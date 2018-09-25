@@ -71,8 +71,13 @@ export default {
     theme: '换肤',
     size: '布局大小'
   },
+  auth: {
+    login: '登录',
+    signup: '注册',
+    resetPasswd: '忘记密码'
+  },
   login: {
-    title: '系统登录',
+    title: '登录',
     logIn: '登录',
     username: '请输入已验证的手机号或邮箱',
     password: '请输入密码',
@@ -80,10 +85,19 @@ export default {
   signup: {
     title: '注册',
     signUp: '注册',
-    phone: '手机号码',
-    password: '密码',
+    phone: '请输入手机号码',
+    password: '请输入密码',
+    vcode: '请输入验证码',
+    email: '请输入邮箱',
+    send: '发送验证码',
+  },
+  passwdReset: {
+    title: '重置密码',
+    phone: '请输入手机号码',
     vcode: '验证码',
     send: '发送验证码',
+    password: '请输入密码',
+    submit: '重置'
   },
   documentation: {
     documentation: '文档',

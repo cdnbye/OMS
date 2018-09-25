@@ -1,49 +1,37 @@
 <template>
   <div class="login-container">
-    <el-form ref="signupForm" :model="signupForm" :rules="signupRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="resetForm" :model="resetForm" :rules="resetRules" class="login-form" auto-complete="on" label-position="left">
       <div class="title-container">
-        <h3 class="title">{{ $t('signup.title') }}</h3>
+        <h3 class="title">{{ $t('passwdReset.title') }}</h3>
         <lang-select class="set-language"/>
       </div>
-
-      <!-- <vue-flag-list height="30" width="120" @getCode="getCode"></vue-flag-list> -->
 
       <el-form-item prop="mobile">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="signupForm.mobile"
-          :placeholder="$t('signup.phone')"
+          v-model="resetForm.mobile"
+          :placeholder="$t('passwdReset.phone')"
           name="mobile"
           type="text"
           auto-complete="on"
           @keyup.enter.native="onSendCode" />
       </el-form-item>
 
-      <el-button id="sendButton" :loading="sendLoading" :disabled="sendDisabled" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="onSendCode">{{ $t('signup.send') }}</el-button>
+      <el-button id="sendButton" :loading="sendLoading" :disabled="sendDisabled" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="onSendCode">{{ $t('passwdReset.send') }}</el-button>
 
       <el-form-item prop="vcode">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
-          v-model="signupForm.vcode"
-          :placeholder="$t('signup.vcode')"
+          v-model="resetForm.vcode"
+          :placeholder="$t('passwdReset.vcode')"
           name="vcode"
           auto-complete="on" />
       </el-form-item>
 
-      <el-form-item prop="email">
-        <span class="svg-container">
-          <svg-icon icon-class="email" />
-        </span>
-        <el-input
-          v-model="signupForm.email"
-          :placeholder="$t('signup.email')"
-          name="email"
-          auto-complete="on" />
-      </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
@@ -51,8 +39,8 @@
         </span>
         <el-input
           :type="passwordType"
-          v-model="signupForm.password"
-          :placeholder="$t('login.password')"
+          v-model="resetForm.password"
+          :placeholder="$t('passwdReset.password')"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleSignup" />
@@ -62,11 +50,11 @@
       </el-form-item>
 
       <el-row type="flex" justify="space-between">
-        <a @click="goSignup" style="color:#eee">{{ $t('auth.login') }}</a>
-        <a @click="goFindPwd" style="color:#eee">{{ $t('auth.resetPasswd') }}</a>
+        <a @click="goLogin" style="color:#eee">{{ $t('auth.login') }}</a>
+        <a @click="goSignup" style="color:#eee">{{ $t('auth.signup') }}</a>
       </el-row>
 
-      <el-button :loading="signupLoading" type="primary" style="width:100%;margin:20px 0;" @click.native.prevent="handleSignup">{{ $t('signup.signUp') }}</el-button>
+      <el-button :loading="resetLoading" type="primary" style="width:100%;margin:20px 0;" @click.native.prevent="handleReset">{{ $t('passwdReset.submit') }}</el-button>
 
     </el-form>
   </div>
@@ -74,11 +62,11 @@
 
 <script>
 import LangSelect from '@/components/LangSelect'
-import { validatePhone, validateEmail } from '@/utils/validate'
-import { sendCode } from '@/api/signup'
+import { validatePhone } from '@/utils/validate'
+import { sendCode, resetPasswd } from '@/api/signup'
 
 export default {
-  name: 'Signup',
+  name: 'PasswdReset',
   components: { LangSelect },
   data() {
     const formValidatePhone = (rule, value, callback) => {
@@ -102,28 +90,19 @@ export default {
         callback()
       }
     }
-    const validateEmail = () => {
-      if(!validateEmail(value)) {
-        callback(new Error('Please enter the correct E-mail'))
-      } else {
-        callback()
-      }
-    }
     return {
-      signupForm: {
+      resetForm: {
         mobile: '',
         password: '',
         vcode: '',
-        email: ''
       },
-      signupRules: {
+      resetRules: {
         mobile: [{ required: true, trigger: 'blur', validator: formValidatePhone }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         vcode: [{ required: true, trigger: 'blur', validator: validateVCode }],
-        email: [{ required: false, trigger: 'blur, change', validator: validateEmail }],
       },
       passwordType: 'password',
-      signupLoading: false,
+      resetLoading: false,
       sendLoading: false,
       sendDisabled: false,
       redirect: undefined,
@@ -137,15 +116,8 @@ export default {
       },
       immediate: true
     }
-
-  },
-  mounted() {
-
   },
   methods: {
-    getCode(code) {
-      console.log(code)
-    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -153,15 +125,18 @@ export default {
         this.passwordType = 'password'
       }
     },
-    handleSignup() {
-      this.$refs.signupForm.validate(valid => {
+    handleReset() {
+      this.$refs.resetForm.validate(valid => {
         if (valid) {
-          this.signupLoading = true
-          this.$store.dispatch('signup', this.signupForm).then(() => {
-            this.signupLoading = false
-            this.$router.push({ path: this.redirect || '/' })
+          this.resetLoading = true
+          resetPasswd(this.resetForm).then(() => {
+            this.resetLoading = false
+            this.$message({
+              message: '密码重置成功',
+              type: 'success'
+            })
           }).catch(() => {
-            this.signupLoading = false
+            this.resetLoading = false
           })
         } else {
           console.log('error submit!!')
@@ -170,13 +145,12 @@ export default {
       })
     },
     onSendCode() {
-      const { mobile } = this.signupForm
+      const { mobile } = this.resetForm
       if(mobile) {
         if(validatePhone(mobile)) {
           const data = {
             mobile,
             ncode: 86,
-            action: "signup",
           }
           this.sendLoading = true
           sendCode(data).then((res) => {
@@ -201,8 +175,8 @@ export default {
     goLogin() {
       this.$router.push({ path: '/login' })
     },
-    goFindPwd() {
-      this.$router.push({ path: '/forget_password' })
+    goSignup() {
+      this.$router.push({ path: '/signup' })
     },
     sendButtonEnable() {
       let time = 10

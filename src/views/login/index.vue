@@ -36,11 +36,11 @@
       </el-form-item>
 
       <el-row type="flex" justify="space-between">
-        <a @click="goSignup" style="color:#eee">注册</a>
-        <a @click="goFindPwd" style="color:#eee">找回密码</a>
+        <a @click="goSignup" style="color:#eee">{{ $t('auth.signup') }}</a>
+        <a @click="goFindPwd" style="color:#eee">{{ $t('auth.resetPasswd') }}</a>
       </el-row>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin:20px 0;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
 
     </el-form>
   </div>
@@ -136,7 +136,7 @@ export default {
       this.$router.push({ path: '/signup' })
     },
     goFindPwd() {
-      this.$router.push({ path: '/findpassword' })
+      this.$router.push({ path: '/forget_password' })
     },
   }
 }

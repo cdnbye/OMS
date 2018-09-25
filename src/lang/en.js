@@ -71,8 +71,13 @@ export default {
     theme: 'Theme',
     size: 'Global Size'
   },
+  auth: {
+    login: 'Loginin',
+    signup: 'Signup',
+    resetPasswd: 'Forget password'
+  },
   login: {
-    title: 'Login Form',
+    title: 'Login',
     logIn: 'Log in',
     username: 'Please enter your verified phone number or email',
     password: 'Please enter your password',
@@ -80,10 +85,19 @@ export default {
   signup: {
     title: 'Signup',
     signUp: 'signup',
-    phone: 'phone number',
+    phone: 'please enter phone number or email',
     password: 'password',
     vcode: 'code',
+    email: 'E-mail',
     send: 'send',
+  },
+  passwdReset: {
+    title: 'Password Reset',
+    phone: 'please enter your phone number',
+    vcode: 'code',
+    send: 'send',
+    password: 'Please enter your password',
+    submit: 'Reset'
   },
   documentation: {
     documentation: 'Documentation',

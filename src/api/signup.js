@@ -25,3 +25,10 @@ export function sendCode(data) {
   })
 }
 
+export function resetPasswd(data) {
+  return request({
+    url: '/user/passwd_forget',
+    method: 'put',
+    data
+  })
+}

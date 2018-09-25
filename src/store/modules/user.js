@@ -11,7 +11,7 @@ const user = {
     name: '',
     avatar: '',
     introduction: '',
-    roles: [],
+    roles: ['admin'],
     setting: {
       articlePlatform: []
     }
@@ -71,7 +71,15 @@ const user = {
           reject(error)
         })
       })
-    }
+    },
+    //用户登出
+    LogOut({ commit, state }) {
+      return new Promise((resolve, reject) => {
+          commit('SET_TOKEN', '')
+          removeToken()
+          resolve()
+      })
+    },
 
   }
 }
