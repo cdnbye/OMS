@@ -45,15 +45,15 @@
           auto-complete="on" />
       </el-form-item>
 
-      <el-form-item prop="password">
+      <el-form-item prop="passwd">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
           :type="passwordType"
-          v-model="signupForm.password"
+          v-model="signupForm.passwd"
           :placeholder="$t('login.password')"
-          name="password"
+          name="passwd"
           auto-complete="on"
           @keyup.enter.native="handleSignup" />
         <span class="show-pwd" @click="showPwd">
@@ -62,7 +62,7 @@
       </el-form-item>
 
       <el-row type="flex" justify="space-between">
-        <a @click="goSignup" style="color:#eee">{{ $t('auth.login') }}</a>
+        <a @click="goLogin" style="color:#eee">{{ $t('auth.login') }}</a>
         <a @click="goFindPwd" style="color:#eee">{{ $t('auth.resetPasswd') }}</a>
       </el-row>
 
@@ -83,44 +83,50 @@ export default {
   data() {
     const formValidatePhone = (rule, value, callback) => {
       if (!validatePhone(value)) {
-        callback(new Error('Please enter the correct phone'))
+        const error = this.$t('auth.phoneError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 6 || value.length >12) {
+        const error = this.$t('auth.passwdError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     const validateVCode = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The code can not be less than 6 digits'))
+      if (value.length < 4) {
+        const error = this.$t('auth.vcodeError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
-    const validateEmail = () => {
+    const formValidateEmail = (rule, value, callback) => {
       if(!validateEmail(value)) {
-        callback(new Error('Please enter the correct E-mail'))
+        const error = this.$t('auth.mailError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     return {
       signupForm: {
+        ncode: 86,
         mobile: '',
-        password: '',
+        passwd: '',
+        email: '',
         vcode: '',
-        email: ''
+        passwd: ''
       },
       signupRules: {
         mobile: [{ required: true, trigger: 'blur', validator: formValidatePhone }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        email: [{ required: true, trigger: 'blur', validator: formValidateEmail }],
         vcode: [{ required: true, trigger: 'blur', validator: validateVCode }],
-        email: [{ required: false, trigger: 'blur, change', validator: validateEmail }],
+        passwd: [{ required: true, trigger: 'blur', validator: validatePassword }],
       },
       passwordType: 'password',
       signupLoading: false,
@@ -137,10 +143,6 @@ export default {
       },
       immediate: true
     }
-
-  },
-  mounted() {
-
   },
   methods: {
     getCode(code) {
@@ -160,6 +162,11 @@ export default {
           this.$store.dispatch('signup', this.signupForm).then(() => {
             this.signupLoading = false
             this.$router.push({ path: this.redirect || '/' })
+            const message = this.$t('signup.signUpSuccess')
+            this.$message({
+              message,
+              type: 'success'
+            })
           }).catch(() => {
             this.signupLoading = false
           })
@@ -192,10 +199,12 @@ export default {
             console.log(error)
           })
         } else {
-          this.$message.error('请输入正确的电话号码')
+          const error = this.$t('auth.phoneError')
+          this.$message.error(error)
         }
       } else {
-        this.$message.error(`请输入电话号码`)
+        const error = this.$t('auth.phoneWarn')
+        this.$message.error(error)
       }
     },
     goLogin() {
@@ -205,7 +214,7 @@ export default {
       this.$router.push({ path: '/forget_password' })
     },
     sendButtonEnable() {
-      let time = 10
+      let time = 120
       let button = document.getElementById('sendButton')
       const _this = this
       _this.int = setInterval(() => {

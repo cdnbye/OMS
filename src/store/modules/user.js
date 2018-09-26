@@ -62,6 +62,7 @@ const user = {
     //用户注册
     signup({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
+        console.log(userInfo)
         signup(userInfo).then(response => {
           const data = response.data
           commit('SET_TOKEN', data.token)
@@ -75,11 +76,11 @@ const user = {
     //用户登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-          commit('SET_TOKEN', '')
-          removeToken()
-          resolve()
+        commit('SET_TOKEN', '')
+        removeToken()
+        resolve()
       })
-    },
+    }
 
   }
 }

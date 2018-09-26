@@ -74,17 +74,27 @@ export default {
   auth: {
     login: '登录',
     signup: '注册',
-    resetPasswd: '忘记密码'
+    resetPasswd: '忘记密码',
+
+    usernameError: '请输入正确的手机号或邮箱',
+    mailError: '请输入正确的邮箱',
+    sendTitle: '验证码已发送至手机',
+    phoneWarn: '请输入手机号码',
+    phoneError: '请输入正确的手机号码',
+    passwdError: '密码必须在6到12位之间',
+    vcodeError: '验证码不能小于4位',
   },
   login: {
     title: '登录',
     logIn: '登录',
+    logInSuccess: '登录成功',
     username: '请输入已验证的手机号或邮箱',
     password: '请输入密码',
   },
   signup: {
     title: '注册',
     signUp: '注册',
+    signUpSuccess: '注册成功',
     phone: '请输入手机号码',
     password: '请输入密码',
     vcode: '请输入验证码',
@@ -93,11 +103,12 @@ export default {
   },
   passwdReset: {
     title: '重置密码',
+    successTitle: '重置密码成功',
     phone: '请输入手机号码',
     vcode: '验证码',
     send: '发送验证码',
     password: '请输入密码',
-    submit: '重置'
+    submit: '重置',
   },
   documentation: {
     documentation: '文档',

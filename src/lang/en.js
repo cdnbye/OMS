@@ -72,19 +72,29 @@ export default {
     size: 'Global Size'
   },
   auth: {
-    login: 'Loginin',
+    login: 'Login',
     signup: 'Signup',
-    resetPasswd: 'Forget password'
+    resetPasswd: 'Forget password',
+
+    usernameError: 'Please input the correct phone number or E-mail',
+    mailError: 'Please enter the correct E-mail',
+    sendTitle: 'The verification code has been sent to your mobile',
+    phoneWarn: 'Please enter your phone number',
+    phoneError: 'Please enter the correct phone number',
+    passwdError: 'The password must be between 6 and 12 digits',
+    vcodeError: 'The verification code can not be less than 4 digits',
   },
   login: {
     title: 'Login',
     logIn: 'Log in',
+    logInSuccess: 'Login successfully',
     username: 'Please enter your verified phone number or email',
     password: 'Please enter your password',
   },
   signup: {
     title: 'Signup',
     signUp: 'signup',
+    signUpSuccess: 'signup successfully',
     phone: 'please enter phone number or email',
     password: 'password',
     vcode: 'code',
@@ -93,8 +103,9 @@ export default {
   },
   passwdReset: {
     title: 'Password Reset',
+    successTitle: 'Reset password successfully',
     phone: 'please enter your phone number',
-    vcode: 'code',
+    vcode: 'verification code',
     send: 'send',
     password: 'Please enter your password',
     submit: 'Reset'

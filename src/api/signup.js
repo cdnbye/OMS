@@ -1,15 +1,6 @@
 import request from '@/utils/request'
-import { validateEmail } from '@/utils/validate'
 
-export function signup(username, passwd) {
-  const data = {
-    passwd
-  }
-  if(validateEmail(username)) {
-    data.email = username
-  } else {
-    data.mobile = username
-  }
+export function signup(data) {
   return request({
     url: 'user',
     method: 'post',

@@ -6,14 +6,14 @@
         <lang-select class="set-language"/>
       </div>
 
-      <el-form-item prop="mobile">
+      <el-form-item prop="Mobile">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="resetForm.mobile"
+          v-model="resetForm.Mobile"
           :placeholder="$t('passwdReset.phone')"
-          name="mobile"
+          name="Mobile"
           type="text"
           auto-complete="on"
           @keyup.enter.native="onSendCode" />
@@ -21,27 +21,27 @@
 
       <el-button id="sendButton" :loading="sendLoading" :disabled="sendDisabled" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="onSendCode">{{ $t('passwdReset.send') }}</el-button>
 
-      <el-form-item prop="vcode">
+      <el-form-item prop="Vcode">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
-          v-model="resetForm.vcode"
+          v-model="resetForm.Vcode"
           :placeholder="$t('passwdReset.vcode')"
-          name="vcode"
+          name="Vcode"
           auto-complete="on" />
       </el-form-item>
 
 
-      <el-form-item prop="password">
+      <el-form-item prop="Passwd">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
           :type="passwordType"
-          v-model="resetForm.password"
+          v-model="resetForm.Passwd"
           :placeholder="$t('passwdReset.password')"
-          name="password"
+          name="Passwd"
           auto-complete="on"
           @keyup.enter.native="handleSignup" />
         <span class="show-pwd" @click="showPwd">
@@ -71,35 +71,39 @@ export default {
   data() {
     const formValidatePhone = (rule, value, callback) => {
       if (!validatePhone(value)) {
-        callback(new Error('Please enter the correct phone'))
+        const error = this.$t('auth.phoneError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 6 || value.length > 12) {
+        const error = this.$t('auth.passwdError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     const validateVCode = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The code can not be less than 6 digits'))
+      if (value.length < 4) {
+        const error = this.$t('auth.vcodeError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     return {
       resetForm: {
-        mobile: '',
-        password: '',
-        vcode: '',
+        NationCode: 86,
+        Mobile: '',
+        Passwd: '',
+        Vcode: '',
       },
       resetRules: {
-        mobile: [{ required: true, trigger: 'blur', validator: formValidatePhone }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        vcode: [{ required: true, trigger: 'blur', validator: validateVCode }],
+        Mobile: [{ required: true, trigger: 'blur', validator: formValidatePhone }],
+        Passwd: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        Vcode: [{ required: true, trigger: 'blur', validator: validateVCode }],
       },
       passwordType: 'password',
       resetLoading: false,
@@ -131,10 +135,12 @@ export default {
           this.resetLoading = true
           resetPasswd(this.resetForm).then(() => {
             this.resetLoading = false
+            const message = this.$t('passwdReset.successTitle')
             this.$message({
-              message: '密码重置成功',
+              message,
               type: 'success'
             })
+            this.$router.push({ path: '/login' })
           }).catch(() => {
             this.resetLoading = false
           })
@@ -145,31 +151,33 @@ export default {
       })
     },
     onSendCode() {
-      const { mobile } = this.resetForm
+      const mobile = this.resetForm.Mobile
       if(mobile) {
         if(validatePhone(mobile)) {
           const data = {
             mobile,
             ncode: 86,
+            action: 'passwd_forget'
           }
           this.sendLoading = true
           sendCode(data).then((res) => {
             this.sendLoading = false
+            const message = this.$t('auth.sendTitle')
             this.$message({
-              message: '发送成功',
+              message,
               type: 'success'
             })
             this.sendButtonEnable()
-            console.log(res)
           }).catch((error) => {
             this.sendLoading = false
-            console.log(error)
           })
         } else {
-          this.$message.error('请输入正确的电话号码')
+          const error = this.$t('auth.phoneError')
+          this.$message.error(error)
         }
       } else {
-        this.$message.error(`请输入电话号码`)
+        const error = this.$t('auth.phoneWarn')
+        this.$message.error(error)
       }
     },
     goLogin() {
@@ -179,7 +187,7 @@ export default {
       this.$router.push({ path: '/signup' })
     },
     sendButtonEnable() {
-      let time = 10
+      let time = 120
       let button = document.getElementById('sendButton')
       const _this = this
       _this.int = setInterval(() => {

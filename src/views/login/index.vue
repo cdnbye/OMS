@@ -56,14 +56,16 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validateEmail(value) && !validatePhone(value)) {
-        callback(new Error('Please enter the correct user name'))
+        const error = this.$t('auth.usernameError')
+        callback(new Error(error))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 6 || value.length > 12) {
+        const error = this.$t('auth.passwdError')
+        callback(new Error(error))
       } else {
         callback()
       }
@@ -89,7 +91,6 @@ export default {
       },
       immediate: true
     }
-
   },
   methods: {
     formatData(data) {
@@ -115,10 +116,14 @@ export default {
         if (valid) {
           this.loading = true
           const data = this.formatData(this.loginForm)
-          console.log(data)
           this.$store.dispatch('LoginByUsername', data).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
+            const message = this.$t('login.logInSuccess')
+            this.$message({
+              message,
+              type: 'success'
+            })
           }).catch(() => {
             this.loading = false
           })
