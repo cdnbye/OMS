@@ -17,6 +17,7 @@
     "sass-loader": "^7.1.0",
     "svg-sprite-loader": "^3.9.2",
     "vue": "^2.5.17",
+    "vue-count-to": "^1.0.13",
     "vue-flag-list": "^1.0.4",
     "vue-i18n": "^8.1.0",
     "vue-router": "^3.0.1",

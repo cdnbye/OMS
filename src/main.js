@@ -10,7 +10,7 @@ import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
 
-import { Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, Message, Row, Menu, MenuItem, Scrollbar, Breadcrumb, BreadcrumbItem } from 'element-ui'
+import { Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, Message, Row, Col, Menu, MenuItem, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
 
 import VueFlagList from 'vue-flag-list'
 import 'vue-flag-list/dist/vue-flag-list.min.css'
@@ -27,11 +27,13 @@ Vue.use(Dropdown)
 Vue.use(DropdownItem)
 Vue.use(DropdownMenu)
 Vue.use(Row)
+Vue.use(Col)
 Vue.use(Menu)
 Vue.use(MenuItem)
 Vue.use(Scrollbar)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
+Vue.use(Submenu)
 
 Vue.use({
   i18n: (key, value) => i18n.t(key, value)

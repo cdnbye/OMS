@@ -63,7 +63,7 @@
 <script>
 import LangSelect from '@/components/LangSelect'
 import { validatePhone } from '@/utils/validate'
-import { sendCode, resetPasswd } from '@/api/signup'
+import { sendCode, resetPasswd } from '@/api/auth'
 
 export default {
   name: 'PasswdReset',

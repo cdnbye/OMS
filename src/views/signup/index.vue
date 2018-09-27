@@ -75,7 +75,7 @@
 <script>
 import LangSelect from '@/components/LangSelect'
 import { validatePhone, validateEmail } from '@/utils/validate'
-import { sendCode } from '@/api/signup'
+import { sendCode } from '@/api/auth'
 
 export default {
   name: 'Signup',
