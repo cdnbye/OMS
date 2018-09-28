@@ -10,7 +10,7 @@ const user = {
     name: '',
     avatar: '',
     introduction: '',
-    roles: ['admin'],
+    roles: [],
     setting: {
       articlePlatform: []
     }
@@ -78,6 +78,16 @@ const user = {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
+      })
+    },
+    //设置用户权限
+    setRole({ commit }) {
+      return new Promise((resolve, reject) => {
+        const data = {
+          roles: ['admin']
+        }
+        commit('SET_ROLES', data.roles)
+        resolve(data)
       })
     }
 
