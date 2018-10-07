@@ -12,15 +12,15 @@ const app = {
   mutations: {
     TOGGLE_SIDEBAR: state => {
       if (state.sidebar.opened) {
-        Cookies.set('sidebarStatus', 1)
+        Cookies.set('sidebarStatus', 1, { expires: 99999 })
       } else {
-        Cookies.set('sidebarStatus', 0)
+        Cookies.set('sidebarStatus', 0, { expires: 99999 })
       }
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
     },
     CLOSE_SIDEBAR: (state, withoutAnimation) => {
-      Cookies.set('sidebarStatus', 1)
+      Cookies.set('sidebarStatus', 1, { expires: 99999 })
       state.sidebar.opened = false
       state.sidebar.withoutAnimation = withoutAnimation
     },
@@ -29,7 +29,7 @@ const app = {
     },
     SET_LANGUAGE: (state, language) => {
       state.language = language
-      Cookies.set('language', language)
+      Cookies.set('language', language, { expires: 99999 })
     }
   },
   actions: {

@@ -2,68 +2,50 @@
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">在线</div>
-          <count-to :start-val="0" :end-val="statis.online" :duration="2600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.online" :duration="1500" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">最高在线</div>
-          <count-to :start-val="0" :end-val="statis.max_online" :duration="2800" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.max_online" :duration="1500" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">一周最高在线</div>
-          <count-to :start-val="0" :end-val="statis.max_online_week" :duration="2800" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.max_online_week" :duration="1500" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">一月最高在线</div>
-          <count-to :start-val="0" :end-val="statis.max_online_month" :duration="2800" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.max_online_month" :duration="1500" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">P2P带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.bandwidth_p2p" :duration="1500" class="card-panel-num"/>
           (Kbps)
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">P2P一周带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_week" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_week" :duration="1500" class="card-panel-num"/>
           (Kbps)
         </div>
       </div>
@@ -71,36 +53,27 @@
 
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">P2P一月带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_month" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_month" :duration="1500" class="card-panel-num"/>
           (Kbps)
         </div>
       </div>
     </el-col>
      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">P2P率</div>
-          <count-to :start-val="0" :end-val="statis.p2p_rate_week" :duration="3000" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.p2p_rate_week" :duration="1500" class="card-panel-num"/>
+          ‰
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">Http带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_http" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.bandwidth_http" :duration="1500" class="card-panel-num"/>
           (Kbps)
         </div>
       </div>
@@ -108,12 +81,9 @@
 
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">Http一周带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_http_week" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.bandwidth_http_week" :duration="1500" class="card-panel-num"/>
           (Kbps)
         </div>
       </div>
@@ -121,12 +91,9 @@
 
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <!-- <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div> -->
         <div class="card-panel-description">
           <div class="card-panel-text">Http一月带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_http_month" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="statis.bandwidth_http_month" :duration="1500" class="card-panel-num"/>
           (Kbps)
         </div>
       </div>
@@ -139,6 +106,8 @@
 import CountTo from 'vue-count-to'
 import { fetchLiveData } from '@/api/liveData'
 import { formatBandwidth } from '@/utils/format'
+
+let int = undefined
 
 export default {
   name: 'PanelGroup',
@@ -163,12 +132,16 @@ export default {
     CountTo
   },
   mounted() {
-    this.getData()
+    const _this = this
+    _this.getData()
+    int = setInterval(function() {
+      _this.getData()
+    }, 5000)
+  },
+  destroyed() {
+    clearInterval(int)
   },
   methods: {
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
-    },
     getData() {
       fetchLiveData().then(res => {
         const { data } = res
@@ -190,7 +163,7 @@ export default {
         this.statis.bandwidth_http = data.rt_bw_http
         this.statis.bandwidth_http_week = data.bwp_http_7
         this.statis.bandwidth_http_month = data.bwp_http_month
-        this.statis.p2p_rate_week = data.p2p_rate_7
+        this.statis.p2p_rate_week = Number((data.p2p_rate_7 * 1000).toFixed())
       }).catch(err => {
         console.log(err)
       })
@@ -216,9 +189,6 @@ export default {
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
     &:hover {
-      .card-panel-icon-wrapper {
-        color: #fff;
-      }
       .icon-people {
          background: #40c9c6;
       }
@@ -227,9 +197,6 @@ export default {
       }
       .icon-money {
         background: #f4516c;
-      }
-      .icon-shoppingCard {
-        background: #34bfa3
       }
     }
     .icon-people {
@@ -240,20 +207,6 @@ export default {
     }
     .icon-money {
       color: #f4516c;
-    }
-    .icon-shoppingCard {
-      color: #34bfa3
-    }
-    .card-panel-icon-wrapper {
-      float: left;
-      margin: 14px 0 0 14px;
-      padding: 16px;
-      transition: all 0.38s ease-out;
-      border-radius: 6px;
-    }
-    .card-panel-icon {
-      float: left;
-      font-size: 48px;
     }
     .card-panel-description {
       // float: right;

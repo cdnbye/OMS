@@ -289,6 +289,8 @@ $light_gray:#eee;
 
 .login-container {
   position: fixed;
+  overflow-y: scroll;
+  overflow-x:hidden;
   height: 100%;
   width: 100%;
   background-color: $bg;
