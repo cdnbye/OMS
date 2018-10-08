@@ -1,104 +1,97 @@
 <template>
   <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">在线</div>
           <count-to :start-val="0" :end-val="statis.online" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">当前在线人数</div>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">最高在线</div>
           <count-to :start-val="0" :end-val="statis.max_online" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">最高在线人数</div>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">一周最高在线</div>
           <count-to :start-val="0" :end-val="statis.max_online_week" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">过去七天最高在线人数</div>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">一月最高在线</div>
           <count-to :start-val="0" :end-val="statis.max_online_month" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">本月最高在线人数</div>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">P2P带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p" :duration="1500" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.bandwidth_p2p.num" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">当前P2P带宽峰值({{ statis.bandwidth_p2p.unit }})</div>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">P2P一周带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_week" :duration="1500" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_week.num" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">过去七天P2P带宽峰值({{ statis.bandwidth_p2p_week.unit }})</div>
         </div>
       </div>
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">P2P一月带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_month" :duration="1500" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_month.num" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">本月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
         </div>
       </div>
     </el-col>
-     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">P2P率</div>
           <count-to :start-val="0" :end-val="statis.p2p_rate_week" :duration="1500" class="card-panel-num"/>
-          ‰
+          <div class="card-panel-text">P2P分享率(‰)</div>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">Http带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_http" :duration="1500" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.bandwidth_http.num" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">当前Http带宽峰值({{ statis.bandwidth_http.unit }})</div>
         </div>
       </div>
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">Http一周带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_http_week" :duration="1500" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.bandwidth_http_week.num" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">过去七天Http带宽峰值({{ statis.bandwidth_http_week.unit }})</div>
         </div>
       </div>
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <div class="card-panel-text">Http一月带宽</div>
-          <count-to :start-val="0" :end-val="statis.bandwidth_http_month" :duration="1500" class="card-panel-num"/>
-          (Kbps)
+          <count-to :start-val="0" :end-val="statis.bandwidth_http_month.num" :duration="1500" class="card-panel-num"/>
+          <div class="card-panel-text">本月Http带宽峰值({{ statis.bandwidth_http_month.unit }})</div>
         </div>
       </div>
     </el-col>
-
+    
   </el-row>
 </template>
 
@@ -118,12 +111,30 @@ export default {
         max_online: 0,
         max_online_week: 0,
         max_online_month: 0,
-        bandwidth_p2p: 0,
-        bandwidth_p2p_week: 0,
-        bandwidth_p2p_month: 0,
-        bandwidth_http: 0,
-        bandwidth_http_week: 0,
-        bandwidth_http_month: 0,
+        bandwidth_p2p: {
+          num: 0,
+          unit: 'kbps'
+        },
+        bandwidth_p2p_week: {
+          num: 0,
+          unit: 'kbps'
+        },
+        bandwidth_p2p_month: {
+          num: 0,
+          unit: 'kbps'
+        },
+        bandwidth_http: {
+          num: 0,
+          unit: 'kbps'
+        },
+        bandwidth_http_week: {
+          num: 0,
+          unit: 'kbps'
+        },
+        bandwidth_http_month: {
+          num: 0,
+          unit: 'kbps'
+        },
         p2p_rate_week: 0
       }
     }
@@ -149,20 +160,12 @@ export default {
         this.statis.max_online = data.max_num
         this.statis.max_online_week = data.max_num_7
         this.statis.max_online_month = data.max_num_month
-
-        // this.statis.bandwidth_p2p = formatBandwidth(data.rt_bw_p2p)
-        // this.statis.bandwidth_p2p_week = formatBandwidth(data.bwp_p2p_7)
-        // this.statis.bandwidth_p2p_month = formatBandwidth(data.bwp_p2p_month)
-        // this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
-        // this.statis.bandwidth_http_week = formatBandwidth(data.bwp_http_7)
-        // this.statis.bandwidth_http_month = formatBandwidth(data.bwp_http_month)
-
-        this.statis.bandwidth_p2p = data.rt_bw_p2p
-        this.statis.bandwidth_p2p_week = data.bwp_p2p_7
-        this.statis.bandwidth_p2p_month = data.bwp_p2p_month
-        this.statis.bandwidth_http = data.rt_bw_http
-        this.statis.bandwidth_http_week = data.bwp_http_7
-        this.statis.bandwidth_http_month = data.bwp_http_month
+        this.statis.bandwidth_p2p = formatBandwidth(data.rt_bw_p2p)
+        this.statis.bandwidth_p2p_week = formatBandwidth(data.bwp_p2p_7)
+        this.statis.bandwidth_p2p_month = formatBandwidth(data.bwp_p2p_month)
+        this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
+        this.statis.bandwidth_http_week = formatBandwidth(data.bwp_http_7)
+        this.statis.bandwidth_http_month = formatBandwidth(data.bwp_http_month)
         this.statis.p2p_rate_week = Number((data.p2p_rate_7 * 1000).toFixed())
       }).catch(err => {
         console.log(err)
@@ -209,18 +212,18 @@ export default {
       color: #f4516c;
     }
     .card-panel-description {
-      // float: right;
+      text-align: right;
+      line-height: 42px;
       font-weight: bold;
       margin: 26px;
-      margin-left: 0px;
+      margin-left: 0;
       .card-panel-text {
         line-height: 18px;
         color: rgba(0, 0, 0, 0.45);
         font-size: 16px;
-        margin-bottom: 12px;
       }
       .card-panel-num {
-        font-size: 20px;
+        font-size: 24px;
       }
     }
   }
