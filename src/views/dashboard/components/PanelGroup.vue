@@ -3,7 +3,7 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.online" :duration="1500" class="card-panel-num"/>
+          <span class="card-panel-num">{{ statis.online }}</span>
           <div class="card-panel-text">当前在线人数</div>
         </div>
       </div>
@@ -11,31 +11,7 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.max_online" :duration="1500" class="card-panel-num"/>
-          <div class="card-panel-text">最高在线人数</div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.max_online_week" :duration="1500" class="card-panel-num"/>
-          <div class="card-panel-text">过去七天最高在线人数</div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.max_online_month" :duration="1500" class="card-panel-num"/>
-          <div class="card-panel-text">本月最高在线人数</div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p.num" :duration="1500" class="card-panel-num"/>
+          <span class="card-panel-num">{{ statis.bandwidth_p2p.num }}</span>
           <div class="card-panel-text">当前P2P带宽峰值({{ statis.bandwidth_p2p.unit }})</div>
         </div>
       </div>
@@ -43,60 +19,79 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_week.num" :duration="1500" class="card-panel-num"/>
-          <div class="card-panel-text">过去七天P2P带宽峰值({{ statis.bandwidth_p2p_week.unit }})</div>
-        </div>
-      </div>
-    </el-col>
-
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.bandwidth_p2p_month.num" :duration="1500" class="card-panel-num"/>
-          <div class="card-panel-text">本月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
-        </div>
-      </div>
-    </el-col>
-     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.p2p_rate_week" :duration="1500" class="card-panel-num"/>
-          <div class="card-panel-text">P2P分享率(‰)</div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.bandwidth_http.num" :duration="1500" class="card-panel-num"/>
+          <span class="card-panel-num">{{ statis.bandwidth_http.num }}</span>
           <div class="card-panel-text">当前Http带宽峰值({{ statis.bandwidth_http.unit }})</div>
         </div>
       </div>
     </el-col>
-
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.bandwidth_http_week.num" :duration="1500" class="card-panel-num"/>
+          <span class="card-panel-num">{{ statis.p2p_rate_week }}</span>
+          <div class="card-panel-text">过去七天P2P分享率(%)</div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.max_online_week }}</span>
+          <div class="card-panel-text">过去七天最高在线人数</div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.bandwidth_p2p_week.num }}</span>
+          <div class="card-panel-text">过去七天P2P带宽峰值({{ statis.bandwidth_p2p_week.unit }})</div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.bandwidth_http_week.num }}</span>
           <div class="card-panel-text">过去七天Http带宽峰值({{ statis.bandwidth_http_week.unit }})</div>
         </div>
       </div>
     </el-col>
-
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <count-to :start-val="0" :end-val="statis.bandwidth_http_month.num" :duration="1500" class="card-panel-num"/>
+          <span class="card-panel-num">{{ statis.max_online }}</span>
+          <div class="card-panel-text">最高在线人数</div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.max_online_month }}</span>
+          <div class="card-panel-text">本月最高在线人数</div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.bandwidth_p2p_month.num }}</span>
+          <div class="card-panel-text">本月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.bandwidth_http_month.num }}</span>
           <div class="card-panel-text">本月Http带宽峰值({{ statis.bandwidth_http_month.unit }})</div>
         </div>
       </div>
     </el-col>
-    
   </el-row>
 </template>
 
 <script>
-import CountTo from 'vue-count-to'
 import { fetchLiveData } from '@/api/liveData'
 import { formatBandwidth } from '@/utils/format'
 
@@ -139,15 +134,12 @@ export default {
       }
     }
   },
-  components: {
-    CountTo
-  },
   mounted() {
     const _this = this
     _this.getData()
     int = setInterval(function() {
       _this.getData()
-    }, 5000)
+    }, 10000)
   },
   destroyed() {
     clearInterval(int)
@@ -166,7 +158,7 @@ export default {
         this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
         this.statis.bandwidth_http_week = formatBandwidth(data.bwp_http_7)
         this.statis.bandwidth_http_month = formatBandwidth(data.bwp_http_month)
-        this.statis.p2p_rate_week = Number((data.p2p_rate_7 * 1000).toFixed())
+        this.statis.p2p_rate_week = (data.p2p_rate_7 * 100).toFixed(2)
       }).catch(err => {
         console.log(err)
       })
@@ -183,7 +175,6 @@ export default {
   }
   .card-panel {
     height: 108px;
-    cursor: pointer;
     font-size: 12px;
     position: relative;
     overflow: hidden;
@@ -191,26 +182,6 @@ export default {
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
-    &:hover {
-      .icon-people {
-         background: #40c9c6;
-      }
-      .icon-message {
-        background: #36a3f7;
-      }
-      .icon-money {
-        background: #f4516c;
-      }
-    }
-    .icon-people {
-      color: #40c9c6;
-    }
-    .icon-message {
-      color: #36a3f7;
-    }
-    .icon-money {
-      color: #f4516c;
-    }
     .card-panel-description {
       text-align: right;
       line-height: 42px;
