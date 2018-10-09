@@ -6,4 +6,3 @@ export function fetchLiveData() {
     method: 'get',
   })
 }
-

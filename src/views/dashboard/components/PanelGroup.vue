@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="40" class="panel-group">
+  <el-row :gutter="20" class="panel-group">
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -171,7 +171,7 @@ export default {
 .panel-group {
   margin-top: 18px;
   .card-panel-col{
-    margin-bottom: 32px;
+    margin-bottom: 20px;
   }
   .card-panel {
     height: 108px;
