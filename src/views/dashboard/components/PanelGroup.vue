@@ -8,6 +8,7 @@
         </div>
       </div>
     </el-col>
+    
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -16,6 +17,7 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -24,14 +26,16 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.p2p_rate_week }}</span>
-          <div class="card-panel-text">过去七天P2P分享率(%)</div>
+          <span class="card-panel-num">{{ statis.p2p_rate }}</span>
+          <div class="card-panel-text">当前P2P分享率(%)</div>
         </div>
       </div>
     </el-col>
+    
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -40,6 +44,7 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -48,6 +53,7 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -56,14 +62,16 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.max_online }}</span>
-          <div class="card-panel-text">最高在线人数</div>
+          <span class="card-panel-num">{{ statis.p2p_rate_week }}</span>
+          <div class="card-panel-text">过去七天P2P分享率(%)</div>
         </div>
       </div>
     </el-col>
+    
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -72,6 +80,7 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -80,11 +89,30 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_http_month.num }}</span>
           <div class="card-panel-text">本月Http带宽峰值({{ statis.bandwidth_http_month.unit }})</div>
+        </div>
+      </div>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.p2p_rate_month }}</span>
+          <div class="card-panel-text">本月P2P分享率(%)</div>
+        </div>
+      </div>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.max_online }}</span>
+          <div class="card-panel-text">最高在线人数</div>
         </div>
       </div>
     </el-col>
@@ -106,6 +134,11 @@ export default {
         max_online: 0,
         max_online_week: 0,
         max_online_month: 0,
+
+        p2p_rate: 0,
+        p2p_rate_week: 0,
+        p2p_rate_month: 0,
+
         bandwidth_p2p: {
           num: 0,
           unit: 'kbps'
@@ -130,7 +163,6 @@ export default {
           num: 0,
           unit: 'kbps'
         },
-        p2p_rate_week: 0
       }
     }
   },
@@ -159,6 +191,10 @@ export default {
         this.statis.bandwidth_http_week = formatBandwidth(data.bwp_http_7)
         this.statis.bandwidth_http_month = formatBandwidth(data.bwp_http_month)
         this.statis.p2p_rate_week = (data.p2p_rate_7 * 100).toFixed(2)
+
+        this.statis.p2p_rate = (data.rt_bw_p2p / (data.rt_bw_p2p + data.rt_bw_http) * 100).toFixed(2)
+        this.statis.p2p_rate_month = (data.bwp_p2p_month / (data.bwp_p2p_month + data.bwp_http_month) * 100).toFixed(2)
+        
       }).catch(err => {
         console.log(err)
       })

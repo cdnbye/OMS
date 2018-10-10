@@ -1,33 +1,32 @@
 <template>
-  <div>
-    <h1>Test</h1>
+  <div class="container">
+    <el-form :inline="true">
+      <el-form-item :xs="10" :sm="6" :lg="4">
+        <el-date-picker
+          placeholder="开始日期"
+          type="date"
+          v-model="startDate"
+        />
+      </el-form-item>
+      <el-form-item :xs="10" :sm="6" :lg="4">      
+        <el-date-picker
+          placeholder="结束日期"
+          type="date"
+          v-model="endDate"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="handleSubmit">确定</el-button>
+      </el-form-item>
+    </el-form>
     <LineChart :chart-data="lineChartData" />
   </div>
 </template>
 
 <script>
-import moment from 'moment'
+import moment,{ isMoment } from 'moment'
 import { fetchP2PTraffic, fetchP2PBandwidth } from '@/api/historyData'
 import LineChart from './components/LineChart'
-
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
 
 export default {
   name: 'Test',
@@ -36,7 +35,12 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: {
+        expectedData: [100, 120, 161, 134, 105, 160, 165],
+        actualData: [120, 82, 91, 154, 162, 140, 145]
+      },
+      startDate: moment(),
+      endDate: moment(),
     }
   },
   mounted() {
@@ -44,16 +48,39 @@ export default {
     this.getP2PBandwidth()
   },
   methods: {
+    dateChange(time) {
+     if (time) {
+     var date = new Date(Date.parse(time));
+     var newDate = date.getFullYear() + "-" + (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+      return newDate ;
+         }
+    }, 
     getP2PTraffic(start, end, gran) {
-      fetchP2PTraffic(start, end, gran)
+      fetchP2PTraffic(start, end, gran).then(res => {
+        console.log(res)
+      })
     },
     getP2PBandwidth() {
       fetchP2PBandwidth(2018, 9).then(res => {
         console.log(res)
-      }).catch(error => {
-        console.log(error)
       })
+    },
+    handleSubmit() {
+
     }
+    // startDateChange(val) {
+    //   console.log(moment(val).format('X'))
+    //   console.log(moment(this.startDate).format('X'))
+    // },
+    // endDateChange(val) {
+    //   console.log(moment(val).format('X'))
+    // },
   }
 }
 </script>
+
+<style scoped>
+  .container {
+    padding: 50px 20px;
+  }
+</style>

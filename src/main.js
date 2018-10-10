@@ -10,7 +10,7 @@ import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
 
-import { Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, Message, Row, Col, Menu, MenuItem, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
+import { DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
 
 import VueFlagList from 'vue-flag-list'
 import 'vue-flag-list/dist/vue-flag-list.min.css'
@@ -18,6 +18,8 @@ import 'vue-flag-list/dist/vue-flag-list.min.css'
 Vue.use(VueFlagList)
 Vue.config.productionTip = false
 
+Vue.use(DatePicker)
+Vue.use(Tooltip)
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)
@@ -30,6 +32,7 @@ Vue.use(Row)
 Vue.use(Col)
 Vue.use(Menu)
 Vue.use(MenuItem)
+Vue.use(MenuItemGroup)
 Vue.use(Scrollbar)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
