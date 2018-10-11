@@ -1,156 +1,82 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}"/>
+  <div class="container">
+    <el-form :inline="true">
+      <el-form-item :xs="10" :sm="6" :lg="4">
+        <el-date-picker
+          placeholder="开始日期"
+          type="date"
+          v-model="startDate"
+        />
+      </el-form-item>
+      <el-form-item :xs="10" :sm="6" :lg="4">      
+        <el-date-picker
+          placeholder="结束日期"
+          type="date"
+          v-model="endDate"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="handleSubmit">确定</el-button>
+      </el-form-item>
+    </el-form>
+    <LineChart :chart-data="lineChartData" />
+  </div>
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import { debounce } from '@/utils'
+import moment,{ isMoment } from 'moment'
+import { fetchP2PTraffic, fetchP2PBandwidth } from '@/api/historyData'
+import LineChart from '@/components/LineChart'
 
 export default {
-  props: {
-    className: {
-      type: String,
-      default: 'chart'
-    },
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '350px'
-    },
-    autoResize: {
-      type: Boolean,
-      default: true
-    },
-    chartData: {
-      type: Object,
-      required: true
-    }
+  name: 'Test',
+  components: {
+    LineChart
   },
   data() {
     return {
-      chart: null
-    }
-  },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val)
-      }
+      lineChartData: {
+        expectedData: [100, 120, 161, 134, 105, 160, 165],
+        actualData: [120, 82, 91, 154, 162, 140, 145]
+      },
+      startDate: moment(),
+      endDate: moment(),
     }
   },
   mounted() {
-    this.initChart()
-    if (this.autoResize) {
-      this.__resizeHandler = debounce(() => {
-        if (this.chart) {
-          this.chart.resize()
-        }
-      }, 100)
-      window.addEventListener('resize', this.__resizeHandler)
-    }
-
-    // 监听侧边栏的变化
-    const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
-    sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler)
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return
-    }
-    if (this.autoResize) {
-      window.removeEventListener('resize', this.__resizeHandler)
-    }
-
-    const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
-    sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler)
-
-    this.chart.dispose()
-    this.chart = null
+    this.getP2PTraffic(moment().startOf('month').format('X'), moment().format('X'), 1440)
+    this.getP2PBandwidth()
   },
   methods: {
-    sidebarResizeHandler(e) {
-      if (e.propertyName === 'width') {
-        this.__resizeHandler()
-      }
+    getTimeStamp(date) {
+      return moment(date).format('X')
     },
-    setOptions({ expectedData, actualData } = {}) {
-      this.chart.setOption({
-        xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          boundaryGap: false,
-          axisTick: {
-            show: false
-          }
-        },
-        grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
-          containLabel: true
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          },
-          padding: [5, 10]
-        },
-        yAxis: {
-          axisTick: {
-            show: false
-          }
-        },
-        legend: {
-          data: ['expected', 'actual']
-        },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+    getP2PTraffic(start, end, gran) {
+      fetchP2PTraffic(start, end, gran).then(res => {
+        console.log(res)
       })
     },
-    initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+    getP2PBandwidth() {
+      fetchP2PBandwidth(2018, 10).then(res => {
+        console.log(res)
+      })
+    },
+    handleSubmit() {
+      this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), 5)
     }
+    // startDateChange(val) {
+    //   console.log(moment(val).format('X'))
+    //   console.log(moment(this.startDate).format('X'))
+    // },
+    // endDateChange(val) {
+    //   console.log(moment(val).format('X'))
+    // },
   }
 }
 </script>
+
+<style scoped>
+  .container {
+    padding: 50px 20px;
+  }
+</style>
