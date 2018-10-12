@@ -40,7 +40,6 @@ export default {
       chart: null,
       optionData: {
         xData: [],
-        legend: [],
         unit: ''
       },
       data: {}
@@ -99,13 +98,15 @@ export default {
     },
     setOptions() {
       const series = []
+      const legend = []
       const colors = ['#FF005A', '#3888fa']
       Object.keys(this.data).forEach((item, index) => {
+        legend.push(item)
         series.push({
-          name: item + ` (${this.optionData.unit})`,
+          name: item,
           itemStyle: {
             normal: {
-              color: '',
+              color: colors[index],
               lineStyle: {
                 color: colors[index],
                 width: 2
@@ -124,7 +125,6 @@ export default {
           data: this.optionData.xData,
           boundaryGap: false,
           axisLabel: {
-            // rotate: 60
             formatter: function(value) {
               return value.split(" ").join("\n");
             }
@@ -143,17 +143,21 @@ export default {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            type: 'cross'
+            type: 'cross',
           },
+          textStyle:{
+        　　align: 'left'
+        　},
           padding: [5, 10]
         },
         yAxis: {
+          name: this.optionData.unit ? `${this.optionData.yName}(${this.optionData.unit})` : `${this.optionData.yName}`,
           axisTick: {
             show: false
           }
         },
         legend: {
-        data: this.optionData.legend
+          data: legend,
         },
         series
         // series: [{

@@ -19,28 +19,29 @@
         <el-button type="primary" @click="handleSubmit">确定</el-button>
       </el-form-item>
     </el-form>
-    <LineChart :chart-data="trafficData" :option="option" />
+    <LineChart :chart-data="bandwidthData" :option="option" />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 import LineChart from '@/components/LineChart'
+import { getGran } from '@/utils/caculate'
 import { formatTraffic, formatTrafficUnit } from '@/utils/format'
+import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
 export default {
-  name: 'P2P',
+  name: 'Bandwidth',
   components: {
     LineChart
   },
   data() {
     return {
-      lineChartData: {
-        expectedData: [100, 120, 161, 134, 105, 160, 165],
-        actualData: [120, 82, 91, 154, 162, 140, 145]
-      },
-      trafficData: {
+      // lineChartData: {
+      //   expectedData: [100, 120, 161, 134, 105, 160, 165],
+      //   actualData: [120, 82, 91, 154, 162, 140, 145]
+      // },
+      bandwidthData: {
         p2p: [],
         http: []
       },
@@ -48,14 +49,14 @@ export default {
       endDate: moment(),
       option: {
         xData: [],
-        legend: ['P2P', 'Http'],
-        unit: 'kb'
+        unit: '',
+        yName: '带宽'
       }
     }
   },
   mounted() {
-    this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), this.getGran())
-    this.fetchHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), this.getGran())
+    this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
+    this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
   },
   methods: {
     formatData(res) {
@@ -64,12 +65,12 @@ export default {
       trafficValue.sort(function(a, b) {
         return b.alue - a.vavlue > 0
       })
-      this.option.unit = formatTrafficUnit(trafficValue[(trafficValue.length - 1)].value)
+      this.option.unit = this.option.unit ? this.option.unit : formatTrafficUnit(trafficValue[(trafficValue.length - 1)].value)
       this.option.xData = []
-      this.trafficData.p2p = []
+      this.bandwidthData.p2p = []
       data.forEach(item => {
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.trafficData.p2p.push(formatTraffic(item.value, this.option.unit))
+        this.bandwidthData.p2p.push(formatTraffic(item.value, this.option.unit))
       })
     },
     formatHttpData(res) {
@@ -78,36 +79,16 @@ export default {
       trafficValue.sort(function(a, b) {
         return b.alue - a.vavlue > 0
       })
-      this.option.unit = formatTrafficUnit(trafficValue[(trafficValue.length - 1)].value)
+      this.option.unit = this.option.unit ? this.option.unit : formatTrafficUnit(trafficValue[(trafficValue.length - 1)].value)
       this.option.xData = []
-      this.trafficData.http = []
+      this.bandwidthData.http = []
       data.forEach(item => {
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.trafficData.http.push(formatTraffic(item.value, this.option.unit))
+        this.bandwidthData.http.push(formatTraffic(item.value, this.option.unit))
       })
     },
     getTimeStamp(date) {
       return moment(date).format('X')
-    },
-    getGran() {
-      let gran = 5
-      const start = moment(this.startDate)
-      const end = moment(this.endDate)
-      const temp = end.diff(start, 'days')
-      const hour = 60
-      const day = 1440
-      const week = 1440 * 7
-      const month = 1440 * 30
-      if(temp >= 210) {
-        gran = month
-      } else if(temp >= 60) {
-        gran = week
-      } else if(temp >= 7) {
-        gran = day
-      } else if(temp >= 3) {
-        gran = hour
-      }
-      return gran
     },
     getP2PTraffic(start, end, gran) {
       fetchP2PTraffic(start, end, gran).then(res => {
@@ -120,8 +101,8 @@ export default {
       })
     },
     handleSubmit() {
-      this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), this.getGran())
-      this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), this.getGran())
+      this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
+      this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
     }
   }
 }

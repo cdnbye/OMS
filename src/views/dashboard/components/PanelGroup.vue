@@ -112,7 +112,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.max_online }}</span>
-          <div class="card-panel-text">最高在线人数</div>
+          <div class="card-panel-text">历史最高在线人数</div>
         </div>
       </div>
     </el-col>

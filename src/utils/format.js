@@ -19,33 +19,33 @@ export function formatBandwidth(val) {
 }
 
 export function formatTrafficUnit(val) {
-  let unit = 'kb'
-  const mb = 1024
-  const gb = 1024 * 1024
-  const tb = 1024 * 1024 * 1024
+  let unit = 'kbps'
+  const mb = 1000
+  const gb = 1000 * 1000
+  const tb = 1000 * 1000 * 1000
   if(val >= tb) {
-    unit =  'tb'
+    unit =  'tbps'
   } else if(val >= gb) {
-    unit =  'gb'
+    unit =  'gbps'
   } else if(val >= mb) {
-    unit = 'mb'
+    unit = 'mbps'
   }
    return unit
 }
 
 export function formatTraffic(val, unit) {
   let value = 0
-  const mb = 1024
-  const gb = 1024 * 1024
-  const tb = 1024 * 1024 * 1024
+  const mb = 1000
+  const gb = 1000 * 1000
+  const tb = 1000 * 1000 * 1000
   switch (unit) {
-    case 'gb':
+    case 'gbps':
       value =  (val / gb).toFixed(2)
       break;
-    case 'mb':
+    case 'mbps':
       value = (val / mb).toFixed(2)
       break;
-    case 'kb':
+    case 'kbps':
       value = val
       break;
     default:

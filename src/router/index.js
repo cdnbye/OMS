@@ -74,31 +74,31 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/traffic',
+    path: '',
     component: Layout,
-    redirect: '/traffic/p2p',
+    redirect: 'bandwidth',
     alwaysShow: true,
     meta: {
-      title: 'history',
+      title: 'Operational',
       icon: 'chart',
       roles: ['admin']
     },
     children: [
       {
-        path: 'p2p',
-        component: () => import('@/views/historyData/traffic'),
-        name: 'P2PTraffic',
+        path: 'bandwidth',
+        component: () => import('@/views/historyData/bandwidth'),
+        name: 'bandwidth',
         meta: {
-          title: 'P2PTraffic',
+          title: 'bandwidth',
           roles: ['admin']
         }
       },
       {
-        path: 'http',
-        component: () => import('@/views/historyData/traffic'),
-        name: 'HttpTraffic',
+        path: 'online',
+        component: () => import('@/views/historyData/online'),
+        name: 'Online',
         meta: {
-          title: 'HttpTraffic',
+          title: 'online',
           roles: ['admin']
         }
       }
