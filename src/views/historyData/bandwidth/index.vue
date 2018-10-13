@@ -2,6 +2,14 @@
   <div class="container">
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
+        <el-radio-group @change="selectChange">
+          <el-radio-button label="1小时内"></el-radio-button>
+          <el-radio-button label="24小时内"></el-radio-button>
+          <el-radio-button label="7天"></el-radio-button>
+          <el-radio-button label="30天"></el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item :xs="10" :sm="6" :lg="4">
         <el-date-picker
           placeholder="开始日期"
           type="date"
@@ -26,7 +34,6 @@
 <script>
 import moment from 'moment'
 import LineChart from '@/components/LineChart'
-import { getGran } from '@/utils/caculate'
 import { formatTraffic, formatTrafficUnit } from '@/utils/format'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
@@ -55,8 +62,8 @@ export default {
     }
   },
   mounted() {
-    this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
-    this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
+    this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate))
+    this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate))
   },
   methods: {
     formatData(res) {
@@ -90,19 +97,19 @@ export default {
     getTimeStamp(date) {
       return moment(date).format('X')
     },
-    getP2PTraffic(start, end, gran) {
-      fetchP2PTraffic(start, end, gran).then(res => {
+    getP2PTraffic(start, end) {
+      fetchP2PTraffic(start, end).then(res => {
         this.formatData(res)
       })
     },
-    getHttpTraffic(start, end, gran) {
-      fetchHttpTraffic(start, end, gran).then(res => {
+    getHttpTraffic(start, end) {
+      fetchHttpTraffic(start, end).then(res => {
         this.formatHttpData(res)
       })
     },
     handleSubmit() {
-      this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
-      this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate), getGran(this.startDate, this.endDate))
+      this.getP2PTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate))
+      this.getHttpTraffic(this.getTimeStamp(this.startDate), this.getTimeStamp(this.endDate))
     }
   }
 }

@@ -13,7 +13,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_p2p.num }}</span>
-          <div class="card-panel-text">当前P2P带宽峰值({{ statis.bandwidth_p2p.unit }})</div>
+          <div class="card-panel-text">当前P2P带宽({{ statis.bandwidth_p2p.unit }})</div>
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_http.num }}</span>
-          <div class="card-panel-text">当前Http带宽峰值({{ statis.bandwidth_http.unit }})</div>
+          <div class="card-panel-text">当前HTTP带宽({{ statis.bandwidth_http.unit }})</div>
         </div>
       </div>
     </el-col>
@@ -58,7 +58,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_http_week.num }}</span>
-          <div class="card-panel-text">过去七天Http带宽峰值({{ statis.bandwidth_http_week.unit }})</div>
+          <div class="card-panel-text">过去七天HTTP带宽峰值({{ statis.bandwidth_http_week.unit }})</div>
         </div>
       </div>
     </el-col>
@@ -94,7 +94,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_http_month.num }}</span>
-          <div class="card-panel-text">本月Http带宽峰值({{ statis.bandwidth_http_month.unit }})</div>
+          <div class="card-panel-text">本月HTTP带宽峰值({{ statis.bandwidth_http_month.unit }})</div>
         </div>
       </div>
     </el-col>
@@ -190,10 +190,9 @@ export default {
         this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
         this.statis.bandwidth_http_week = formatBandwidth(data.bwp_http_7)
         this.statis.bandwidth_http_month = formatBandwidth(data.bwp_http_month)
+        this.statis.p2p_rate = (data.p2p_rate_rt * 100).toFixed(2)
         this.statis.p2p_rate_week = (data.p2p_rate_7 * 100).toFixed(2)
-
-        this.statis.p2p_rate = (data.rt_bw_p2p / (data.rt_bw_p2p + data.rt_bw_http) * 100).toFixed(2)
-        this.statis.p2p_rate_month = (data.bwp_p2p_month / (data.bwp_p2p_month + data.bwp_http_month) * 100).toFixed(2)
+        this.statis.p2p_rate_month = (data.p2p_rate_month * 100).toFixed(2)
         
       }).catch(err => {
         console.log(err)

@@ -25,10 +25,9 @@
 
 <script>
 import moment from 'moment'
-import LineChart from '@/components/LineChart'
-import { fetchNum } from '@/api/historyData'
 import { getGran } from '@/utils/caculate'
-import { formatTraffic, formatTrafficUnit } from '@/utils/format'
+import { fetchNum } from '@/api/historyData'
+import LineChart from '@/components/LineChart'
 
 export default {
   name: 'Online',

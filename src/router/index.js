@@ -103,7 +103,100 @@ export const asyncRouterMap = [
         }
       }
     ]
-  }
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: 'user/domain',
+    alwaysShow: true,
+    meta: {
+      title: 'userData',
+      icon: 'table',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'domain',
+        component: () => import('@/views/test/index'),
+        name: 'Domain',
+        meta: {
+          title: 'domain',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'whole',
+        component: () => import('@/views/test/index'),
+        name: 'Whole',
+        meta: {
+          title: 'whole',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+  {
+    path: '/distribution',
+    component: Layout,
+    redirect: 'distribution/china',
+    alwaysShow: true,
+    meta: {
+      title: 'userDistribution',
+      icon: 'people',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'china',
+        component: () => import('@/views/test/index'),
+        name: 'ChinaDistribution',
+        meta: {
+          title: 'chinaDistribution',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'world',
+        component: () => import('@/views/test/index'),
+        name: 'WorldDistribution',
+        meta: {
+          title: 'worldDistribution',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+  {
+    path: '/config',
+    component: Layout,
+    redirect: 'config/tracker',
+    alwaysShow: true,
+    meta: {
+      title: 'config',
+      icon: 'edit',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'tracker',
+        component: () => import('@/views/test/index'),
+        name: 'TrackerConfig',
+        meta: {
+          title: 'trackerConfig',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/test/index'),
+        name: 'UserConfig',
+        meta: {
+          title: 'userConfig',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
 ]
 
 export default new Router({

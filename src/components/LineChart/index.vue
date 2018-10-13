@@ -31,8 +31,7 @@ export default {
     },
     option: {
       type: Object,
-      required: true,
-      default: {}
+      required: true
     }
   },
   data() {
@@ -142,13 +141,13 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
+          padding: [5, 10],
           axisPointer: {
-            type: 'cross',
+            type: 'cross'
           },
-          textStyle:{
-        　　align: 'left'
-        　},
-          padding: [5, 10]
+          textStyle: {
+        　  align: 'left'
+        　}
         },
         yAxis: {
           name: this.optionData.unit ? `${this.optionData.yName}(${this.optionData.unit})` : `${this.optionData.yName}`,
@@ -157,7 +156,7 @@ export default {
           }
         },
         legend: {
-          data: legend,
+          data: legend
         },
         series
         // series: [{

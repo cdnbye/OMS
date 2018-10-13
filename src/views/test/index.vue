@@ -1,17 +1,13 @@
 <template>
   <div class="container">
-    <LineChart />
+    test
   </div>
 </template>
 
 <script>
-import LineChart from './components/LineChart'
 
 export default {
   name: 'Test',
-  components: {
-    LineChart
-  },
   data() {
     return {
       
