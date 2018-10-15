@@ -125,7 +125,9 @@ export default {
           boundaryGap: false,
           axisLabel: {
             formatter: function(value) {
-              return value.split(" ").join("\n");
+              if(value) {
+                return value.split(" ").join("\n");
+              }
             }
           },
           axisTick: {

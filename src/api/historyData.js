@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function fetchNum(start, end, gran) {
+export function fetchNum(start, end) {
   return request({
-    url: `global/num?start_ts=${start}&end_ts=${end}&gran=${gran}`,
+    url: `global/num?start_ts=${start}&end_ts=${end}&gran=5`,
     method: 'get',
   })
 }
