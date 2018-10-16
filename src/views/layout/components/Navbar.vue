@@ -5,12 +5,7 @@
     <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
-        <!-- <error-log class="errLog-container right-menu-item"/> -->
-
-        <lang-select class="international right-menu-item"/>
-
-      </template>
+      <lang-select class="international right-menu-item"/>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">

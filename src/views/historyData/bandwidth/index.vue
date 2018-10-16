@@ -98,7 +98,7 @@ export default {
       this.bandwidthData.p2p = []
       data.forEach(item => {
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.bandwidthData.p2p.push(formatTraffic(item.value, this.option.unit))
+        this.bandwidthData.p2p.push(formatTraffic((item.value * 8 / 300), this.option.unit))
       })
     },
     formatHttpData(res) {
@@ -112,7 +112,7 @@ export default {
       this.bandwidthData.http = []
       data.forEach(item => {
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.bandwidthData.http.push(formatTraffic(item.value, this.option.unit))
+        this.bandwidthData.http.push(formatTraffic((item.value * 8 / 300), this.option.unit))
       })
     },
     getTimeStamp(date) {

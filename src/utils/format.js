@@ -1,5 +1,5 @@
 export function formatBandwidth(val) {
-  const mbps = 1000
+  const mbps = 1024
   let value = {
     num: 0,
     unit: 'kbps'
@@ -20,9 +20,9 @@ export function formatBandwidth(val) {
 
 export function formatTrafficUnit(val) {
   let unit = 'kbps'
-  const mb = 1000
-  const gb = 1000 * 1000
-  const tb = 1000 * 1000 * 1000
+  const mb = 1024
+  const gb = 1024 * 1024
+  const tb = 1024 * 1024 * 1024
   if(val >= tb) {
     unit =  'tbps'
   } else if(val >= gb) {
@@ -35,9 +35,9 @@ export function formatTrafficUnit(val) {
 
 export function formatTraffic(val, unit) {
   let value = 0
-  const mb = 1000
-  const gb = 1000 * 1000
-  const tb = 1000 * 1000 * 1000
+  const mb = 1024
+  const gb = 1024 * 1024
+  const tb = 1024 * 1024 * 1024
   switch (unit) {
     case 'gbps':
       value =  (val / gb).toFixed(2)
