@@ -11,20 +11,13 @@
       </el-form-item>
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-date-picker
-          placeholder="开始日期"
-          type="date"
-          v-model="startDate"
-        />
-      </el-form-item>
-      <el-form-item :xs="10" :sm="6" :lg="4">      
-        <el-date-picker
-          placeholder="结束日期"
-          type="date"
-          v-model="endDate"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="handleSubmit">确定</el-button>
+          v-model="date"
+          @change="dataChange"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
       </el-form-item>
     </el-form>
     <LineChart :chart-data="onlineData" :option="option" />
@@ -43,50 +36,40 @@ export default {
   },
   data() {
     return {
-      radio: '',      
+      date: [moment().subtract(1, 'hour'), moment()],
+      radio: 'hour',      
       onlineData: {
         online: []
       },
-      startDate: moment().startOf('week'),
-      endDate: moment(),
       option: {
         xData: [],
         yName: '在线人数',
-      },
-      time: 'MM-DD HH:mm'      
+      }
     }
   },
   mounted() {
     this.getData()
   },
   methods: {
+    dataChange(date) {
+      this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
+    },
     selectChange(val) {
       switch (val) {
         case 'hour':
-          this.time = 'MM-DD HH:mm'
           this.getData(this.getTimeStamp(moment().subtract(1, 'hour')), this.getTimeStamp(moment()))
           break;
         case 'day':
-          this.time = 'MM-DD HH:mm'
           this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
           break;
         case 'week':
-          this.time = 'MM-DD'
           this.getData(this.getTimeStamp(moment().subtract(1, 'week')), this.getTimeStamp(moment()))
           break;
         case 'month':
-          this.time = 'MM-DD'
           this.getData(this.getTimeStamp(moment().subtract(1, 'month')), this.getTimeStamp(moment()))
           break;
         default:
           break;
-      }
-    },
-    getTime() {
-      const { startDate, endDate } = this
-      const days = moment(endDate).diff(moment(startDate), 'days')
-      if(days > 3) {
-        this.time = 'MM-DD'
       }
     },
     formatData(res) {
@@ -94,20 +77,17 @@ export default {
       this.option.xData = []
       this.onlineData.online = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format(this.time))
+        this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
         this.onlineData.online.push(item.value)
       })
     },
     getTimeStamp(date) {
       return moment(date).format('X')
     },
-    getData(start = this.getTimeStamp(this.startDate), end = this.getTimeStamp(this.endDate)) {
+    getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
       fetchNum(start, end).then(res => {
         this.formatData(res)
       })
-    },
-    handleSubmit() {
-      this.getData()
     }
   }
 }

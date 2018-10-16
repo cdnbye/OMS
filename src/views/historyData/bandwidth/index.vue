@@ -11,20 +11,13 @@
       </el-form-item>
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-date-picker
-          placeholder="开始日期"
-          type="date"
-          v-model="startDate"
-        />
-      </el-form-item>
-      <el-form-item :xs="10" :sm="6" :lg="4">      
-        <el-date-picker
-          placeholder="结束日期"
-          type="date"
-          v-model="endDate"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="handleSubmit">确定</el-button>
+          v-model="date"
+          @change="dataChange"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
       </el-form-item>
     </el-form>
     <LineChart :chart-data="bandwidthData" :option="option" />
@@ -48,27 +41,27 @@ export default {
       //   expectedData: [100, 120, 161, 134, 105, 160, 165],
       //   actualData: [120, 82, 91, 154, 162, 140, 145]
       // },
-      radio: '',
+      date: [moment().subtract(1, 'hour'), moment()],
+      radio: 'hour',
       bandwidthData: {
         p2p: [],
         http: []
       },
-      startDate: moment().startOf('week'),
-      endDate: moment(),
       option: {
         xData: [],
         unit: '',
         yName: '带宽'
-      },
-      time: 'MM-DD HH:mm'
+      }
     }
   },
   mounted() {
     this.getData()
   },
   methods: {
-    getData(start = this.getTimeStamp(this.startDate), end = this.getTimeStamp(this.endDate)) {
-      this.getTime()
+    dataChange(date) {
+      this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
+    },
+    getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
       fetchP2PTraffic(start, end).then(res => {
         this.formatData(res)
       })
@@ -79,19 +72,15 @@ export default {
     selectChange(val) {
       switch (val) {
         case 'hour':
-          this.time = 'MM-DD HH:mm'
           this.getData(this.getTimeStamp(moment().subtract(1, 'hour')), this.getTimeStamp(moment()))
           break;
         case 'day':
-          this.time = 'MM-DD HH:mm'
           this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
           break;
         case 'week':
-          this.time = 'MM-DD'
           this.getData(this.getTimeStamp(moment().subtract(1, 'week')), this.getTimeStamp(moment()))
           break;
         case 'month':
-          this.time = 'MM-DD'
           this.getData(this.getTimeStamp(moment().subtract(1, 'month')), this.getTimeStamp(moment()))
           break;
         default:
@@ -108,7 +97,7 @@ export default {
       this.option.xData = []
       this.bandwidthData.p2p = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format(this.time))
+        this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
         this.bandwidthData.p2p.push(formatTraffic(item.value, this.option.unit))
       })
     },
@@ -122,22 +111,12 @@ export default {
       this.option.xData = []
       this.bandwidthData.http = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format(this.time))
+        this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
         this.bandwidthData.http.push(formatTraffic(item.value, this.option.unit))
       })
     },
     getTimeStamp(date) {
       return moment(date).format('X')
-    },
-    handleSubmit() {
-      this.getData()
-    },
-    getTime() {
-      const { startDate, endDate } = this
-      const days = moment(endDate).diff(moment(startDate), 'days')
-      if(days > 3) {
-        this.time = 'MM-DD'
-      }
     }
   }
 }
