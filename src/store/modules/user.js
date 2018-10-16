@@ -46,7 +46,7 @@ const user = {
   actions: {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
-      const username = userInfo.email ? userInfo.email.trim() : userInfo.mobile.trim()
+      const username = userInfo.email.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.passwd).then(response => {
           const data = response.data

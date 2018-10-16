@@ -6,14 +6,14 @@
         <lang-select class="set-language"/>
       </div>
 
-      <el-form-item prop="Mobile">
+      <el-form-item prop="email">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="resetForm.Mobile"
-          :placeholder="$t('passwdReset.phone')"
-          name="Mobile"
+          v-model="resetForm.email"
+          :placeholder="$t('passwdReset.email')"
+          name="email"
           type="text"
           auto-complete="on"
           @keyup.enter.native="onSendCode" />
@@ -62,16 +62,16 @@
 
 <script>
 import LangSelect from '@/components/LangSelect'
-import { validatePhone } from '@/utils/validate'
+import { validateEmail } from '@/utils/validate'
 import { sendCode, resetPasswd } from '@/api/auth'
 
 export default {
   name: 'PasswdReset',
   components: { LangSelect },
   data() {
-    const formValidatePhone = (rule, value, callback) => {
-      if (!validatePhone(value)) {
-        const error = this.$t('auth.phoneError')
+    const formValidateMail = (rule, value, callback) => {
+      if (!validateEmail(value)) {
+        const error = this.$t('auth.mailError')
         callback(new Error(error))
       } else {
         callback()
@@ -95,13 +95,12 @@ export default {
     }
     return {
       resetForm: {
-        NationCode: 86,
-        Mobile: '',
+        email: '',
         Passwd: '',
         Vcode: '',
       },
       resetRules: {
-        Mobile: [{ required: true, trigger: 'blur', validator: formValidatePhone }],
+        email: [{ required: true, trigger: 'blur', validator: formValidateMail }],
         Passwd: [{ required: true, trigger: 'blur', validator: validatePassword }],
         Vcode: [{ required: true, trigger: 'blur', validator: validateVCode }],
       },
@@ -151,12 +150,11 @@ export default {
       })
     },
     onSendCode() {
-      const mobile = this.resetForm.Mobile
-      if(mobile) {
-        if(validatePhone(mobile)) {
+      const { email } = this.resetForm
+      if(email) {
+        if(validateEmail(email)) {
           const data = {
-            mobile,
-            ncode: 86,
+            email,
             action: 'passwd_forget'
           }
           this.sendLoading = true
@@ -172,11 +170,11 @@ export default {
             this.sendLoading = false
           })
         } else {
-          const error = this.$t('auth.phoneError')
+          const error = this.$t('auth.mailError')
           this.$message.error(error)
         }
       } else {
-        const error = this.$t('auth.phoneWarn')
+        const error = this.$t('auth.mailError')
         this.$message.error(error)
       }
     },
@@ -187,7 +185,7 @@ export default {
       this.$router.push({ path: '/signup' })
     },
     sendButtonEnable() {
-      let time = 120
+      let time = 300
       let button = document.getElementById('sendButton')
       const _this = this
       _this.int = setInterval(() => {

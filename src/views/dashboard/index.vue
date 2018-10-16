@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
     <PanelGroup />
-    <Piechart :chart-data="this.chartData" :option="this.option" />
+    <!-- <Piechart :chart-data="this.chartData" :option="this.option" /> -->
   </div>
 </template>
 

@@ -6,7 +6,7 @@ import store from '@/store'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_API, // api 的 base_url
-  timeout: 5000
+  timeout: 10000
 })
 
 // request interceptor

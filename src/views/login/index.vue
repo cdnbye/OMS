@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { validateEmail, validatePhone } from '@/utils/validate'
+import { validateEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 
 export default {
@@ -55,7 +55,7 @@ export default {
   components: { LangSelect },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validateEmail(value) && !validatePhone(value)) {
+      if (!validateEmail(value)) {
         const error = this.$t('auth.usernameError')
         callback(new Error(error))
       } else {
@@ -97,11 +97,7 @@ export default {
       const temp = {...data}
       delete temp.username
       temp.passwd = this.setSha256(data.passwd)
-      if(validateEmail(data.username)) {
-        temp.email = data.username
-      } else {
-        temp.mobile = data.username
-      }
+      temp.email = data.username
       return temp
     },
     showPwd() {

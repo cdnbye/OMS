@@ -5,17 +5,14 @@
         <h3 class="title">{{ $t('signup.title') }}</h3>
         <lang-select class="set-language"/>
       </div>
-
-      <!-- <vue-flag-list height="30" width="120" @getCode="getCode"></vue-flag-list> -->
-
-      <el-form-item prop="mobile">
+      <el-form-item prop="email">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="signupForm.mobile"
-          :placeholder="$t('signup.phone')"
-          name="mobile"
+          v-model="signupForm.email"
+          :placeholder="$t('signup.email')"
+          name="email"
           type="text"
           auto-complete="on"
           @keyup.enter.native="onSendCode" />
@@ -34,17 +31,6 @@
           auto-complete="on" />
       </el-form-item>
 
-      <el-form-item prop="email">
-        <span class="svg-container">
-          <svg-icon icon-class="email" />
-        </span>
-        <el-input
-          v-model="signupForm.email"
-          :placeholder="$t('signup.email')"
-          name="email"
-          auto-complete="on" />
-      </el-form-item>
-
       <el-form-item prop="passwd">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -54,6 +40,22 @@
           v-model="signupForm.passwd"
           :placeholder="$t('login.password')"
           name="passwd"
+          auto-complete="on"
+          @keyup.enter.native="handleSignup" />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon icon-class="eye" />
+        </span>
+      </el-form-item>
+
+      <el-form-item prop="confirm_passwd">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          :type="passwordType"
+          v-model="signupForm.confirm_passwd"
+          :placeholder="$t('signup.confirm_password')"
+          name="confirm_passwd"
           auto-complete="on"
           @keyup.enter.native="handleSignup" />
         <span class="show-pwd" @click="showPwd">
@@ -81,9 +83,9 @@ export default {
   name: 'Signup',
   components: { LangSelect },
   data() {
-    const formValidatePhone = (rule, value, callback) => {
-      if (!validatePhone(value)) {
-        const error = this.$t('auth.phoneError')
+    const formValidateEmail = (rule, value, callback) => {
+      if (!validateEmail(value)) {
+        const error = this.$t('auth.mailError')
         callback(new Error(error))
       } else {
         callback()
@@ -105,9 +107,10 @@ export default {
         callback()
       }
     }
-    const formValidateEmail = (rule, value, callback) => {
-      if(!validateEmail(value)) {
-        const error = this.$t('auth.mailError')
+    const validateConfirmPassword = (rule, value, callback) => {
+      const { passwd } = this.signupForm
+      if(value !== passwd) {
+        const error = this.$t('signup.confirm_password_error')
         callback(new Error(error))
       } else {
         callback()
@@ -115,18 +118,16 @@ export default {
     }
     return {
       signupForm: {
-        ncode: 86,
-        mobile: '',
-        passwd: '',
         email: '',
         vcode: '',
-        passwd: ''
+        passwd: '',
+        confirm_passwd: ''
       },
       signupRules: {
-        mobile: [{ required: true, trigger: 'blur', validator: formValidatePhone }],
         email: [{ required: true, trigger: 'blur', validator: formValidateEmail }],
         vcode: [{ required: true, trigger: 'blur', validator: validateVCode }],
         passwd: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        confirm_passwd: [{ required: true, trigger: 'blur', validator: validateConfirmPassword }],
       },
       passwordType: 'password',
       signupLoading: false,
@@ -145,9 +146,6 @@ export default {
     }
   },
   methods: {
-    getCode(code) {
-      console.log(code)
-    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -177,12 +175,11 @@ export default {
       })
     },
     onSendCode() {
-      const { mobile } = this.signupForm
-      if(mobile) {
-        if(validatePhone(mobile)) {
+      const { email } = this.signupForm
+      if(email) {
+        if(validateEmail(email)) {
           const data = {
-            mobile,
-            ncode: 86,
+            email,
             action: "signup",
           }
           this.sendLoading = true
@@ -193,17 +190,16 @@ export default {
               type: 'success'
             })
             this.sendButtonEnable()
-            console.log(res)
           }).catch((error) => {
             this.sendLoading = false
             console.log(error)
           })
         } else {
-          const error = this.$t('auth.phoneError')
+          const error = this.$t('auth.mailError')
           this.$message.error(error)
         }
       } else {
-        const error = this.$t('auth.phoneWarn')
+        const error = this.$t('auth.email')
         this.$message.error(error)
       }
     },
@@ -214,7 +210,7 @@ export default {
       this.$router.push({ path: '/forget_password' })
     },
     sendButtonEnable() {
-      let time = 120
+      let time = 300
       let button = document.getElementById('sendButton')
       const _this = this
       _this.int = setInterval(() => {
