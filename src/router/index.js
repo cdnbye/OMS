@@ -117,7 +117,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'domain',
-        component: () => import('@/views/test/index'),
+        component: () => import('@/views/userData/index'),
         name: 'Domain',
         meta: {
           title: 'domain',
@@ -179,7 +179,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'tracker',
-        component: () => import('@/views/test/index'),
+        component: () => import('@/views/trackerConfig/index'),
         name: 'TrackerConfig',
         meta: {
           title: 'trackerConfig',

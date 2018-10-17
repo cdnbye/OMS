@@ -98,7 +98,7 @@ export default {
     setOptions() {
       const series = []
       const legend = []
-      const colors = ['#FF005A', '#3888fa']
+      const colors = ['#3888fa', '#FF005A']
       Object.keys(this.data).forEach((item, index) => {
         legend.push(item)
         series.push({

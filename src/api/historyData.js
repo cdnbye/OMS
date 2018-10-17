@@ -7,6 +7,13 @@ export function fetchNum(start, end) {
   })
 }
 
+export function fetchVersion() {
+  return request({
+    url: `global/num?version=all`,
+    method: 'get',
+  })
+}
+
 export function fetchP2PTraffic(start, end) {
   return request({
     url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=5`,

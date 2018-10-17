@@ -1,13 +1,23 @@
 <template>
   <div class="dashboard-editor-container">
     <PanelGroup />
-    <!-- <Piechart :chart-data="this.chartData" :option="this.option" /> -->
+    <el-row>
+      <el-col :xs="24" :sm="12" :lg="10">
+        <el-card>
+          <div slot="header">
+            <span>版本分布</span>
+          </div>
+          <Piechart :chart-data="this.chartData" :option="this.option" />
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import PanelGroup from './components/PanelGroup'
 import Piechart from '@/components/PieChart'
+import { fetchVersion } from '@/api/historyData'
 
 export default {
   name: 'Dashboard',
@@ -19,20 +29,19 @@ export default {
     return {
       chartData: [],
       option: {
-        name: '分布'
+        name: '版本分布'
       }
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.chartData = [
-        { value: 320, name: 'Industries' },
-        { value: 240, name: 'Technology' },
-        { value: 149, name: 'Forex' },
-        { value: 100, name: 'Gold' },
-        { value: 59, name: 'Forecasts' }
-      ]
-    }, 5000);
+    fetchVersion().then(res => {
+      res.data.forEach(item => {
+        this.chartData.push({
+          name: item.version,
+          value: item.num
+        })
+      })
+    })
   }
 }
 </script>

@@ -10,14 +10,15 @@ import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
 
-import { RadioGroup, RadioButton, DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
+import { Slider, Card, Table, TableColumn, RadioGroup, RadioButton, DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, 
+  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
 
-import VueFlagList from 'vue-flag-list'
-import 'vue-flag-list/dist/vue-flag-list.min.css'
-
-Vue.use(VueFlagList)
 Vue.config.productionTip = false
 
+Vue.use(Slider)
+Vue.use(Card)
+Vue.use(Table)
+Vue.use(TableColumn)
 Vue.use(RadioGroup)
 Vue.use(RadioButton)
 Vue.use(DatePicker)
