@@ -7,7 +7,7 @@
           <div slot="header">
             <span>版本分布</span>
           </div>
-          <Piechart :chart-data="this.chartData" :option="this.option" />
+          <Piechart :chart-data="this.chartData" />
         </el-card>
       </el-col>
     </el-row>
@@ -27,20 +27,19 @@ export default {
   },
   data() {
     return {
-      chartData: [],
-      option: {
-        name: '版本分布'
-      }
+      chartData: []
     }
   },
   mounted() {
     fetchVersion().then(res => {
-      res.data.forEach(item => {
-        this.chartData.push({
-          name: item.version,
-          value: item.num
+      if(res.data) {
+        res.data.forEach(item => {
+          this.chartData.push({
+            name: item.version,
+            value: item.num
+          })
         })
-      })
+      }
     })
   }
 }

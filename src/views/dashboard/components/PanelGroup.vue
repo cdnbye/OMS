@@ -116,11 +116,22 @@
         </div>
       </div>
     </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.hostNum }}</span>
+          <div class="card-panel-text">域名总数</div>
+        </div>
+      </div>
+    </el-col>
+
   </el-row>
 </template>
 
 <script>
 import { fetchLiveData } from '@/api/liveData'
+import { fetchHostNum } from '@/api/userDomain'
 import { formatBandwidth } from '@/utils/format'
 
 let int = undefined
@@ -138,6 +149,8 @@ export default {
         p2p_rate: 0,
         p2p_rate_week: 0,
         p2p_rate_month: 0,
+
+        hostNum: 0,
 
         bandwidth_p2p: {
           num: 0,
@@ -169,6 +182,9 @@ export default {
   mounted() {
     const _this = this
     _this.getData()
+    fetchHostNum().then(res => {
+      _this.statis.hostNum = res.data.num
+    })
     int = setInterval(function() {
       _this.getData()
     }, 10000)

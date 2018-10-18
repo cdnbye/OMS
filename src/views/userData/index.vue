@@ -1,7 +1,6 @@
 <template>
   <el-card :body-style="{ padding: '30px' }">
-    <!-- <Table /> -->
-    test
+    <Table />
   </el-card>
 </template>
 
