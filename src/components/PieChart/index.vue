@@ -73,7 +73,7 @@ export default {
             data,
             type: 'pie',
             radius : '55%',
-            center: ['40%', '50%'],
+            center: ['50%', '50%'],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

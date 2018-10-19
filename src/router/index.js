@@ -94,6 +94,15 @@ export const asyncRouterMap = [
         }
       },
       {
+        path: 'p2p_rate',
+        component: () => import('@/views/historyData/p2pRate'),
+        name: 'P2PRate',
+        meta: {
+          title: 'p2pRate',
+          roles: ['admin']
+        }
+      },
+      {
         path: 'online',
         component: () => import('@/views/historyData/online'),
         name: 'Online',

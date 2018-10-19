@@ -1,15 +1,25 @@
 <template>
   <div class="dashboard-editor-container">
     <PanelGroup />
-    <el-row>
-      <el-col :xs="24" :sm="12" :lg="10">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="12" :lg="8">
         <el-card>
           <div slot="header">
             <span>版本分布</span>
           </div>
-          <Piechart :chart-data="this.chartData" />
+          <Piechart :chart-data="this.versionData" />
         </el-card>
       </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8">
+        <el-card>
+          <div slot="header">
+            <span>Tag分布</span>
+          </div>
+          <Piechart :chart-data="tagData" />
+        </el-card>
+      </el-col>
+
     </el-row>
   </div>
 </template>
@@ -17,7 +27,7 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import Piechart from '@/components/PieChart'
-import { fetchVersion } from '@/api/historyData'
+import { fetchVersion, fetchTag } from '@/api/historyData'
 
 export default {
   name: 'Dashboard',
@@ -27,20 +37,36 @@ export default {
   },
   data() {
     return {
-      chartData: []
+      versionData: [],
+      tagData: []
     }
   },
   mounted() {
-    fetchVersion().then(res => {
-      if(res.data) {
-        res.data.forEach(item => {
-          this.chartData.push({
-            name: item.version,
-            value: item.num
+    this.getData()
+  },
+  methods: {
+    getData() {
+      fetchVersion().then(res => {
+        if(res.data) {
+          res.data.forEach(item => {
+            this.versionData.push({
+              name: item.version,
+              value: item.num
+            })
           })
-        })
-      }
-    })
+        }
+      })
+      fetchTag().then(res => {
+        if(res.data) {
+          res.data.forEach(item => {
+            this.tagData.push({
+              name: item.version,
+              value: item.num
+            })
+          })
+        }
+      })
+    }
   }
 }
 </script>

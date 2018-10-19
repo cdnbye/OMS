@@ -1,7 +1,7 @@
 <template>
-<div>
-  <div>
-    <el-select v-model="selectValue" @change="selectChange">
+<div class="app-container">
+  <div class="filter-container">
+    <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
       <el-option
         v-for="item in selectOptions"
         :key="item.value"
@@ -10,6 +10,14 @@
       >
       </el-option>
     </el-select>
+
+    <el-input 
+      style="width: 200px;float: right" 
+      class="filter-item" 
+      prefix-icon="el-icon-search"
+      placeholder="请输入内容"
+      v-model="searchValue"
+      @keyup.enter.native="handleSearch"/>
   </div>
   <el-table
     :data="tableData"
@@ -36,25 +44,13 @@
     <el-table-column
       align="center"
       prop="p2p_rt"
-      label="p2p_rt(mbps)">
+      label="p2p实时带宽(mbps)">
     </el-table-column>
 
     <el-table-column
       align="center"
       prop="http_rt"
-      label="http_rt(mbps)">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="FailConns"
-      label="FailConns">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="ErrsFragLoad"
-      label="ErrsFragLoad">
+      label="http实时带宽(mbps)">
     </el-table-column>
 
     <el-table-column
@@ -72,13 +68,13 @@
     <el-table-column
       align="center"
       prop="num"
-      label="num">
+      label="人数">
     </el-table-column>
 
     <el-table-column
       align="center"
       prop="max_num"
-      label="max_num">
+      label="最大人数">
     </el-table-column>
 
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
@@ -104,8 +100,7 @@
 </template>
 
   <script>
-  import { fetchDomain } from '@/api/userDomain'
-  import { fetchHostNum } from '@/api/userDomain'
+  import { fetchDomain, fetchHostNum, searchHost } from '@/api/userDomain'
 
   export default {
     data() {
@@ -117,6 +112,8 @@
           page: 1,
           pageSize: 10
         },
+
+        searchValue: '',
 
         selectValue: 'max_num',
         selectOptions: [
@@ -157,10 +154,10 @@
             item.http = (item.http / 1024 / 1024).toFixed(2)
           }
           if(item.p2p_rt) {
-            item.p2p_rt = (item.p2p_rt / 1024 / 1024).toFixed(2)
+            item.p2p_rt = (item.p2p_rt / 1024).toFixed(2)
           }
           if(item.http_rt) {
-            item.http_rt = (item.http_rt / 1024 / 1024).toFixed(2)
+            item.http_rt = (item.http_rt / 1024).toFixed(2)
           }
         })
         return data
@@ -172,6 +169,10 @@
           this.tableData = this.formatData(res.data)
         }).catch(err => {
           this.loading = false
+          console.log(err)
+        })
+        fetchHostNum().then(res => {
+          this.total = res.data.num
         })
       },
       handleSizeChange(pageSize) {
@@ -185,15 +186,23 @@
       selectChange(val) {
         this.fetchTableData()
       },
+      handleSearch(e){
+        const host = e.target.value.trim()
+        if(host) {
+          searchHost(host).then(res => {
+            this.tableData = res.data
+            this.total = res.data ? res.data.length : 0
+          })
+        } else {
+          this.fetchTableData()
+        }
+      },
       handleTest(val) {
         console.log(val)
       }
     },
     mounted() {
       this.fetchTableData()
-      fetchHostNum().then(res => {
-        this.total = res.data.num
-      })
     }
   }
   </script>

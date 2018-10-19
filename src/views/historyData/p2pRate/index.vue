@@ -20,30 +20,34 @@
         </el-date-picker>
       </el-form-item>
     </el-form>
-    <LineChart :chart-data="onlineData" :option="option" />
+    <LineChart :chart-data="lineChartData" :option="option" />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import { fetchNum } from '@/api/historyData'
 import LineChart from '@/components/LineChart'
+import { formatTraffic, formatTrafficUnit } from '@/utils/format'
+import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
 export default {
-  name: 'Online',
+  name: 'Bandwidth',
   components: {
     LineChart
   },
   data() {
     return {
-      date: [moment().subtract(1, 'hour'), moment()],
-      radio: 'hour',      
-      onlineData: {
-        online: []
+      lineChartData: {
+        p2pRate: []
       },
+      date: [moment().subtract(1, 'hour'), moment()],
+      radio: 'hour',
+      httpData: [],
+      p2pData: [],
       option: {
         xData: [],
-        yName: '在线人数',
+        unit: '%',
+        yName: 'p2p分享率'
       }
     }
   },
@@ -53,6 +57,33 @@ export default {
   methods: {
     dataChange(date) {
       this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
+    },
+    getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
+      this.httpData = []
+      this.p2pData = []
+      this.option.xData = []
+      this.lineChartData.p2pRate = []
+      fetchP2PTraffic(start, end).then(res => {
+        this.p2pData = res.data.list
+        this.formatData()
+      })
+      fetchHttpTraffic(start, end).then(res => {
+        this.httpData = res.data.list
+        this.formatData()
+      })
+    },
+    formatData() {
+      if(this.httpData.length > 0 && this.p2pData.length > 0) {
+        this.p2pData.forEach((item, index) => {
+          this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
+          const value = (item.value / (item.value + this.httpData[index].value) * 100).toFixed(2)
+          if(item.value + this.httpData[index].value === 0) {
+            this.lineChartData.p2pRate.push(0)
+          } else {
+            this.lineChartData.p2pRate.push(value)
+          }
+        })
+      }
     },
     selectChange(val) {
       switch (val) {
@@ -72,22 +103,8 @@ export default {
           break;
       }
     },
-    formatData(res) {
-      const data = res.data.list
-      this.option.xData = []
-      this.onlineData.online = []
-      data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.onlineData.online.push(item.value)
-      })
-    },
     getTimeStamp(date) {
       return moment(date).format('X')
-    },
-    getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
-      fetchNum(start, end).then(res => {
-        this.formatData(res)
-      })
     }
   }
 }

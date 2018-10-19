@@ -14,6 +14,13 @@ export function fetchVersion() {
   })
 }
 
+export function fetchTag() {
+  return request({
+    url: `global/num?tag=all`,
+    method: 'get',
+  })
+}
+
 export function fetchP2PTraffic(start, end) {
   return request({
     url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=5`,

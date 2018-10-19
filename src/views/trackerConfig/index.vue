@@ -8,7 +8,7 @@
         <el-slider v-model="configForm.max_peer_conn" :max="30" @change="connChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="report_interval">
-        <el-slider v-model="configForm.report_interval" :max="30" @change="intervalChange" show-input></el-slider>
+        <el-slider v-model="configForm.report_interval" :min="10" :max="30" @change="intervalChange" show-input></el-slider>
       </el-form-item>
       <el-form-item>
         <el-button :loading="buttonLoading" :disabled="!isChanged" type="primary" @click.native.prevent="handleSubmit">更改</el-button>

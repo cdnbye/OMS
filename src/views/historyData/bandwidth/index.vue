@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="app-container">
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
@@ -121,9 +121,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .container {
-    padding: 50px 20px;
-  }
-</style>

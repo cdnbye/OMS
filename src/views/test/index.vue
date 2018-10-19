@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="app-container">
     test
   </div>
 </template>
@@ -21,9 +21,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .container {
-    padding: 50px 20px;
-  }
-</style>
