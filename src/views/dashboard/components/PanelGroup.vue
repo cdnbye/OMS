@@ -175,7 +175,7 @@ export default {
         bandwidth_http_month: {
           num: 0,
           unit: 'kbps'
-        },
+        }
       }
     }
   },

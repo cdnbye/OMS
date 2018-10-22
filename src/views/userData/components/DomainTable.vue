@@ -190,7 +190,7 @@
         const host = e.target.value.trim()
         if(host) {
           searchHost(host).then(res => {
-            this.tableData = res.data
+            this.tableData = this.formatData(res.data)
             this.total = res.data ? res.data.length : 0
           })
         } else {

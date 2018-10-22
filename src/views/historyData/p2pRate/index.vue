@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       lineChartData: {
-        p2pRate: []
+        P2P分享率: []
       },
       date: [moment().subtract(1, 'hour'), moment()],
       radio: 'hour',
@@ -47,7 +47,7 @@ export default {
       option: {
         xData: [],
         unit: '%',
-        yName: 'p2p分享率'
+        yName: 'P2P分享率'
       }
     }
   },
@@ -62,7 +62,7 @@ export default {
       this.httpData = []
       this.p2pData = []
       this.option.xData = []
-      this.lineChartData.p2pRate = []
+      this.lineChartData.P2P分享率 = []
       fetchP2PTraffic(start, end).then(res => {
         this.p2pData = res.data.list
         this.formatData()
@@ -78,9 +78,9 @@ export default {
           this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
           const value = (item.value / (item.value + this.httpData[index].value) * 100).toFixed(2)
           if(item.value + this.httpData[index].value === 0) {
-            this.lineChartData.p2pRate.push(0)
+            this.lineChartData.P2P分享率.push(0)
           } else {
-            this.lineChartData.p2pRate.push(value)
+            this.lineChartData.P2P分享率.push(value)
           }
         })
       }
