@@ -118,27 +118,27 @@
         selectValue: 'max_num',
         selectOptions: [
           {
-            label: 'max_num',
+            label: '最大人数',
             value: 'max_num'
           },
           {
-            label: 'num',
+            label: '人数',
             value: 'num'
           },
           {
-            label: 'p2p',
+            label: 'p2p流量',
             value: 'p2p'
           },
           {
-            label: 'http',
+            label: 'http流量',
             value: 'http'
           },
           {
-            label: 'p2p_rt',
+            label: 'p2p实时带宽',
             value: 'p2p_rt'
           },
           {
-            label: 'http_rt',
+            label: 'http实时带宽',
             value: 'http_rt'
           },
         ]
