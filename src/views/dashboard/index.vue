@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <PanelGroup />
+    <PanelGroup v-on:numChange="getOnlineNum" />
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
@@ -23,7 +23,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>Device分布</span>
+            <span>终端分布</span>
           </div>
           <Piechart :chart-data="deviceData" />
         </el-card>
@@ -32,9 +32,18 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>Live分布</span>
+            <span>直播点播分布</span>
           </div>
           <Piechart :chart-data="liveData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>头部域名分布</span>
+          </div>
+          <Piechart :chart-data="topSiteData" />
         </el-card>
       </el-col>
 
@@ -46,6 +55,7 @@
 import PanelGroup from './components/PanelGroup'
 import Piechart from '@/components/PieChart'
 import { fetchVersion, fetchTag, fetchDevice, fetchLive } from '@/api/historyData'
+  import { fetchDomain } from '@/api/userDomain'
 
 export default {
   name: 'Dashboard',
@@ -58,7 +68,9 @@ export default {
       versionData: [],
       tagData: [],
       deviceData: [],
-      liveData: []
+      liveData: [],
+      topSiteData: [],
+      onlineNum: 0
     }
   },
   mounted() {
@@ -106,6 +118,26 @@ export default {
           })
         }
       })
+
+      fetchDomain(1, 10, 'max_num').then(res => {
+        if(res.data) {
+          let total = 0
+          res.data.forEach(item => {
+            total += item.num
+            this.topSiteData.push({
+              name: item.host,
+              value: item.num
+            })
+          })
+          this.topSiteData.push({
+            name: '其他',
+            value: this.onlineNum - total
+          })
+        }
+      })
+    },
+    getOnlineNum(num) {
+      this.onlineNum = num
     }
   }
 }

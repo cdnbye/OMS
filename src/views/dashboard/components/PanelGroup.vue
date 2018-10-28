@@ -216,7 +216,7 @@ export default {
         this.statis.frequency_day = data.api_frequency_day
         this.statis.frequency_week = data.api_frequency_7
         this.statis.frequency_month = data.api_frequency_30
-        
+        this.$emit('numChange', data.num_rt)
       }).catch(err => {
         console.log(err)
       })
