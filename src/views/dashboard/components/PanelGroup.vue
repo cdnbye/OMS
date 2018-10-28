@@ -226,35 +226,35 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.panel-group {
-  margin-top: 18px;
-  .card-panel-col{
-    margin-bottom: 20px;
-  }
-  .card-panel {
-    height: 108px;
-    font-size: 12px;
-    position: relative;
-    overflow: hidden;
-    color: #666;
-    background: #fff;
-    box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-    border-color: rgba(0, 0, 0, .05);
-    .card-panel-description {
-      text-align: right;
-      line-height: 42px;
-      font-weight: bold;
-      margin: 26px;
-      margin-left: 0;
-      .card-panel-text {
-        line-height: 18px;
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 16px;
-      }
-      .card-panel-num {
-        font-size: 24px;
+  .panel-group {
+    margin-top: 18px;
+    .card-panel-col{
+      margin-bottom: 20px;
+    }
+    .card-panel {
+      height: 108px;
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+      color: #666;
+      background: #fff;
+      box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
+      border-color: rgba(0, 0, 0, .05);
+      .card-panel-description {
+        text-align: right;
+        line-height: 42px;
+        font-weight: bold;
+        margin: 26px;
+        margin-left: 0;
+        .card-panel-text {
+          line-height: 18px;
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 16px;
+        }
+        .card-panel-num {
+          font-size: 24px;
+        }
       }
     }
   }
-}
 </style>

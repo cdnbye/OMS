@@ -2,7 +2,7 @@
   <div class="dashboard-editor-container">
     <PanelGroup />
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :lg="8">
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
             <span>版本分布</span>
@@ -11,12 +11,30 @@
         </el-card>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="8">
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
             <span>Tag分布</span>
           </div>
           <Piechart :chart-data="tagData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>Device分布</span>
+          </div>
+          <Piechart :chart-data="deviceData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>Live分布</span>
+          </div>
+          <Piechart :chart-data="liveData" />
         </el-card>
       </el-col>
 
@@ -27,7 +45,7 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import Piechart from '@/components/PieChart'
-import { fetchVersion, fetchTag } from '@/api/historyData'
+import { fetchVersion, fetchTag, fetchDevice, fetchLive } from '@/api/historyData'
 
 export default {
   name: 'Dashboard',
@@ -38,7 +56,9 @@ export default {
   data() {
     return {
       versionData: [],
-      tagData: []
+      tagData: [],
+      deviceData: [],
+      liveData: []
     }
   },
   mounted() {
@@ -60,7 +80,27 @@ export default {
         if(res.data) {
           res.data.forEach(item => {
             this.tagData.push({
-              name: item.version,
+              name: item.tag,
+              value: item.num
+            })
+          })
+        }
+      })
+      fetchDevice().then(res => {
+        if(res.data) {
+          res.data.forEach(item => {
+            this.deviceData.push({
+              name: item.dev,
+              value: item.num
+            })
+          })
+        }
+      })
+      fetchLive().then(res => {
+        if(res.data) {
+          res.data.forEach(item => {
+            this.liveData.push({
+              name: item.live,
               value: item.num
             })
           })
@@ -80,5 +120,8 @@ export default {
     padding: 16px 16px 0;
     margin-bottom: 32px;
   }
+}
+.chart-col {
+  margin-bottom: 20px;
 }
 </style>
