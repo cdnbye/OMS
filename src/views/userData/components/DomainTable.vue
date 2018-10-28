@@ -77,6 +77,12 @@
       label="最大人数">
     </el-table-column>
 
+    <el-table-column
+      align="center"
+      prop="agent"
+      label="代理商">
+    </el-table-column>
+
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
         <el-button type="primary" size="mini" @click="handleTest(scope.row)">详情</el-button>
@@ -158,6 +164,9 @@
           }
           if(item.http_rt) {
             item.http_rt = (item.http_rt / 1024).toFixed(2)
+          }
+          if(!item.agent) {
+            item.agent = '无'
           }
         })
         return data
