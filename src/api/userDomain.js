@@ -20,3 +20,10 @@ export function searchHost(host) {
     method: 'get'
   })
 }
+
+export function fetchUserList(page, pageSize, order) {
+  return request({
+    url: `user?page=${page}&page_size=${pageSize}&order=${order}`,
+    method: 'get'
+  })
+}

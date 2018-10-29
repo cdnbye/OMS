@@ -8,6 +8,7 @@ export default {
     pagePermission: 'Page Permission',
     userData: 'User data',
     domain: 'domain',
+    list: 'User list',
     p2pRate: 'P2P rate',
     whole: 'whole',
     userDistribution: 'User distribution',
