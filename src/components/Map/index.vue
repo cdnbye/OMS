@@ -83,13 +83,33 @@ export default {
     },
     setOptions() {
       this.chart.setOption({
+        // visualMap: {
+        //   min: 0,
+        //   max: 2500,
+        //   left: 'left',
+        //   top: 'bottom',
+        //   text:['高','低'],           // 文本，默认为数值文本
+        //   calculable : true
+        // },
         visualMap: {
-          min: 0,
-          max: 2500,
-          left: 'left',
-          top: 'bottom',
-          text:['高','低'],           // 文本，默认为数值文本
-          calculable : true
+          type: 'piecewise',
+          picees: [
+            {gt: 1500},
+            {gt: 900, lte: 1500},
+            {gt: 310, lte: 1000},
+            {gt: 200, lte: 300},
+            {gt: 10, lte: 200, label: '10 到 200（自定义label）'},
+            {value: 123, label: '123（自定义特殊颜色）', color: 'grey'},
+            {lt: 5}
+          ]
+        },
+        geo: {
+          map: 'china',
+          roam: true,
+          scaleLimit: {
+            min: 0.5,
+            max: 3
+          }
         },
         tooltip: {
           trigger: 'item'
@@ -98,6 +118,8 @@ export default {
           name: 'aaa',
           type: 'map',
           mapType: 'china',
+          zoom: 5,
+          geoIndex: 0,
           data: [
                 {name: '北京',value: Math.round(Math.random()*1000)},
                 {name: '天津',value: Math.round(Math.random()*1000)},
