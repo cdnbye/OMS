@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: '350px'
+      default: '900px'
     },
     autoResize: {
       type: Boolean,
@@ -70,92 +70,115 @@ export default {
     },
     setOptions() {
       this.chart.setOption({
+        // visualMap: {
+        //   min: 0,
+        //   max: 2500,
+        //   left: 'left',
+        //   top: 'bottom',
+        //   text:['高','低'],           // 文本，默认为数值文本
+        //   calculable : true
+        // },
+
         visualMap: {
-          min: 0,
-          max: 2500,
-          left: 'left',
-          top: 'bottom',
-          text:['高','低'],           // 文本，默认为数值文本
-          calculable : true
+          type: 'piecewise',
+          pieces: [
+            {gt: 2500},            // (1500, Infinity]
+            {gt: 1500, lte: 2500},  // (900, 1500]
+            {gt: 1000, lte: 1500},  // (310, 1000]
+            {gt: 500, lte: 1000},   // (200, 300]
+            {gt: 100, lte: 500, label: '50 到 200（自定义label）'},       // (10, 200]
+            {lt: 100}                 // (-Infinity, 5)
+          ]
         },
         tooltip: {
           trigger: 'item'
+        },
+        geo: {
+          map: 'world',
+          roam: true,
+          scaleLimit: {
+            min: 0.5,
+            max: 5
+          }
         },
         series: {
           name: 'aaa',
           type: 'map',
           mapType: 'world',
-          data: [{
+          zoom: 5,
+          geoIndex: 0,
+          data: [
+              {
                 name: 'Afghanistan',
-                value: 28397.812
+                value: 2839.812
               },
               {
                 name: 'Angola',
-                value: 19549.124
+                value: 1549.124
               },
               {
                 name: 'Albania',
-                value: 3150.143
+                value: 350.143
               },
               {
                 name: 'United Arab Emirates',
-                value: 8441.537
+                value: 441.537
               },
               {
                 name: 'Argentina',
-                value: 40374.224
+                value: 4037.224
               },
               {
                 name: 'Armenia',
-                value: 2963.496
+                value: 963.496
               },
               {
                 name: 'French Southern and Antarctic Lands',
-                value: 268.065
+                value: 68.065
               },
               {
                 name: 'Australia',
-                value: 22404.488
+                value: 2204.488
               },
               {
                 name: 'Austria',
-                value: 8401.924
+                value: 801.924
               },
               {
                 name: 'Azerbaijan',
-                value: 9094.718
+                value: 904.718
               },
               {
                 name: 'Burundi',
-                value: 9232.753
+                value: 923.753
               },
               {
                 name: 'Belgium',
-                value: 10941.288
+                value: 941.288
               },
               {
                 name: 'Benin',
-                value: 9509.798
+                value: 909.798
               },
               {
                 name: 'Burkina Faso',
-                value: 15540.284
+                value: 140.284
               },
               {
                 name: 'Bangladesh',
-                value: 151125.475
+                value: 125.475
               },
               {
                 name: 'Bulgaria',
-                value: 7389.175
+                value: 789.175
               },
               {
                 name: 'The Bahamas',
-                value: 66402.316
+                value: 602.316
               },
               {
                 name: 'Bosnia and Herzegovina',
-                value: 3845.929
+                value: 845.929
               },
               {
                 name: 'Belarus',
@@ -175,7 +198,7 @@ export default {
               },
               {
                 name: 'Brazil',
-                value: 195210.154
+                value: 195.154
               },
               {
                 name: 'Brunei',
@@ -191,11 +214,11 @@ export default {
               },
               {
                 name: 'Central African Republic',
-                value: 4349.921
+                value: 349.921
               },
               {
                 name: 'Canada',
-                value: 34126.24
+                value: 346.24
               },
               {
                 name: 'Switzerland',
@@ -207,27 +230,27 @@ export default {
               },
               {
                 name: 'China',
-                value: 1359821.465
+                value: 13590.465
               },
               {
                 name: 'Ivory Coast',
-                value: 60508.978
+                value: 608.978
               },
               {
                 name: 'Cameroon',
-                value: 20624.343
+                value: 224.343
               },
               {
                 name: 'Democratic Republic of the Congo',
-                value: 62191.161
+                value: 2191.161
               },
               {
                 name: 'Republic of the Congo',
-                value: 3573.024
+                value: 573.024
               },
               {
                 name: 'Colombia',
-                value: 46444.798
+                value: 464.798
               },
               {
                 name: 'Costa Rica',
@@ -247,7 +270,7 @@ export default {
               },
               {
                 name: 'Czech Republic',
-                value: 10553.701
+                value: 1053.701
               },
               {
                 name: 'Germany',
@@ -263,19 +286,19 @@ export default {
               },
               {
                 name: 'Dominican Republic',
-                value: 10016.797
+                value: 1016.797
               },
               {
                 name: 'Algeria',
-                value: 37062.82
+                value: 362.82
               },
               {
                 name: 'Ecuador',
-                value: 15001.072
+                value: 1501.072
               },
               {
                 name: 'Egypt',
-                value: 78075.705
+                value: 775.705
               },
               {
                 name: 'Eritrea',
@@ -291,7 +314,7 @@ export default {
               },
               {
                 name: 'Ethiopia',
-                value: 87095.281
+                value: 895.281
               },
               {
                 name: 'Finland',
@@ -307,7 +330,7 @@ export default {
               },
               {
                 name: 'France',
-                value: 63230.866
+                value: 630.866
               },
               {
                 name: 'Gabon',
@@ -315,7 +338,7 @@ export default {
               },
               {
                 name: 'United Kingdom',
-                value: 62066.35
+                value: 666.35
               },
               {
                 name: 'Georgia',
@@ -327,7 +350,7 @@ export default {
               },
               {
                 name: 'Guinea',
-                value: 10876.033
+                value: 1876.033
               },
               {
                 name: 'Gambia',
@@ -343,7 +366,7 @@ export default {
               },
               {
                 name: 'Greece',
-                value: 11109.999
+                value: 119.999
               },
               {
                 name: 'Greenland',
@@ -351,7 +374,7 @@ export default {
               },
               {
                 name: 'Guatemala',
-                value: 14341.576
+                value: 1441.576
               },
               {
                 name: 'French Guiana',
@@ -375,11 +398,11 @@ export default {
               },
               {
                 name: 'Hungary',
-                value: 10014.633
+                value: 114.633
               },
               {
                 name: 'Indonesia',
-                value: 240676.485
+                value: 2676.485
               },
               {
                 name: 'India',
@@ -395,7 +418,7 @@ export default {
               },
               {
                 name: 'Iraq',
-                value: 30962.38
+                value: 362.38
               },
               {
                 name: 'Iceland',
@@ -407,7 +430,7 @@ export default {
               },
               {
                 name: 'Italy',
-                value: 60508.978
+                value: 608.978
               },
               {
                 name: 'Jamaica',
@@ -419,7 +442,7 @@ export default {
               },
               {
                 name: 'Japan',
-                value: 127352.833
+                value: 1352.833
               },
               {
                 name: 'Kazakhstan',
@@ -427,19 +450,19 @@ export default {
               },
               {
                 name: 'Kenya',
-                value: 40909.194
+                value: 409.194
               },
               {
                 name: 'Kyrgyzstan',
-                value: 5334.223
+                value: 534.223
               },
               {
                 name: 'Cambodia',
-                value: 14364.931
+                value: 1364.931
               },
               {
                 name: 'South Korea',
-                value: 51452.352
+                value: 512.352
               },
               {
                 name: 'Kosovo',
@@ -447,7 +470,7 @@ export default {
               },
               {
                 name: 'Kuwait',
-                value: 2991.58
+                value: 291.58
               },
               {
                 name: 'Laos',
@@ -455,7 +478,7 @@ export default {
               },
               {
                 name: 'Lebanon',
-                value: 4341.092
+                value: 441.092
               },
               {
                 name: 'Liberia',
@@ -753,8 +776,12 @@ export default {
                 name: 'Uruguay',
                 value: 3371.982
               },
+              // {
+              //   name: 'United States of America',
+              //   value: 312247.116
+              // },
               {
-                name: 'United States of America',
+                name: 'United States',
                 value: 312247.116
               },
               {
@@ -794,6 +821,8 @@ export default {
                 value: 13076.978
               }
             ],
+        
+        
         }
       })
     },
