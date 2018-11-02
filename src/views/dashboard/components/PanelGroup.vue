@@ -85,7 +85,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.max_online_month }}</span>
-          <div class="card-panel-text">本月最高在线人数</div>
+          <div class="card-panel-text">近1月最高在线人数</div>
         </div>
       </div>
     </el-col>
@@ -94,7 +94,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_p2p_month.num }}</span>
-          <div class="card-panel-text">本月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
+          <div class="card-panel-text">近1月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
         </div>
       </div>
     </el-col>
@@ -103,7 +103,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.p2p_rate_month }}</span>
-          <div class="card-panel-text">本月P2P分享率(%)</div>
+          <div class="card-panel-text">近1月P2P分享率(%)</div>
         </div>
       </div>
     </el-col>
@@ -112,7 +112,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.frequency_month }}</span>
-          <div class="card-panel-text">本月服务人数</div>
+          <div class="card-panel-text">近1月服务人数</div>
         </div>
       </div>
     </el-col>
@@ -130,7 +130,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.hostNum }}</span>
-          <div class="card-panel-text">域名总数</div>
+          <div class="card-panel-text">活跃域名总数</div>
         </div>
       </div>
     </el-col>
@@ -217,6 +217,7 @@ export default {
         this.statis.frequency_week = data.api_frequency_7
         this.statis.frequency_month = data.api_frequency_30
         this.$emit('numChange', data.num_rt)
+        //接入网站总数
       }).catch(err => {
         console.log(err)
       })

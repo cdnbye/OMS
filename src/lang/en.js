@@ -9,6 +9,7 @@ export default {
     userData: 'User data',
     domain: 'domain',
     list: 'User list',
+    userDomain: 'Domain list',
     p2pRate: 'P2P rate',
     whole: 'whole',
     userDistribution: 'User distribution',

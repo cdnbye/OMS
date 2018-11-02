@@ -150,6 +150,15 @@ export const asyncRouterMap = [
           title: 'list',
           roles: ['admin']
         }
+      },
+      {
+        path: 'user_domain',
+        component: () => import('@/views/userData/bindDomain'),
+        name: 'UserDomain',
+        meta: {
+          title: 'userDomain',
+          roles: ['admin']
+        }
       }
     ]
   },

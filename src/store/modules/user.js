@@ -1,5 +1,5 @@
 import { loginByUsername, signup } from '@/api/auth'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, getID, setID, removeID } from '@/utils/auth'
 
 const user = {
   state: {
@@ -7,9 +7,9 @@ const user = {
     status: '',
     code: '',
     token: getToken(),
+    id: getID(),
     name: '',
     avatar: '',
-    introduction: '',
     roles: [],
     setting: {
       articlePlatform: []
@@ -23,8 +23,8 @@ const user = {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_INTRODUCTION: (state, introduction) => {
-      state.introduction = introduction
+    SET_ID: (state, id) => {
+      state.id = id
     },
     SET_SETTING: (state, setting) => {
       state.setting = setting
@@ -52,6 +52,8 @@ const user = {
           const data = response.data
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
+          commit('SET_ID', data.id)
+          setID(response.data.id)
           resolve()
         }).catch(error => {
           reject(error)
@@ -66,6 +68,8 @@ const user = {
           const data = response.data
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
+          commit('SET_ID', data.id)
+          setID(response.data.id)
           resolve()
         }).catch(error => {
           reject(error)
@@ -77,6 +81,8 @@ const user = {
       return new Promise((resolve, reject) => {
         commit('SET_TOKEN', '')
         removeToken()
+        commit('SET_ID', '')
+        removeID()
         resolve()
       })
     },

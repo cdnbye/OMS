@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { getID } from '@/utils/auth'
 
 export function fetchHostNum() {
   return request({
@@ -25,5 +26,27 @@ export function fetchUserList(page, pageSize, order) {
   return request({
     url: `user?page=${page}&page_size=${pageSize}&order=${order}`,
     method: 'get'
+  })
+}
+
+export function fetchUserDomain() {
+  return request({
+    url: `user/${getID()}/domain`,
+    method: 'get'
+  })
+}
+
+export function bindDomain(data) {
+  return request({
+    url: `user/${getID()}/domain`,
+    method: 'post',
+    data
+  })
+}
+
+export function checkDomain(domainID) {
+  return request({
+    url: `user/${getID()}/domain/${domainID}`,
+    method: 'post'
   })
 }

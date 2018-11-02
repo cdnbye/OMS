@@ -9,6 +9,7 @@ export default {
     userData: '用户数据分析',
     domain: '域名',
     list: '用户列表',
+    userDomain: '域名列表',
     p2pRate: 'P2P分享率',
     whole: '总体信息',
     userDistribution: '用户地理分布',
