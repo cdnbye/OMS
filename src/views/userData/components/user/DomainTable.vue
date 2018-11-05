@@ -24,12 +24,24 @@
       label="text">
     </el-table-column>
 
-    <el-table-column label="action" align="center" class-name="small-padding fixed-width">
+    <el-table-column label="操作" align="center" width="100" fixed="right">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="handleTest(scope.row)">action</el-button>
+        <el-button type="text" size="mini" @click="handleCheck(scope.row)">认证</el-button>
+        <el-button type="text" size="mini" @click="handleTest(scope.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
+
+  <div class="pagination-container">
+    <el-pagination
+      layout="sizes, prev, pager, next"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="tableParam.pageSize"
+      :current-page="tableParam.page"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange">
+    </el-pagination>
+  </div>
 
   <el-dialog
     title="绑定域名"
@@ -53,7 +65,7 @@
 </template>
 
   <script>
-  import { fetchUserDomain, bindDomain } from '@/api/userDomain'
+  import { fetchUserDomain, bindDomain, checkDomain } from '@/api/userDomain'
 import { validateURL } from '@/utils/validate'
 
   export default {
@@ -86,9 +98,9 @@ import { validateURL } from '@/utils/validate'
       }
     },
     methods: {
-      fetchTableData() {
+      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
         this.loading = true
-        fetchUserDomain().then(res => {
+        fetchUserDomain(page, pageSize).then(res => {
           if(res.data) {
             this.tableData = res.data
           }
@@ -106,23 +118,31 @@ import { validateURL } from '@/utils/validate'
         this.tableParam.page = page
         this.fetchTableData()
       },
+      handleCheck(data) {
+        checkDomain(data.id).then(res => {
+          if(res.data) {
+            console.log(res.data)
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      },
       handleTest(val) {
         console.log(val)
       },
       addDomainSubmit() {
-      this.$refs.domainForm.validate(valid => {
-        if(valid) {
-          bindDomain(this.domainFormData).then(res => {
-            this.dialogVisible = false
-            this.tableData.push(res.data)
-            console.log(res)
-          }).catch(error => {
-            console.log(error)
-          })
-        } else {
-          return false
-        }
-      })
+        this.$refs.domainForm.validate(valid => {
+          if(valid) {
+            bindDomain(this.domainFormData).then(res => {
+              this.dialogVisible = false
+              this.tableData.push(res.data)
+            }).catch(error => {
+              console.log(error)
+            })
+          } else {
+            return false
+          }
+        })
       }
     },
     mounted() {

@@ -175,7 +175,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'china',
-        component: () => import('@/components/Map/index'),
+        component: () => import('@/views/userDistribution/china'),
         name: 'ChinaDistribution',
         meta: {
           title: 'chinaDistribution',

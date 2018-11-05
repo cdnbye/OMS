@@ -29,9 +29,9 @@ export function fetchUserList(page, pageSize, order) {
   })
 }
 
-export function fetchUserDomain() {
+export function fetchUserDomain(page, pageSize) {
   return request({
-    url: `user/${getID()}/domain`,
+    url: `user/${getID()}/domain?page=${page}&page_size=${pageSize}`,
     method: 'get'
   })
 }

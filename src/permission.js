@@ -2,6 +2,7 @@ import router from './router/index'
 import store from './store'
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // getToken from cookie
+import { Base64 } from 'js-base64'
 
 // permission judge function
 function hasPermission(roles, permissionRoles) {
@@ -18,7 +19,8 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
     } else {
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-        store.dispatch('setRole').then(res => {
+        const auth = JSON.parse(Base64.decode(getToken().split('.')[1])).iat === 1 ? 'admin' : 'user'
+        store.dispatch('setRole', auth).then(res => {
           const roles = res.roles // note: roles must be a array! such as: ['editor','develop']
           store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表

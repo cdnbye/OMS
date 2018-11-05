@@ -87,10 +87,10 @@ const user = {
       })
     },
     //设置用户权限
-    setRole({ commit }) {
+    setRole({ commit }, auth) {
       return new Promise((resolve, reject) => {
         const data = {
-          roles: ['admin']
+          roles: [auth]
         }
         commit('SET_ROLES', data.roles)
         resolve(data)
