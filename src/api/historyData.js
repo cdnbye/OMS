@@ -7,13 +7,6 @@ export function fetchNum(start, end) {
   })
 }
 
-export function fetchCityNum() {
-  return request({
-    url: `global/num?city=all`,
-    method: 'get'
-  })
-}
-
 export function fetchVersion() {
   return request({
     url: `global/num?version=all`,

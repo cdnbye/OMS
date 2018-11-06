@@ -6,3 +6,17 @@ export function fetchLiveData() {
     method: 'get',
   })
 }
+
+export function fetchCityNum() {
+  return request({
+    url: `global/num?city=all`,
+    method: 'get'
+  })
+}
+
+export function fetchProvinceNum() {
+  return request({
+    url: `global/num?province=all`,
+    method: 'get'
+  })
+}

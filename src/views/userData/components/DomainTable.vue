@@ -10,6 +10,15 @@
       >
       </el-option>
     </el-select>
+
+     <el-input 
+      style="width: 200px;float: right" 
+      class="filter-item" 
+      prefix-icon="el-icon-search"
+      placeholder="请输入内容"
+      v-model="searchValue"
+      @keyup.enter.native="handleSearch"/>
+
   </div>
   <el-table
     :data="tableData"
@@ -110,7 +119,7 @@
           page: 1,
           pageSize: 10
         },
-
+        searchValue: '',
         selectValue: 'max_num',
         selectOptions: [
           {
@@ -184,6 +193,17 @@
       },
       selectChange(val) {
         this.fetchTableData()
+      },
+      handleSearch(e){
+        const host = e.target.value.trim()
+        if(host) {
+          searchHost(host).then(res => {
+            this.tableData = this.formatData(res.data)
+            this.total = res.data ? res.data.length : 0
+          })
+        } else {
+          this.fetchTableData()
+        }
       },
       handleTest(val) {
         console.log(val)

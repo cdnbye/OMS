@@ -1,16 +1,17 @@
 <template>
-  <china-map :chartData="chartData" />
+  <china-map :chartData="cityData" :provinceData="provinceData" />
 </template>
 
 <script>
 import ChinaMap from '@/components/CityMap'
-import { fetchCityNum } from '@/api/historyData'
+import { fetchCityNum, fetchProvinceNum } from '@/api/liveData'
 
 export default {
   name: 'ChinaDis',
   data() {
     return {
-      chartData: []
+      cityData: [],
+      provinceData: []
     }
   },
   components: {
@@ -23,8 +24,15 @@ export default {
     fetchData() {
       fetchCityNum().then(res => {
         if(res.data) {
-          console.log(res.data)
-          this.chartData = res.data
+          this.cityData = res.data
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+
+      fetchProvinceNum().then(res => {
+        if(res.data) {
+          this.provinceData = res.data
         }
       }).catch(err => {
         console.log(err)
