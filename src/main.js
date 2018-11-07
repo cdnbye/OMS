@@ -10,12 +10,13 @@ import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
 
-import { Select, Option, Loading, Pagination, Slider, 
+import { Popover, Select, Option, Loading, Pagination, Slider, 
   Card, Table, TableColumn, RadioGroup, RadioButton, DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, 
   Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
 
 Vue.config.productionTip = false
 
+Vue.use(Popover)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Loading)

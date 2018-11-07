@@ -1,7 +1,8 @@
 <template>
 <div class="app-container">
-  <el-button type="primary" @click="dialogVisible = true">绑定域名</el-button>
+  <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">绑定域名</el-button>
   <el-table
+    border
     :data="tableData"
     v-loading="loading"
     style="width: 100%">
@@ -15,7 +16,8 @@
     <el-table-column
       align="center"
       prop="isValid"
-      label="isValid">
+      :formatter="formatter"
+      label="可用状态">
     </el-table-column>
 
     <el-table-column
@@ -24,10 +26,21 @@
       label="text">
     </el-table-column>
 
-    <el-table-column label="操作" align="center" width="100" fixed="right">
+    <el-table-column label="操作" align="center" width="150" fixed="right">
       <template slot-scope="scope">
         <el-button type="text" size="mini" @click="handleCheck(scope.row)">认证</el-button>
-        <el-button type="text" size="mini" @click="handleTest(scope.row)">删除</el-button>
+        <el-popover
+          style="margin-left: 10px"
+          placement="top"
+          width="160"
+          v-model="scope.row.visible">
+          <p>确定删除吗？</p>
+          <div style="text-align: right; margin: 0">
+            <el-button size="mini" type="text" @click="scope.row.visible = false">取消</el-button>
+            <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">确定</el-button>
+          </div>
+          <el-button slot="reference" type="text" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+        </el-popover>
       </template>
     </el-table-column>
   </el-table>
@@ -51,8 +64,12 @@
     <el-form ref="domainForm" :model="domainFormData" :rules="domainRules">
       <el-form-item prop="domain">
         <el-input 
+          type="textarea"
+          :rows="3"
           v-model="domainFormData.domain"
-          placeholder="请输入要绑定的域名"
+          placeholder="输入一个网站，例如
+http://www.example.com:8080
+https://180.163.26.39"
         />
       </el-form-item>
     </el-form>
@@ -65,14 +82,13 @@
 </template>
 
   <script>
-  import { fetchUserDomain, bindDomain, checkDomain } from '@/api/userDomain'
-import { validateURL } from '@/utils/validate'
+  import { fetchUserDomain, bindDomain, checkDomain, deleteDomain } from '@/api/userDomain'
+  import { validateURL } from '@/utils/validate'
 
   export default {
     name: 'UserDomain',
     data() {
       const formValidateURL = (rule, value, callback) => {
-        console.log(value)
         if(!validateURL(value)) {
           const error = '请输入正确的域名'
           callback(new Error(error))
@@ -88,7 +104,6 @@ import { validateURL } from '@/utils/validate'
           pageSize: 10
         },
         dialogVisible: false,
-
         domainFormData: {
           domain: ''
         },
@@ -102,7 +117,10 @@ import { validateURL } from '@/utils/validate'
         this.loading = true
         fetchUserDomain(page, pageSize).then(res => {
           if(res.data) {
-            this.tableData = res.data
+            res.data.forEach(item => {
+              item.visible = false
+            })
+            this.tableData = [...res.data]
           }
           this.loading = false
         }).catch(err => {
@@ -120,15 +138,34 @@ import { validateURL } from '@/utils/validate'
       },
       handleCheck(data) {
         checkDomain(data.id).then(res => {
-          if(res.data) {
-            console.log(res.data)
-          }
+          this.$message({
+            message: '验证成功',
+            type: 'success'
+          })
         }).catch(err => {
           console.log(err)
         })
       },
-      handleTest(val) {
-        console.log(val)
+      handleDelete(val) {
+        val.visible = true
+      },
+      handleDeleteDomain(domainData) {
+        deleteDomain(domainData.id).then(res => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          let index = 0
+          this.tableData.forEach((item, index) => {
+            if(item.id === domainData.id) {
+              index = index
+            }
+          })
+          this.tableData.splice(index, 1)
+          domainData.visible = false
+        }).catch(err => {
+          console.log(err)
+        })
       },
       addDomainSubmit() {
         this.$refs.domainForm.validate(valid => {
@@ -143,6 +180,9 @@ import { validateURL } from '@/utils/validate'
             return false
           }
         })
+      },
+      formatter(row) {
+        return row.isValid === 0 ? '不可用' : '可用'
       }
     },
     mounted() {

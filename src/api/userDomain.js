@@ -50,3 +50,10 @@ export function checkDomain(domainID) {
     method: 'post'
   })
 }
+
+export function deleteDomain(domainID) {
+  return request({
+    url: `user/${getID()}/domain/${domainID}`,
+    method: 'delete'
+  })
+}
