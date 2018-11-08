@@ -56,6 +56,45 @@
     </el-pagination>
   </div>
 
+
+  <el-dialog
+    title="验证域名"
+    :visible.sync="checkDialogVisible"
+    width="30%"
+  >
+    <el-alert
+      title=""
+      style="text-align: left"
+      type="warning" 
+      description="您需要对添加的网站进行权限认证才能使用安全扫描功能，公网域名可以选择以下任意一种方式进行验证，内网域名由于安全原因只支持DNS验证。"
+      :closable="false">
+    </el-alert>
+    <el-form>
+      <el-form-item label="验证方式">
+        <el-radio v-model="checkSelect" label="dns">DNS验证</el-radio>
+        <el-radio v-model="checkSelect" label="file">文件验证</el-radio>
+      </el-form-item>
+    </el-form>
+    <el-steps direction="vertical" :active="2" :space="100">
+      <el-step icon="el-icon-success" :description="'设置cdnbye_dns_auth.cdnbye.com的TXT域名解析内容为下列字符：\n' + checkDomainText"></el-step>
+      <el-step icon="el-icon-success" description="完成操作后请点击'完成验证'按钮"></el-step>
+    </el-steps>
+    <!-- <el-form ref="checkDomainForm" :model="checkDomainFormData" :rules="domainRules">
+      <el-form-item prop="domain">
+        <el-input 
+          type="textarea"
+          :rows="3"
+          v-model="domainFormData.domain"
+          placeholder="输入一个网站，例如"
+        />
+      </el-form-item>
+    </el-form> -->
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="checkDialogVisible = false">稍后验证</el-button>
+      <el-button :loading="checkDomainLoading" type="primary" @click="handleCheckDomain">立即验证</el-button>
+    </span>
+  </el-dialog>
+
   <el-dialog
     title="绑定域名"
     :visible.sync="dialogVisible"
@@ -104,6 +143,13 @@ https://180.163.26.39"
           pageSize: 10
         },
         dialogVisible: false,
+        checkDialogVisible: false,
+        checkSelect: 'dns',
+
+        checkDomainText: '',
+        checkDomainID: 0,
+        checkDomainLoading: false,
+
         domainFormData: {
           domain: ''
         },
@@ -137,12 +183,22 @@ https://180.163.26.39"
         this.fetchTableData()
       },
       handleCheck(data) {
-        checkDomain(data.id).then(res => {
+        console.log(data)
+        this.checkDomainText = data.text
+        this.checkDomainID = data.id
+        this.checkDialogVisible = true
+      },
+      handleCheckDomain() {
+        this.checkDomainLoading = true
+        checkDomain(this.checkDomainID).then(res => {
           this.$message({
             message: '验证成功',
             type: 'success'
           })
+          this.checkDomainLoading = false
+          this.checkDialogVisible = false
         }).catch(err => {
+          this.checkDomainLoading = false
           console.log(err)
         })
       },

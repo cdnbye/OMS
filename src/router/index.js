@@ -184,7 +184,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'world',
-        component: () => import('@/components/WorldMap/index'),
+        component: () => import('@/views/userDistribution/world'),
         name: 'WorldDistribution',
         meta: {
           title: 'worldDistribution',

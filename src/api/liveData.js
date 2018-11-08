@@ -20,3 +20,10 @@ export function fetchProvinceNum() {
     method: 'get'
   })
 }
+
+export function fetchCountryNum() {
+  return request({
+    url: `global/num?country=all`,
+    method: 'get'
+  })
+}
