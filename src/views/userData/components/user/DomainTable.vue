@@ -75,20 +75,42 @@
         <el-radio v-model="checkSelect" label="file">文件验证</el-radio>
       </el-form-item>
     </el-form>
-    <el-steps direction="vertical" :active="2" :space="100">
-      <el-step icon="el-icon-success" :description="'设置cdnbye_dns_auth.cdnbye.com的TXT域名解析内容为下列字符：\n' + checkDomainText"></el-step>
-      <el-step icon="el-icon-success" description="完成操作后请点击'完成验证'按钮"></el-step>
-    </el-steps>
-    <!-- <el-form ref="checkDomainForm" :model="checkDomainFormData" :rules="domainRules">
-      <el-form-item prop="domain">
-        <el-input 
-          type="textarea"
-          :rows="3"
-          v-model="domainFormData.domain"
-          placeholder="输入一个网站，例如"
-        />
-      </el-form-item>
-    </el-form> -->
+
+    <template v-if="checkSelect === 'dns'">
+      <el-steps direction="vertical" :active="2" :space="100">
+        <el-step icon="el-icon-success" :description="'设置cdnbye_dns_auth.cdnbye.com的TXT域名解析内容为下列字符：\n' + checkDomainText"></el-step>
+        <el-step icon="el-icon-success" description="完成操作后请点击'立即验证'按钮"></el-step>
+      </el-steps>
+    </template>
+
+    <template v-else>
+      <div>
+        <ol>
+          <li>
+            <div class="pv-content">
+              <h4>下载专有的<a>HTML验证文件</a></h4>
+            </div>
+          </li>
+          <li>
+            <div class="pv-content">
+              <h4>将该文件上传至：http://oms.cdnbye.com/</h4>
+              <h4>注意文件名称不要修改，文件名称为auth.txt</h4>
+            </div>
+          </li>
+          <li>
+            <div class="pv-content">
+              <h4>用浏览器访问http://oms.cdnbye.com/auth.txt,确认是否上传成功</h4>
+            </div>  
+          </li>
+          <li>
+            <div class="pv-content pv-content-last">                
+              <h4>完成操作后请点击"立即验证"按钮</h4>
+            </div>  
+          </li>
+        </ol>
+      </div>
+    </template>
+
     <span slot="footer" class="dialog-footer">
       <el-button @click="checkDialogVisible = false">稍后验证</el-button>
       <el-button :loading="checkDomainLoading" type="primary" @click="handleCheckDomain">立即验证</el-button>
@@ -98,8 +120,7 @@
   <el-dialog
     title="绑定域名"
     :visible.sync="dialogVisible"
-    width="50%"
-  >
+    width="50%">
     <el-form ref="domainForm" :model="domainFormData" :rules="domainRules">
       <el-form-item prop="domain">
         <el-input 
@@ -108,8 +129,7 @@
           v-model="domainFormData.domain"
           placeholder="输入一个网站，例如
 http://www.example.com:8080
-https://180.163.26.39"
-        />
+https://180.163.26.39" />
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -246,3 +266,59 @@ https://180.163.26.39"
     }
   }
   </script>
+
+<style scoped>
+  ol {
+    display: table;
+    width: 100%;
+    margin: 0
+  }
+  a {
+    color: #006eff;
+    margin-left: 5px;
+  }
+  li {
+    position: relative;
+    min-height: 50px;
+    display: table-row;
+    table-layout: fixed;
+    text-align: left;
+  }
+  h4 {
+    font-weight: 400;
+  }
+  .pv-content {
+    display: table-cell;
+    padding: 0 0 22px 24px;
+    position: relative;
+    min-height: 28px;
+    vertical-align: top;
+  }
+  .pv-content-last:before {
+    display: none !important;
+  }
+  .pv-content:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: -4px;
+    left: -2px;
+    border-left: 1px solid #ddd;
+  }
+  .pv-content:after {
+    top: 3px;
+    left: -5px;
+    width: 7px;
+    height: 7px;
+    border-color: #006eff;
+    background-color: #006eff;
+
+    content: "";
+    display: inline-block;
+    position: absolute;
+    border-radius: 100%;
+    border: 2px solid transparent;
+  }
+</style>
+
