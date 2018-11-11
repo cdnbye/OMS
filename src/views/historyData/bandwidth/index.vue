@@ -27,7 +27,7 @@
 <script>
 import moment from 'moment'
 import LineChart from '@/components/LineChart'
-import { formatTraffic, formatTrafficUnit } from '@/utils/format'
+import { formatBandwidth, getBandwidthNum } from '@/utils/format'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
 export default {
@@ -93,12 +93,12 @@ export default {
       trafficValue.sort(function(a, b) {
         return b.alue - a.vavlue > 0
       })
-      this.option.unit = this.option.unit ? this.option.unit : formatTrafficUnit(trafficValue[(trafficValue.length - 1)].value)
+      this.option.unit = this.option.unit ? this.option.unit : formatBandwidth(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []
       this.bandwidthData.p2p = []
       data.forEach(item => {
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.bandwidthData.p2p.push(formatTraffic((item.value * 8 / 300), this.option.unit))
+        this.bandwidthData.p2p.push(getBandwidthNum((item.value * 8 / 300), this.option.unit))
       })
     },
     formatHttpData(res) {
@@ -107,12 +107,12 @@ export default {
       trafficValue.sort(function(a, b) {
         return b.alue - a.vavlue > 0
       })
-      this.option.unit = this.option.unit ? this.option.unit : formatTrafficUnit(trafficValue[(trafficValue.length - 1)].value)
+      this.option.unit = this.option.unit ? this.option.unit : formatBandwidth(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []
       this.bandwidthData.http = []
       data.forEach(item => {
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.bandwidthData.http.push(formatTraffic((item.value * 8 / 300), this.option.unit))
+        this.bandwidthData.http.push(getBandwidthNum((item.value * 8 / 300), this.option.unit))
       })
     },
     getTimeStamp(date) {

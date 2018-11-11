@@ -1,10 +1,16 @@
 export function formatBandwidth(val) {
   const mbps = 1024
+  const gbps = 1024 * 1024
   let value = {
     num: 0,
     unit: 'kbps'
   }
-  if(val >= mbps) {
+  if(val >= gbps) {
+    value = {
+      num: (val / gbps).toFixed(2),
+      unit: 'gbps'
+    }
+  } else if(val >= mbps) {
     value = {
       num: (val / mbps).toFixed(2),
       unit: 'mbps'
@@ -15,29 +21,13 @@ export function formatBandwidth(val) {
       unit: 'kbps'
     }
   }
-   return value
+  return value
 }
 
-export function formatTrafficUnit(val) {
-  let unit = 'kbps'
-  const mb = 1024
-  const gb = 1024 * 1024
-  const tb = 1024 * 1024 * 1024
-  if(val >= tb) {
-    unit =  'tbps'
-  } else if(val >= gb) {
-    unit =  'gbps'
-  } else if(val >= mb) {
-    unit = 'mbps'
-  }
-   return unit
-}
-
-export function formatTraffic(val, unit) {
+export function getBandwidthNum(val, unit) {
   let value = 0
   const mb = 1024
   const gb = 1024 * 1024
-  const tb = 1024 * 1024 * 1024
   switch (unit) {
     case 'gbps':
       value =  (val / gb).toFixed(2)
@@ -51,5 +41,31 @@ export function formatTraffic(val, unit) {
     default:
       break;
   }
-   return value
+  return value
+}
+
+export function formatTraffic(val) {
+  const mb = 1024
+  const gb = 1024 * 1024
+  let value = {
+    num: 0,
+    unit: 'kb'
+  }
+  if(val >= gb) {
+    value = {
+      num: (val / gb).toFixed(2),
+      unit: 'gb'
+    }
+  } else if(val >= mb) {
+    value = {
+      num: (val / mb).toFixed(2),
+      unit: 'mb'
+    }
+  } else {
+    value = {
+      num: val,
+      unit: 'kb'
+    }
+  }
+  return value
 }

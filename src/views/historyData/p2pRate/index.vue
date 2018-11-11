@@ -27,7 +27,6 @@
 <script>
 import moment from 'moment'
 import LineChart from '@/components/LineChart'
-import { formatTraffic, formatTrafficUnit } from '@/utils/format'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
 export default {

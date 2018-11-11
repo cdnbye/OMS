@@ -26,7 +26,7 @@
       label="text">
     </el-table-column>
 
-    <el-table-column label="操作" align="center" width="150" fixed="right">
+    <el-table-column label="操作" align="center" fixed="right">
       <template slot-scope="scope">
         <el-button type="text" size="mini" @click="handleCheck(scope.row)">认证</el-button>
         <el-popover
@@ -60,7 +60,7 @@
   <el-dialog
     title="验证域名"
     :visible.sync="checkDialogVisible"
-    :width="device === 'mobile' ? '100%' : '30%' "
+    :width="device === 'mobile' ? '90%' : '30%' "
   >
     <el-alert
       title=""
@@ -131,7 +131,7 @@
   <el-dialog
     title="绑定域名"
     :visible.sync="dialogVisible"
-    width="50%">
+    :width="device === 'mobile' ? '90%' : '50%' ">
     <el-form ref="domainForm" :model="domainFormData" :rules="domainRules">
       <el-form-item prop="domain">
         <el-input 

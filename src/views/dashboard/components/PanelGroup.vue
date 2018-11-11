@@ -35,6 +35,15 @@
         </div>
       </div>
     </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
+          <div class="card-panel-text">今日P2P流量({{statis.traffic_p2p.unit}})</div>
+        </div>
+      </div>
+    </el-col>
     
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
@@ -93,6 +102,15 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.traffic_p2p_month.num }}</span>
+          <div class="card-panel-text">近1月P2P流量({{statis.traffic_p2p_month.unit}})</div>
+        </div>
+      </div>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.bandwidth_p2p_month.num }}</span>
           <div class="card-panel-text">近1月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
         </div>
@@ -141,7 +159,7 @@
 <script>
 import { fetchLiveData } from '@/api/liveData'
 import { fetchHostNum } from '@/api/userDomain'
-import { formatBandwidth } from '@/utils/format'
+import { formatBandwidth, formatTraffic } from '@/utils/format'
 
 let int = undefined
 
@@ -174,6 +192,15 @@ export default {
           unit: 'kbps'
         },
         bandwidth_http: {
+          num: 0,
+          unit: 'kbps'
+        },
+
+        traffic_p2p: {
+          num: 0,
+          unit: 'kbps'
+        },
+        traffic_p2p_month: {
           num: 0,
           unit: 'kbps'
         },
@@ -212,6 +239,8 @@ export default {
         this.statis.p2p_rate = (data.p2p_rate_rt * 100).toFixed(2)
         this.statis.p2p_rate_week = (data.p2p_rate_7 * 100).toFixed(2)
         this.statis.p2p_rate_month = (data.p2p_rate_month * 100).toFixed(2)
+        this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+        this.statis.traffic_p2p_month = formatTraffic(data.traffic_p2p_30)
 
         this.statis.frequency_day = data.api_frequency_day
         this.statis.frequency_week = data.api_frequency_7
