@@ -35,6 +35,13 @@ export function fetchLive() {
   })
 }
 
+export function fetchNetType() {
+  return request({
+    url: `global/num?net_type=all`,
+    method: 'get'
+  })
+}
+
 export function fetchP2PTraffic(start, end) {
   return request({
     url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=5`,

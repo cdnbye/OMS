@@ -91,20 +91,8 @@ export default {
           top: 'bottom',
           text:['高','低'],           // 文本，默认为数值文本
           calculable : true,
-          color: ['lightskyblue', 'black']
+          color: ['red', '#E2E2E2']
         },
-
-        // visualMap: {
-        //   type: 'piecewise',
-        //   pieces: [
-        //     {gt: 2500},            // (1500, Infinity]
-        //     {gt: 1500, lte: 2500},  // (900, 1500]
-        //     {gt: 1000, lte: 1500},  // (310, 1000]
-        //     {gt: 500, lte: 1000},   // (200, 300]
-        //     {gt: 100, lte: 500, label: '50 到 200（自定义label）'},       // (10, 200]
-        //     {lt: 100}                 // (-Infinity, 5)
-        //   ]
-        // },
         backgroundColor: {
           type: 'linear',
           x: 0,
@@ -136,12 +124,15 @@ export default {
             }
           },
           itemStyle: {
-            normal: {
-              areaColor: '#091632',
-              borderColor: '#1773c3',
-              shadowColor: '#1773c3',
-              shadowBlur: 20
-            }
+            // emphasis: {
+            //   color: "rgba(37, 43, 61, .5)" //hover背景
+            // }
+            // normal: {
+            //   areaColor: '#091632',
+            //   borderColor: '#1773c3',
+            //   shadowColor: '#1773c3',
+            //   shadowBlur: 20
+            // }
           },
           scaleLimit: {
             min: 0.5,

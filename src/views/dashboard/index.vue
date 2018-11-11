@@ -47,6 +47,15 @@
         </el-card>
       </el-col>
 
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>网络类型分布</span>
+          </div>
+          <Piechart :chart-data="netTypeData" />
+        </el-card>
+      </el-col>
+
     </el-row>
   </div>
 </template>
@@ -54,8 +63,8 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import Piechart from '@/components/PieChart'
-import { fetchVersion, fetchTag, fetchDevice, fetchLive } from '@/api/historyData'
-  import { fetchDomain } from '@/api/userDomain'
+import { fetchVersion, fetchTag, fetchDevice, fetchLive, fetchNetType } from '@/api/historyData'
+import { fetchDomain } from '@/api/userDomain'
 
 export default {
   name: 'Dashboard',
@@ -70,6 +79,7 @@ export default {
       deviceData: [],
       liveData: [],
       topSiteData: [],
+      netTypeData: [],
       onlineNum: 0
     }
   },
@@ -116,6 +126,11 @@ export default {
               value: item.num
             })
           })
+        }
+      })
+      fetchNetType().then(res => {
+        if(res.data) {
+          this.netTypeData = [...res.data]
         }
       })
 

@@ -18,7 +18,6 @@
       placeholder="请输入内容"
       v-model="searchValue"
       @keyup.enter.native="handleSearch"/>
-
   </div>
   <el-table
     :data="tableData"
@@ -94,7 +93,8 @@
   <div class="pagination-container">
     <el-pagination
       v-show="total>0"
-      layout="total, sizes, prev, pager, next"
+      :small="device === 'mobile'"
+      :layout="device === 'mobile' ? 'total, prev, pager, next' : 'total, sizes, prev, pager, next'"
       :total="total"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="tableParam.pageSize"
@@ -108,6 +108,7 @@
 
   <script>
   import { fetchDomain, fetchHostNum, searchHost } from '@/api/userDomain'
+  import { mapGetters } from 'vuex'
 
   export default {
     data() {
@@ -148,6 +149,11 @@
           },
         ]
       }
+    },
+    computed: {
+      ...mapGetters([
+        'device'
+      ])
     },
     methods: {
       formatData(data) {

@@ -60,7 +60,7 @@
   <el-dialog
     title="验证域名"
     :visible.sync="checkDialogVisible"
-    width="30%"
+    :width="device === 'mobile' ? '100%' : '30%' "
   >
     <el-alert
       title=""
@@ -77,10 +77,21 @@
     </el-form>
 
     <template v-if="checkSelect === 'dns'">
-      <el-steps direction="vertical" :active="2" :space="100">
-        <el-step icon="el-icon-success" :description="'设置cdnbye_dns_auth.cdnbye.com的TXT域名解析内容为下列字符：\n' + checkDomainText"></el-step>
-        <el-step icon="el-icon-success" description="完成操作后请点击'立即验证'按钮"></el-step>
-      </el-steps>
+      <div>
+        <ol>
+          <li>
+            <div class="pv-content">
+              <h4>设置cdnbye_dns_auth.cdnbye.com的TXT域名解析内容为下列字符：</h4>
+              <h4>{{checkDomainData.text}}</h4>
+            </div>
+          </li>
+          <li>
+            <div class="pv-content pv-content-last">                
+              <h4>完成操作后请点击"立即验证"按钮</h4>
+            </div>  
+          </li>
+        </ol>
+      </div>
     </template>
 
     <template v-else>
@@ -88,18 +99,18 @@
         <ol>
           <li>
             <div class="pv-content">
-              <h4>下载专有的<a>HTML验证文件</a></h4>
+              <h4>下载专有的<a @click="saveFile">HTML验证文件</a></h4>
             </div>
           </li>
           <li>
             <div class="pv-content">
-              <h4>将该文件上传至：http://oms.cdnbye.com/</h4>
+              <h4>将该文件上传至：{{checkDomainData.domain}}</h4>
               <h4>注意文件名称不要修改，文件名称为auth.txt</h4>
             </div>
           </li>
           <li>
             <div class="pv-content">
-              <h4>用浏览器访问http://oms.cdnbye.com/auth.txt,确认是否上传成功</h4>
+              <h4>用浏览器访问{{checkDomainData.domain}}/auth.txt,确认是否上传成功</h4>
             </div>  
           </li>
           <li>
@@ -143,6 +154,8 @@ https://180.163.26.39" />
   <script>
   import { fetchUserDomain, bindDomain, checkDomain, deleteDomain } from '@/api/userDomain'
   import { validateURL } from '@/utils/validate'
+  import { downloadFile } from '@/utils'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'UserDomain',
@@ -163,12 +176,15 @@ https://180.163.26.39" />
           pageSize: 10
         },
         dialogVisible: false,
+
         checkDialogVisible: false,
         checkSelect: 'dns',
-
-        checkDomainText: '',
-        checkDomainID: 0,
         checkDomainLoading: false,
+        checkDomainData: {
+          domain: '',
+          text: '',
+          id: 0,
+        },
 
         domainFormData: {
           domain: ''
@@ -177,6 +193,11 @@ https://180.163.26.39" />
           domain: [{ required: true, trigger: 'blur', validator: formValidateURL }],
         }
       }
+    },
+    computed: {
+      ...mapGetters([
+        'device'
+      ])
     },
     methods: {
       fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
@@ -203,14 +224,15 @@ https://180.163.26.39" />
         this.fetchTableData()
       },
       handleCheck(data) {
-        console.log(data)
-        this.checkDomainText = data.text
-        this.checkDomainID = data.id
+        this.checkDomainData.text = data.text
+        this.checkDomainData.domain = data.domain
+        this.checkDomainData.id = data.id
+
         this.checkDialogVisible = true
       },
       handleCheckDomain() {
         this.checkDomainLoading = true
-        checkDomain(this.checkDomainID).then(res => {
+        checkDomain(this.checkDomainData.id).then(res => {
           this.$message({
             message: '验证成功',
             type: 'success'
@@ -259,6 +281,9 @@ https://180.163.26.39" />
       },
       formatter(row) {
         return row.isValid === 0 ? '不可用' : '可用'
+      },
+      saveFile() {
+        downloadFile(this.checkDomainData.text, 'auth.txt')
       }
     },
     mounted() {
