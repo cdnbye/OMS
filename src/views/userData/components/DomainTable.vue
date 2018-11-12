@@ -22,6 +22,7 @@
   <el-table
     :data="tableData"
     v-loading="loading"
+    @filter-change="tableFilter"
     style="width: 100%">
     <el-table-column
       align="center"
@@ -80,7 +81,11 @@
     <el-table-column
       align="center"
       prop="agent"
-      label="代理商">
+      label="代理商"
+      column-key="agent"
+      :filter-multiple="false"
+      :filters="[{ text: 'btjson', value: 'btjson' }]"
+      >
     </el-table-column>
 
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
@@ -107,7 +112,7 @@
 </template>
 
   <script>
-  import { fetchDomain, fetchHostNum, searchHost } from '@/api/userDomain'
+  import { fetchDomain, fetchDomainByFilter, fetchHostNum, searchHost } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -156,6 +161,13 @@
       ])
     },
     methods: {
+      tableFilter(filters) {
+        console.log(filters)
+        this.fetchTableByFilter([{
+          name: 'agent',
+          value: filters.agent
+        }])
+      },
       formatData(data) {
         data.forEach(item => {
           if(item.p2p) {
@@ -189,6 +201,21 @@
           this.total = res.data.num
         })
       },
+
+      fetchTableByFilter(filter) {
+        this.loading = true
+        fetchDomainByFilter(this.tableParam.page, this.tableParam.pageSize, this.selectValue, filter).then(res => {
+          if(res.data) {
+            this.loading = false
+            this.tableData = this.formatData(res.data)
+            console.log(this.formatData(res.data))
+          }
+        }).catch(err => {
+          this.loading = false
+          console.log(err)
+        })
+      },
+
       handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize
         this.fetchTableData()

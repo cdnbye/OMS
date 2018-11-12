@@ -15,6 +15,17 @@ export function fetchDomain(page, pageSize, order) {
   })
 }
 
+export function fetchDomainByFilter(page, pageSize, order, filters) {
+  let url = `host?page=${page}&page_size=${pageSize}&order=${order}`
+  filters.forEach(item => {
+    url += `&${item.name}=${item.value}`
+  })
+  return request({
+    url,
+    method: 'get'
+  })
+}
+
 export function searchHost(host) {
   return request({
     url: `host/search?keywords=${host}`,
