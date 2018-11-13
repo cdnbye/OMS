@@ -1,3 +1,8 @@
+export function setSha256(value) {
+  const sha256 = require("js-sha256").sha256
+  return sha256(value)
+}
+
 export function formatBandwidth(val) {
   const mbps = 1024
   const gbps = 1024 * 1024

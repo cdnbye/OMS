@@ -151,6 +151,17 @@ export const asyncRouterMap = [
           roles: ['admin']
         }
       },
+
+      {
+        path: 'edit',
+        component: () => import('@/views/editMailPwd'),
+        name: 'Edit',
+        meta: {
+          title: 'edit',
+          roles: ['admin', 'user']
+        }
+      },
+
       {
         path: 'user_domain',
         component: () => import('@/views/userData/bindDomain'),

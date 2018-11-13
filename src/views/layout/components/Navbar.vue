@@ -23,6 +23,13 @@
               {{ $t('navbar.github') }}
             </el-dropdown-item>
           </a>
+
+          <router-link to="/user/edit">
+            <el-dropdown-item>
+              edit
+            </el-dropdown-item>
+          </router-link>
+
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>

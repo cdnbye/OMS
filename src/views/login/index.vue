@@ -49,6 +49,7 @@
 <script>
 import { validateEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
+import { setSha256 } from '@/utils/format'
 
 export default {
   name: 'Login',
@@ -96,7 +97,7 @@ export default {
     formatData(data) {
       const temp = {...data}
       delete temp.username
-      temp.passwd = this.setSha256(data.passwd)
+      temp.passwd = setSha256(data.passwd)
       temp.email = data.username
       return temp
     },
@@ -128,10 +129,6 @@ export default {
           return false
         }
       })
-    },
-    setSha256(value) {
-      const sha256 = require("js-sha256").sha256
-      return sha256(value)
     },
     goSignup() {
       this.$router.push({ path: '/signup' })
