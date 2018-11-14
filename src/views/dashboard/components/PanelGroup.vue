@@ -198,11 +198,11 @@ export default {
 
         traffic_p2p: {
           num: 0,
-          unit: 'kbps'
+          unit: 'KB'
         },
         traffic_p2p_month: {
           num: 0,
-          unit: 'kbps'
+          unit: 'KB'
         },
 
         frequency_day: 0,

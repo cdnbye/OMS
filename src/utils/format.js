@@ -52,24 +52,27 @@ export function getBandwidthNum(val, unit) {
 export function formatTraffic(val) {
   const mb = 1024
   const gb = 1024 * 1024
-  let value = {
-    num: 0,
-    unit: 'kb'
-  }
-  if(val >= gb) {
+  const tb = 1024 * 1024 * 1024
+  let value = {num: 0,unit: 'KB'}
+  if(val >= tb) {
+    value = {
+      num: (val / tb).toFixed(2),
+      unit: 'TB'
+    }
+  } else if(val >= gb) {
     value = {
       num: (val / gb).toFixed(2),
-      unit: 'gb'
+      unit: 'GB'
     }
   } else if(val >= mb) {
     value = {
       num: (val / mb).toFixed(2),
-      unit: 'mb'
+      unit: 'MB'
     }
   } else {
     value = {
       num: val,
-      unit: 'kb'
+      unit: 'KB'
     }
   }
   return value
