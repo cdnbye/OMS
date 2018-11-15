@@ -63,7 +63,7 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import Piechart from '@/components/PieChart'
-import { fetchVersion, fetchTag, fetchDevice, fetchLive, fetchNetType } from '@/api/historyData'
+import { fetchLiveData } from '@/api/liveData'
 import { fetchDomain } from '@/api/userDomain'
 
 export default {
@@ -88,47 +88,27 @@ export default {
   },
   methods: {
     getData() {
-      fetchVersion().then(res => {
+      fetchLiveData('version').then(res => {
         if(res.data) {
-          res.data.forEach(item => {
-            this.versionData.push({
-              name: item.version,
-              value: item.num
-            })
-          })
+          this.versionData = [...res.data]
         }
       })
-      fetchTag().then(res => {
+      fetchLiveData('tag').then(res => {
         if(res.data) {
-          res.data.forEach(item => {
-            this.tagData.push({
-              name: item.tag,
-              value: item.num
-            })
-          })
+          this.tagData = [...res.data]
         }
       })
-      fetchDevice().then(res => {
+      fetchLiveData('device').then(res => {
         if(res.data) {
-          res.data.forEach(item => {
-            this.deviceData.push({
-              name: item.dev,
-              value: item.num
-            })
-          })
+          this.deviceData = [...res.data]
         }
       })
-      fetchLive().then(res => {
+      fetchLiveData('live').then(res => {
         if(res.data) {
-          res.data.forEach(item => {
-            this.liveData.push({
-              name: item.live,
-              value: item.num
-            })
-          })
+          this.liveData = [...res.data]
         }
       })
-      fetchNetType().then(res => {
+      fetchLiveData('netType').then(res => {
         if(res.data) {
           this.netTypeData = [...res.data]
         }

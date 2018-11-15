@@ -4,7 +4,7 @@
 
 <script>
 import ChinaMap from '@/components/CityMap'
-import { fetchCityNum, fetchProvinceNum } from '@/api/liveData'
+import { fetchLiveData } from '@/api/liveData'
 
 export default {
   name: 'ChinaDis',
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetchCityNum().then(res => {
+      fetchLiveData('city').then(res => {
         if(res.data) {
           this.cityData = res.data
         }
@@ -30,7 +30,7 @@ export default {
         console.log(err)
       })
 
-      fetchProvinceNum().then(res => {
+      fetchLiveData('province').then(res => {
         if(res.data) {
           this.provinceData = res.data
         }

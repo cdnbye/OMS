@@ -7,41 +7,6 @@ export function fetchNum(start, end) {
   })
 }
 
-export function fetchVersion() {
-  return request({
-    url: `global/num?version=all`,
-    method: 'get'
-  })
-}
-
-export function fetchTag() {
-  return request({
-    url: `global/num?tag=all`,
-    method: 'get'
-  })
-}
-
-export function fetchDevice() {
-  return request({
-    url: `global/num?dev=all`,
-    method: 'get'
-  })
-}
-
-export function fetchLive() {
-  return request({
-    url: `global/num?live=all`,
-    method: 'get'
-  })
-}
-
-export function fetchNetType() {
-  return request({
-    url: `global/num?net_type=all`,
-    method: 'get'
-  })
-}
-
 export function fetchP2PTraffic(start, end) {
   return request({
     url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=5`,

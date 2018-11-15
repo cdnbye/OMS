@@ -4,7 +4,7 @@
 
 <script>
 import WorldMap from '@/components/WorldMap'
-import { fetchCountryNum } from '@/api/liveData'
+import { fetchLiveData } from '@/api/liveData'
 
 export default {
   name: 'ChinaDis',
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetchCountryNum().then(res => {
+      fetchLiveData('country').then(res => {
         if(res.data) {
           this.countryData = res.data
         }

@@ -1,29 +1,15 @@
 import request from '@/utils/request'
 
-export function fetchLiveData() {
+export function fetchGlobalData() {
   return request({
     url: 'global',
     method: 'get',
   })
 }
 
-export function fetchCityNum() {
+export function fetchLiveData(type) {
   return request({
-    url: `global/num?city=all`,
-    method: 'get'
-  })
-}
-
-export function fetchProvinceNum() {
-  return request({
-    url: `global/num?province=all`,
-    method: 'get'
-  })
-}
-
-export function fetchCountryNum() {
-  return request({
-    url: `global/num?country=all`,
+    url: `global/num?type=${type}`,
     method: 'get'
   })
 }

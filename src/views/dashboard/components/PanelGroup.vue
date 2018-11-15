@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import { fetchLiveData } from '@/api/liveData'
+import { fetchGlobalData } from '@/api/liveData'
 import { fetchHostNum } from '@/api/userDomain'
 import { formatBandwidth, formatTraffic } from '@/utils/format'
 
@@ -226,7 +226,7 @@ export default {
   },
   methods: {
     getData() {
-      fetchLiveData().then(res => {
+      fetchGlobalData().then(res => {
         const { data } = res
         this.statis.online = data.num_rt
         this.statis.max_online = data.max_num
