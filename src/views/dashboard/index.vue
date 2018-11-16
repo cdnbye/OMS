@@ -114,7 +114,7 @@ export default {
         }
       })
 
-      fetchDomain(1, 10, 'max_num').then(res => {
+      fetchDomain(1, 10, 'num').then(res => {
         if(res.data) {
           let total = 0
           res.data.forEach(item => {

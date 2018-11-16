@@ -34,6 +34,10 @@ export default {
     provinceData: {
       type: Array,
       required: true
+    },
+    total: {
+      type: Number,
+      required: false
     }
   },
   data() {
@@ -233,7 +237,8 @@ export default {
         '大庆':[125.03,46.58]
     },
       data: [],
-      province_data: []
+      province_data: [],
+      _total: 0
     }
   },
   watch: {
@@ -248,6 +253,12 @@ export default {
       deep: true,
       handler(val) {
         this.province_data = val
+        this.setOptions()
+      }
+    },
+    total: {
+      handler(val) {
+        this._total = val
         this.setOptions()
       }
     }
@@ -301,6 +312,7 @@ export default {
       }
     },
     setOptions() {
+      const _this = this
       this.chart.setOption({
         // visualMap: {
         //   type: 'piecewise',
@@ -355,7 +367,13 @@ export default {
         tooltip: {
           trigger: 'item',
           formatter: function (params) {
-            return params.value[2] ? params.name + ' : ' + params.value[2] : params.name + ' : ' + params.value
+            let desc = ''
+            if(params.value[2]) {
+              desc += params.name + ' : ' + params.value[2] + '<br />' + '人数占比：' + (params.value[2] / _this._total * 100).toFixed(2) + '%'
+            } else {
+              desc += params.name + ' : ' + params.value + '<br />' + '人数占比：' + (params.value / _this._total * 100).toFixed(2) + '%'
+            }
+            return desc
           }
         },
         series: [

@@ -7,7 +7,7 @@ import WorldMap from '@/components/WorldMap'
 import { fetchLiveData } from '@/api/liveData'
 
 export default {
-  name: 'ChinaDis',
+  name: 'WorldDis',
   data() {
     return {
       countryData: []
