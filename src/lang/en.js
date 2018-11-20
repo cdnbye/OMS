@@ -1,6 +1,8 @@
 export default {
   route: {
     dashboard: 'Realtime data',
+    liveData: 'Live data',
+    disChart: 'Distribution',
     Operational: 'Operational data',
     bandwidth: 'bandwidth',
     online: 'online',
@@ -22,7 +24,7 @@ export default {
   navbar: {
     logOut: 'Log Out',
     dashboard: 'Dashboard',
-    github: 'Github',
+    dosAddress: 'Document address',
     screenfull: 'Screenfull',
     theme: 'Theme',
     size: 'Global Size'

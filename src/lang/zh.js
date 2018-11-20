@@ -1,6 +1,8 @@
 export default {
   route: {
     dashboard: '实时数据分析',
+    liveData: '实时数据',
+    disChart: '分布图',
     Operational: '整体运营数据',
     bandwidth: '带宽趋势图',
     online: '在线人数趋势图',
@@ -22,7 +24,7 @@ export default {
   navbar: {
     logOut: '退出登录',
     dashboard: '首页',
-    github: '项目地址',
+    dosAddress: '文档地址',
     screenfull: '全屏',
     theme: '换肤',
     size: '布局大小'

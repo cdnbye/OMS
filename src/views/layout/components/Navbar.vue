@@ -18,9 +18,9 @@
               {{ $t('navbar.dashboard') }}
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/cdnbye/hlsjs-p2p-engine">
+          <a target="_blank" href="https://docs.cdnbye.com/">
             <el-dropdown-item>
-              {{ $t('navbar.github') }}
+              {{ $t('navbar.dosAddress') }}
             </el-dropdown-item>
           </a>
 

@@ -35,22 +35,56 @@ export const constantRouterMap = [
     hidden: true,
     component: () => import('@/views/passwdReset'),
   },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: 'dashboard',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: () => import('@/views/dashboard/index'),
+  //       name: 'Dashboard',
+  //       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+  //     }
+  //   ]
+  // },
 ]
 
 export const asyncRouterMap = [
+  {
+    path: '',
+    component: Layout,
+    redirect: '/liveData',
+    alwaysShow: true,
+    meta: {
+      title: 'dashboard',
+      icon: 'dashboard',
+      roles: ['admin', 'user']
+    },
+    children: [
+      {
+        path: 'liveData',
+        component: () => import('@/views/dashboard/'),
+        name: 'LiveData',
+        meta: {
+          title: 'liveData',
+          roles: ['admin', 'user'],
+          noCache: true
+        }
+      },
+      {
+        path: 'pieChart',
+        component: () => import('@/views/dashboard/admin/Distribution'),
+        name: 'PieChart',
+        meta: {
+          title: 'disChart',
+          roles: ['admin'],
+          noCache: true
+        }
+      }
+    ]
+  },
+
   {
     path: '/permission',
     component: Layout,
@@ -74,9 +108,9 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '',
+    path: '/history',
     component: Layout,
-    redirect: 'bandwidth',
+    redirect: '/history/bandwidth',
     alwaysShow: true,
     meta: {
       title: 'Operational',
