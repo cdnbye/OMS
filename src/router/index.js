@@ -52,7 +52,7 @@ export const constantRouterMap = [
 
 export const asyncRouterMap = [
   {
-    path: '',
+    path: '/',
     component: Layout,
     redirect: '/liveData',
     alwaysShow: true,
@@ -63,7 +63,7 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: 'liveData',
+        path: '/liveData',
         component: () => import('@/views/dashboard/'),
         name: 'LiveData',
         meta: {
@@ -73,7 +73,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'pieChart',
+        path: '/pieChart',
         component: () => import('@/views/dashboard/admin/Distribution'),
         name: 'PieChart',
         meta: {
