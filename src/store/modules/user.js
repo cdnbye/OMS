@@ -1,5 +1,6 @@
 import { loginByUsername, signup } from '@/api/auth'
 import { getToken, setToken, removeToken, getID, setID, removeID } from '@/utils/auth'
+import Cookies from 'js-cookie'
 
 const user = {
   state: {
@@ -13,7 +14,9 @@ const user = {
     roles: [],
     setting: {
       articlePlatform: []
-    }
+    },
+    userDomain: [],
+    currentDomain: (Cookies.get('userDomain') ? JSON.parse(Cookies.get('userDomain')) : {}) || {}
   },
 
   mutations: {
@@ -40,7 +43,14 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
-    }
+    },
+    SET_USERDOMAIN: (state, userDomain) => {
+      state.userDomain = userDomain
+    },
+    SET_CURRENTDOMAIN: (state, currentDomain) => {
+      Cookies.set('userDomain', currentDomain, { expires: 99999 })
+      state.currentDomain = currentDomain
+    },
   },
 
   actions: {
@@ -94,6 +104,20 @@ const user = {
         }
         commit('SET_ROLES', data.roles)
         resolve(data)
+      })
+    },
+    //设置用户域名
+    setDomain({ commit }, userDomain) {
+      return new Promise((resolve, reject) => {
+        commit('SET_USERDOMAIN', userDomain)
+        resolve(userDomain)
+      })
+    },
+    //设置用户当前域名
+    setCurrentDomain({ commit }, currentDomain) {
+      return new Promise((resolve, reject) => {
+        commit('SET_CURRENTDOMAIN', currentDomain)
+        resolve(currentDomain)
       })
     }
 

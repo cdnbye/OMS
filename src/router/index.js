@@ -64,7 +64,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: '/liveData',
-        component: () => import('@/views/dashboard/'),
+        component: () => import('@/views/dashboard/LiveData'),
         name: 'LiveData',
         meta: {
           title: 'liveData',
@@ -74,11 +74,11 @@ export const asyncRouterMap = [
       },
       {
         path: '/pieChart',
-        component: () => import('@/views/dashboard/admin/Distribution'),
+        component: () => import('@/views/dashboard/Distribution'),
         name: 'PieChart',
         meta: {
           title: 'disChart',
-          roles: ['admin'],
+          roles: ['admin', 'user'],
           noCache: true
         }
       }
@@ -155,7 +155,7 @@ export const asyncRouterMap = [
     meta: {
       title: 'userData',
       icon: 'table',
-      roles: ['admin']
+      roles: ['admin', 'user']
     },
     children: [
       {
@@ -190,6 +190,7 @@ export const asyncRouterMap = [
         path: 'edit',
         component: () => import('@/views/editMailPwd'),
         name: 'Edit',
+        hidden: true,
         meta: {
           title: 'edit',
           roles: ['admin', 'user']
@@ -202,7 +203,7 @@ export const asyncRouterMap = [
         name: 'UserDomain',
         meta: {
           title: 'userDomain',
-          roles: ['admin']
+          roles: ['admin', 'user']
         }
       }
     ]

@@ -156,6 +156,7 @@ https://180.163.26.39" />
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
+  import store from '@/store'
 
   export default {
     name: 'UserDomain',

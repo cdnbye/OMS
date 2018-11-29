@@ -1,37 +1,63 @@
 <template>
-  <el-row :gutter="20" class="panel-group">
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.online }}</span>
-          <div class="card-panel-text">当前在线人数</div>
+  <div>
+    <p>当前域名：{{currentDomain.domain}}&nbsp; &nbsp;<a @click="dialogVisible = true">切换</a></p>
+    <el-row :gutter="20" class="panel-group">
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.online }}</span>
+            <div class="card-panel-text">当前在线人数</div>
+          </div>
         </div>
-      </div>
-    </el-col>
+      </el-col>
 
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
-          <div class="card-panel-text">今日P2P流量({{statis.traffic_p2p.unit}})</div>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
+            <div class="card-panel-text">今日P2P流量({{statis.traffic_p2p.unit}})</div>
+          </div>
         </div>
-      </div>
-    </el-col>
-    
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.frequency_day }}</span>
-          <div class="card-panel-text">今日服务人数</div>
+      </el-col>
+      
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.frequency_day }}</span>
+            <div class="card-panel-text">今日服务人数</div>
+          </div>
         </div>
-      </div>
-    </el-col>
-  </el-row>
+      </el-col>
+    </el-row>
+
+    <el-dialog
+      title="切换域名"
+      :visible.sync="dialogVisible"
+      :width="device === 'mobile' ? '80%' : '30%'">
+      <el-select v-model="selectValue" placeholder="请选择" style="width: 80%">
+        <template v-for = "value in userDomain">
+          <el-option
+            v-if="value.isValid === 1"
+            :key="value.domain"
+            :label="value.domain"
+            :value="value.domain">
+          </el-option>
+        </template>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleSelect">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
 import { fetchGlobalData } from '@/api/user/liveData'
+import { fetchUserDomain } from '@/api/userDomain'
 import { formatTraffic } from '@/utils/format'
+import { mapGetters } from 'vuex'
+import store from '@/store'
 
 let int = undefined
 
@@ -39,6 +65,8 @@ export default {
   name: 'PanelGroup',
   data() {
     return {
+      dialogVisible: false,
+      selectValue: '',
       statis: {
         online: 0,
         traffic_p2p: {
@@ -46,12 +74,20 @@ export default {
           unit: 'KB'
         },
         frequency_day: 0,
-      }
+      },
     }
   },
+  computed: {
+    ...mapGetters([
+      'userDomain',
+      'currentDomain',
+      'device'
+    ])
+  },
   mounted() {
-    const _this = this
+    this.fetchTableData()
     this.getData()
+    const _this = this
     int = setInterval(function() {
       _this.getData()
     }, 10000)
@@ -61,14 +97,43 @@ export default {
   },
   methods: {
     getData() {
-      fetchGlobalData().then(res => {
-        const { data } = res
-        this.statis.online = data.num_rt
-        this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
-        this.statis.frequency_day = data.api_frequency_day
+      if(this.currentDomain.id) {
+        fetchGlobalData(this.currentDomain.uid, this.currentDomain.id).then(res => {
+          const { data } = res
+          this.statis.online = data.num_rt
+          this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+          this.statis.frequency_day = data.api_frequency_day
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    fetchTableData() {
+      fetchUserDomain(1, 10).then(res => {
+        if(res.data) {
+          res.data.forEach(item => {
+            if(item.isValid === 1) {
+              store.dispatch('setDomain', res.data)
+              store.dispatch('setCurrentDomain', res.data[0])
+              this.getData()
+            }
+          })
+        }
       }).catch(err => {
         console.log(err)
       })
+    },
+    handleSelect() {
+      if(this.selectValue) {
+        this.userDomain.forEach(item => {
+          if(item.domain === this.selectValue) {
+            store.dispatch('setCurrentDomain', item).then(() => {
+              this.getData()
+              this.dialogVisible = false
+            })
+          }
+        })
+      }
     }
   }
 }
@@ -106,4 +171,15 @@ export default {
       }
     }
   }
+  p {
+      padding: 4px 20px;
+      text-align: left;
+      a {
+        color: #337ab7;
+        cursor: pointer;
+        &:hover {
+          color: rgb(32, 160, 255);
+        }
+      }
+    }
 </style>
