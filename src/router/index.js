@@ -78,7 +78,7 @@ export const asyncRouterMap = [
         name: 'PieChart',
         meta: {
           title: 'disChart',
-          roles: ['admin', 'user'],
+          roles: ['admin'],
           noCache: true
         }
       }
@@ -115,7 +115,7 @@ export const asyncRouterMap = [
     meta: {
       title: 'Operational',
       icon: 'chart',
-      roles: ['admin']
+      roles: ['admin', 'user']
     },
     children: [
       {
@@ -129,20 +129,21 @@ export const asyncRouterMap = [
       },
       {
         path: 'p2p_rate',
-        component: () => import('@/views/historyData/p2pRate'),
+        component: () => import('@/views/historyData/P2P'),
+        // component: () => import('@/views/historyData/p2pRate'),
         name: 'P2PRate',
         meta: {
           title: 'p2pRate',
-          roles: ['admin']
+          roles: ['admin', 'user']
         }
       },
       {
         path: 'online',
-        component: () => import('@/views/historyData/online'),
+        component: () => import('@/views/historyData/OnlineNum'),
         name: 'Online',
         meta: {
           title: 'online',
-          roles: ['admin']
+          roles: ['admin', 'user']
         }
       }
     ]

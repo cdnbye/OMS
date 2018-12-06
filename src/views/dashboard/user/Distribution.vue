@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-editor-container">
+  <!-- <div class="dashboard-editor-container"> -->
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
@@ -47,7 +47,7 @@
       </el-col>
 
     </el-row>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>

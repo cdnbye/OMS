@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <p>当前域名：{{currentDomain.domain}}&nbsp; &nbsp;<a @click="dialogVisible = true">切换</a></p>
+  <div class="user-dash">
+    <p>当前域名：{{currentDomain.domain ? currentDomain.domain : '无'}}&nbsp; &nbsp;<a @click="dialogVisible = true">切换</a></p>
     <el-row :gutter="20" class="panel-group">
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.online }}</span>
@@ -11,7 +11,7 @@
         </div>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
@@ -20,7 +20,7 @@
         </div>
       </el-col>
       
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.frequency_day }}</span>
@@ -29,6 +29,8 @@
         </div>
       </el-col>
     </el-row>
+
+    <Dis />
 
     <el-dialog
       title="切换域名"
@@ -53,16 +55,22 @@
 </template>
 
 <script>
-import { fetchGlobalData } from '@/api/user/liveData'
+import { fetchGlobalData, fetchNum } from '@/api/user/liveData'
 import { fetchUserDomain } from '@/api/userDomain'
 import { formatTraffic } from '@/utils/format'
 import { mapGetters } from 'vuex'
+import Cookies from 'js-cookie'
 import store from '@/store'
+
+import Dis from './Distribution'
 
 let int = undefined
 
 export default {
   name: 'PanelGroup',
+  components: {
+    Dis
+  },
   data() {
     return {
       dialogVisible: false,
@@ -114,7 +122,9 @@ export default {
           res.data.forEach(item => {
             if(item.isValid === 1) {
               store.dispatch('setDomain', res.data)
-              store.dispatch('setCurrentDomain', res.data[0])
+              if(!Cookies.get('userDomain')) {
+                store.dispatch('setCurrentDomain', res.data[0])
+              }
               this.getData()
             }
           })
@@ -140,6 +150,11 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+  .user-dash {
+    min-height: calc(100vh - 84px);
+    background-color: rgb(240, 242, 245);
+    padding: 16px 32px;
+  }
   .panel-group {
     margin-top: 18px;
     .card-panel-col{
@@ -172,7 +187,6 @@ export default {
     }
   }
   p {
-      padding: 4px 20px;
       text-align: left;
       a {
         color: #337ab7;
