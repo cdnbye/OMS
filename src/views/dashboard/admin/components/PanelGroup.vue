@@ -148,7 +148,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.hostNum }}</span>
-          <div class="card-panel-text">活跃域名总数</div>
+          <div class="card-panel-text">活跃网站总数</div>
         </div>
       </div>
     </el-col>
