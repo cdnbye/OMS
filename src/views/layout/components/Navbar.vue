@@ -26,7 +26,7 @@
 
           <router-link to="/user/edit">
             <el-dropdown-item>
-              edit
+              {{ $t('navbar.myInfo') }}
             </el-dropdown-item>
           </router-link>
 

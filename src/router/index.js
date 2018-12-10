@@ -115,7 +115,7 @@ export const asyncRouterMap = [
     meta: {
       title: 'Operational',
       icon: 'chart',
-      roles: ['admin', 'user']
+      roles: ['admin']
     },
     children: [
       {
@@ -130,11 +130,10 @@ export const asyncRouterMap = [
       {
         path: 'p2p_rate',
         component: () => import('@/views/historyData/P2P'),
-        // component: () => import('@/views/historyData/p2pRate'),
         name: 'P2PRate',
         meta: {
           title: 'p2pRate',
-          roles: ['admin', 'user']
+          roles: ['admin']
         }
       },
       {
@@ -143,11 +142,44 @@ export const asyncRouterMap = [
         name: 'Online',
         meta: {
           title: 'online',
-          roles: ['admin', 'user']
+          roles: ['admin']
         }
       }
     ]
   },
+
+  {
+    path: '/history',
+    component: Layout,
+    redirect: '/history/P2P',
+    alwaysShow: true,
+    meta: {
+      title: 'dataAnalysis',
+      icon: 'chart',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'p2p_rate',
+        component: () => import('@/views/historyData/P2P'),
+        name: 'P2PRate',
+        meta: {
+          title: 'p2pTraffic',
+          roles: ['user']
+        }
+      },
+      {
+        path: 'online',
+        component: () => import('@/views/historyData/OnlineNum'),
+        name: 'Online',
+        meta: {
+          title: 'onlineNum',
+          roles: ['user']
+        }
+      }
+    ]
+  },
+
   {
     path: '/user',
     component: Layout,
@@ -156,7 +188,7 @@ export const asyncRouterMap = [
     meta: {
       title: 'userData',
       icon: 'table',
-      roles: ['admin', 'user']
+      roles: ['admin']
     },
     children: [
       {
@@ -194,7 +226,7 @@ export const asyncRouterMap = [
         hidden: true,
         meta: {
           title: 'edit',
-          roles: ['admin', 'user']
+          roles: ['admin']
         }
       },
 
@@ -204,11 +236,35 @@ export const asyncRouterMap = [
         name: 'UserDomain',
         meta: {
           title: 'userDomain',
-          roles: ['admin', 'user']
+          roles: ['admin']
         }
       }
     ]
   },
+
+  {
+    path: '/user',
+    component: Layout,
+    redirect: 'user/domain',
+    alwaysShow: true,
+    meta: {
+      title: 'domainInfo',
+      icon: 'table',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'domain',
+        component: () => import('@/views/userData/bindDomain'),
+        name: 'Domain',
+        meta: {
+          title: 'domainList',
+          roles: ['user']
+        }
+      }
+    ]
+  },
+
   {
     path: '/distribution',
     component: Layout,

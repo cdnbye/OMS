@@ -1,12 +1,12 @@
 <template>
   <div class="user-dash">
-    <p>当前域名：{{currentDomain.domain ? currentDomain.domain : '无'}}&nbsp; &nbsp;<a @click="dialogVisible = true">切换</a></p>
+    <p>{{ $t('dashboard.currentDomain') }}{{currentDomain.domain ? currentDomain.domain : '无'}}&nbsp; &nbsp;<a @click="dialogVisible = true">{{ $t('dashboard.switch') }}</a></p>
     <el-row :gutter="20" class="panel-group">
       <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.online }}</span>
-            <div class="card-panel-text">当前在线人数</div>
+            <div class="card-panel-text">{{ $t('dashboard.online') }}</div>
           </div>
         </div>
       </el-col>
@@ -15,7 +15,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
-            <div class="card-panel-text">今日P2P流量({{statis.traffic_p2p.unit}})</div>
+            <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }}({{statis.traffic_p2p.unit}})</div>
           </div>
         </div>
       </el-col>
@@ -24,7 +24,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.frequency_day }}</span>
-            <div class="card-panel-text">今日服务人数</div>
+            <div class="card-panel-text">{{ $t('dashboard.serveNum') }}</div>
           </div>
         </div>
       </el-col>
@@ -33,7 +33,7 @@
     <Dis />
 
     <el-dialog
-      title="切换域名"
+      :title="$t('dashboard.switchDomain')"
       :visible.sync="dialogVisible"
       :width="device === 'mobile' ? '80%' : '30%'">
       <el-select v-model="selectValue" placeholder="请选择" style="width: 80%">
@@ -47,10 +47,21 @@
         </template>
       </el-select>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleSelect">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{ $t('common.cancel')}}</el-button>
+        <el-button type="primary" @click="handleSelect">{{ $t('common.ok')}}</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      :visible.sync="tipVisible"
+      :width="device === 'mobile' ? '80%' : '30%'">
+      <span>{{ $t('dashboard.tip') }}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="tipVisible = false">{{ $t('common.cancel')}}</el-button>
+        <el-button type="primary" @click="handlePush">{{$t('dashboard.goBind')}}</el-button>
+      </span>
+    </el-dialog>
+    
   </div>
 </template>
 
@@ -74,6 +85,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      tipVisible: false,
       selectValue: '',
       statis: {
         online: 0,
@@ -128,6 +140,9 @@ export default {
               this.getData()
             }
           })
+        } else {
+          this.tipVisible = true
+          //弹出框
         }
       }).catch(err => {
         console.log(err)
@@ -144,6 +159,10 @@ export default {
           }
         })
       }
+    },
+    handlePush() {
+      this.tipVisible = false
+      this.$router.push('/user/user_domain')
     }
   }
 }

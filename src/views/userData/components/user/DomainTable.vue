@@ -1,6 +1,6 @@
 <template>
 <div class="app-container">
-  <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">绑定域名</el-button>
+  <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">{{ $t('domainTable.bindDomain') }}</el-button>
   <el-table
     border
     :data="tableData"
@@ -10,14 +10,14 @@
     <el-table-column
       align="center"
       prop="domain"
-      label="域名">
+      :label="$t('domainTable.domain')">
     </el-table-column>
 
     <el-table-column
       align="center"
       prop="isValid"
       :formatter="formatter"
-      label="可用状态">
+      :label="$t('domainTable.status')">
     </el-table-column>
 
     <el-table-column
@@ -26,20 +26,20 @@
       label="text">
     </el-table-column>
 
-    <el-table-column label="操作" align="center" fixed="right">
+    <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
-        <el-button type="text" size="mini" @click="handleCheck(scope.row)">认证</el-button>
+        <el-button type="text" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
         <el-popover
           style="margin-left: 10px"
           placement="top"
           width="160"
           v-model="scope.row.visible">
-          <p>确定删除吗？</p>
+          <p>{{ $t('domainTable.tip') }}</p>
           <div style="text-align: right; margin: 0">
-            <el-button size="mini" type="text" @click="scope.row.visible = false">取消</el-button>
-            <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">确定</el-button>
+            <el-button size="mini" type="text" @click="scope.row.visible = false">{{ $t('common.cancel') }}</el-button>
+            <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
           </div>
-          <el-button slot="reference" type="text" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button slot="reference" type="text" size="mini" @click="handleDelete(scope.row)">{{ $t('domainTable.delete') }}</el-button>
         </el-popover>
       </template>
     </el-table-column>
@@ -281,7 +281,7 @@ https://180.163.26.39" />
         })
       },
       formatter(row) {
-        return row.isValid === 0 ? '不可用' : '可用'
+        return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('domainTable.available')
       },
       saveFile() {
         downloadFile(this.checkDomainData.text, 'auth.txt')

@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>版本分布</span>
+            <span>{{ $t('dashboard.versionDis') }}</span>
           </div>
           <Piechart :chart-data="this.versionData" />
         </el-card>
@@ -13,7 +13,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>Tag分布</span>
+            <span>{{ $t('dashboard.tagDis') }}</span>
           </div>
           <Piechart :chart-data="tagData" />
         </el-card>
@@ -22,7 +22,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>终端分布</span>
+            <span>{{ $t('dashboard.terminalDis') }}</span>
           </div>
           <Piechart :chart-data="deviceData" />
         </el-card>
@@ -31,7 +31,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>直播点播分布</span>
+            <span>{{ $t('dashboard.liveDis') }}</span>
           </div>
           <Piechart :chart-data="liveData" />
         </el-card>
@@ -40,7 +40,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>网络类型分布</span>
+            <span>{{ $t('dashboard.natDis') }}</span>
           </div>
           <Piechart :chart-data="netTypeData" />
         </el-card>

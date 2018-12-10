@@ -1,5 +1,6 @@
 <template>
-  <div class="app-container">
+  <ComingSoon />
+  <!-- <div class="app-container">
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
@@ -21,7 +22,7 @@
       </el-form-item>
     </el-form>
     <LineChart :chart-data="onlineData" :option="option" />
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -29,11 +30,13 @@ import moment from 'moment'
 import { fetchNum } from '@/api/user/historyData'
 import LineChart from '@/components/LineChart'
 import { mapGetters } from 'vuex'
+import ComingSoon from '@/components/ComingSoon'
 
 export default {
   name: 'Online',
   components: {
-    LineChart
+    LineChart,
+    ComingSoon
   },
   data() {
     return {
