@@ -2,6 +2,7 @@ export default {
   route: {
     dashboard: 'Realtime data',
     liveData: 'Live data',
+    basicAnalysis: 'Basic analysis',
     disChart: 'Distribution',
     Operational: 'Operational data',
     bandwidth: 'bandwidth',
@@ -21,7 +22,7 @@ export default {
     trackerConfig: 'tracker',
     userConfig: 'user',
 
-    dataAnalysis: 'Advanced analytics',
+    dataAnalysis: 'Advanced analysis',
     p2pTraffic: 'P2P traffic',
     onlineNum: 'Online number',
     domainInfo: 'Domain info',

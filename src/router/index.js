@@ -34,20 +34,7 @@ export const constantRouterMap = [
     name: 'forgetPassword',
     hidden: true,
     component: () => import('@/views/passwdReset'),
-  },
-  // {
-  //   path: '',
-  //   component: Layout,
-  //   redirect: 'dashboard',
-  //   children: [
-  //     {
-  //       path: 'dashboard',
-  //       component: () => import('@/views/dashboard/index'),
-  //       name: 'Dashboard',
-  //       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
-  //     }
-  //   ]
-  // },
+  }
 ]
 
 export const asyncRouterMap = [
@@ -59,7 +46,7 @@ export const asyncRouterMap = [
     meta: {
       title: 'dashboard',
       icon: 'dashboard',
-      roles: ['admin', 'user']
+      roles: ['admin']
     },
     children: [
       {
@@ -68,7 +55,7 @@ export const asyncRouterMap = [
         name: 'LiveData',
         meta: {
           title: 'liveData',
-          roles: ['admin', 'user'],
+          roles: ['admin'],
           noCache: true
         }
       },
@@ -84,7 +71,52 @@ export const asyncRouterMap = [
       }
     ]
   },
-
+  //user router
+  {
+    path: '/user',
+    component: Layout,
+    redirect: 'user/domain',
+    meta: {
+      title: 'domainInfo',
+      icon: 'table',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'domain',
+        component: () => import('@/views/userData/bindDomain'),
+        name: 'Domain',
+        meta: {
+          title: 'domainInfo',
+          roles: ['user']
+        }
+      }
+    ]
+  },
+  //user router
+  {
+    path: '',
+    component: Layout,
+    redirect: 'liveData',
+    meta: {
+      title: 'dashboard',
+      icon: 'dashboard',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'liveData',
+        component: () => import('@/views/dashboard/LiveData'),
+        name: 'LiveData',
+        meta: { 
+          title: 'basicAnalysis', 
+          icon: 'dashboard', 
+          roles: ['user'],
+          noCache: true
+        }
+      }
+    ]
+  },
   {
     path: '/permission',
     component: Layout,
@@ -179,7 +211,28 @@ export const asyncRouterMap = [
       }
     ]
   },
-
+  //修改邮箱密码
+  {
+    path: '/user/edit',
+    component: Layout,
+    redirect: '/',
+    hidden: true,
+    meta: {
+      title: 'edit',
+      roles: ['admin', 'user']
+    },
+    children: [
+      {
+        path: '/',
+        component: () => import('@/views/editMailPwd'),
+        name: 'Edit',
+        meta: {
+          title: 'edit',
+          roles: ['admin', 'user'],
+        }
+      }
+    ]
+  },
   {
     path: '/user',
     component: Layout,
@@ -218,18 +271,6 @@ export const asyncRouterMap = [
           roles: ['admin']
         }
       },
-
-      {
-        path: 'edit',
-        component: () => import('@/views/editMailPwd'),
-        name: 'Edit',
-        hidden: true,
-        meta: {
-          title: 'edit',
-          roles: ['admin']
-        }
-      },
-
       {
         path: 'user_domain',
         component: () => import('@/views/userData/bindDomain'),
@@ -241,30 +282,6 @@ export const asyncRouterMap = [
       }
     ]
   },
-
-  {
-    path: '/user',
-    component: Layout,
-    redirect: 'user/domain',
-    alwaysShow: true,
-    meta: {
-      title: 'domainInfo',
-      icon: 'table',
-      roles: ['user']
-    },
-    children: [
-      {
-        path: 'domain',
-        component: () => import('@/views/userData/bindDomain'),
-        name: 'Domain',
-        meta: {
-          title: 'domainList',
-          roles: ['user']
-        }
-      }
-    ]
-  },
-
   {
     path: '/distribution',
     component: Layout,
@@ -324,9 +341,10 @@ export const asyncRouterMap = [
           title: 'userConfig',
           roles: ['admin']
         }
-      }
+      },
     ]
   },
+
 ]
 
 export default new Router({

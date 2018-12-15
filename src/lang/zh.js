@@ -2,6 +2,7 @@ export default {
   route: {
     dashboard: '实时数据分析',
     liveData: '实时数据',
+    basicAnalysis: '基本数据分析',
     disChart: '分布图',
     Operational: '整体运营数据',
     bandwidth: '带宽趋势图',
@@ -95,8 +96,8 @@ export default {
     bindDomain: '绑定域名',
     domain: '域名',
     status: '可用状态',
-    available: 'Available',
-    unavailable: 'unAvailable',
+    available: '可用',
+    unavailable: '不可用',
     operation: '操作',
     certification: '认证',
     delete: '删除',

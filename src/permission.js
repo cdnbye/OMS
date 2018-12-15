@@ -6,8 +6,6 @@ import { Base64 } from 'js-base64'
 
 // permission judge function
 function hasPermission(roles, permissionRoles) {
-  console.log(roles)
-  console.log(permissionRoles)
   // if (roles.indexOf('admin') >= 0)
   //   return true // admin permission passed directly
   if (!permissionRoles)
