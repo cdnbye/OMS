@@ -64,6 +64,7 @@ import Piechart from '@/components/PieChart'
 import { fetchGlobalData } from '@/api/liveData'
 import { fetchLiveData } from '@/api/liveData'
 import { fetchDomain } from '@/api/userDomain'
+import { formatPieData } from '@/utils/format'
 
 export default {
   name: 'Distribution',
@@ -93,27 +94,27 @@ export default {
       })
       fetchLiveData('version').then(res => {
         if(res.data) {
-          this.versionData = [...res.data]
+          this.versionData = formatPieData(res.data)
         }
       })
       fetchLiveData('tag').then(res => {
         if(res.data) {
-          this.tagData = [...res.data]
+          this.tagData = formatPieData(res.data)
         }
       })
       fetchLiveData('device').then(res => {
         if(res.data) {
-          this.deviceData = [...res.data]
+          this.deviceData = formatPieData(res.data)
         }
       })
       fetchLiveData('live').then(res => {
         if(res.data) {
-          this.liveData = [...res.data]
+          this.liveData = formatPieData(res.data)
         }
       })
       fetchLiveData('netType').then(res => {
         if(res.data) {
-          this.netTypeData = [...res.data]
+          this.netTypeData = formatPieData(res.data)
         }
       })
 

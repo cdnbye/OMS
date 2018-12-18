@@ -53,6 +53,7 @@
 <script>
 import Piechart from '@/components/PieChart'
 import { fetchDisData } from '@/api/user/liveData'
+import { formatPieData } from '@/utils/format'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -81,27 +82,27 @@ export default {
     getData() {
       fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'version').then(res => {
         if(res.data) {
-          this.versionData = [...res.data]
+          this.versionData = formatPieData(res.data)
         }
       })
       fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'tag').then(res => {
         if(res.data) {
-          this.tagData = [...res.data]
+          this.tagData = formatPieData(res.data)
         }
       })
       fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'device').then(res => {
         if(res.data) {
-          this.deviceData = [...res.data]
+          this.deviceData = formatPieData(res.data)
         }
       })
       fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'live').then(res => {
         if(res.data) {
-          this.liveData = [...res.data]
+          this.liveData = formatPieData(res.data)
         }
       })
       fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'netType').then(res => {
         if(res.data) {
-          this.netTypeData = [...res.data]
+          this.netTypeData = formatPieData(res.data)
         }
       })
     }

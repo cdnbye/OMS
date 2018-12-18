@@ -77,3 +77,10 @@ export function formatTraffic(val) {
   }
   return value
 }
+
+export function formatPieData(data) {
+  const temp = data.filter(a => {
+    return a.value > 0
+  })
+  return temp
+}
