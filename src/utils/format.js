@@ -80,7 +80,7 @@ export function formatTraffic(val) {
 
 export function formatPieData(data) {
   const temp = data.filter(a => {
-    return a.value > 0
+    return a.value > 0 && a.name !== 'iOS'
   })
   return temp
 }

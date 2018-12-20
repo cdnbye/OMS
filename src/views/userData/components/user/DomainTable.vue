@@ -1,6 +1,9 @@
 <template>
 <div class="app-container">
   <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">{{ $t('domainTable.bindDomain') }}</el-button>
+
+  <p>{{ $t('dashboard.currentDomain') }}{{currentDomain.domain ? currentDomain.domain : '无'}}&nbsp;<a @click="selectDomainVisible = true">{{ $t('dashboard.switch') }}</a></p>
+
   <el-table
     border
     :data="tableData"
@@ -148,6 +151,27 @@ https://180.163.26.39" />
       <el-button type="primary" @click="addDomainSubmit">确 定</el-button>
     </span>
   </el-dialog>
+
+  <el-dialog
+    :title="$t('dashboard.switchDomain')"
+    :visible.sync="selectDomainVisible"
+    :width="device === 'mobile' ? '80%' : '30%'">
+    <el-select v-model="selectValue" placeholder="请选择" style="width: 80%">
+      <template v-for = "value in userDomain">
+        <el-option
+          v-if="value.isValid === 1"
+          :key="value.domain"
+          :label="value.domain"
+          :value="value.domain">
+        </el-option>
+      </template>
+    </el-select>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="selectDomainVisible = false">{{ $t('common.cancel')}}</el-button>
+      <el-button type="primary" @click="handleSelect">{{ $t('common.ok')}}</el-button>
+    </span>
+  </el-dialog>
+
 </div>
 </template>
 
@@ -156,6 +180,7 @@ https://180.163.26.39" />
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
+  import Cookies from 'js-cookie'
   import store from '@/store'
 
   export default {
@@ -178,6 +203,9 @@ https://180.163.26.39" />
         },
         dialogVisible: false,
 
+        selectDomainVisible: false,
+        selectValue: '',
+
         checkDialogVisible: false,
         checkSelect: 'dns',
         checkDomainLoading: false,
@@ -196,17 +224,25 @@ https://180.163.26.39" />
       }
     },
     computed: {
-      ...mapGetters([
-        'device'
-      ])
-    },
+    ...mapGetters([
+      'userDomain',
+      'currentDomain',
+      'device'
+    ])
+  },
     methods: {
       fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
         this.loading = true
         fetchUserDomain(page, pageSize).then(res => {
           if(res.data) {
-            res.data.forEach(item => {
+            res.data.forEach((item, index) => {
               item.visible = false
+              if(item.isValid === 1) {
+                store.dispatch('setDomain', res.data)
+                if(!Cookies.get('userDomain')) {
+                  store.dispatch('setCurrentDomain', res.data[index])
+                }
+              }
             })
             this.tableData = [...res.data]
           }
@@ -285,7 +321,20 @@ https://180.163.26.39" />
       },
       saveFile() {
         downloadFile(this.checkDomainData.text, 'auth.txt')
-      }
+      },
+
+      //
+      handleSelect() {
+        if(this.selectValue) {
+          this.userDomain.forEach(item => {
+            if(item.domain === this.selectValue) {
+              store.dispatch('setCurrentDomain', item).then(() => {
+                this.selectDomainVisible = false
+              })
+            }
+          })
+        }
+      },
     },
     mounted() {
       this.fetchTableData()

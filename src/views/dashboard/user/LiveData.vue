@@ -1,6 +1,5 @@
 <template>
-  <div class="user-dash">
-    <p>{{ $t('dashboard.currentDomain') }}{{currentDomain.domain ? currentDomain.domain : '无'}}&nbsp; &nbsp;<a @click="dialogVisible = true">{{ $t('dashboard.switch') }}</a></p>
+  <div>
     <el-row :gutter="20" class="panel-group">
       <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
@@ -31,26 +30,6 @@
     </el-row>
 
     <Dis />
-
-    <el-dialog
-      :title="$t('dashboard.switchDomain')"
-      :visible.sync="dialogVisible"
-      :width="device === 'mobile' ? '80%' : '30%'">
-      <el-select v-model="selectValue" placeholder="请选择" style="width: 80%">
-        <template v-for = "value in userDomain">
-          <el-option
-            v-if="value.isValid === 1"
-            :key="value.domain"
-            :label="value.domain"
-            :value="value.domain">
-          </el-option>
-        </template>
-      </el-select>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">{{ $t('common.cancel')}}</el-button>
-        <el-button type="primary" @click="handleSelect">{{ $t('common.ok')}}</el-button>
-      </span>
-    </el-dialog>
 
     <el-dialog
       :visible.sync="tipVisible"
@@ -84,9 +63,7 @@ export default {
   },
   data() {
     return {
-      dialogVisible: false,
       tipVisible: false,
-      selectValue: '',
       statis: {
         online: 0,
         traffic_p2p: {
@@ -99,13 +76,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'userDomain',
       'currentDomain',
       'device'
     ])
   },
   mounted() {
-    this.fetchTableData()
     this.getData()
     const _this = this
     int = setInterval(function() {
@@ -126,38 +101,8 @@ export default {
         }).catch(err => {
           console.log(err)
         })
-      }
-    },
-    fetchTableData() {
-      fetchUserDomain(1, 10).then(res => {
-        if(res.data) {
-          res.data.forEach(item => {
-            if(item.isValid === 1) {
-              store.dispatch('setDomain', res.data)
-              if(!Cookies.get('userDomain')) {
-                store.dispatch('setCurrentDomain', res.data[0])
-              }
-              this.getData()
-            }
-          })
-        } else {
-          this.tipVisible = true
-          //弹出框
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    handleSelect() {
-      if(this.selectValue) {
-        this.userDomain.forEach(item => {
-          if(item.domain === this.selectValue) {
-            store.dispatch('setCurrentDomain', item).then(() => {
-              this.getData()
-              this.dialogVisible = false
-            })
-          }
-        })
+      } else {
+        this.tipVisible = true
       }
     },
     handlePush() {
@@ -169,11 +114,6 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .user-dash {
-    min-height: calc(100vh - 84px);
-    background-color: rgb(240, 242, 245);
-    padding: 16px 32px;
-  }
   .panel-group {
     margin-top: 18px;
     .card-panel-col{
