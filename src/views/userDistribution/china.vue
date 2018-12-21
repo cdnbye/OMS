@@ -1,53 +1,28 @@
 <template>
-  <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
+  <component :is="currentRole"/>
 </template>
 
 <script>
-import ChinaMap from '@/components/CityMap'
-import { fetchLiveData } from '@/api/liveData'
+import { mapGetters } from 'vuex'
+import adminChina from './admin/China'
+import userChina from './user/China'
 
 export default {
-  name: 'ChinaDis',
+  name: 'China',
+  components: { adminChina, userChina },
   data() {
     return {
-      cityData: [],
-      provinceData: [],
-      total: 0
+      currentRole: 'adminChina'
     }
   },
-  components: {
-    ChinaMap
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
   },
-  mounted() {
-    this.fetchData()
-  },
-  methods: {
-    fetchData() {
-      fetchLiveData('city').then(res => {
-        if(res.data) {
-          this.cityData = res.data
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-
-      fetchLiveData('province').then(res => {
-        if(res.data) {
-          this.provinceData = res.data
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-
-      fetchLiveData('country').then(res => {
-        if(res.data) {
-          res.data.forEach(item => {
-            if(item.name === 'China') {
-              this.total = item.value
-            }
-          })
-        }
-      })
+  created() {
+    if (!this.roles.includes('admin')) {
+      this.currentRole = 'userChina'
     }
   }
 }

@@ -179,7 +179,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-
+  // user router
   {
     path: '/history',
     component: Layout,
@@ -206,6 +206,38 @@ export const asyncRouterMap = [
         name: 'Online',
         meta: {
           title: 'onlineNum',
+          roles: ['user']
+        }
+      }
+    ]
+  },
+  // user router
+  {
+    path: '/distribution',
+    component: Layout,
+    redirect: 'distribution/china',
+    alwaysShow: true,
+    meta: {
+      title: 'userDistribution',
+      icon: 'people',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'china',
+        component: () => import('@/views/userDistribution/china'),
+        name: 'ChinaDistribution',
+        meta: {
+          title: 'chinaDistribution',
+          roles: ['user']
+        }
+      },
+      {
+        path: 'world',
+        component: () => import('@/views/userDistribution/world'),
+        name: 'WorldDistribution',
+        meta: {
+          title: 'worldDistribution',
           roles: ['user']
         }
       }

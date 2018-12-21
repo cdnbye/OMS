@@ -1,33 +1,28 @@
 <template>
-  <world-map :countryData="countryData" />
+  <component :is="currentRole"/>
 </template>
 
 <script>
-import WorldMap from '@/components/WorldMap'
-import { fetchLiveData } from '@/api/liveData'
+import { mapGetters } from 'vuex'
+import adminWorld from './admin/World'
+import userWorld from './user/World'
 
 export default {
-  name: 'WorldDis',
+  name: 'World',
+  components: { adminWorld, userWorld },
   data() {
     return {
-      countryData: []
+      currentRole: 'adminWorld'
     }
   },
-  components: {
-    WorldMap
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
   },
-  mounted() {
-    this.fetchData()
-  },
-  methods: {
-    fetchData() {
-      fetchLiveData('country').then(res => {
-        if(res.data) {
-          this.countryData = res.data
-        }
-      }).catch(err => {
-        console.log(err)
-      })
+  created() {
+    if (!this.roles.includes('admin')) {
+      this.currentRole = 'userWorld'
     }
   }
 }
