@@ -93,6 +93,8 @@ const user = {
         removeToken()
         commit('SET_ID', '')
         removeID()
+        commit('SET_USERDOMAIN', [])
+        commit('SET_CURRENTDOMAIN', {})
         resolve()
       })
     },

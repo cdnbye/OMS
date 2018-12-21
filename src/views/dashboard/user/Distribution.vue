@@ -1,12 +1,11 @@
 <template>
-  <!-- <div class="dashboard-editor-container"> -->
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
             <span>{{ $t('dashboard.versionDis') }}</span>
           </div>
-          <Piechart :chart-data="this.versionData" />
+          <Piechart :chart-data="data.versionData" />
         </el-card>
       </el-col>
 
@@ -15,7 +14,7 @@
           <div slot="header">
             <span>{{ $t('dashboard.tagDis') }}</span>
           </div>
-          <Piechart :chart-data="tagData" />
+          <Piechart :chart-data="data.tagData" />
         </el-card>
       </el-col>
 
@@ -24,7 +23,7 @@
           <div slot="header">
             <span>{{ $t('dashboard.terminalDis') }}</span>
           </div>
-          <Piechart :chart-data="deviceData" />
+          <Piechart :chart-data="data.deviceData" />
         </el-card>
       </el-col>
 
@@ -33,7 +32,7 @@
           <div slot="header">
             <span>{{ $t('dashboard.liveDis') }}</span>
           </div>
-          <Piechart :chart-data="liveData" />
+          <Piechart :chart-data="data.liveData" />
         </el-card>
       </el-col>
 
@@ -42,69 +41,32 @@
           <div slot="header">
             <span>{{ $t('dashboard.natDis') }}</span>
           </div>
-          <Piechart :chart-data="netTypeData" />
+          <Piechart :chart-data="data.netTypeData" />
         </el-card>
       </el-col>
 
     </el-row>
-  <!-- </div> -->
 </template>
 
 <script>
 import Piechart from '@/components/PieChart'
-import { fetchDisData } from '@/api/user/liveData'
-import { formatPieData } from '@/utils/format'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Distribution',
   components: {
     Piechart
   },
-  data() {
-    return {
-      versionData: [],
-      tagData: [],
-      deviceData: [],
-      liveData: [],
-      netTypeData: []
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'currentDomain'
-    ])
-  },
-  mounted() {
-    this.getData()
-  },
-  methods: {
-    getData() {
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'version').then(res => {
-        if(res.data) {
-          this.versionData = formatPieData(res.data)
-        }
-      })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'tag').then(res => {
-        if(res.data) {
-          this.tagData = formatPieData(res.data)
-        }
-      })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'device').then(res => {
-        if(res.data) {
-          this.deviceData = formatPieData(res.data)
-        }
-      })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'live').then(res => {
-        if(res.data) {
-          this.liveData = formatPieData(res.data)
-        }
-      })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'netType').then(res => {
-        if(res.data) {
-          this.netTypeData = formatPieData(res.data)
-        }
-      })
+  props: {
+    data: {
+      type: Object,
+      required: true,
+      default: {
+        versionData: [],
+        tagData: [],
+        deviceData: [],
+        liveData: [],
+        netTypeData: []
+      }
     }
   }
 }

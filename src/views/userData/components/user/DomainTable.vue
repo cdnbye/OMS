@@ -2,7 +2,7 @@
 <div class="app-container">
   <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">{{ $t('domainTable.bindDomain') }}</el-button>
 
-  <p>{{ $t('dashboard.currentDomain') }}{{currentDomain.domain ? currentDomain.domain : '无'}}&nbsp;<a @click="selectDomainVisible = true">{{ $t('dashboard.switch') }}</a></p>
+  <p>{{ $t('dashboard.currentDomain') }}{{currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}&nbsp;<a @click="selectDomainVisible = true">{{ $t('dashboard.switch') }}</a></p>
 
   <el-table
     border
@@ -156,8 +156,8 @@ https://180.163.26.39" />
     :title="$t('dashboard.switchDomain')"
     :visible.sync="selectDomainVisible"
     :width="device === 'mobile' ? '80%' : '30%'">
-    <el-select v-model="selectValue" placeholder="请选择" style="width: 80%">
-      <template v-for = "value in userDomain">
+    <el-select v-model="selectValue" :placeholder="$t('domainTable.select')" style="width: 80%">
+      <template v-for = "value in tableData">
         <el-option
           v-if="value.isValid === 1"
           :key="value.domain"
@@ -225,7 +225,6 @@ https://180.163.26.39" />
     },
     computed: {
     ...mapGetters([
-      'userDomain',
       'currentDomain',
       'device'
     ])
@@ -237,12 +236,6 @@ https://180.163.26.39" />
           if(res.data) {
             res.data.forEach((item, index) => {
               item.visible = false
-              if(item.isValid === 1) {
-                store.dispatch('setDomain', res.data)
-                if(!Cookies.get('userDomain')) {
-                  store.dispatch('setCurrentDomain', res.data[index])
-                }
-              }
             })
             this.tableData = [...res.data]
           }
@@ -326,7 +319,7 @@ https://180.163.26.39" />
       //
       handleSelect() {
         if(this.selectValue) {
-          this.userDomain.forEach(item => {
+          this.tableData.forEach(item => {
             if(item.domain === this.selectValue) {
               store.dispatch('setCurrentDomain', item).then(() => {
                 this.selectDomainVisible = false

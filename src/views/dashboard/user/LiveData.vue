@@ -29,7 +29,7 @@
       </el-col>
     </el-row>
 
-    <Dis />
+    <Dis :data="disData"/>
 
     <el-dialog
       :visible.sync="tipVisible"
@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import { fetchGlobalData, fetchNum } from '@/api/user/liveData'
+import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
 import { fetchUserDomain } from '@/api/userDomain'
-import { formatTraffic } from '@/utils/format'
+import { formatTraffic, formatPieData } from '@/utils/format'
 import { mapGetters } from 'vuex'
 import Cookies from 'js-cookie'
 import store from '@/store'
@@ -72,6 +72,13 @@ export default {
         },
         frequency_day: 0,
       },
+      disData: {
+        versionData: [],
+        tagData: [],
+        deviceData: [],
+        liveData: [],
+        netTypeData: []
+      }
     }
   },
   computed: {
@@ -81,33 +88,79 @@ export default {
     ])
   },
   mounted() {
-    this.getData()
-    const _this = this
-    int = setInterval(function() {
-      _this.getData()
-    }, 10000)
+    if(!this.currentDomain.id) {
+      this.getUserDomain()
+    } else {
+      this.loopGetData()
+    }
   },
   beforeDestroy() {
     clearInterval(int)
   },
   methods: {
     getData() {
-      if(this.currentDomain.id) {
-        fetchGlobalData(this.currentDomain.uid, this.currentDomain.id).then(res => {
-          const { data } = res
-          this.statis.online = data.num_rt
-          this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
-          this.statis.frequency_day = data.api_frequency_day
-        }).catch(err => {
-          console.log(err)
-        })
-      } else {
-        this.tipVisible = true
-      }
+      fetchGlobalData(this.currentDomain.uid, this.currentDomain.id).then(res => {
+        const { data } = res
+        this.statis.online = data.num_rt
+        this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+        this.statis.frequency_day = data.api_frequency_day
+      }).catch(err => {
+        console.log(err)
+      })
+      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'version').then(res => {
+        if(res.data) {
+          this.disData.versionData = formatPieData(res.data)
+        }
+      })
+      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'tag').then(res => {
+        if(res.data) {
+          this.disData.tagData = formatPieData(res.data)
+        }
+      })
+      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'device').then(res => {
+        if(res.data) {
+          this.disData.deviceData = formatPieData(res.data)
+        }
+      })
+      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'live').then(res => {
+        if(res.data) {
+          this.disData.liveData = formatPieData(res.data)
+        }
+      })
+      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'netType').then(res => {
+        if(res.data) {
+          this.disData.netTypeData = formatPieData(res.data)
+        }
+      })
+    },
+    loopGetData() {
+      const _this = this
+      _this.getData()
+      int = setInterval(function() {
+        _this.getData()
+      }, 10000)
     },
     handlePush() {
       this.tipVisible = false
-      this.$router.push('/user/user_domain')
+      this.$router.push('/user/domain')
+    },
+    getUserDomain() {
+      fetchUserDomain(1, 10).then(res => {
+        if(res.data) {
+          for (let i = 0; i < res.data.length; i++) {
+            if(res.data[i].isValid === 1) {
+              store.dispatch('setDomain', res.data)
+              store.dispatch('setCurrentDomain', res.data[i])
+              this.loopGetData()
+              break
+            }
+          }
+        } else {
+          this.tipVisible = true
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

@@ -102,6 +102,8 @@ export default {
     certification: 'certification',
     delete: 'delete',
     tip: 'Sure to delete？',
+    none: 'none',
+    select: 'please select',
   },
   documentation: {
     documentation: 'Documentation',

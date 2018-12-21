@@ -102,6 +102,8 @@ export default {
     certification: '认证',
     delete: '删除',
     tip: '确定删除吗？',
+    none: '无',
+    select: '请选择',
   },
   documentation: {
     documentation: '文档',
