@@ -84,7 +84,7 @@
         <ol>
           <li>
             <div class="pv-content">
-              <h4>设置cdnbye_dns_auth.cdnbye.com的TXT域名解析内容为下列字符：</h4>
+              <h4>设置cdnbye_dns_auth.{{ get1Domain(checkDomainData.domain) }}的TXT域名解析内容为下列字符：</h4>
               <h4>{{checkDomainData.text}}</h4>
             </div>
           </li>
@@ -257,7 +257,6 @@ https://180.163.26.39" />
         this.checkDomainData.text = data.text
         this.checkDomainData.domain = data.domain
         this.checkDomainData.id = data.id
-
         this.checkDialogVisible = true
       },
       handleCheckDomain() {
@@ -276,6 +275,17 @@ https://180.163.26.39" />
       },
       handleDelete(val) {
         val.visible = true
+      },
+      get1Domain(domain) {
+        let temp = ''
+        temp = domain.replace('http://', '')
+        temp = domain.replace('https://', '')
+        if (temp.indexOf('/') > -1)
+          temp = temp.substr(0, temp.indexOf('/'))
+        if (temp.indexOf(':') > -1)
+          temp = temp.substr(0, temp.indexOf(':'))
+        const arr = temp.split('.')
+        return arr[arr.length - 2] + '.' + arr[arr.length - 1]
       },
       handleDeleteDomain(domainData) {
         deleteDomain(domainData.id).then(res => {

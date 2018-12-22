@@ -23,8 +23,8 @@ export default {
     userConfig: '客户管理',
 
     dataAnalysis: '高级数据分析',
-    p2pTraffic: 'P2P流量',
-    onlineNum: '在线人数',
+    p2pTraffic: 'P2P流量趋势图',
+    onlineNum: '在线人数趋势图',
     domainInfo: '域名信息',
     domainList: '域名列表'
   },

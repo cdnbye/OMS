@@ -23,8 +23,8 @@ export default {
     userConfig: 'user',
 
     dataAnalysis: 'Advanced analysis',
-    p2pTraffic: 'P2P traffic',
-    onlineNum: 'Online number',
+    p2pTraffic: 'P2P traffic trend',
+    onlineNum: 'Online number trend',
     domainInfo: 'Domain info',
     domainList: 'Domain list'
   },
