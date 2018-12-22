@@ -279,7 +279,7 @@ https://180.163.26.39" />
       get1Domain(domain) {
         let temp = ''
         temp = domain.replace('http://', '')
-        temp = domain.replace('https://', '')
+        temp = temp.replace('https://', '')
         if (temp.indexOf('/') > -1)
           temp = temp.substr(0, temp.indexOf('/'))
         if (temp.indexOf(':') > -1)

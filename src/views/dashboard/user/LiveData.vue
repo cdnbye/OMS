@@ -138,7 +138,7 @@ export default {
       _this.getData()
       int = setInterval(function() {
         _this.getData()
-      }, 10000)
+      }, 20000)
     },
     handlePush() {
       this.tipVisible = false
