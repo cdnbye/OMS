@@ -83,7 +83,7 @@ export default {
     switch: 'Switch',
     switchDomain: 'Switch Domain',
     tip: 'You have not bound a domain name, are you binding now?',
-    online: 'Concurrent Online Viewers',
+    online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'Served Viewers Today',
     versionDis: 'Version Distribution',
