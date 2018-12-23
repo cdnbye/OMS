@@ -106,7 +106,7 @@ export default {
     select: '请选择',
   },
   documentation: {
-    documentation: '文档',
+    documentation: '使用文档',
     github: 'Github 地址'
   },
   errorLog: {
