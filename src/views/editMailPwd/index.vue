@@ -4,21 +4,21 @@
       <el-col :span="12" style="margin: 0 auto">
       <el-card>
         <p>
-          <span>邮箱：{{userInfo.email}}</span>&nbsp;
-          <el-button type="text" @click="mailDialogVisible = true">修改</el-button>
+          <span>{{$t('myInfo.mail')}}{{userInfo.email}}</span>&nbsp;
+          <el-button type="text" @click="mailDialogVisible = true">{{$t('myInfo.change')}}</el-button>
         </p>
         <el-dialog
-          title="修改邮箱"
+          :title="$t('myInfo.changeMail.change')"
           :visible.sync="mailDialogVisible"
           width="30%">
           <el-form ref="emailForm" :model="emailForm" :rules="emailRules">
               <el-form-item prop="email">
-                  <el-input placeholder="新邮箱" v-model="emailForm.email"></el-input>
+                  <el-input :placeholder="$t('myInfo.changeMail.newMail')" v-model="emailForm.email"></el-input>
               </el-form-item>
               <el-row :gutter="20">
                 <el-col :span="14">
                   <el-form-item prop="vcode">
-                    <el-input placeholder="验证码" v-model.number="emailForm.vcode"></el-input>
+                    <el-input :placeholder="$t('myInfo.changeMail.code')" v-model.number="emailForm.vcode"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -29,34 +29,34 @@
               </el-row>
           </el-form>            
           <span slot="footer" class="dialog-footer">
-            <el-button @click="mailDialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="changeEmail" :loading="confirmButtonLoading">确定</el-button>
+            <el-button @click="mailDialogVisible = false">{{$t('common.cancel')}}</el-button>
+            <el-button type="primary" @click="changeEmail" :loading="confirmButtonLoading">{{$t('common.ok')}}</el-button>
           </span>
         </el-dialog>
         
         <p>
-          <span>密码：********</span>&nbsp;
-          <el-button type="text" @click="passwdDialogVisible = true">修改</el-button>
+          <span>{{$t('myInfo.passwd')}}********</span>&nbsp;
+          <el-button type="text" @click="passwdDialogVisible = true">{{$t('myInfo.change')}}</el-button>
           <el-dialog
-          title="修改密码"
+          :title="$t('myInfo.changePasswd.change')"
           :visible.sync="passwdDialogVisible"
           width="30%">
             <el-form ref="passwdForm" :model="passwdForm" :rules="passwdRules">
               <el-form-item prop="passwd">
-                  <el-input placeholder="老密码" v-model="passwdForm.passwd" type="password"></el-input>
+                  <el-input :placeholder="$t('myInfo.changePasswd.old')" v-model="passwdForm.passwd" type="password"></el-input>
               </el-form-item>
               <el-form-item prop="newpasswd">
-                <el-input placeholder="新密码" v-model="passwdForm.newpasswd"></el-input>
+                <el-input :placeholder="$t('myInfo.changePasswd.new')" v-model="passwdForm.newpasswd"></el-input>
               </el-form-item>
             </el-form>            
             <span slot="footer" class="dialog-footer">
-              <el-button @click="passwdDialogVisible = false">取消</el-button>
-              <el-button type="primary" @click="changePasswd" :loading="confirmButtonLoading">确定</el-button>
+              <el-button @click="passwdDialogVisible = false">{{$t('common.cancel')}}</el-button>
+              <el-button type="primary" @click="changePasswd" :loading="confirmButtonLoading">{{$t('common.ok')}}</el-button>
             </span>
           </el-dialog>
         </p>
         <p>
-          <span>注册时间：{{userInfo.time}}</span>
+          <span>{{$t('myInfo.time')}}{{userInfo.time}}</span>
         </p>
       </el-card>
       </el-col>
@@ -75,13 +75,13 @@ export default {
   data() {
     const checkPasswd = (rule, value, callback) => {
       if(!value) {
-        callback('请输入密码')
+        callback(this.$t('myInfo.changePasswd.noneError'))
       } else {
         if (value.indexOf(' ') > -1) {
-          callback('密码不允许包含空格')
+          callback(this.$t('myInfo.changePasswd.blankError'))
         } else {
           if(value.length <6 || value.length > 12) {
-            callback('请输入6到12位的密码')
+            callback(this.$t('myInfo.changePasswd.lengthError'))
           } else {
             callback()
           }
@@ -93,24 +93,24 @@ export default {
         email: [
           {
             required: true,
-            message: '请输入邮箱',
+            message: this.$t('myInfo.changeMail.noneError'),
             trigger: 'blur'
           },
           {
             type: 'email',
-            message: '请输入正确的邮箱',
+            message: this.$t('myInfo.changeMail.wrongError'),
             trigger: "blur",
           },
         ],
         vcode: [
           {
             required: true,
-            message: '请输入验证码',
+            message: this.$t('myInfo.changeMail.codeNoneError'),
             trigger: 'blur'
           },
           {
             type: 'number',
-            message: '请输入正确的验证码',
+            message: this.$t('myInfo.changeMail.codeWrongError'),
             trigger: "blur",
           },
         ]
@@ -144,7 +144,7 @@ export default {
         newpasswd: ''
       },
       sendButton: {
-      value: '发送验证码',
+      value: 'Send',
       enable: false,
       loading: false,
       },
@@ -168,7 +168,7 @@ export default {
       const email = this.emailForm.email
       if(email) {
         if(email === this.userInfo.email) {
-          this.$message.error('请不要输入相同的邮箱')
+          this.$message.error(this.$t('myInfo.changeMail.sameError'))
         } else {
           this.sendButton.loading = true
           const data = {
@@ -188,7 +188,7 @@ export default {
               timer --
               if(timer <= 0) {
               this.sendButton.enable = false
-                this.sendButton.value = '发送验证码'
+                this.sendButton.value = 'Send'
               }
             }, 1000)
           }).catch(err => {
@@ -197,7 +197,7 @@ export default {
           })
         }
       } else {
-        this.$message.error('请先输入邮箱')
+        this.$message.error(this.$t('myInfo.changeMail.noneError'))
       }
     },
     changeEmail() {

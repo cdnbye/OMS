@@ -94,6 +94,7 @@ export default {
   },
   domainTable: {
     bindDomain: '绑定域名',
+    bindDomainTip: '输入一个网站，例如\nhttp://www.example.com:8080\nhttps://180.163.26.39',
     domain: '域名',
     status: '可用状态',
     available: '可用',
@@ -139,6 +140,30 @@ export default {
     close: '关闭',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
+  },
+  myInfo: {
+    mail: '邮箱：',
+    passwd: '密码：',
+    time: '注册时间：',
+    change: '修改',
+    changeMail: {
+      change: '修改邮箱',
+      newMail: '新邮箱',
+      code: '验证码',
+      noneError: '请输入邮箱',
+      wrongError: '请输入正确的邮箱',
+      sameError: '请不要输入相同的邮箱',
+      codeNoneError: '请输入验证码',
+      codeWrongError: '请输入正确的验证码',
+    },
+    changePasswd: {
+      change: '修改密码',
+      new: '新密码',
+      old: '旧密码',
+      noneError: '请输入密码',
+      blankError: '密码不允许包含空格',
+      lengthError: '请输入6到12位的密码',
+    },
   },
   common: {
     ok: '确定',

@@ -130,7 +130,6 @@
       <el-button :loading="checkDomainLoading" type="primary" @click="handleCheckDomain">{{ $t('domainTable.verifyNow') }}</el-button>
     </span>
   </el-dialog>
-
   <el-dialog
     :title="$t('domainTable.bindDomain')"
     :visible.sync="dialogVisible"
@@ -141,14 +140,12 @@
           type="textarea"
           :rows="3"
           v-model="domainFormData.domain"
-          placeholder="输入一个网站，例如
-http://www.example.com:8080
-https://180.163.26.39" />
+          :placeholder="$t('domainTable.bindDomainTip')"/>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="addDomainSubmit">确 定</el-button>
+      <el-button @click="dialogVisible = false">{{$t('common.cancel')}}</el-button>
+      <el-button type="primary" @click="addDomainSubmit">{{$t('common.ok')}}</el-button>
     </span>
   </el-dialog>
 

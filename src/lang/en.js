@@ -94,6 +94,7 @@ export default {
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
+    bindDomainTip: 'Enter a domain，such as\nhttp://www.example.com:8080\nhttps://180.163.26.39',
     domain: 'Domain',
     status: 'State',
     available: 'Available',
@@ -139,6 +140,30 @@ export default {
     close: 'Close',
     closeOthers: 'Close Others',
     closeAll: 'Close All'
+  },
+  myInfo: {
+    mail: 'E-mail: ',
+    passwd: 'password: ',
+    time: 'Registration time: ',
+    change: 'update',
+    changeMail: {
+      change: 'update E-mail',
+      newMail: 'new E-mail',
+      code: 'Verification code',
+      noneError: 'please enter your email',
+      wrongError: 'please enter your vaild email',
+      sameError: 'Please do not enter the same E-mail',
+      codeNoneError: 'please enter your verification code',
+      codeWrongError: 'please enter your vaild verification code',
+    },
+    changePasswd: {
+      change: 'update password',
+      new: 'new password',
+      old: 'old password',
+      noneError: 'Please enter your password',
+      blankError: 'Passwords are not allowed to contain spaces',
+      lengthError: 'Please enter a 6 to 12 digit password',
+    },
   },
   common: {
     ok: 'OK',
