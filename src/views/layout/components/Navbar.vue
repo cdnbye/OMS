@@ -13,11 +13,11 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
+          <!-- <router-link to="/">
             <el-dropdown-item>
               {{ $t('navbar.dashboard') }}
             </el-dropdown-item>
-          </router-link>
+          </router-link> -->
           <a target="_blank" href="https://docs.cdnbye.com/">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}

@@ -61,7 +61,7 @@
 
 
   <el-dialog
-    title="验证域名"
+    :title="$t('domainTable.verifyDomain')"
     :visible.sync="checkDialogVisible"
     :width="device === 'mobile' ? '90%' : '30%' "
   >
@@ -69,13 +69,13 @@
       title=""
       style="text-align: left"
       type="warning" 
-      description="您需要对添加的网站进行权限认证才能使用安全扫描功能，公网域名可以选择以下任意一种方式进行验证，内网域名由于安全原因只支持DNS验证。"
+      :description="$t('domainTable.certificationTip')"
       :closable="false">
     </el-alert>
     <el-form>
-      <el-form-item label="验证方式">
-        <el-radio v-model="checkSelect" label="dns">DNS验证</el-radio>
-        <el-radio v-model="checkSelect" label="file">文件验证</el-radio>
+      <el-form-item :label="$t('domainTable.userVerifyDomain.verifyWay')">
+        <el-radio v-model="checkSelect" label="dns">{{ $t('domainTable.userVerifyDomain.DNSVerify') }}</el-radio>
+        <el-radio v-model="checkSelect" label="file">{{ $t('domainTable.userVerifyDomain.fileVerify') }}</el-radio>
       </el-form-item>
     </el-form>
 
@@ -84,13 +84,13 @@
         <ol>
           <li>
             <div class="pv-content">
-              <h4>设置cdnbye_dns_auth.{{ get1Domain(checkDomainData.domain) }}的TXT域名解析内容为下列字符：</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ get1Domain(checkDomainData.domain) }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4>
               <h4>{{checkDomainData.text}}</h4>
             </div>
           </li>
           <li>
             <div class="pv-content pv-content-last">                
-              <h4>完成操作后请点击"立即验证"按钮</h4>
+              <h4>{{ $t('domainTable.doneTip') }}</h4>
             </div>  
           </li>
         </ol>
@@ -102,23 +102,23 @@
         <ol>
           <li>
             <div class="pv-content">
-              <h4>下载专有的<a @click="saveFile">HTML验证文件</a></h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.downloadFileHead') }}<a @click="saveFile">{{ $t('domainTable.userVerifyDomain.downloadFileEnd') }}</a></h4>
             </div>
           </li>
           <li>
             <div class="pv-content">
-              <h4>将该文件上传至：{{checkDomainData.domain}}</h4>
-              <h4>注意文件名称不要修改，文件名称为auth.txt</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.uploadFile') }}{{checkDomainData.domain}}</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.fileName') }}</h4>
             </div>
           </li>
           <li>
             <div class="pv-content">
-              <h4>用浏览器访问{{checkDomainData.domain}}/auth.txt,确认是否上传成功</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.navVisitHead') }}{{checkDomainData.domain}}/auth.txt{{ $t('domainTable.userVerifyDomain.navVisitEnd') }}</h4>
             </div>  
           </li>
           <li>
             <div class="pv-content pv-content-last">                
-              <h4>完成操作后请点击"立即验证"按钮</h4>
+              <h4>{{ $t('domainTable.doneTip') }}</h4>
             </div>  
           </li>
         </ol>
@@ -126,13 +126,13 @@
     </template>
 
     <span slot="footer" class="dialog-footer">
-      <el-button @click="checkDialogVisible = false">稍后验证</el-button>
-      <el-button :loading="checkDomainLoading" type="primary" @click="handleCheckDomain">立即验证</el-button>
+      <el-button @click="checkDialogVisible = false">{{ $t('domainTable.verifyLater') }}</el-button>
+      <el-button :loading="checkDomainLoading" type="primary" @click="handleCheckDomain">{{ $t('domainTable.verifyNow') }}</el-button>
     </span>
   </el-dialog>
 
   <el-dialog
-    title="绑定域名"
+    :title="$t('domainTable.bindDomain')"
     :visible.sync="dialogVisible"
     :width="device === 'mobile' ? '90%' : '50%' ">
     <el-form ref="domainForm" :model="domainFormData" :rules="domainRules">

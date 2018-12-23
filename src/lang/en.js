@@ -99,11 +99,31 @@ export default {
     available: 'Available',
     unavailable: 'Unavailable',
     operation: 'Operation',
+    verifyDomain: 'Verity domain',
     certification: 'Validate',
+    certificationTip: 'You need to authenticate the added website to use the security scanning function. The public domain name can be verified by any of the following methods. The internal network domain name only supports DNS authentication for security reasons.',
+    doneTip: 'Click the "Verify Now" button when you are done',
+    verifyLater: 'Verify Later',
+    verifyNow: 'Verify Now',
     delete: 'Delete',
     tip: 'Sure to delete？',
     none: 'none',
     select: 'please select',
+    userVerifyDomain: {
+      //DNS
+      verifyWay: 'Ways of verify',
+      DNSVerify: 'DNS',
+      fileVerify: 'file',
+      verifyTipHead: 'Set the TXT domain name resolution content of cdnbye_dns_auth.',
+      verifyTipEnd: ' to the following characters:',
+      //file
+      downloadFileHead: 'Download the specific ',
+      downloadFileEnd: 'HTML verification file',
+      uploadFile: 'Upload the file to: ',
+      fileName: 'please note that the file name is auth.txt which should not be modified.',
+      navVisitHead: 'Access ',
+      navVisitEnd: ' to confirm that the upload was successful',
+    }
   },
   documentation: {
     documentation: 'Documentation',

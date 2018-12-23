@@ -99,11 +99,31 @@ export default {
     available: '可用',
     unavailable: '不可用',
     operation: '操作',
+    verifyDomain: '验证域名',
     certification: '认证',
+    certificationTip: '您需要对添加的网站进行权限认证才能使用安全扫描功能，公网域名可以选择以下任意一种方式进行验证，内网域名由于安全原因只支持DNS验证。',
+    doneTip: '完成操作后请点击"立即验证"按钮',
+    verifyLater: '稍后验证',
+    verifyNow: '立即验证',
     delete: '删除',
     tip: '确定删除吗？',
     none: '无',
     select: '请选择',
+    userVerifyDomain: {
+      //DNS
+      verifyWay: '验证方式',
+      DNSVerify: 'DNS 验证',
+      fileVerify: '文件验证',
+      verifyTipHead: '设置cdnbye_dns_auth.',
+      verifyTipEnd: '的TXT域名解析内容为下列字符：',
+      //file
+      downloadFileHead: '下载专有的',
+      downloadFileEnd: 'HTML验证文件',
+      uploadFile: '将该文件上传至：',
+      fileName: '注意文件名称不要修改，文件名称为auth.txt',
+      navVisitHead: '用浏览器访问',
+      navVisitEnd: '，确认是否上传成功',
+    }
   },
   documentation: {
     documentation: '使用文档',
