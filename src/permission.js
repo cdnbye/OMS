@@ -59,7 +59,7 @@ router.afterEach( ( to, from, next ) => {
         //每次执行前，先移除上次插入的代码
         document.getElementById('baidu_tj') && document.getElementById('baidu_tj').remove();
         var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?85b9b827ca0754106fbf77580140816d";
+        hm.src = "https://hm.baidu.com/hm.js?8f2960260b356c68d99e09f7cd27dfca";
         hm.id = "baidu_tj"
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
