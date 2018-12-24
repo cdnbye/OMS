@@ -102,7 +102,7 @@ export default {
     operation: '操作',
     verifyDomain: '验证域名',
     certification: '认证',
-    certificationTip: '您需要对添加的网站进行权限认证才能使用安全扫描功能，公网域名可以选择以下任意一种方式进行验证，内网域名由于安全原因只支持DNS验证。',
+    certificationTip: '您需要对添加的网站进行域名所有权认证，公网域名可以选择以下任意一种方式进行验证，内网域名由于安全原因只支持DNS验证。域名是指视频网站的域名，不是流地址(m3u8)的域名。',
     doneTip: '完成操作后请点击"立即验证"按钮',
     verifyLater: '稍后验证',
     verifyNow: '立即验证',
