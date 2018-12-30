@@ -2,7 +2,7 @@ export default {
   route: {
     dashboard: '实时数据分析',
     liveData: '实时数据',
-    basicAnalysis: '基本数据分析',
+    basicAnalysis: '实时数据分析',
     disChart: '分布图',
     Operational: '整体运营数据',
     bandwidth: '带宽趋势图',
@@ -94,7 +94,7 @@ export default {
   },
   domainTable: {
     bindDomain: '绑定域名',
-    bindDomainTip: '输入一个网站，例如\nhttp://www.example.com:8080\nhttps://180.163.26.39',
+    bindDomainTip: '输入你的网站地址，例如\nhttp://www.yourwebsite.com:8080\nhttps://180.163.26.39',
     domain: '域名',
     status: '可用状态',
     available: '可用',

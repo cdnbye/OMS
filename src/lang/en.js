@@ -2,7 +2,7 @@ export default {
   route: {
     dashboard: 'Realtime data',
     liveData: 'Live data',
-    basicAnalysis: 'Basic Analysis',
+    basicAnalysis: 'Realtime Analysis',
     disChart: 'Distribution',
     Operational: 'Operational data',
     bandwidth: 'bandwidth',
@@ -94,7 +94,7 @@ export default {
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
-    bindDomainTip: 'Enter a domain，such as\nhttp://www.example.com:8080\nhttps://180.163.26.39',
+    bindDomainTip: 'Enter your website url，such as\nhttp://www.yourwebsite.com:8080\nhttps://180.163.26.39',
     domain: 'Domain',
     status: 'State',
     available: 'Available',
