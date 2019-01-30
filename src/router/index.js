@@ -93,11 +93,40 @@ export const asyncRouterMap = [
       }
     ]
   },
+
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/user/liveData',
+    hidden: true,
+    meta: {
+      title: 'dashboard',
+      icon: 'dashboard',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: '/user/liveData',
+        component: () => import('@/views/dashboard/user/LiveData'),
+        name: 'UserLiveData',
+        meta: { 
+          title: 'basicAnalysis', 
+          icon: 'dashboard', 
+          roles: ['admin'],
+          noCache: true
+        }
+      }
+    ]
+  },
+
+
+
   //user router
   {
-    path: '',
+    path: '/',
     component: Layout,
-    redirect: 'liveData',
+    redirect: '/user/liveData',
     meta: {
       title: 'dashboard',
       icon: 'dashboard',
@@ -105,9 +134,9 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: 'liveData',
-        component: () => import('@/views/dashboard/LiveData'),
-        name: 'LiveData',
+        path: '/user/liveData',
+        component: () => import('@/views/dashboard/user/LiveData'),
+        name: 'UserLiveData',
         meta: { 
           title: 'basicAnalysis', 
           icon: 'dashboard', 

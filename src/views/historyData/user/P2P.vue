@@ -31,6 +31,7 @@ import LineChart from '@/components/LineChart'
 import { fetchP2PTraffic } from '@/api/user/historyData'
 import { mapGetters } from 'vuex'
 import ComingSoon from '@/components/ComingSoon'
+import { formatTraffic } from '@/utils/format'
 
 export default {
   name: 'Bandwidth',
@@ -69,23 +70,16 @@ export default {
     getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
       this.p2pData = []
       this.option.xData = []
-      this.lineChartData.P2P分享率 = []
+      this.lineChartData.P2P = []
       fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end).then(res => {
-        this.p2pData = res.data.list
-        // this.formatData()
+        res.data.list.forEach((item, index) => {
+          this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
+          const traffic = formatTraffic(item.value)
+          this.option.unit = traffic.unit
+          this.lineChartData.P2P.push(traffic.num)
+        })
       })
     },
-    // formatData() {
-    //   this.p2pData.forEach((item, index) => {
-    //     this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-    //     const value = (item.value / (item.value + this.httpData[index].value) * 100).toFixed(2)
-    //     if(item.value + this.httpData[index].value === 0) {
-    //       this.lineChartData.P2P分享率.push(0)
-    //     } else {
-    //       this.lineChartData.P2P分享率.push(value)
-    //     }
-    //   })
-    // },
     selectChange(val) {
       switch (val) {
         case 'hour':

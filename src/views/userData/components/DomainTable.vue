@@ -54,7 +54,7 @@
       label="http实时带宽(mbps)">
     </el-table-column>
 
-    <el-table-column
+    <!-- <el-table-column
       align="center"
       prop="ErrsBufStalled"
       label="ErrsBufStalled">
@@ -64,7 +64,7 @@
       align="center"
       prop="ErrsInternalExcpt"
       label="ErrsInternalExcpt">
-    </el-table-column>
+    </el-table-column> -->
 
     <el-table-column
       align="center"
@@ -239,6 +239,13 @@
         }
       },
       handleTest(val) {
+        this.$router.push({
+          name: 'UserLiveData',
+          params: {
+            uid: val.uid,
+            id: val.id
+          }
+        })
         console.log(val)
       }
     },

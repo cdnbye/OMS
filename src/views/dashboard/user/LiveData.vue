@@ -88,18 +88,75 @@ export default {
     ])
   },
   mounted() {
-    if(!this.currentDomain.id) {
-      this.getUserDomain()
+    console.log('===')
+    console.log(this.$route.params)
+    if(this.$route.params.id && this.$route.params.uid) {
+      console.log('has router')
+      this.loopGetData(this.$route.params.uid, this.$route.params.id)
     } else {
-      this.loopGetData()
+      console.log('has not router')
+      if(!this.currentDomain.id) {
+        this.getUserDomain()
+      } else {
+        this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
+      }
     }
+    // if(!this.currentDomain.id) {
+    //   this.getUserDomain()
+    // } else {
+    //   this.loopGetData()
+    // }
   },
   beforeDestroy() {
     clearInterval(int)
   },
   methods: {
-    getData() {
-      fetchGlobalData(this.currentDomain.uid, this.currentDomain.id).then(res => {
+    // getData() {
+    //   fetchGlobalData(this.currentDomain.uid, this.currentDomain.id).then(res => {
+    //     const { data } = res
+    //     this.statis.online = data.num_rt
+    //     this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+    //     this.statis.frequency_day = data.api_frequency_day
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'version').then(res => {
+    //     if(res.data) {
+    //       this.disData.versionData = formatPieData(res.data)
+    //     }
+    //   })
+    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'tag').then(res => {
+    //     if(res.data) {
+    //       this.disData.tagData = formatPieData(res.data)
+    //     }
+    //   })
+    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'device').then(res => {
+    //     if(res.data) {
+    //       this.disData.deviceData = formatPieData(res.data)
+    //     }
+    //   })
+    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'live').then(res => {
+    //     if(res.data) {
+    //       this.disData.liveData = formatPieData(res.data)
+    //     }
+    //   })
+    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'netType').then(res => {
+    //     if(res.data) {
+    //       this.disData.netTypeData = formatPieData(res.data)
+    //     }
+    //   })
+    // },
+
+    // loopGetData() {
+    //   const _this = this
+    //   _this.getData()
+    //   int = setInterval(function() {
+    //     _this.getData()
+    //   }, 20000)
+    // },
+
+    getData(uid, id) {
+      fetchGlobalData(uid, id).then(res => {
         const { data } = res
         this.statis.online = data.num_rt
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
@@ -107,37 +164,37 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'version').then(res => {
+      fetchDisData(uid, id, 'version').then(res => {
         if(res.data) {
           this.disData.versionData = formatPieData(res.data)
         }
       })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'tag').then(res => {
+      fetchDisData(uid, id, 'tag').then(res => {
         if(res.data) {
           this.disData.tagData = formatPieData(res.data)
         }
       })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'device').then(res => {
+      fetchDisData(uid, id, 'device').then(res => {
         if(res.data) {
           this.disData.deviceData = formatPieData(res.data)
         }
       })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'live').then(res => {
+      fetchDisData(uid, id, 'live').then(res => {
         if(res.data) {
           this.disData.liveData = formatPieData(res.data)
         }
       })
-      fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'netType').then(res => {
+      fetchDisData(uid, id, 'netType').then(res => {
         if(res.data) {
           this.disData.netTypeData = formatPieData(res.data)
         }
       })
     },
-    loopGetData() {
+    loopGetData(uid, id) {
       const _this = this
-      _this.getData()
+      _this.getData(uid, id)
       int = setInterval(function() {
-        _this.getData()
+        _this.getData(uid, id)
       }, 20000)
     },
     handlePush() {
@@ -151,7 +208,7 @@ export default {
             if(res.data[i].isValid === 1) {
               store.dispatch('setDomain', res.data)
               store.dispatch('setCurrentDomain', res.data[i])
-              this.loopGetData()
+              this.loopGetData(res.data[i].uid, res.data[i].id)
               break
             }
           }
