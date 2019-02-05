@@ -42,14 +42,14 @@ export function fetchUserList(page, pageSize, order) {
 
 export function fetchUserDomain(page, pageSize) {
   return request({
-    url: `user/${getID()}/domain?page=${page}&page_size=${pageSize}`,
+    url: `user/user_id/${getID()}/domain?page=${page}&page_size=${pageSize}`,
     method: 'get'
   })
 }
 
 export function bindDomain(data) {
   return request({
-    url: `user/${getID()}/domain`,
+    url: `user/user_id/${getID()}/domain`,
     method: 'post',
     data
   })
@@ -57,14 +57,14 @@ export function bindDomain(data) {
 
 export function checkDomain(domainID) {
   return request({
-    url: `user/${getID()}/domain/${domainID}`,
+    url: `user/user_id/${getID()}/domain/domain_id/${domainID}`,
     method: 'post'
   })
 }
 
 export function deleteDomain(domainID) {
   return request({
-    url: `user/${getID()}/domain/${domainID}`,
+    url: `user/user_id/${getID()}/domain/domain_id/${domainID}`,
     method: 'delete'
   })
 }

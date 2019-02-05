@@ -10,7 +10,7 @@ export function fetchUserData() {
 
 export function changePasswd(data) {
   return request({
-    url: `user/${getID()}/profile/passwd`,
+    url: `user/user_id/${getID()}/profile/passwd`,
     method: 'put',
     data
   })
@@ -18,7 +18,7 @@ export function changePasswd(data) {
 
 export function changeMail(data) {
   return request({
-    url: `user/${getID()}/profile/email`,
+    url: `user/user_id/${getID()}/profile/email`,
     method: 'put',
     data
   })
