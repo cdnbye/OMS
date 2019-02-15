@@ -73,11 +73,10 @@ const user = {
     //用户注册
     signup({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        console.log(userInfo)
         signup(userInfo).then(response => {
           const data = response.data
-          commit('SET_TOKEN', data.token)
-          setToken(response.data.token)
+          commit('SET_TOKEN', data.usertoken)
+          setToken(response.data.usertoken)
           commit('SET_ID', data.id)
           setID(response.data.id)
           resolve()
