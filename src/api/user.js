@@ -3,7 +3,7 @@ import { getID } from '@/utils/auth'
 
 export function fetchUserData() {
   return request({
-    url: `user/${getID()}/profile`,
+    url: `user/user_id/${getID()}/profile`,
     method: 'get'
   })
 }

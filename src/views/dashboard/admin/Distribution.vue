@@ -90,6 +90,22 @@ export default {
       fetchGlobalData().then(res => {
         if(res.data) {
           this.onlineNum = res.data.num_rt
+          fetchDomain(1, 10, 'num').then(res => {
+              if(res.data) {
+                  let total = 0
+                  res.data.forEach(item => {
+                      total += item.num
+                      this.topSiteData.push({
+                          name: item.host,
+                          value: item.num
+                      })
+                  })
+                  this.topSiteData.push({
+                      name: '其他',
+                      value: this.onlineNum - total
+                  })
+              }
+          })
         }
       })
       fetchLiveData('version').then(res => {
@@ -115,23 +131,6 @@ export default {
       fetchLiveData('netType').then(res => {
         if(res.data) {
           this.netTypeData = formatPieData(res.data)
-        }
-      })
-
-      fetchDomain(1, 10, 'num').then(res => {
-        if(res.data) {
-          let total = 0
-          res.data.forEach(item => {
-            total += item.num
-            this.topSiteData.push({
-              name: item.host,
-              value: item.num
-            })
-          })
-          this.topSiteData.push({
-            name: '其他',
-            value: this.onlineNum - total
-          })
         }
       })
     }
