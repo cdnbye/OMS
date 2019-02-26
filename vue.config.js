@@ -1,8 +1,9 @@
 module.exports = {
-  baseUrl: '/',
+  baseUrl: './',
   devServer: {
     port: 8081,
-    open: true
+    open: true,
+    // proxy: 'http://127.0.0.1:6066/v1/'
   },
   chainWebpack: config => {
     // 一个规则里的 基础Loader

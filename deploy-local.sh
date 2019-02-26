@@ -4,23 +4,20 @@
 set -e
 
 # build
-npm run build --mode production
+npm run build-dev
 
-rm -rf release
+rm -rf local
 
-cp -r dist release
+cp -r dist local
 
 # navigate into the build output directory
-cd release
-
-# if you are deploying to a custom domain
-echo 'oms.cdnbye.com' > CNAME
+cd local
 
 git init
 git add -A
 git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/cdnbye/OMS.git master
+git push -f git@gitee.com:snowinszu/OMS_local.git master
 
 cd -
