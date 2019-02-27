@@ -214,9 +214,6 @@ export default {
   mounted() {
     const _this = this
     _this.getData()
-    fetchHostNum().then(res => {
-      _this.statis.hostNum = res.data.num
-    })
     int = setInterval(function() {
       _this.getData()
     }, 10000)
@@ -249,6 +246,9 @@ export default {
         //接入网站总数
       }).catch(err => {
         console.log(err)
+      })
+      fetchHostNum().then(res => {
+          _this.statis.hostNum = res.data.num
       })
     }
   }
