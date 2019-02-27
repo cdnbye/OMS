@@ -4,7 +4,7 @@
 set -e
 
 # build
-npm run build --mode production
+npm run build
 
 rm -rf release
 
