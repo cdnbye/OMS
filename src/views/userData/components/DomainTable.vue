@@ -32,14 +32,14 @@
 
     <el-table-column
       align="center"
-      prop="p2p"
-      label="p2p流量(GB)">
+      prop="p2p_month"
+      label="近一月p2p流量(GB)">
     </el-table-column>
 
     <el-table-column
       align="center"
-      prop="http"
-      label="http流量(GB)">
+      prop="http_month"
+      label="近一月http流量(GB)">
     </el-table-column>
 
     <el-table-column
@@ -137,21 +137,21 @@
             value: 'num'
           },
           {
-            label: 'p2p流量',
-            value: 'p2p'
+            label: '近一月p2p流量',
+            value: 'p2p_month'
           },
           {
-            label: 'http流量',
-            value: 'http'
+            label: '近一月http流量',
+            value: 'http_month'
           },
-          {
-            label: 'p2p实时带宽',
-            value: 'p2p_rt'
-          },
-          {
-            label: 'http实时带宽',
-            value: 'http_rt'
-          },
+          // {
+          //   label: 'p2p实时带宽',
+          //   value: 'p2p_rt'
+          // },
+          // {
+          //   label: 'http实时带宽',
+          //   value: 'http_rt'
+          // },
         ]
       }
     },
@@ -170,11 +170,11 @@
       },
       formatData(data) {
         data.forEach(item => {
-          if(item.p2p) {
-            item.p2p = (item.p2p / 1024 / 1024).toFixed(2)
+          if(item.p2p_month) {
+            item.p2p_month = (item.p2p_month / 1024 / 1024).toFixed(2)
           }
-          if(item.http) {
-            item.http = (item.http / 1024 / 1024).toFixed(2)
+          if(item.http_month) {
+            item.http_month = (item.http_month / 1024 / 1024).toFixed(2)
           }
           if(item.p2p_rt) {
             item.p2p_rt = (item.p2p_rt / 1024).toFixed(2)

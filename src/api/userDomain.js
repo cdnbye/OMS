@@ -3,7 +3,7 @@ import { getID } from '@/utils/auth'
 
 export function fetchHostNum() {
   return request({
-    url: `host/num?ts=${((new Date().getTime()) / 1000).toFixed() - 900}`,
+    url: `host/num?ts=${((new Date().getTime()) / 1000).toFixed() - 1800}`,
     method: 'get'
   })
 }

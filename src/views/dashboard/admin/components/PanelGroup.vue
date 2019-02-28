@@ -248,7 +248,7 @@ export default {
         console.log(err)
       })
       fetchHostNum().then(res => {
-          _this.statis.hostNum = res.data.num
+          this.statis.hostNum = res.data.num
       })
     }
   }
