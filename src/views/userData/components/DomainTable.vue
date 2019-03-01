@@ -114,6 +114,7 @@
   <script>
   import { fetchDomain, fetchDomainByFilter, fetchHostNum, searchHost } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
+  import { getID } from '@/utils/auth'
 
   export default {
     data() {
@@ -242,7 +243,8 @@
         this.$router.push({
           name: 'UserLiveData',
           params: {
-            uid: val.uid,
+            // uid: val.uid,
+            uid: getID(),
             id: val.id
           }
         })
