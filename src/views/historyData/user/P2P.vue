@@ -1,6 +1,5 @@
 <template>
-  <ComingSoon />
-  <!-- <div class="app-container">
+  <div class="app-container">
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
@@ -22,7 +21,7 @@
       </el-form-item>
     </el-form>
     <LineChart :chart-data="lineChartData" :option="option" />
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -30,14 +29,12 @@ import moment from 'moment'
 import LineChart from '@/components/LineChart'
 import { fetchP2PTraffic } from '@/api/user/historyData'
 import { mapGetters } from 'vuex'
-import ComingSoon from '@/components/ComingSoon'
 import { formatTraffic } from '@/utils/format'
 
 export default {
   name: 'Bandwidth',
   components: {
-    LineChart,
-    ComingSoon
+    LineChart
   },
   data() {
     return {
