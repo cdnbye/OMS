@@ -55,6 +55,10 @@ Vue.use({
 
 Vue.prototype.$message = Message
 
+Vue.filter('positive', (value) => {
+   return value < 0 ? 0 : value
+})
+
 new Vue({
   router,
   store,

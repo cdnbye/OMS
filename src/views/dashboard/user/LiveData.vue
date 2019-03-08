@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ statis.online }}</span>
+            <span class="card-panel-num">{{ statis.online | positive }}</span>
             <div class="card-panel-text">{{ $t('dashboard.online') }}</div>
           </div>
         </div>
