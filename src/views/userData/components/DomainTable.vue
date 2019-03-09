@@ -245,7 +245,8 @@
           params: {
             // uid: val.uid,
             uid: getID(),
-            id: val.id
+            id: val.id,
+            hostId: val.host_id,
           }
         })
         console.log(val)

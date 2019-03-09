@@ -92,7 +92,7 @@ export default {
     console.log(this.$route.params)
     if(this.$route.params.id && this.$route.params.uid) {
       console.log('has router')
-      this.loopGetData(this.$route.params.uid, this.$route.params.id)
+      this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
     } else {
       console.log('has not router')
       if(!this.currentDomain.id) {
@@ -155,8 +155,8 @@ export default {
     //   }, 20000)
     // },
 
-    getData(uid, id) {
-      fetchGlobalData(uid, id).then(res => {
+    getData(uid, id, hostId) {
+      fetchGlobalData(uid, id, hostId).then(res => {
         const { data } = res
         this.statis.online = data.num_rt
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
@@ -164,37 +164,37 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-      fetchDisData(uid, id, 'version').then(res => {
+      fetchDisData(uid, id, 'version', hostId).then(res => {
         if(res.data) {
           this.disData.versionData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'tag').then(res => {
+      fetchDisData(uid, id, 'tag', hostId).then(res => {
         if(res.data) {
           this.disData.tagData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'device').then(res => {
+      fetchDisData(uid, id, 'device', hostId).then(res => {
         if(res.data) {
           this.disData.deviceData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'live').then(res => {
+      fetchDisData(uid, id, 'live', hostId).then(res => {
         if(res.data) {
           this.disData.liveData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'netType').then(res => {
+      fetchDisData(uid, id, 'netType', hostId).then(res => {
         if(res.data) {
           this.disData.netTypeData = formatPieData(res.data)
         }
       })
     },
-    loopGetData(uid, id) {
+    loopGetData(uid, id, hostId) {
       const _this = this
-      _this.getData(uid, id)
+      _this.getData(uid, id, hostId)
       int = setInterval(function() {
-        _this.getData(uid, id)
+        _this.getData(uid, id, hostId)
       }, 20000)
     },
     handlePush() {

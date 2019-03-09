@@ -1,15 +1,23 @@
 import request from '@/utils/request'
 
-export function fetchGlobalData(uid, domainID) {
+export function fetchGlobalData(uid, domainID, hostId) {
+  var url = `user/user_id/${uid}/domain/domain_id/${domainID}`
+  if (hostId) {
+    url = `${url}?host_id=${hostId}`
+  }
   return request({
-    url: `user/user_id/${uid}/domain/domain_id/${domainID}`,
+    url,
     method: 'get',
   })
 }
 
-export function fetchDisData(uid, domainID, type) {
+export function fetchDisData(uid, domainID, type, hostId) {
+  var url = `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`
+  if (hostId) {
+      url = `${url}&host_id=${hostId}`
+  }
   return request({
-    url: `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`,
+    url,
     method: 'get',
   })
 }
