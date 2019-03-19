@@ -21,6 +21,7 @@
       </el-form-item>
     </el-form>
     <LineChart :chart-data="onlineData" :option="option" />
+    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
   </div>
 </template>
 
@@ -28,15 +29,18 @@
 import moment from 'moment'
 import { fetchNum } from '@/api/user/historyData'
 import LineChart from '@/components/LineChart'
+import NoBindTip from '@/components/NoBindTip'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Online',
   components: {
-    LineChart
+    LineChart,
+    NoBindTip
   },
   data() {
     return {
+      tipVisible: false,
       date: [moment().subtract(1, 'hour'), moment()],
       radio: 'hour',      
       onlineData: {
@@ -56,6 +60,8 @@ export default {
   mounted() {
     if(this.currentDomain.id) {
       this.getData()
+    } else {
+      this.tipVisible = true
     }
   },
   methods: {
@@ -96,6 +102,9 @@ export default {
       fetchNum(this.currentDomain.uid, this.currentDomain.id, start, end).then(res => {
         this.formatData(res)
       })
+    },
+    handleCloseTip() {
+      this.tipVisible = false
     }
   }
 }

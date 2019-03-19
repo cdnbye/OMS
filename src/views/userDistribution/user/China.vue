@@ -1,23 +1,29 @@
 <template>
-  <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
+  <div>
+    <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
+    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import ChinaMap from '@/components/CityMap'
+import NoBindTip from '@/components/NoBindTip'
 import { fetchChinaDis } from '@/api/user/liveData'
 
 export default {
   name: 'ChinaDis',
   data() {
     return {
+      tipVisible: false,
       cityData: [],
       provinceData: [],
       total: 0
     }
   },
   components: {
-    ChinaMap
+    ChinaMap,
+    NoBindTip
   },
   computed: {
     ...mapGetters([
@@ -25,7 +31,11 @@ export default {
     ])
   },
   mounted() {
-    this.fetchData()
+    if(this.currentDomain.id) {
+      this.fetchData()
+    } else {
+      this.tipVisible = true
+    }
   },
   methods: {
     fetchData() {
@@ -54,6 +64,9 @@ export default {
           })
         }
       })
+    },
+    handleCloseTip() {
+      this.tipVisible = false
     }
   }
 }

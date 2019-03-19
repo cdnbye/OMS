@@ -34,15 +34,16 @@
 
     <Dis :data="disData"/>
 
-    <el-dialog
+    <!-- <el-dialog
       :visible.sync="tipVisible"
       :width="device === 'mobile' ? '80%' : '30%'">
       <span>{{ $t('dashboard.tip') }}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="tipVisible = false">{{ $t('common.cancel')}}</el-button>
-        <el-button type="primary" @click="handlePush">{{$t('dashboard.goBind')}}</el-button>
+        <el-button @click="tipVisible = false">{{ $t('common.cancel') }}</el-button>
+        <el-button type="primary" @click="handlePush">{{ $t('dashboard.goBind') }}</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
+    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
     
   </div>
 </template>
@@ -52,23 +53,25 @@ import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
 import { formatTraffic, formatPieData } from '@/utils/format'
 import { fetchUserDomain } from '@/api/userDomain'
 import { mapGetters } from 'vuex'
-import Cookies from 'js-cookie'
 import store from '@/store'
 
 import SwitchDomain from '@/components/SwitchDomain'
+import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
 
 let int = undefined
 
 export default {
-  name: 'PanelGroup',
+  name: 'LiveData',
   components: {
     Dis,
+    NoBindTip,
     SwitchDomain
   },
   data() {
     return {
       tipVisible: false,
+
       statis: {
         online: 0,
         traffic_p2p: {
@@ -148,9 +151,12 @@ export default {
         _this.getData(uid, id, hostId)
       }, 20000)
     },
-    handlePush() {
+    // handlePush() {
+    //   this.tipVisible = false
+    //   this.$router.push('/user/domain')
+    // },
+    handleCloseTip() {
       this.tipVisible = false
-      this.$router.push('/user/domain')
     },
     getUserDomain() {
       fetchUserDomain(1, 10).then(res => {

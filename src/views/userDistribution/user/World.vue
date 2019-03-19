@@ -1,21 +1,27 @@
 <template>
-  <world-map :countryData="countryData" />
+  <div>
+    <world-map :countryData="countryData" />
+    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
+</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import WorldMap from '@/components/WorldMap'
+import NoBindTip from '@/components/NoBindTip'
 import { fetchChinaDis } from '@/api/user/liveData'
 
 export default {
   name: 'WorldDis',
   data() {
     return {
+      tipVisible: false,
       countryData: []
     }
   },
   components: {
-    WorldMap
+    WorldMap,
+    NoBindTip
   },
   computed: {
     ...mapGetters([
@@ -23,7 +29,11 @@ export default {
     ])
   },
   mounted() {
-    this.fetchData()
+    if(this.currentDomain.id) {
+      this.fetchData()
+    } else {
+      this.tipVisible = true
+    }
   },
   methods: {
     fetchData() {
@@ -34,6 +44,9 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    handleCloseTip() {
+      this.tipVisible = false
     }
   }
 }

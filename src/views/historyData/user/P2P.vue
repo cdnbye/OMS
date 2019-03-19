@@ -21,11 +21,13 @@
       </el-form-item>
     </el-form>
     <LineChart :chart-data="lineChartData" :option="option" />
+    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import NoBindTip from '@/components/NoBindTip'
 import LineChart from '@/components/LineChart'
 import { fetchP2PTraffic } from '@/api/user/historyData'
 import { mapGetters } from 'vuex'
@@ -34,10 +36,12 @@ import { formatTraffic } from '@/utils/format'
 export default {
   name: 'Bandwidth',
   components: {
-    LineChart
+    LineChart,
+    NoBindTip
   },
   data() {
     return {
+      tipVisible: false,
       lineChartData: {
         P2P: []
       },
@@ -58,7 +62,11 @@ export default {
     ])
   },
   mounted() {
-    this.getData()
+    if(this.currentDomain.id) {
+      this.getData()
+    } else {
+      this.tipVisible = true
+    }
   },
   methods: {
     dataChange(date) {
@@ -97,6 +105,9 @@ export default {
     },
     getTimeStamp(date) {
       return moment(date).format('X')
+    },
+    handleCloseTip() {
+      this.tipVisible = false
     }
   }
 }

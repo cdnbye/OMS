@@ -358,6 +358,9 @@ export default {
               borderColor: '#1773c3',
               shadowColor: '#1773c3',
               shadowBlur: 20
+            },
+            emphasis: {
+              areaColor: '#082E54'
             }
           },
           scaleLimit: {
@@ -400,6 +403,13 @@ export default {
             },
 
             data: this.convertData(this.data),
+            itemStyle: {
+              normal: {
+                color: '#FFD700',
+                shadowBlur: 10,
+                shadowColor: '#333'
+              }
+            },
             symbolSize: function (val) {
                 return Math.log(val[2]) / Math.log(3.3)
                 // return val[2] / 60;
