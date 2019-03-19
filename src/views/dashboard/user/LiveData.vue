@@ -33,16 +33,6 @@
     </el-row>
 
     <Dis :data="disData"/>
-
-    <!-- <el-dialog
-      :visible.sync="tipVisible"
-      :width="device === 'mobile' ? '80%' : '30%'">
-      <span>{{ $t('dashboard.tip') }}</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="tipVisible = false">{{ $t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="handlePush">{{ $t('dashboard.goBind') }}</el-button>
-      </span>
-    </el-dialog> -->
     <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
     
   </div>
@@ -151,28 +141,30 @@ export default {
         _this.getData(uid, id, hostId)
       }, 20000)
     },
-    // handlePush() {
-    //   this.tipVisible = false
-    //   this.$router.push('/user/domain')
-    // },
     handleCloseTip() {
       this.tipVisible = false
     },
     getUserDomain() {
       fetchUserDomain(1, 10).then(res => {
         if(res.data) {
+          let hasValidDomain = false
           if(!this.currentDomain.id) {
             for (let i = 0; i < res.data.length; i++) {
               if(res.data[i].isValid === 1) {
                 store.dispatch('setDomain', res.data)
                 store.dispatch('setCurrentDomain', res.data[i])
+                hasValidDomain = true
                 break
               }
             }
           }
-          const validDomain = res.data.filter(item => item.isValid === 1)
-          store.dispatch('setValidDomain', validDomain)
-          this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
+          if(hasValidDomain) {
+            const validDomain = res.data.filter(item => item.isValid === 1)
+            store.dispatch('setValidDomain', validDomain)
+            this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
+          } else {
+            this.tipVisible = true
+          }
         } else {
           this.tipVisible = true
         }
