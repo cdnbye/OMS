@@ -148,11 +148,20 @@ export default {
       fetchUserDomain(1, 10).then(res => {
         if(res.data) {
           let hasValidDomain = false
+          console.log(this.currentDomain.id)
           if(!this.currentDomain.id) {
+            console.log('===')
             for (let i = 0; i < res.data.length; i++) {
               if(res.data[i].isValid === 1) {
                 store.dispatch('setDomain', res.data)
                 store.dispatch('setCurrentDomain', res.data[i])
+                hasValidDomain = true
+                break
+              }
+            }
+          } else {
+            for (let i = 0; i < res.data.length; i++) {
+              if(res.data[i].isValid === 1) {
                 hasValidDomain = true
                 break
               }
