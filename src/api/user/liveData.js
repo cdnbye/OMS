@@ -28,3 +28,10 @@ export function fetchNum(uid, domainID, start, end) {
     method: 'get',
   })
 }
+
+export function fetchChinaDis(uid, domainID, type) {
+  return request({
+    url: `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`,
+    method: 'get',
+  })
+}

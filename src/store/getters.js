@@ -9,6 +9,7 @@ const getters = {
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
   userDomain: state => state.user.userDomain,
+  userValidDomain: state => state.user.userValidDomain,
   currentDomain: state => state.user.currentDomain
 }
 export default getters

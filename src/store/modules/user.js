@@ -16,6 +16,7 @@ const user = {
       articlePlatform: []
     },
     userDomain: [],
+    userValidDomain: '',
     currentDomain: (Cookies.get('userDomain') ? JSON.parse(Cookies.get('userDomain')) : {}) || {}
   },
 
@@ -46,6 +47,11 @@ const user = {
     },
     SET_USERDOMAIN: (state, userDomain) => {
       state.userDomain = userDomain
+    },
+    SET_USERVALIDDOMAIN: (state, userValidDomain) => {
+      const validDomain = JSON.stringify(userValidDomain)
+      state.userValidDomain = validDomain
+      Cookies.set('validDomain', validDomain, { expires: 99999 })
     },
     SET_CURRENTDOMAIN: (state, currentDomain) => {
       Cookies.set('userDomain', currentDomain, { expires: 99999 })
@@ -93,7 +99,9 @@ const user = {
         commit('SET_ID', '')
         removeID()
         commit('SET_USERDOMAIN', [])
+        commit('SET_USERVALIDDOMAIN', [])
         commit('SET_CURRENTDOMAIN', {})
+        commit('SET_USERVALIDDOMAIN', '')
         resolve()
       })
     },
@@ -119,6 +127,13 @@ const user = {
       return new Promise((resolve, reject) => {
         commit('SET_CURRENTDOMAIN', currentDomain)
         resolve(currentDomain)
+      })
+    },
+    //设置用户所有有效域名
+    setValidDomain({ commit }, validDomain) {
+      return new Promise((resolve, reject) => {
+        commit('SET_USERVALIDDOMAIN', validDomain)
+        resolve(validDomain)
       })
     }
 

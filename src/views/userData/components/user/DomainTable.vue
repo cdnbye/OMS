@@ -1,8 +1,9 @@
 <template>
 <div class="app-container">
-  <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">{{ $t('domainTable.bindDomain') }}</el-button>
-
-  <p>{{ $t('dashboard.currentDomain') }}{{currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}&nbsp;<a @click="selectDomainVisible = true">{{ $t('dashboard.switch') }}</a></p>
+  <p>
+    <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">{{ $t('domainTable.bindDomain') }}</el-button>
+    <SwitchDomain mobileWidth="25%" />
+  </p>
 
   <el-table
     border
@@ -149,31 +150,12 @@
     </span>
   </el-dialog>
 
-  <el-dialog
-    :title="$t('dashboard.switchDomain')"
-    :visible.sync="selectDomainVisible"
-    :width="device === 'mobile' ? '80%' : '30%'">
-    <el-select v-model="selectValue" :placeholder="$t('domainTable.select')" style="width: 80%">
-      <template v-for = "value in tableData">
-        <el-option
-          v-if="value.isValid === 1"
-          :key="value.domain"
-          :label="value.domain"
-          :value="value.domain">
-        </el-option>
-      </template>
-    </el-select>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="selectDomainVisible = false">{{ $t('common.cancel')}}</el-button>
-      <el-button type="primary" @click="handleSelect">{{ $t('common.ok')}}</el-button>
-    </span>
-  </el-dialog>
-
 </div>
 </template>
 
   <script>
   import { fetchUserDomain, bindDomain, checkDomain, deleteDomain } from '@/api/userDomain'
+  import SwitchDomain from '@/components/SwitchDomain'
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
@@ -182,6 +164,9 @@
 
   export default {
     name: 'UserDomain',
+    components: {
+      SwitchDomain
+    },
     data() {
       const formValidateURL = (rule, value, callback) => {
         if(!validateURL(value)) {
@@ -199,9 +184,6 @@
           pageSize: 10
         },
         dialogVisible: false,
-
-        selectDomainVisible: false,
-        selectValue: '',
 
         checkDialogVisible: false,
         checkSelect: 'dns',
@@ -221,11 +203,11 @@
       }
     },
     computed: {
-    ...mapGetters([
-      'currentDomain',
-      'device'
-    ])
-  },
+      ...mapGetters([
+        // 'currentDomain',
+        'device'
+      ])
+    },
     methods: {
       fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
         this.loading = true
@@ -321,19 +303,6 @@
       },
       saveFile() {
         downloadFile(this.checkDomainData.text, 'auth.txt')
-      },
-
-      //
-      handleSelect() {
-        if(this.selectValue) {
-          this.tableData.forEach(item => {
-            if(item.domain === this.selectValue) {
-              store.dispatch('setCurrentDomain', item).then(() => {
-                this.selectDomainVisible = false
-              })
-            }
-          })
-        }
       },
     },
     mounted() {

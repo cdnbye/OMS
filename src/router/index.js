@@ -254,7 +254,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'china',
-        component: () => import('@/views/userDistribution/china'),
+        component: () => import('@/views/userDistribution/China'),
         name: 'ChinaDistribution',
         meta: {
           title: 'chinaDistribution',
@@ -263,7 +263,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'world',
-        component: () => import('@/views/userDistribution/world'),
+        component: () => import('@/views/userDistribution/World'),
         name: 'WorldDistribution',
         meta: {
           title: 'worldDistribution',
@@ -356,7 +356,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'china',
-        component: () => import('@/views/userDistribution/china'),
+        component: () => import('@/views/userDistribution/China'),
         name: 'ChinaDistribution',
         meta: {
           title: 'chinaDistribution',
@@ -365,7 +365,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'world',
-        component: () => import('@/views/userDistribution/world'),
+        component: () => import('@/views/userDistribution/World'),
         name: 'WorldDistribution',
         meta: {
           title: 'worldDistribution',

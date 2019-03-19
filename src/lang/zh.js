@@ -79,7 +79,6 @@ export default {
   },
   dashboard: {
     currentDomain: '当前域名：',
-    switch: '切换',
     goBind: '去绑定',
     switchDomain: '切换域名',
     tip: '您还未绑定域名，是否现在绑定？',
@@ -108,7 +107,7 @@ export default {
     verifyNow: '立即验证',
     delete: '删除',
     tip: '确定删除吗？',
-    none: '无',
+    none: '暂无域名',
     select: '请选择',
     userVerifyDomain: {
       //DNS

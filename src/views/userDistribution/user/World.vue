@@ -1,14 +1,40 @@
 <template>
-  <ComingSoon />
+  <world-map :countryData="countryData" />
 </template>
 
 <script>
-import ComingSoon from '@/components/ComingSoon'
+import { mapGetters } from 'vuex'
+import WorldMap from '@/components/WorldMap'
+import { fetchChinaDis } from '@/api/user/liveData'
 
 export default {
-  name: 'World',
+  name: 'WorldDis',
+  data() {
+    return {
+      countryData: []
+    }
+  },
   components: {
-    ComingSoon
+    WorldMap
+  },
+  computed: {
+    ...mapGetters([
+      'currentDomain'
+    ])
+  },
+  mounted() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'country').then(res => {
+        if(res.data) {
+          this.countryData = res.data
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   }
 }
 </script>

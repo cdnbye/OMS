@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+let echarts = require('echarts/lib/echarts')
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
 import '../../../node_modules/echarts/map/js/world.js'

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div style="text-align: left; margin: 20px">
+    <SwitchDomain :finishSelect="loopGetData" />
+    </div>
     <el-row :gutter="20" class="panel-group">
       <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
         <div class="card-panel">
@@ -46,12 +49,13 @@
 
 <script>
 import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
-import { fetchUserDomain } from '@/api/userDomain'
 import { formatTraffic, formatPieData } from '@/utils/format'
+import { fetchUserDomain } from '@/api/userDomain'
 import { mapGetters } from 'vuex'
 import Cookies from 'js-cookie'
 import store from '@/store'
 
+import SwitchDomain from '@/components/SwitchDomain'
 import Dis from './Distribution'
 
 let int = undefined
@@ -59,7 +63,8 @@ let int = undefined
 export default {
   name: 'PanelGroup',
   components: {
-    Dis
+    Dis,
+    SwitchDomain
   },
   data() {
     return {
@@ -84,77 +89,23 @@ export default {
   computed: {
     ...mapGetters([
       'currentDomain',
-      'device'
+      'device',
+      'userValidDomain'
     ])
   },
   mounted() {
-    console.log('===')
-    console.log(this.$route.params)
     if(this.$route.params.id && this.$route.params.uid) {
       console.log('has router')
       this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
     } else {
       console.log('has not router')
-      if(!this.currentDomain.id) {
-        this.getUserDomain()
-      } else {
-        this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
-      }
+      this.getUserDomain()
     }
-    // if(!this.currentDomain.id) {
-    //   this.getUserDomain()
-    // } else {
-    //   this.loopGetData()
-    // }
   },
   beforeDestroy() {
     clearInterval(int)
   },
   methods: {
-    // getData() {
-    //   fetchGlobalData(this.currentDomain.uid, this.currentDomain.id).then(res => {
-    //     const { data } = res
-    //     this.statis.online = data.num_rt
-    //     this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
-    //     this.statis.frequency_day = data.api_frequency_day
-    //   }).catch(err => {
-    //     console.log(err)
-    //   })
-    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'version').then(res => {
-    //     if(res.data) {
-    //       this.disData.versionData = formatPieData(res.data)
-    //     }
-    //   })
-    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'tag').then(res => {
-    //     if(res.data) {
-    //       this.disData.tagData = formatPieData(res.data)
-    //     }
-    //   })
-    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'device').then(res => {
-    //     if(res.data) {
-    //       this.disData.deviceData = formatPieData(res.data)
-    //     }
-    //   })
-    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'live').then(res => {
-    //     if(res.data) {
-    //       this.disData.liveData = formatPieData(res.data)
-    //     }
-    //   })
-    //   fetchDisData(this.currentDomain.uid, this.currentDomain.id, 'netType').then(res => {
-    //     if(res.data) {
-    //       this.disData.netTypeData = formatPieData(res.data)
-    //     }
-    //   })
-    // },
-
-    // loopGetData() {
-    //   const _this = this
-    //   _this.getData()
-    //   int = setInterval(function() {
-    //     _this.getData()
-    //   }, 20000)
-    // },
-
     getData(uid, id, hostId) {
       fetchGlobalData(uid, id, hostId).then(res => {
         const { data } = res
@@ -204,14 +155,19 @@ export default {
     getUserDomain() {
       fetchUserDomain(1, 10).then(res => {
         if(res.data) {
-          for (let i = 0; i < res.data.length; i++) {
-            if(res.data[i].isValid === 1) {
-              store.dispatch('setDomain', res.data)
-              store.dispatch('setCurrentDomain', res.data[i])
-              this.loopGetData(res.data[i].uid, res.data[i].id)
-              break
+          if(!this.currentDomain.id) {
+            for (let i = 0; i < res.data.length; i++) {
+              if(res.data[i].isValid === 1) {
+                store.dispatch('setDomain', res.data)
+                store.dispatch('setCurrentDomain', res.data[i])
+                break
+              }
             }
           }
+          const validDomain = res.data.filter(item => item.isValid === 1)
+          console.log(validDomain)
+          store.dispatch('setValidDomain', validDomain)
+          this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
         } else {
           this.tipVisible = true
         }

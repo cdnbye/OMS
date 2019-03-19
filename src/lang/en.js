@@ -80,7 +80,6 @@ export default {
   dashboard : {
     currentDomain: 'Current Domain: ',
     goBind: 'Go bind',
-    switch: 'Switch',
     switchDomain: 'Switch Domain',
     tip: 'You have not bound a domain name, are you binding now?',
     online: 'Current Online Viewers',
@@ -108,7 +107,7 @@ export default {
     verifyNow: 'Verify Now',
     delete: 'Delete',
     tip: 'Sure to delete？',
-    none: 'none',
+    none: 'None',
     select: 'please select',
     userVerifyDomain: {
       //DNS
