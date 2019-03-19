@@ -72,6 +72,10 @@ export default {
         this.validDomain = JSON.parse(val)
     }
   },
+  mounted() {
+    if(this.userValidDomain)
+      this.validDomain = JSON.parse(this.userValidDomain)
+  },
   methods: {
     handleSelect() {
       if(this.selectValue) {

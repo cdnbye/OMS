@@ -159,7 +159,6 @@
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
-  import Cookies from 'js-cookie'
   import store from '@/store'
 
   export default {
@@ -204,7 +203,6 @@
     },
     computed: {
       ...mapGetters([
-        // 'currentDomain',
         'device'
       ])
     },
@@ -217,6 +215,8 @@
               item.visible = false
             })
             this.tableData = [...res.data]
+            const validDomain = res.data.filter(item => item.isValid === 1)
+            store.dispatch('setValidDomain', validDomain)
           }
           this.loading = false
         }).catch(err => {

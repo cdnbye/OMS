@@ -165,7 +165,6 @@ export default {
             }
           }
           const validDomain = res.data.filter(item => item.isValid === 1)
-          console.log(validDomain)
           store.dispatch('setValidDomain', validDomain)
           this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
         } else {
