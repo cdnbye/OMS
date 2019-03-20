@@ -85,6 +85,7 @@ export default {
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
     serveNum: '今日服务人数',
+    maxOnlineNum: '最高在线人数',
     versionDis: '版本分布',
     tagDis: 'Tag分布',
     terminalDis: '终端分布',
@@ -167,5 +168,11 @@ export default {
   common: {
     ok: '确定',
     cancel: '取消'
+  },
+  historyData: {
+    hour: '1小时内',
+    day: '24小时内',
+    week: '7天',
+    month: '30天'
   }
 }

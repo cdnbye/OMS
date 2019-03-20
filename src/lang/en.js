@@ -85,6 +85,7 @@ export default {
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'Served Viewers Today',
+    maxOnlineNum: 'Peak Concurrent Viewers',
     versionDis: 'Version Distribution',
     tagDis: 'Tag Distribution',
     terminalDis: 'Terminal Distribution',
@@ -167,5 +168,11 @@ export default {
   common: {
     ok: 'OK',
     cancel: 'Cancel'
+  },
+  historyData: {
+    hour: '1 Hour',
+    day: '24 Hours',
+    week: '7 Days',
+    month: '30 Days'
   }
 }

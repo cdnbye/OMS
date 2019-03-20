@@ -233,14 +233,13 @@
         this.fetchTableData()
       },
       handleCheck(data) {
-        this.checkDomainData.text = data.text
-        this.checkDomainData.domain = data.domain
-        this.checkDomainData.id = data.id
+        this.checkDomainData = {...data}
         this.checkDialogVisible = true
       },
       handleCheckDomain() {
         this.checkDomainLoading = true
         checkDomain(this.checkDomainData.id).then(res => {
+          this.fetchTableData()
           this.$message({
             message: '验证成功',
             type: 'success'
@@ -272,13 +271,9 @@
             message: '删除成功',
             type: 'success'
           })
-          let index = 0
-          this.tableData.forEach((item, index) => {
-            if(item.id === domainData.id) {
-              index = index
-            }
+          this.tableData = this.tableData.filter(item => {
+            return item.id !== domainData.id
           })
-          this.tableData.splice(index, 1)
           domainData.visible = false
         }).catch(err => {
           console.log(err)

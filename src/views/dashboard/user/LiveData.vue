@@ -1,10 +1,10 @@
 <template>
   <div>
     <div style="text-align: left; margin: 20px">
-    <SwitchDomain :finishSelect="loopGetData" />
+    <SwitchDomain :finishSelect="handleSwitchDomain" />
     </div>
     <el-row :gutter="20" class="panel-group">
-      <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.online | positive }}</span>
@@ -13,7 +13,7 @@
         </div>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
@@ -22,11 +22,20 @@
         </div>
       </el-col>
       
-      <el-col :xs="24" :sm="12" :lg="8" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.frequency_day }}</span>
             <div class="card-panel-text">{{ $t('dashboard.serveNum') }}</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.num_max }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.maxOnlineNum') }}</div>
           </div>
         </div>
       </el-col>
@@ -69,6 +78,7 @@ export default {
           unit: 'KB'
         },
         frequency_day: 0,
+        num_max: 0
       },
       disData: {
         versionData: [],
@@ -105,6 +115,7 @@ export default {
         this.statis.online = data.num_rt
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
         this.statis.frequency_day = data.api_frequency_day
+        this.statis.num_max = data.num_max
       }).catch(err => {
         console.log(err)
       })
@@ -141,6 +152,10 @@ export default {
         _this.getData(uid, id, hostId)
       }, 20000)
     },
+    handleSwitchDomain(uid, id) {
+      clearInterval(int)
+      this.loopGetData(uid, id)
+    },
     handleCloseTip() {
       this.tipVisible = false
     },
@@ -148,9 +163,7 @@ export default {
       fetchUserDomain(1, 10).then(res => {
         if(res.data) {
           let hasValidDomain = false
-          console.log(this.currentDomain.id)
           if(!this.currentDomain.id) {
-            console.log('===')
             for (let i = 0; i < res.data.length; i++) {
               if(res.data[i].isValid === 1) {
                 store.dispatch('setDomain', res.data)
