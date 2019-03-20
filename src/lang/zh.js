@@ -91,6 +91,7 @@ export default {
     terminalDis: '终端分布',
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
+    p2pTip: '如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置'
   },
   domainTable: {
     bindDomain: '绑定域名',

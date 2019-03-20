@@ -15,9 +15,12 @@
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.p2pTip')" />
+          </div>
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
-            <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }}({{statis.traffic_p2p.unit}})</div>
+            <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }}({{ statis.traffic_p2p.unit }})</div>
           </div>
         </div>
       </el-col>
@@ -58,6 +61,8 @@ import SwitchDomain from '@/components/SwitchDomain'
 import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
 
+import PointTip from '@/components/PointTip'
+
 let int = undefined
 
 export default {
@@ -65,7 +70,8 @@ export default {
   components: {
     Dis,
     NoBindTip,
-    SwitchDomain
+    SwitchDomain,
+    PointTip
   },
   data() {
     return {
@@ -239,5 +245,12 @@ export default {
           color: rgb(32, 160, 255);
         }
       }
-    }
+  }
+  .tip {
+    position: absolute;
+    font-size: 15px;
+    top: 0;
+    right: 0;
+    padding: 10px;
+  }
 </style>

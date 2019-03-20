@@ -91,6 +91,7 @@ export default {
     terminalDis: 'Terminal Distribution',
     liveDis: 'Live/VOD Distribution',
     natDis: 'Network Type Distribution',
+    p2pTip: ' '
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
