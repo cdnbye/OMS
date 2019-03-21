@@ -12,7 +12,7 @@ import './permission' // permission control
 
 import { Alert, Popover, Select, Option, Loading, Pagination, Slider, 
   Card, Table, TableColumn, Radio, RadioGroup, RadioButton, DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, 
-  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu } from 'element-ui'
+  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu, InputNumber } from 'element-ui'
 
 Vue.config.productionTip = false
 
@@ -48,6 +48,7 @@ Vue.use(Scrollbar)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Submenu)
+Vue.use(InputNumber)
 
 Vue.use({
   i18n: (key, value) => i18n.t(key, value)
