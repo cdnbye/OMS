@@ -26,7 +26,8 @@ export default {
     p2pTraffic: 'P2P Traffic Trend',
     onlineNum: 'Online Viewers Trend',
     domainInfo: 'Domain Info',
-    domainList: 'Domain List'
+    domainList: 'Domain List',
+    package: 'Flow Package'
   },
   navbar: {
     logOut: 'Log Out',
@@ -177,6 +178,15 @@ export default {
     month: '30 Days'
   },
   package: {
-    payMethod: 'Payment method'
+    noBuyTitle: 'Tips',
+    noBuyTip: 'Please select the traffic package you want to purchase first.',
+    payMethod: 'Payment method',
+
+    packageInfo: 'Package info',
+    unitPrice: 'Unit price',
+    quantity: 'Quantity',
+    expense: 'Expense',
+    total: 'total:',
+    confirmPurchase: 'Pay now'
   }
 }

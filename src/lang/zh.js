@@ -26,7 +26,8 @@ export default {
     p2pTraffic: 'P2P流量趋势图',
     onlineNum: '在线人数趋势图',
     domainInfo: '域名信息',
-    domainList: '域名列表'
+    domainList: '域名列表',
+    package: '套餐列表'
   },
   navbar: {
     logOut: '退出登录',
@@ -177,6 +178,15 @@ export default {
     month: '30天'
   },
   package: {
-    payMethod: '付款方式'
+    noBuyTitle: '温馨提示',
+    noBuyTip: '请先选择你要购买的流量包',
+    payMethod: '付款方式',
+
+    packageInfo: '套餐信息',
+    unitPrice: '单价',
+    quantity: '数量',
+    expense: '费用',
+    total: '总计：',
+    confirmPurchase: '确认购买'
   }
 }

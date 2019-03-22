@@ -296,6 +296,29 @@ export const asyncRouterMap = [
       }
     ]
   },
+  // user router 订单详情
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/package/detail',
+    hidden: true,
+    meta: {
+      title: 'package',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: '/user/package/detail',
+        component: () => import('@/views/package/OrderDetail'),
+        name: 'OrderDetail',
+        meta: { 
+          hide: true,
+          roles: ['user'],
+          noCache: true
+        }
+      }
+    ]
+  },
   //修改邮箱密码
   {
     path: '/user/edit',

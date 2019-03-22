@@ -71,7 +71,8 @@ export default {
     },
     addViewTags() {
       const route = this.generateRoute()
-      if (!route) {
+      //route.meta.hide 不生成tagview
+      if (!route || route.meta.hide) {
         return false
       }
       this.$store.dispatch('addView', route)
