@@ -272,30 +272,30 @@ export const asyncRouterMap = [
       }
     ]
   },
-    // user router 套餐列表
-    {
-      path: '/user',
-      component: Layout,
-      redirect: '/user/package',
-      meta: {
-        title: 'package',
-        icon: 'shoppingCard',
-        roles: ['user']
-      },
-      children: [
-        {
-          path: '/user/package',
-          component: () => import('@/views/package'),
-          name: 'Package',
-          meta: { 
-            title: 'package', 
-            icon: 'shoppingCard', 
-            roles: ['user'],
-            noCache: true
-          }
-        }
-      ]
+  // user router 套餐列表
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/package',
+    meta: {
+      title: 'package',
+      icon: 'shoppingCard',
+      roles: ['user']
     },
+    children: [
+      {
+        path: '/user/package',
+        component: () => import('@/views/package'),
+        name: 'Package',
+        meta: { 
+          title: 'package', 
+          icon: 'shoppingCard', 
+          roles: ['user'],
+          noCache: true
+        }
+      }
+    ]
+  },
   //修改邮箱密码
   {
     path: '/user/edit',

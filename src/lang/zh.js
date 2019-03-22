@@ -175,5 +175,8 @@ export default {
     day: '24小时内',
     week: '7天',
     month: '30天'
+  },
+  package: {
+    payMethod: '付款方式'
   }
 }

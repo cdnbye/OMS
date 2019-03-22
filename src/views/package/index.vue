@@ -1,7 +1,7 @@
 <template>
-  <div class="package">
+  <div class="package" :style="device === 'mobile' ? {} : {padding: '30px 120px'}">
     <el-dialog
-      title="付款方式"
+      :title="$t('package.payMethod')"
       :visible.sync="payVisible"
       :width="device === 'mobile' ? '80%' : '30%'"
       :before-close="dialogClose">
@@ -12,45 +12,83 @@
         <img :src="payImg.paypal" />
       </el-radio>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSelect">确 定</el-button>
+        <el-button type="primary" @click="handleSelect">{{ $t('common.ok') }}</el-button>
       </span>
     </el-dialog>
     <template v-for="(item, index) in packages">
       <el-row :key="item.subject" style="margin-bottom: 20px">
         <el-col :span="24">
           <el-card shadow="never">
-            <div class="container">
-              <div class="item-desc">
-                <em class="shop-card-em">{{ item.subject }}</em>
+            <template v-if="paySelect === 'alipay'">
+              <div class="container">
+                <div class="item-desc">
+                  <em class="shop-card-em">{{ item.traffic }}TB</em>
+                  <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
+                    立减 ￥ {{item.original_price - item.price}}
+                  </span>
+                  <span class="shop-card-txt">永久有效</span>
+                </div>
+                <div class="item-price">
+                  <span class="price">
+                    <span>￥</span>
+                    <em>{{ item.price }}</em>
+                    <s v-if="item.price !== item.original_price">￥{{ item.original_price }}</s>
+                  </span>
+                </div>
+                <div class="count">
+                  <el-input-number v-model="selectPackage.cn[index].buyCount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
+                </div>
               </div>
-              <div class="item-price">
-                <span class="price">
-                  <span>{{ paySelect === 'alipay' ? '￥' : '$'}}</span>
-                  <em>{{ item.price }}</em>
-                  <s v-if="item.price !== item.original_price">{{ paySelect === 'alipay' ? '￥' : '$'}}{{ item.original_price }}</s>
-                </span>
+            </template>
+
+            <template v-else>
+              <div class="container">
+                <div class="item-desc">
+                  <em class="shop-card-em">{{ item.traffic }}TB</em>
+                  <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
+                    {{((item.original_price - item.price)/item.original_price * 100).toFixed(1)}}% off
+                  </span>
+                  <span class="shop-card-txt">Permanent</span>
+                </div>
+                <div class="item-price">
+                  <span class="price">
+                    <span>$</span>
+                    <em>{{ item.price }}</em>
+                    <s v-if="item.price !== item.original_price">${{ item.original_price }}</s>
+                  </span>
+                </div>
+                <div class="count">
+                  <el-input-number v-model="selectPackage.en[index].buyCount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
+                </div>
               </div>
-              <div v-if="paySelect === 'alipay'" class="count">
-                <el-input-number v-model="inputNumber.cn[index]" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
-              </div>
-              <div v-else class="count">
-                <el-input-number v-model="inputNumber.en[index]" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
-              </div>
-            </div>
+            </template>
           </el-card>
         </el-col>
       </el-row>
     </template>
-    <el-card>
-      <div>
-        <div class="tip">
-          总计费用：
+    <el-card :body-style="{'text-align': 'left'}">
+      <div v-if="paySelect === 'alipay'">
+        <div class="buy">
+          <div class="tip">
+            总计费用：
+          </div>
+          <div class="total-price">
+            <em>{{totalPrice}}</em>
+          </div>
         </div>
-        <div class="total-price">
-          <em>{{totalPrice}}</em>
-        </div>
+        <el-button type="warning">立即购买</el-button>
       </div>
-      <el-button type="warning">立即购买</el-button>
+      <div v-else>
+        <div class="buy">
+          <div class="tip">
+            Total cost:
+          </div>
+          <div class="total-price">
+            <em>{{totalPrice}}</em>
+          </div>
+        </div>
+        <el-button type="warning">Buy now</el-button>
+      </div>
     </el-card>
   </div>
 </template>
@@ -71,10 +109,10 @@ export default {
         ali: Alipay,
         paypal: Paypal
       },
-      totalPrice: '0.00',
+      totalPrice: 0,
       packageData: {},
       packages: [],
-      inputNumber: {
+      selectPackage: {
         cn: [],
         en: []
       }
@@ -102,23 +140,38 @@ export default {
       this.$router.go(-1)
     },
     selectCountChange(value, item) {
-      console.log(value)
-      console.log(item)
+      this.getTotalPrice()
     },
     handleSelect() {
       this.payVisible = false
       if(this.paySelect === 'alipay') {
         this.packages = [...this.packageData.list_cn]
         this.packages.forEach(item => {
-          this.inputNumber.cn.push(0)
+          this.selectPackage.cn.push({...item, buyCount: 0})
         })
       } else {
         this.packages = [...this.packageData.list_en]
         this.packages.forEach(item => {
-          this.inputNumber.en.push(0)
+          this.selectPackage.en.push({...item, buyCount: 0})
         })
       }
-      console.log(this.inputNumber)
+    },
+    getTotalPrice() {
+      let total = 0
+      if(this.selectPackage.cn.length > 0) {
+        this.selectPackage.cn.forEach(item => {
+          if(item.buyCount > 0) {
+            total += item.price * item.buyCount
+          }
+        })
+      } else {
+        this.selectPackage.en.forEach(item => {
+          if(item.buyCount > 0) {
+            total += item.price * item.buyCount
+          }
+        })
+      }
+      this.totalPrice = total.toFixed(2)
     }
   }
 }
@@ -142,14 +195,31 @@ export default {
     justify-content: space-between;
     .item-desc {
       text-align: left;
+      flex-grow: 2;
       .shop-card-em {
         font-size: 24px;
         color: #333;
         vertical-align: middle;
         margin-right: 5px;
       }
+      .shop-card-txt {
+        display: block;
+        color: #8d99a6;
+        font-size: 14px;
+        padding-top: 3px;
+      }
+      .shop-card-tips {
+        vertical-align: middle;
+        color: #ff7200;
+        border: 1px solid #ff7200;
+        font-size: 12px;
+        line-height: 12px;
+        padding: 2px 5px 1px;
+        border-radius: 2px;
+      }
     }
     .item-price {
+      flex-grow: 1;
       .price {
         span {
           vertical-align: top;
@@ -185,5 +255,8 @@ export default {
       font-size: 25px;
       line-height: 20px;
     }
+  }
+  .buy {
+    margin-bottom: 12px;
   }
 </style>

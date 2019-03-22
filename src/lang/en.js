@@ -175,5 +175,8 @@ export default {
     day: '24 Hours',
     week: '7 Days',
     month: '30 Days'
+  },
+  package: {
+    payMethod: 'Payment method'
   }
 }
