@@ -108,13 +108,13 @@
           </li>
           <li>
             <div class="pv-content">
-              <h4>{{ $t('domainTable.userVerifyDomain.uploadFile') }}{{checkDomainData.domain}}</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.uploadFile') }}http://{{checkDomainData.domain}}/</h4>
               <h4>{{ $t('domainTable.userVerifyDomain.fileName') }}</h4>
             </div>
           </li>
           <li>
             <div class="pv-content">
-              <h4>{{ $t('domainTable.userVerifyDomain.navVisitHead') }}{{checkDomainData.domain}}/auth.txt{{ $t('domainTable.userVerifyDomain.navVisitEnd') }}</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.navVisitHead') }}http://{{checkDomainData.domain}}/auth.txt{{ $t('domainTable.userVerifyDomain.navVisitEnd') }}</h4>
             </div>  
           </li>
           <li>
