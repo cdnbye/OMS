@@ -36,8 +36,8 @@
               <div class="container">
                 <div class="item-desc">
                   <em class="shop-card-em">{{ item.traffic }}TB</em>
-                  <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
-                    立减 ￥ {{item.original_price - item.price}}
+                  <span class="shop-card-tips" :style="item.original_price - item.price > 0 ? {display: 'inline-block'} : {display: 'none'}">
+                    立减 ￥ {{ (item.original_price - item.price).toFixed(2) }}
                   </span>
                   <span class="shop-card-txt">永久有效</span>
                 </div>
@@ -202,7 +202,6 @@ export default {
           }
         })
       }
-      console.log(data)
       return data
     },
     handleBuyClick() {

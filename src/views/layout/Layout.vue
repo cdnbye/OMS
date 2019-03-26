@@ -6,6 +6,7 @@
       <Navbar />
       <TagsView />
       <AppMain/>
+      <Advertisement :show="true" />
     </div>
   </div>
 </template>
@@ -13,6 +14,7 @@
 <script>
 import { Navbar, Sidebar, AppMain, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import Advertisement from '@/components/Advertisement'
 
 export default {
   name: 'Layout',
@@ -20,7 +22,8 @@ export default {
     Navbar,
     Sidebar,
     AppMain,
-    TagsView
+    TagsView,
+    Advertisement
   },
   mixins: [ResizeMixin],
   computed: {

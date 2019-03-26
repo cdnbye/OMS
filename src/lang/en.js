@@ -187,6 +187,8 @@ export default {
     quantity: 'Quantity',
     expense: 'Expense',
     total: 'total:',
-    confirmPurchase: 'Pay now'
+    confirmPurchase: 'Pay now',
+    paySuccess: 'payment successful',
+    systemError: 'Sorry, the system is maintaining'
   }
 }

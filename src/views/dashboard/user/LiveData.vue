@@ -43,25 +43,31 @@
         </div>
       </el-col>
     </el-row>
-
+    <el-dialog :visible="finishPayVisible" :width="device === 'mobile' ? '80%' : '30%'">
+      <span>{{ $t('package.paySuccess') }}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="finishPayVisible = false">{{ $t('common.ok') }}</el-button>
+      </span>
+    </el-dialog>
     <Dis :data="disData"/>
     <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
-    
   </div>
 </template>
 
 <script>
-import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
-import { formatTraffic, formatPieData } from '@/utils/format'
-import { fetchUserDomain } from '@/api/userDomain'
-import { mapGetters } from 'vuex'
 import store from '@/store'
+import { mapGetters } from 'vuex'
+
+import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
+import { checkAlipayOrder, checkPaypalOrder } from '@/api/user/package'
+import { fetchUserDomain } from '@/api/userDomain'
+
+import { formatTraffic, formatPieData, getQueryObj } from '@/utils/format'
 
 import SwitchDomain from '@/components/SwitchDomain'
 import NoBindTip from '@/components/NoBindTip'
-import Dis from './Distribution'
-
 import PointTip from '@/components/PointTip'
+import Dis from './Distribution'
 
 let int = undefined
 
@@ -76,6 +82,7 @@ export default {
   data() {
     return {
       tipVisible: false,
+      finishPayVisible: false,
 
       statis: {
         online: 0,
@@ -104,11 +111,10 @@ export default {
   },
   mounted() {
     if(this.$route.params.id && this.$route.params.uid) {
-      console.log('has router')
       this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
     } else {
-      console.log('has not router')
       this.getUserDomain()
+      this.checkPayResult()
     }
   },
   beforeDestroy() {
@@ -164,6 +170,35 @@ export default {
     },
     handleCloseTip() {
       this.tipVisible = false
+    },
+    checkPayResult() {
+      const paramObj = getQueryObj()
+      if(paramObj.payment) {
+        switch (paramObj.payment) {
+          case 'alipay':
+            checkAlipayOrder(paramObj.out_trade_no)
+              .then(res => {
+                if(res.data.is_payed)
+                  this.finishPayVisible = true
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            break
+          case 'paypal':
+            checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
+              .then(res => {
+                if(res.data.is_payed)
+                  this.finishPayVisible = true
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            break
+          default:
+            break
+        }
+      }
     },
     getUserDomain() {
       fetchUserDomain(1, 10).then(res => {

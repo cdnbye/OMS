@@ -187,6 +187,8 @@ export default {
     quantity: '数量',
     expense: '费用',
     total: '总计：',
-    confirmPurchase: '确认购买'
+    confirmPurchase: '确认购买',
+    paySuccess: '付款成功',
+    systemError: '抱歉，系统正在维护中'
   }
 }
