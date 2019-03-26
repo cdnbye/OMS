@@ -6,6 +6,7 @@
       <Navbar />
       <TagsView />
       <AppMain/>
+      <!-- show为false则不显示广告 -->
       <Advertisement :show="true" />
     </div>
   </div>
