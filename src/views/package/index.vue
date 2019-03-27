@@ -28,6 +28,8 @@
       </span>
     </el-dialog>
 
+    <el-alert style="margin-bottom: 20px" type="info" show-icon :title="$t('package.packageSubTitle')" :description="$t('package.packageSub')" />
+
     <template v-for="(item, index) in packages">
       <el-row :key="item.subject" style="margin-bottom: 20px">
         <el-col :span="24">
@@ -124,16 +126,12 @@ export default {
         paypal: Paypal
       },
       totalPrice: 0,
-      packageData: {},
       packages: [],
       selectPackage: {
         cn: [],
         en: []
       }
     }
-  },
-  mounted() {
-    this.getPackageData()
   },
   computed: {
     ...mapGetters([
@@ -144,7 +142,17 @@ export default {
     getPackageData() {
       fetchPackage()
         .then(res => {
-          this.packageData = {...res.data}
+          if(this.paySelect === 'alipay') {
+            this.packages = [...res.data.list_cn]
+            this.packages.forEach(item => {
+              this.selectPackage.cn.push({...item, buyCount: 0})
+            })
+          } else {
+            this.packages = [...res.data.list_en]
+            this.packages.forEach(item => {
+              this.selectPackage.en.push({...item, buyCount: 0})
+            })
+          }
         })
         .catch(err => {
           console.log(err)
@@ -158,17 +166,7 @@ export default {
     },
     handleSelect() {
       this.payVisible = false
-      if(this.paySelect === 'alipay') {
-        this.packages = [...this.packageData.list_cn]
-        this.packages.forEach(item => {
-          this.selectPackage.cn.push({...item, buyCount: 0})
-        })
-      } else {
-        this.packages = [...this.packageData.list_en]
-        this.packages.forEach(item => {
-          this.selectPackage.en.push({...item, buyCount: 0})
-        })
-      }
+      this.getPackageData()
     },
     getTotalPrice() {
       let total = 0

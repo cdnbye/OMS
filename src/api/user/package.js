@@ -44,3 +44,11 @@ export function checkPaypalOrder(orderID, paymentID, payerID) {
     method: 'get'
   })
 }
+
+export function checkIn(data) {
+  return request({
+    url: `user/user_id/${userID}/checkin`,
+    method: 'post',
+    data
+  })
+}

@@ -20,15 +20,6 @@
         </div>
       </el-card>
     </div>
-    <!-- <el-dialog :visible.sync="payVisible" :width="device === 'mobile' ? '80%' : '30%'">
-      <span>请在新打开的支付页面上完成付款</span>
-      <span>支付完成前请勿关闭页面！</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="payVisible = false">取消订单</el-button>
-        <el-button type="primary" @click="payVisible = false">已完成支付</el-button>
-      </span>
-    </el-dialog> -->
-
     <el-dialog :visible.sync="cantBuyVisible" :width="device === 'mobile' ? '80%' : '30%'">
       <span>{{ $t('package.systemError') }}</span>
       <span slot="footer" class="dialog-footer">
@@ -47,7 +38,6 @@ export default {
   name: 'OrderDetail',
   data() {
     return {
-      // payVisible: false,
       cantBuyVisible: false,
       tableData: [],
       payMethod: '',

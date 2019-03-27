@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="display: inline-block; text-align: left; width: 100%">
     <el-input
-      :style= "device === 'mobile' ? {'width': mobileWidth} : {'width': pcWidth}"
+      style="width: 66%"
       :placeholder="currentDomain.domain ? currentDomain.domain : $t('domainTable.none')"
       :disabled="true"
     >

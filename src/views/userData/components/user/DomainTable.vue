@@ -1,9 +1,13 @@
 <template>
 <div class="app-container">
-  <p>
-    <el-button type="primary" @click="dialogVisible = true" style="float: left; margin-bottom: 20px">{{ $t('domainTable.bindDomain') }}</el-button>
-    <SwitchDomain mobileWidth="25%" />
-  </p>
+  <el-row style="text-align: left">
+    <el-col :xs="24" :sm="12" :lg="8" style="margin: 10px 0">
+      <el-button type="primary" @click="dialogVisible = true">{{ $t('domainTable.bindDomain') }}</el-button>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="12" style="margin: 10px 0">
+      <SwitchDomain mobileWidth="25%" />
+    </el-col>
+  </el-row>
 
   <el-table
     border
@@ -32,7 +36,7 @@
 
     <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
-        <el-button type="text" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
+        <el-button v-if="scope.row.isValid !== 1" type="text" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
         <el-popover
           style="margin-left: 10px"
           placement="top"
@@ -43,7 +47,7 @@
             <el-button size="mini" type="text" @click="scope.row.visible = false">{{ $t('common.cancel') }}</el-button>
             <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
           </div>
-          <el-button slot="reference" type="text" size="mini" @click="handleDelete(scope.row)">{{ $t('domainTable.delete') }}</el-button>
+          <el-button slot="reference" type="text" size="mini" @click="handleDelete(scope.row)" style="color: red">{{ $t('domainTable.delete') }}</el-button>
         </el-popover>
       </template>
     </el-table-column>
@@ -60,12 +64,10 @@
     </el-pagination>
   </div>
 
-
   <el-dialog
     :title="$t('domainTable.verifyDomain')"
     :visible.sync="checkDialogVisible"
-    :width="device === 'mobile' ? '90%' : '30%' "
-  >
+    :width="device === 'mobile' ? '90%' : '30%' ">
     <el-alert
       title=""
       style="text-align: left"

@@ -1,8 +1,15 @@
 <template>
   <div>
-    <div style="text-align: left; margin: 20px">
-    <SwitchDomain :finishSelect="handleSwitchDomain" />
-    </div>
+    <el-row style="text-align: left; margin: 20px 0">
+      <el-col :xs="18" :sm="12" :lg="8">
+        <SwitchDomain :finishSelect="handleSwitchDomain" />
+      </el-col>
+      <el-col :xs="3" :sm="3" :lg="2">
+        <el-button type="success">{{ $t('dashboard.checkin') }}</el-button>
+      </el-col>
+    </el-row>
+
+
     <el-row :gutter="20" class="panel-group">
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
@@ -20,11 +27,29 @@
           </div>
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
-            <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }}({{ statis.traffic_p2p.unit }})</div>
+            <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }} ({{ statis.traffic_p2p.unit }})</div>
           </div>
         </div>
       </el-col>
-      
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.flow.free.num }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.free') }} ({{ statis.flow.free.unit }})</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.flow.buyed.num }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.buyed') }} ({{ statis.flow.buyed.unit }})</div>
+          </div>
+        </div>
+      </el-col>
+
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
@@ -43,12 +68,6 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible="finishPayVisible" :width="device === 'mobile' ? '80%' : '30%'">
-      <span>{{ $t('package.paySuccess') }}</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="finishPayVisible = false">{{ $t('common.ok') }}</el-button>
-      </span>
-    </el-dialog>
     <Dis :data="disData"/>
     <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
   </div>
@@ -59,7 +78,7 @@ import store from '@/store'
 import { mapGetters } from 'vuex'
 
 import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
-import { checkAlipayOrder, checkPaypalOrder } from '@/api/user/package'
+import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
 import { fetchUserDomain } from '@/api/userDomain'
 
 import { formatTraffic, formatPieData, getQueryObj } from '@/utils/format'
@@ -82,7 +101,6 @@ export default {
   data() {
     return {
       tipVisible: false,
-      finishPayVisible: false,
 
       statis: {
         online: 0,
@@ -91,7 +109,17 @@ export default {
           unit: 'KB'
         },
         frequency_day: 0,
-        num_max: 0
+        num_max: 0,
+        flow: {
+          buyed: {
+            num: 0,
+            unit: 'KB'
+          },
+          free: {
+            num: 0,
+            unit: 'KB'
+          }
+        }
       },
       disData: {
         versionData: [],
@@ -128,6 +156,8 @@ export default {
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
         this.statis.frequency_day = data.api_frequency_day
         this.statis.num_max = data.num_max
+        this.statis.flow.buyed = formatTraffic(data.flow.buyed)
+        this.statis.flow.free = formatTraffic(data.flow.free)
       }).catch(err => {
         console.log(err)
       })
@@ -179,7 +209,12 @@ export default {
             checkAlipayOrder(paramObj.out_trade_no)
               .then(res => {
                 if(res.data.is_payed)
-                  this.finishPayVisible = true
+                  this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                    type: 'success',
+                    confirmButtonText: this.$t('common.ok'),
+                    showCancelButton: false,
+                    customClass: 'my-message-box'
+                  })
               })
               .catch(err => {
                 console.log(err)
@@ -188,8 +223,12 @@ export default {
           case 'paypal':
             checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
               .then(res => {
-                if(res.data.is_payed)
-                  this.finishPayVisible = true
+                this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                  type: 'success',
+                  confirmButtonText: this.$t('common.ok'),
+                  showCancelButton: false,
+                  customClass: 'my-message-box'
+                })
               })
               .catch(err => {
                 console.log(err)

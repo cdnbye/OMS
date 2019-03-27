@@ -27,7 +27,7 @@ export default {
     onlineNum: '在线人数趋势图',
     domainInfo: '域名信息',
     domainList: '域名列表',
-    package: '套餐列表'
+    package: '购买流量包'
   },
   navbar: {
     logOut: '退出登录',
@@ -87,12 +87,15 @@ export default {
     p2pTraffic: '今日P2P流量',
     serveNum: '今日服务人数',
     maxOnlineNum: '最高在线人数',
+    buyed: '剩余流量包流量',
+    free: '剩余免费流量',
     versionDis: '版本分布',
     tagDis: 'Tag分布',
     terminalDis: '终端分布',
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
-    p2pTip: '如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置'
+    p2pTip: '如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置',
+    checkin: '签到'
   },
   domainTable: {
     bindDomain: '绑定域名',
@@ -181,6 +184,8 @@ export default {
     noBuyTitle: '温馨提示',
     noBuyTip: '请先选择你要购买的流量包',
     payMethod: '付款方式',
+    packageSubTitle: '流量包说明：',
+    packageSub: '每个用户所能消耗的P2P流量有额度限制，不同额度的流量包用于提高对应的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。',
 
     packageInfo: '套餐信息',
     unitPrice: '单价',

@@ -80,7 +80,8 @@ export default {
     right: 0;
     bottom: 0;
     background: url('./ad.jpg') no-repeat center;
-    background-size: 240px 240px; 
+    background-size: 240px 240px;
+    z-index: 999;
     .operate {
       height: 20px;
       .word {

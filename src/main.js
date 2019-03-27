@@ -12,7 +12,7 @@ import './permission' // permission control
 
 import { Alert, Popover, Select, Option, Loading, Pagination, Slider, 
   Card, Table, TableColumn, Radio, RadioGroup, RadioButton, DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu, 
-  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu, InputNumber } from 'element-ui'
+  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Breadcrumb, BreadcrumbItem, Submenu, InputNumber, MessageBox } from 'element-ui'
 
 Vue.config.productionTip = false
 
@@ -55,6 +55,7 @@ Vue.use({
 })
 
 Vue.prototype.$message = Message
+Vue.prototype.$messageBox = MessageBox
 
 Vue.filter('positive', (value) => {
    return value < 0 ? 0 : value

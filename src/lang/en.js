@@ -27,7 +27,7 @@ export default {
     onlineNum: 'Online Viewers Trend',
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
-    package: 'Flow Package'
+    package: 'Traffic Packages'
   },
   navbar: {
     logOut: 'Log Out',
@@ -87,12 +87,15 @@ export default {
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'Served Viewers Today',
     maxOnlineNum: 'Peak Concurrent Viewers',
+    buyed: 'Remaining Purchased Traffic',
+    free: 'Remaining Free Traffic',
     versionDis: 'Version Distribution',
     tagDis: 'Tag Distribution',
     terminalDis: 'Terminal Distribution',
     liveDis: 'Live/VOD Distribution',
     natDis: 'Network Type Distribution',
-    p2pTip: ' '
+    p2pTip: 'Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">here</a>',
+    checkin: 'Checkin'
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
@@ -181,6 +184,8 @@ export default {
     noBuyTitle: 'Tips',
     noBuyTip: 'Please select the traffic package you want to purchase first.',
     payMethod: 'Payment method',
+    packageSubTitle: 'Notice: ',
+    packageSub: 'Each user can consume a certain amount of P2P traffic. You can increase quota of traffic by buying the listed traffic packages below.  It takes effect immediately after purchase. Refunds are not supported. Contact service@cdnbye.com if you have problems.',
 
     packageInfo: 'Package info',
     unitPrice: 'Unit price',
