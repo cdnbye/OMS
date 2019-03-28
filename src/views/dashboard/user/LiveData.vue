@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-row style="text-align: left; margin: 20px 0">
-      <el-col :xs="18" :sm="12" :lg="8">
+      <el-col :xs="20" :sm="12" :lg="8">
         <SwitchDomain :finishSelect="handleSwitchDomain" />
       </el-col>
-      <el-col :xs="3" :sm="3" :lg="2">
+      <el-col :xs="7" :sm="4" :lg="2">
         <el-button type="success" @click="handleCheckin" v-loading="checkinLoading">{{ $t('dashboard.checkin') }}</el-button>
       </el-col>
     </el-row>
@@ -34,6 +34,9 @@
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.freeTip')" />
+          </div>
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.flow.free.num }}</span>
             <div class="card-panel-text">{{ $t('dashboard.free') }} ({{ statis.flow.free.unit }})</div>
@@ -43,9 +46,12 @@
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.remainTip')" />
+          </div>
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ statis.flow.remain.num }}</span>
-            <div class="card-panel-text">{{ $t('dashboard.remain') }} ({{ statis.flow.remain.unit }})</div>
+            <span class="card-panel-num" :style="statis.flow.remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).num }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})</div>
           </div>
         </div>
       </el-col>
@@ -112,10 +118,7 @@ export default {
         frequency_day: 0,
         num_max: 0,
         flow: {
-          remain: {
-            num: 0,
-            unit: 'KB'
-          },
+          remain: 0,
           free: {
             num: 0,
             unit: 'KB'
@@ -141,6 +144,7 @@ export default {
   mounted() {
     if(this.$route.params.id && this.$route.params.uid) {
       this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
+      this.getDisData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
     } else {
       this.getUserDomain()
       this.checkPayResult()
@@ -150,6 +154,8 @@ export default {
     clearInterval(int)
   },
   methods: {
+    formatTraffic,
+
     getData(uid, id, hostId) {
       fetchGlobalData(uid, id, hostId).then(res => {
         const { data } = res
@@ -157,32 +163,34 @@ export default {
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
         this.statis.frequency_day = data.api_frequency_day
         this.statis.num_max = data.num_max
-        this.statis.flow.remain = formatTraffic(data.flow.remain)
+        this.statis.flow.remain = data.flow.remain
         this.statis.flow.free = formatTraffic(data.flow.free)
       }).catch(err => {
         console.log(err)
       })
-      fetchDisData(uid, id, 'version', hostId).then(res => {
+    },
+    getDisData(uid, id, hostID) {
+      fetchDisData(uid, id, 'version', hostID).then(res => {
         if(res.data) {
           this.disData.versionData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'tag', hostId).then(res => {
+      fetchDisData(uid, id, 'tag', hostID).then(res => {
         if(res.data) {
           this.disData.tagData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'device', hostId).then(res => {
+      fetchDisData(uid, id, 'device', hostID).then(res => {
         if(res.data) {
           this.disData.deviceData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'live', hostId).then(res => {
+      fetchDisData(uid, id, 'live', hostID).then(res => {
         if(res.data) {
           this.disData.liveData = formatPieData(res.data)
         }
       })
-      fetchDisData(uid, id, 'netType', hostId).then(res => {
+      fetchDisData(uid, id, 'netType', hostID).then(res => {
         if(res.data) {
           this.disData.netTypeData = formatPieData(res.data)
         }
@@ -293,6 +301,7 @@ export default {
             const validDomain = res.data.filter(item => item.isValid === 1)
             store.dispatch('setValidDomain', validDomain)
             this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
+            this.getDisData(this.currentDomain.uid, this.currentDomain.id)
           } else {
             this.tipVisible = true
           }
@@ -302,6 +311,10 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    goBuy() {
+      console.log('===')
+      this.$router.push('/user/package')
     }
   }
 }

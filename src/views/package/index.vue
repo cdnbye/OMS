@@ -81,7 +81,7 @@
         </el-col>
       </el-row>
     </template>
-    <el-card :body-style="{'text-align': 'left'}">
+    <el-card :body-style="{'text-align': 'left', 'position': 'fixed', 'bottom': 0, 'width': '100%', 'z-index': 99, 'background-color': '#fff'}">
       <div v-if="paySelect === 'alipay'">
         <div class="buy">
           <div class="tip">

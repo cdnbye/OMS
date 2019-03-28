@@ -95,7 +95,9 @@ export default {
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
     p2pTip: '如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置',
-    checkin: '签到',
+    freeTip: '绑定后的域名每日赠送10GB流量，签到后再额外赠送40GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用流量包抵扣。<br/>如果可用流量为零，则停止P2P服务。',
+    remainTip: '流量包用于提高P2P流量额度，请及时<a style="color: #337ab7" href="#/user/package">购买</a>，以避免服务中断。',
+    checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
     haveChecked: '你今天已经签到过了哦~',
     checkinFail: '签到失败，请重试！'

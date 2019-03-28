@@ -85,6 +85,10 @@
   text-align: left;
 }
 
+.el-tooltip__popper {
+  max-width: 360px;
+}
+
 @media screen and (max-width: 600px) {
   .my-message-box {
     width: 300px

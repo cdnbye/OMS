@@ -95,7 +95,9 @@ export default {
     liveDis: 'Live/VOD Distribution',
     natDis: 'Network Type Distribution',
     p2pTip: 'Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/en/m3u8" target="_blank">here</a>',
-    checkin: 'Sign in',
+    freeTip: '10GB of traffic will be given after the domain name is bound with an additional 40 GB after signing in. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by traffic package. <br/>If there is no available traffic, P2P service will be stopped.',
+    remainTip: '流量包用于提高P2P流量额度，请及时<a style="color: #337ab7" href="/user/package">购买</a>，以避免服务中断。',
+    checkin: 'Sign in for free traffic',
     checkinSuccess: 'Sign in successfully!',
     haveChecked: 'You have signed today!',
     checkinFail: 'Sign in failed, please try again!'
@@ -109,7 +111,7 @@ export default {
     unavailable: 'Unavailable',
     operation: 'Operation',
     verifyDomain: 'Verity domain',
-    certification: 'Validate',
+    certification: 'Verify',
     certificationTip: 'You need to verify your domain name of the added website. The public domain name can be verified by any of the following methods. The intranet domain name only supports DNS authentication for security reasons. Notice: Verify the domain of the web site that host the player, not the domain name of the m3u8 address.',
     doneTip: 'Click the "Verify Now" button when you are done',
     verifyLater: 'Verify Later',
@@ -198,6 +200,6 @@ export default {
     confirmPurchase: 'Pay now',
     paySuccess: 'payment successful',
     systemError: 'Sorry, the system is maintaining',
-    payLoadingTip: 'Loading'
+    payLoadingTip: 'Jumping to payment page...'
   }
 }

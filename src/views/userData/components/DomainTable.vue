@@ -54,18 +54,6 @@
       label="http实时带宽(mbps)">
     </el-table-column>
 
-    <!-- <el-table-column
-      align="center"
-      prop="ErrsBufStalled"
-      label="ErrsBufStalled">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="ErrsInternalExcpt"
-      label="ErrsInternalExcpt">
-    </el-table-column> -->
-
     <el-table-column
       align="center"
       prop="num"
@@ -127,7 +115,7 @@
           pageSize: 10
         },
         searchValue: '',
-        selectValue: 'max_num',
+        selectValue: 'num',
         selectOptions: [
           {
             label: '最大人数',
@@ -144,15 +132,7 @@
           {
             label: '近一月http流量',
             value: 'http_month'
-          },
-          // {
-          //   label: 'p2p实时带宽',
-          //   value: 'p2p_rt'
-          // },
-          // {
-          //   label: 'http实时带宽',
-          //   value: 'http_rt'
-          // },
+          }
         ]
       }
     },
@@ -209,7 +189,6 @@
           if(res.data) {
             this.loading = false
             this.tableData = this.formatData(res.data)
-            console.log(this.formatData(res.data))
           }
         }).catch(err => {
           this.loading = false

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export function fetchGlobalData(uid, domainID, hostId) {
-  var url = `user/user_id/${uid}/domain/domain_id/${domainID}`
+  let url = `user/user_id/${uid}/domain/domain_id/${domainID}`
   if (hostId) {
     url = `${url}?host_id=${hostId}`
   }
@@ -12,7 +12,7 @@ export function fetchGlobalData(uid, domainID, hostId) {
 }
 
 export function fetchDisData(uid, domainID, type, hostId) {
-  var url = `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`
+  let url = `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`
   if (hostId) {
       url = `${url}&host_id=${hostId}`
   }
