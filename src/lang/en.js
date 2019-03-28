@@ -87,15 +87,18 @@ export default {
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'Served Viewers Today',
     maxOnlineNum: 'Peak Concurrent Viewers',
-    buyed: 'Remaining Purchased Traffic',
+    remain: 'Remaining Purchased Traffic',
     free: 'Remaining Free Traffic',
     versionDis: 'Version Distribution',
     tagDis: 'Tag Distribution',
     terminalDis: 'Terminal Distribution',
     liveDis: 'Live/VOD Distribution',
     natDis: 'Network Type Distribution',
-    p2pTip: 'Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">here</a>',
-    checkin: 'Checkin'
+    p2pTip: 'Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/en/m3u8" target="_blank">here</a>',
+    checkin: 'Sign in',
+    checkinSuccess: 'Sign in successfully!',
+    haveChecked: 'You have signed today!',
+    checkinFail: 'Sign in failed, please try again!'
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
@@ -194,6 +197,7 @@ export default {
     total: 'total:',
     confirmPurchase: 'Pay now',
     paySuccess: 'payment successful',
-    systemError: 'Sorry, the system is maintaining'
+    systemError: 'Sorry, the system is maintaining',
+    payLoadingTip: 'Loading'
   }
 }

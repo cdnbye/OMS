@@ -87,7 +87,7 @@ export default {
     p2pTraffic: '今日P2P流量',
     serveNum: '今日服务人数',
     maxOnlineNum: '最高在线人数',
-    buyed: '剩余流量包流量',
+    remain: '剩余流量包流量',
     free: '剩余免费流量',
     versionDis: '版本分布',
     tagDis: 'Tag分布',
@@ -95,7 +95,10 @@ export default {
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
     p2pTip: '如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置',
-    checkin: '签到'
+    checkin: '签到',
+    checkinSuccess: '签到成功！',
+    haveChecked: '你今天已经签到过了哦~',
+    checkinFail: '签到失败，请重试！'
   },
   domainTable: {
     bindDomain: '绑定域名',
@@ -194,6 +197,7 @@ export default {
     total: '总计：',
     confirmPurchase: '确认购买',
     paySuccess: '付款成功',
-    systemError: '抱歉，系统正在维护中'
+    systemError: '抱歉，系统正在维护中',
+    payLoadingTip: '正在跳转至支付页面'
   }
 }

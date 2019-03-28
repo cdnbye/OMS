@@ -45,7 +45,7 @@ export function checkPaypalOrder(orderID, paymentID, payerID) {
   })
 }
 
-export function checkIn(data) {
+export function checkIn(userID, data) {
   return request({
     url: `user/user_id/${userID}/checkin`,
     method: 'post',

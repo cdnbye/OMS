@@ -159,7 +159,7 @@ export default {
         })
     },
     dialogClose() {
-      this.$router.go(-1)
+      this.$router.push('/')
     },
     selectCountChange(value, item) {
       this.getTotalPrice()

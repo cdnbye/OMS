@@ -1,5 +1,5 @@
 <template>
-  <div :style="device === 'mobile' ? {} : {padding: '30px 120px'}">
+  <div :style="device === 'mobile' ? {} : {padding: '30px 120px'}" v-loading="payLoading" :element-loading-text="$t('package.payLoadingTip')">
     <el-table :data="tableData" border>
       <el-table-column align="left" prop="subject" :label="$t('package.packageInfo')"></el-table-column>
       <el-table-column align="left" prop="price" :label="$t('package.unitPrice')"></el-table-column>
@@ -38,6 +38,7 @@ export default {
   name: 'OrderDetail',
   data() {
     return {
+      payLoading: false,
       cantBuyVisible: false,
       tableData: [],
       payMethod: '',
@@ -66,6 +67,7 @@ export default {
       this.handleCreateOrder()
     },
     handleCreateOrder() {
+      this.payLoading = true
       const data = {
         price: Number(this.totalPrice),
         payment: this.payMethod,
@@ -91,6 +93,7 @@ export default {
     handleFetchPayUrl(orderID) {
       fetchPayUrl(this.payMethod, orderID, this.device)
         .then(res => {
+          this.payLoading = false
           if(res.data.available) {
             this.payVisible = true
             window.location.href = `${res.data.pay_url}`
@@ -99,6 +102,7 @@ export default {
           }
         })
         .catch(err => {
+          this.payLoading = false
           console.log(err)
         })
     }

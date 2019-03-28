@@ -5,7 +5,7 @@
         <SwitchDomain :finishSelect="handleSwitchDomain" />
       </el-col>
       <el-col :xs="3" :sm="3" :lg="2">
-        <el-button type="success">{{ $t('dashboard.checkin') }}</el-button>
+        <el-button type="success" @click="handleCheckin" v-loading="checkinLoading">{{ $t('dashboard.checkin') }}</el-button>
       </el-col>
     </el-row>
 
@@ -44,8 +44,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ statis.flow.buyed.num }}</span>
-            <div class="card-panel-text">{{ $t('dashboard.buyed') }} ({{ statis.flow.buyed.unit }})</div>
+            <span class="card-panel-num">{{ statis.flow.remain.num }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.remain') }} ({{ statis.flow.remain.unit }})</div>
           </div>
         </div>
       </el-col>
@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       tipVisible: false,
+      checkinLoading: false,
 
       statis: {
         online: 0,
@@ -111,7 +112,7 @@ export default {
         frequency_day: 0,
         num_max: 0,
         flow: {
-          buyed: {
+          remain: {
             num: 0,
             unit: 'KB'
           },
@@ -156,7 +157,7 @@ export default {
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
         this.statis.frequency_day = data.api_frequency_day
         this.statis.num_max = data.num_max
-        this.statis.flow.buyed = formatTraffic(data.flow.buyed)
+        this.statis.flow.remain = formatTraffic(data.flow.remain)
         this.statis.flow.free = formatTraffic(data.flow.free)
       }).catch(err => {
         console.log(err)
@@ -193,6 +194,34 @@ export default {
       int = setInterval(function() {
         _this.getData(uid, id, hostId)
       }, 20000)
+    },
+    handleCheckin() {
+      this.checkinLoading = true
+      checkIn(this.currentDomain.uid, {user_id: this.currentDomain.uid})
+        .then(res => {
+          if(res.data.repeat) {
+            this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
+              confirmButtonText: this.$t('common.ok'),
+            })
+          } else {
+            this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {
+              type: 'success',
+              confirmButtonText: this.$t('common.ok'),
+              showCancelButton: false
+            })
+            this.getData(this.currentDomain.uid, this.currentDomain.id)
+          }
+          this.checkinLoading = false
+        })
+        .catch(err => {
+          this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {
+            type: 'error',
+            confirmButtonText: this.$t('common.ok'),
+            showCancelButton: false
+          })
+          this.checkinLoading = false
+          console.log(err)
+        })
     },
     handleSwitchDomain(uid, id) {
       clearInterval(int)

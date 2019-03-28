@@ -36,7 +36,7 @@
 
     <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
-        <el-button v-if="scope.row.isValid !== 1" type="text" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
+        <el-button v-if="scope.row.isValid !== 1" type="primary" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
         <el-popover
           style="margin-left: 10px"
           placement="top"
@@ -47,7 +47,7 @@
             <el-button size="mini" type="text" @click="scope.row.visible = false">{{ $t('common.cancel') }}</el-button>
             <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
           </div>
-          <el-button slot="reference" type="text" size="mini" @click="handleDelete(scope.row)" style="color: red">{{ $t('domainTable.delete') }}</el-button>
+          <el-button slot="reference" type="danger" size="mini" @click="handleDelete(scope.row)">{{ $t('domainTable.delete') }}</el-button>
         </el-popover>
       </template>
     </el-table-column>
