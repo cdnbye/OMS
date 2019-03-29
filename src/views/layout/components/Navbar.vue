@@ -2,7 +2,7 @@
   <div class="navbar">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
 
-    <breadcrumb class="breadcrumb-container"/>
+    <!-- <breadcrumb class="breadcrumb-container"/> -->
 
     <div class="right-menu">
       <lang-select class="international right-menu-item"/>
@@ -41,13 +41,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
+// import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
 
 export default {
   components: {
-    Breadcrumb,
+    // Breadcrumb,
     Hamburger,
     LangSelect,
   },
@@ -82,9 +82,9 @@ export default {
     float: left;
     padding: 0 10px;
   }
-  .breadcrumb-container{
-    float: left;
-  }
+  // .breadcrumb-container{
+  //   float: left;
+  // }
   .errLog-container {
     display: inline-block;
     vertical-align: top;

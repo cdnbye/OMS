@@ -27,7 +27,8 @@ export default {
     onlineNum: '在线人数趋势图',
     domainInfo: '域名信息',
     domainList: '域名列表',
-    package: '购买流量包'
+    package: '购买流量包',
+    order: '历史订单'
   },
   navbar: {
     logOut: '退出登录',
@@ -99,7 +100,7 @@ export default {
     remainTip: '流量包用于提高P2P流量额度，请及时<a style="color: #337ab7" href="#/user/package">购买</a>，以避免服务中断。',
     checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
-    haveChecked: '你24小时内已经签到过了哦~',
+    haveChecked: '你今天已经签到了哦~',
     checkinFail: '签到失败，请重试！'
   },
   domainTable: {
@@ -198,7 +199,7 @@ export default {
     quantity: '数量',
     expense: '费用',
     total: '总计：',
-    confirmPurchase: '确认购买',
+    confirmPurchase: '创建订单',
     paySuccess: '付款成功',
     payFail: '付款失败',
     systemError: '抱歉，系统正在维护中',

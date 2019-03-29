@@ -288,7 +288,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/package'),
         name: 'Package',
         meta: { 
-          title: 'package', 
+          title: 'package',
           icon: 'shoppingCard', 
           roles: ['user'],
           noCache: true
@@ -313,6 +313,29 @@ export const asyncRouterMap = [
         name: 'OrderDetail',
         meta: { 
           hide: true,
+          roles: ['user'],
+          noCache: true
+        }
+      }
+    ]
+  },
+  // user router 历史订单
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/order',
+    meta: {
+      title: 'order',
+      icon: 'documentation',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: '/user/order',
+        component: () => import('@/views/historyOrder/user/OrderTable'),
+        name: 'HistoryOrder',
+        meta: { 
+          title: 'order',
           roles: ['user'],
           noCache: true
         }

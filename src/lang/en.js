@@ -27,7 +27,8 @@ export default {
     onlineNum: 'Online Viewers Trend',
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
-    package: 'Traffic Packages'
+    package: 'Traffic Packages',
+    order: 'History orders'
   },
   navbar: {
     logOut: 'Log Out',
@@ -99,7 +100,7 @@ export default {
     remainTip: 'The traffic packages is used to increase avaliable P2P traffic. Please <a style="color: #337ab7" href="/user/package">buy</a> it in time to avoid service interruption.',
     checkin: 'Sign in for free traffic',
     checkinSuccess: 'Sign in successfully!',
-    haveChecked: 'You have signed in in the past 24 hours',
+    haveChecked: 'You have signed in today',
     checkinFail: 'Sign in failed, please try again!'
   },
   domainTable: {
@@ -198,8 +199,8 @@ export default {
     quantity: 'Quantity',
     expense: 'Expense',
     total: 'total:',
-    confirmPurchase: 'Pay now',
-    paySuccess: 'payment successful',
+    confirmPurchase: 'Create order',       
+    paySuccess: 'Paid successfully',
     payFail: 'payment fail',
     systemError: 'Sorry, the system is maintaining',
     payLoadingTip: 'Jumping to payment page...'
