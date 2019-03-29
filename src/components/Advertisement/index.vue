@@ -33,16 +33,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'device',
       'roles'
     ])
-  },
-  watch: {
-    device(val) {
-      if(val === 'mobile') {
-        clearTimeout(int)
-      }
-    }
   },
   mounted(){
     const _this = this

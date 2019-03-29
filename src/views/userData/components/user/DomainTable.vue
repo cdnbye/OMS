@@ -171,7 +171,7 @@
     data() {
       const formValidateURL = (rule, value, callback) => {
         if(!validateURL(value)) {
-          const error = '请输入正确的域名'
+          const error = this.$t('domainTable.bindDomainTError')
           callback(new Error(error))
         } else {
           callback()

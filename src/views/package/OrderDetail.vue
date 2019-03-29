@@ -3,7 +3,7 @@
     <el-table :data="tableData" border>
       <el-table-column align="left" prop="subject" :label="$t('package.packageInfo')"></el-table-column>
       <el-table-column align="left" prop="price" :label="$t('package.unitPrice')"></el-table-column>
-      <el-table-column align="left" prop="buyCount" :label="$t('package.quantity')"></el-table-column>
+      <el-table-column align="left" prop="amount" :label="$t('package.quantity')"></el-table-column>
       <el-table-column align="left" prop="total" :label="$t('package.expense')"></el-table-column>
     </el-table>
     <div class="pay-submit">
@@ -31,8 +31,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getID } from '@/utils/auth'
-import { createOrder, fetchPayUrl } from '@/api/user/package'
+import { fetchPayUrl } from '@/api/user/package'
 
 export default {
   name: 'OrderDetail',
@@ -42,7 +41,8 @@ export default {
       cantBuyVisible: false,
       tableData: [],
       payMethod: '',
-      totalPrice: 0
+      totalPrice: 0,
+      orderID: 0
     }
   },
   computed: {
@@ -51,47 +51,25 @@ export default {
     ])
   },
   mounted() {
-    if(this.$route.params.payMethod) {
-      this.tableData = [...this.$route.params.buyData]
+    if(this.$route.query.payMethod) {
+      this.tableData = [...JSON.parse(this.$route.query.buyData)]
       this.tableData.forEach(item => {
-        item.total = (item.buyCount * item.price).toFixed(2)
+        item.total = (item.amount * item.price).toFixed(2)
       })
-      this.payMethod = this.$route.params.payMethod
-      this.totalPrice = this.$route.params.totalPrice
+      this.payMethod = this.$route.query.payMethod
+      this.totalPrice = this.$route.query.totalPrice
+      this.orderID = this.$route.query.orderID
     } else {
       this.$router.push('/user/package')
     }
   },
   methods: {
     payClick() {
-      this.handleCreateOrder()
+      this.handleFetchPayUrl()
     },
-    handleCreateOrder() {
+    handleFetchPayUrl() {
       this.payLoading = true
-      const data = {
-        price: Number(this.totalPrice),
-        payment: this.payMethod,
-        goods: [],
-        goods_type: this.payMethod === 'alipay' ? 'flow_packet_cn' : 'flow_packet_en'
-      }
-      this.tableData.forEach(item => {
-        data.goods.push({
-          subject: item.subject,
-          traffic: item.traffic,
-          price: item.price,
-          amount: item.buyCount
-        })
-      })
-      createOrder(getID(), data)
-        .then(res => {
-          this.handleFetchPayUrl(res.data.order_id)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    handleFetchPayUrl(orderID) {
-      fetchPayUrl(this.payMethod, orderID, this.device)
+      fetchPayUrl(this.payMethod, this.orderID, this.device)
         .then(res => {
           this.payLoading = false
           if(res.data.available) {

@@ -51,7 +51,7 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-model="selectPackage.cn[index].buyCount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
+                  <el-input-number v-model="selectPackage.cn[index].amount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
                 </div>
               </div>
             </template>
@@ -73,7 +73,7 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-model="selectPackage.en[index].buyCount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
+                  <el-input-number v-model="selectPackage.en[index].amount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
                 </div>
               </div>
             </template>
@@ -109,8 +109,10 @@
 </template>
 
 <script>
-import { fetchPackage } from '@/api/user/package'
+import { fetchPackage, createOrder } from '@/api/user/package'
 import { mapGetters } from 'vuex'
+import { getID } from '@/utils/auth'
+
 import Alipay from '@/assets/ali_pay.png'
 import Paypal from '@/assets/paypal.jpeg'
 
@@ -145,12 +147,12 @@ export default {
           if(this.paySelect === 'alipay') {
             this.packages = [...res.data.list_cn]
             this.packages.forEach(item => {
-              this.selectPackage.cn.push({...item, buyCount: 0})
+              this.selectPackage.cn.push({...item, amount: 0})
             })
           } else {
             this.packages = [...res.data.list_en]
             this.packages.forEach(item => {
-              this.selectPackage.en.push({...item, buyCount: 0})
+              this.selectPackage.en.push({...item, amount: 0})
             })
           }
         })
@@ -172,47 +174,48 @@ export default {
       let total = 0
       if(this.selectPackage.cn.length > 0) {
         this.selectPackage.cn.forEach(item => {
-          if(item.buyCount > 0) {
-            total += item.price * item.buyCount
+          if(item.amount > 0) {
+            total += item.price * item.amount
           }
         })
       } else {
         this.selectPackage.en.forEach(item => {
-          if(item.buyCount > 0) {
-            total += item.price * item.buyCount
+          if(item.amount > 0) {
+            total += item.price * item.amount
           }
         })
       }
       this.totalPrice = total.toFixed(2)
     },
-    getBuyPackage() {
-      let data = []
-      if(this.selectPackage.cn.length > 0) {
-        this.selectPackage.cn.forEach(item => {
-          if(item.buyCount > 0) {
-            data.push(item)
-          }
-        })
-      } else {
-        this.selectPackage.en.forEach(item => {
-          if(item.buyCount > 0) {
-            data.push(item)
-          }
-        })
+    handleCreateOrder() {
+      const data = {
+        price: Number(this.totalPrice),
+        payment: this.paySelect,
+        goods: [],
+        goods_type: this.paySelect === 'alipay' ? 'flow_packet_cn' : 'flow_packet_en'
       }
-      return data
+      const selected = this.paySelect === 'alipay' ? this.selectPackage.cn : this.selectPackage.en
+      data.goods = selected.filter(item => item.amount > 0)
+      createOrder(getID(), data)
+        .then(res => {
+          this.$router.push({
+            name: 'OrderDetail',
+            query: {
+              payMethod: this.paySelect,
+              orderID: res.data.order_id,
+              totalPrice: this.totalPrice,
+              buyData: JSON.stringify(data.goods)
+            }
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     handleBuyClick() {
       this.totalPrice <= 0
         ? this.noSelectVisible = true
-        : this.$router.push({
-          name: 'OrderDetail',
-          params: {
-            payMethod: this.paySelect,
-            totalPrice: this.totalPrice,
-            buyData: this.getBuyPackage()
-          }
-        })
+        : this.handleCreateOrder()
     }
   }
 }

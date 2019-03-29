@@ -90,10 +90,10 @@
 }
 
 @media screen and (max-width: 600px) {
-  .my-message-box {
-    width: 300px
-  }
   .el-input-number--mini {
     width: 90px
+  }
+  .el-message-box {
+    width: 300px
   }
 }

@@ -99,12 +99,13 @@ export default {
     remainTip: '流量包用于提高P2P流量额度，请及时<a style="color: #337ab7" href="#/user/package">购买</a>，以避免服务中断。',
     checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
-    haveChecked: '你今天已经签到过了哦~',
+    haveChecked: '你24小时内已经签到过了哦~',
     checkinFail: '签到失败，请重试！'
   },
   domainTable: {
     bindDomain: '绑定域名',
-    bindDomainTip: '输入你的网站地址，例如\nhttp://www.yourwebsite.com:8080\nhttps://180.163.26.39',
+    bindDomainTip: '输入你的网站地址，例如：\nwww.example.com',
+    bindDomainTError: '请输入正确的域名！',
     domain: '域名',
     status: '可用状态',
     available: '可用',
@@ -199,6 +200,7 @@ export default {
     total: '总计：',
     confirmPurchase: '确认购买',
     paySuccess: '付款成功',
+    payFail: '付款失败',
     systemError: '抱歉，系统正在维护中',
     payLoadingTip: '正在跳转至支付页面'
   }

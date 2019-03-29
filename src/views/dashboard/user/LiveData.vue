@@ -9,7 +9,6 @@
       </el-col>
     </el-row>
 
-
     <el-row :gutter="20" class="panel-group">
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
@@ -240,6 +239,7 @@ export default {
     },
     checkPayResult() {
       const paramObj = getQueryObj()
+      console.log(paramObj)
       if(paramObj.payment) {
         switch (paramObj.payment) {
           case 'alipay':
@@ -249,8 +249,7 @@ export default {
                   this.$messageBox.confirm(this.$t('package.paySuccess'), {
                     type: 'success',
                     confirmButtonText: this.$t('common.ok'),
-                    showCancelButton: false,
-                    customClass: 'my-message-box'
+                    showCancelButton: false
                   })
               })
               .catch(err => {
@@ -258,18 +257,25 @@ export default {
               })
             break
           case 'paypal':
-            checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
-              .then(res => {
-                this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                  type: 'success',
-                  confirmButtonText: this.$t('common.ok'),
-                  showCancelButton: false,
-                  customClass: 'my-message-box'
+            if(paramObj.cancel) {
+              this.$messageBox.confirm(this.$t('package.payFail'), {
+                type: 'error',
+                confirmButtonText: this.$t('common.ok'),
+                showCancelButton: false
+              })
+            } else {
+              checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
+                .then(res => {
+                  this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                    type: 'success',
+                    confirmButtonText: this.$t('common.ok'),
+                    showCancelButton: false
+                  })
                 })
-              })
-              .catch(err => {
-                console.log(err)
-              })
+                .catch(err => {
+                  console.log(err)
+                })
+            }
             break
           default:
             break
