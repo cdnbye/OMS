@@ -71,11 +71,10 @@ export default {
       this.payLoading = true
       fetchPayUrl(this.payMethod, this.orderID, this.device)
         .then(res => {
-          this.payLoading = false
           if(res.data.available) {
-            this.payVisible = true
             window.location.href = `${res.data.pay_url}`
           } else {
+            this.payLoading = false
             this.cantBuyVisible = true
           }
         })

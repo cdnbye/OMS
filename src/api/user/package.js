@@ -15,14 +15,6 @@ export function createOrder(userID, data) {
   })
 }
 
-// export function cancelOrder(userID, data) {
-//   return request({
-//     url: `order/user_id/${userID}`,
-//     method: 'delete',
-//     data
-//   })
-// }
-
 export function fetchPayUrl(payMethod, orderID, device) {
   const param = device === 'mobile' ? '&mobile=true' : ''
   return request({

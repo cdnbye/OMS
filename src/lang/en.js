@@ -15,7 +15,7 @@ export default {
     userDomain: 'Domain list',
     p2pRate: 'P2P rate',
     whole: 'whole',
-    userDistribution: 'Viewer Distribution',
+    userDistribution: 'Geographical Distribution',
     chinaDistribution: 'China',
     worldDistribution: 'Global',
     config: 'Config management',
@@ -28,7 +28,7 @@ export default {
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
     package: 'Traffic Packages',
-    order: 'History orders'
+    order: 'Orders History'
   },
   navbar: {
     logOut: 'Log Out',
@@ -136,7 +136,8 @@ export default {
       fileName: 'please note that the file name is auth.txt which should not be modified.',
       navVisitHead: 'Access ',
       navVisitEnd: ' to confirm that the upload was successful',
-    }
+    },
+    verifySuccess: 'verify successfully'
   },
   documentation: {
     documentation: 'Documentation',
@@ -179,7 +180,9 @@ export default {
   },
   common: {
     ok: 'OK',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    deleteSuccess: 'delete successfully',
+    closeSuccess: 'close successfully'
   },
   historyData: {
     hour: '1 Hour',
@@ -199,10 +202,27 @@ export default {
     quantity: 'Quantity',
     expense: 'Expense',
     total: 'total:',
-    confirmPurchase: 'Create order',       
+    confirmPurchase: 'Pay now',       
     paySuccess: 'Paid successfully',
     payFail: 'payment fail',
     systemError: 'Sorry, the system is maintaining',
-    payLoadingTip: 'Jumping to payment page...'
+    payLoadingTip: 'Jumping to payment page...',
+    checkResultLoadingTip: 'Checking payment status...'
+  },
+  order: {
+    createTime: 'Date',
+    type: 'Type',
+    payMethod: 'Payment method',
+    flowPackage: 'Traffic package',
+    price: 'Price',
+    status: 'Order status',
+    action: 'Action',
+    pay: 'Pay',
+    close: 'Close',
+    waitPay: 'Pending',
+    finish: 'Finish',
+    fail: 'Close',
+    tip: 'Sure to close order?',
+    alipay: 'alipay'
   }
 }

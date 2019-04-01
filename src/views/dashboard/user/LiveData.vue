@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
     <el-row style="text-align: left; margin: 20px 0">
       <el-col :xs="20" :sm="12" :lg="8">
         <SwitchDomain :finishSelect="handleSwitchDomain" />
@@ -107,6 +107,7 @@ export default {
     return {
       tipVisible: false,
       checkinLoading: false,
+      checkResultLoading: false,
 
       statis: {
         online: 0,
@@ -239,25 +240,35 @@ export default {
     },
     checkPayResult() {
       const paramObj = getQueryObj()
-      console.log(paramObj)
       if(paramObj.payment) {
+        this.checkResultLoading = true
         switch (paramObj.payment) {
           case 'alipay':
             checkAlipayOrder(paramObj.out_trade_no)
               .then(res => {
-                if(res.data.is_payed)
+                this.checkResultLoading = false
+                if(res.data.is_payed) {
                   this.$messageBox.confirm(this.$t('package.paySuccess'), {
                     type: 'success',
                     confirmButtonText: this.$t('common.ok'),
                     showCancelButton: false
                   })
+                } else {
+                  this.$messageBox.confirm(this.$t('package.payFail'), {
+                    type: 'error',
+                    confirmButtonText: this.$t('common.ok'),
+                    showCancelButton: false
+                  })
+                }
               })
               .catch(err => {
+                this.checkResultLoading = false
                 console.log(err)
               })
             break
           case 'paypal':
             if(paramObj.cancel) {
+              this.checkResultLoading = false
               this.$messageBox.confirm(this.$t('package.payFail'), {
                 type: 'error',
                 confirmButtonText: this.$t('common.ok'),
@@ -266,13 +277,23 @@ export default {
             } else {
               checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
                 .then(res => {
-                  this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                    type: 'success',
-                    confirmButtonText: this.$t('common.ok'),
-                    showCancelButton: false
-                  })
+                  if(res.data.is_payed) {
+                    this.checkResultLoading = false
+                    this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                      type: 'success',
+                      confirmButtonText: this.$t('common.ok'),
+                      showCancelButton: false
+                    })
+                  } else {
+                    this.$messageBox.confirm(this.$t('package.payFail'), {
+                      type: 'error',
+                      confirmButtonText: this.$t('common.ok'),
+                      showCancelButton: false
+                    })
+                  }
                 })
                 .catch(err => {
+                  this.checkResultLoading = false
                   console.log(err)
                 })
             }

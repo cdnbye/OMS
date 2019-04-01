@@ -47,7 +47,7 @@
             <el-button size="mini" type="text" @click="scope.row.visible = false">{{ $t('common.cancel') }}</el-button>
             <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
           </div>
-          <el-button slot="reference" type="danger" size="mini" @click="handleDelete(scope.row)">{{ $t('domainTable.delete') }}</el-button>
+          <el-button trigger="manual" slot="reference" type="danger" size="mini" @click="handleDelete(scope.row)">{{ $t('domainTable.delete') }}</el-button>
         </el-popover>
       </template>
     </el-table-column>
@@ -243,7 +243,7 @@
         checkDomain(this.checkDomainData.id).then(res => {
           this.fetchTableData()
           this.$message({
-            message: '验证成功',
+            message: this.$t('domainTable.verifySuccess'),
             type: 'success'
           })
           this.checkDomainLoading = false
@@ -270,7 +270,7 @@
       handleDeleteDomain(domainData) {
         deleteDomain(domainData.id).then(res => {
           this.$message({
-            message: '删除成功',
+            message: this.$t('common.deleteSuccess'),
             type: 'success'
           })
           this.tableData = this.tableData.filter(item => {

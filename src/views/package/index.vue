@@ -91,7 +91,7 @@
             <em>{{totalPrice}}</em>
           </div>
         </div>
-        <el-button type="warning" @click="handleBuyClick">立即购买</el-button>
+        <el-button type="warning" @click="handleBuyClick">创建订单</el-button>
       </div>
       <div v-else>
         <div class="buy">
@@ -102,7 +102,7 @@
             <em>{{totalPrice}}</em>
           </div>
         </div>
-        <el-button type="warning" @click="handleBuyClick">Continue</el-button>
+        <el-button type="warning" @click="handleBuyClick">Create order</el-button>
       </div>
     </el-card>
   </div>

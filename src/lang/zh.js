@@ -136,7 +136,8 @@ export default {
       fileName: '注意文件名称不要修改，文件名称为auth.txt',
       navVisitHead: '用浏览器访问',
       navVisitEnd: '，确认是否上传成功',
-    }
+    },
+    verifySuccess: '验证成功'
   },
   documentation: {
     documentation: '使用文档',
@@ -179,7 +180,9 @@ export default {
   },
   common: {
     ok: '确定',
-    cancel: '取消'
+    cancel: '取消',
+    deleteSuccess: '删除成功',
+    closeSuccess: '关闭成功'
   },
   historyData: {
     hour: '1小时内',
@@ -199,10 +202,27 @@ export default {
     quantity: '数量',
     expense: '费用',
     total: '总计：',
-    confirmPurchase: '创建订单',
+    confirmPurchase: '确认购买',
     paySuccess: '付款成功',
     payFail: '付款失败',
     systemError: '抱歉，系统正在维护中',
-    payLoadingTip: '正在跳转至支付页面'
+    payLoadingTip: '正在跳转至支付页面',
+    checkResultLoadingTip: '正在查询支付状态...'
+  },
+  order: {
+    createTime: '创建时间',
+    type: '类型',
+    flowPackage: '流量包',
+    payMethod: '支付方式',
+    price: '价格',
+    status: '订单状态',
+    action: '操作',
+    pay: '付款',
+    close: '关闭',
+    waitPay: '待付款',
+    finish: '完成',
+    fail: '关闭',
+    tip: '确认关闭订单吗？',
+    alipay: '支付宝'
   }
 }
