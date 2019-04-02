@@ -113,11 +113,13 @@ export default {
   }
   #first-ad {
     display: none;
+    margin: 8px 0;
     background: url('./lookfor.jpg') no-repeat center;
     background-size: 100% 100%;
   }
   #second-ad {
     display: none;
+    margin: 8px 0;
     background: url('./lookfor.jpg') no-repeat center;
     background-size: 100% 100%;
   }
