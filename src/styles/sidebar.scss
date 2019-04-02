@@ -3,13 +3,13 @@
   .main-container {
     min-height: 100%;
     transition: margin-left .28s;
-    margin-left: 180px;
+    margin-left: 220px;
     position: relative;
   }
   // 侧边栏
   .sidebar-container {
     transition: width 0.28s;
-    width: 180px !important;
+    width: 220px !important;
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -108,12 +108,12 @@
     }
     .sidebar-container {
       transition: transform .28s;
-      width: 180px !important;
+      width: 220px !important;
     }
     &.hideSidebar {
       .sidebar-container {
         transition-duration: 0.3s;
-        transform: translate3d(-180px, 0, 0);
+        transform: translate3d(-220px, 0, 0);
       }
     }
   }

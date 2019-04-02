@@ -88,7 +88,7 @@
             总计费用：
           </div>
           <div class="total-price">
-            <em>{{totalPrice}}</em>
+            <em>{{totalPrice}} <span class="unit">RMB</span></em>
           </div>
         </div>
         <el-button type="warning" @click="handleBuyClick">创建订单</el-button>
@@ -99,7 +99,7 @@
             Total cost:
           </div>
           <div class="total-price">
-            <em>{{totalPrice}}</em>
+            <em>{{totalPrice}} <span class="unit">USD</span></em>
           </div>
         </div>
         <el-button type="warning" @click="handleBuyClick">Create order</el-button>
@@ -298,6 +298,9 @@ export default {
     em {
       font-size: 25px;
       line-height: 20px;
+      .unit {
+        font-size: 16px;
+      }
     }
   }
   .buy {

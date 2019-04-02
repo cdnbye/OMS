@@ -1,22 +1,23 @@
 <template>
   <div :style="device === 'mobile' ? {} : {padding: '30px 120px'}" v-loading="payLoading" :element-loading-text="$t('package.payLoadingTip')">
     <el-table border :data="orderData" v-loading="tableLoading">
-      <el-table-column fixed align="left" prop="created_at" :label="$t('order.createTime')"></el-table-column>
-      <el-table-column align="left" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
-      <el-table-column align="left" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>
-      <el-table-column align="left" prop="price" :label="$t('order.price')"></el-table-column>
+      <el-table-column fixed align="center" prop="created_at" :label="$t('order.createTime')"></el-table-column>
+      <el-table-column align="center" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
+      <el-table-column align="center" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>
+      <el-table-column align="center" prop="price" :label="$t('order.price')"></el-table-column>
 
-      <el-table-column align="left"  :label="$t('order.status')">
+      <el-table-column align="center"  :label="$t('order.status')">
         <template slot-scope="scope" :formatter="formatterStatus">
           <el-tag size="medium" :type="scope.row.trade_status==='WAIT_BUYER_PAY'?'':scope.row.trade_status==='TRADE_CLOSED'?'danger':'success'">{{ formatterStatus(scope.row) }}</el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column fixed="right" align="left" :label="$t('order.action')">
+      <el-table-column fixed="right" align="center" :label="$t('order.action')">
         <template slot-scope="scope">
           <el-button v-if="scope.row.trade_status === 'WAIT_BUYER_PAY'" type="primary" size="mini" @click="handlePay(scope.row)">{{ $t('order.pay') }}</el-button>
           <el-popover
             style="margin-left: 10px"
+            trigger="manual"
             placement="top"
             width="160"
             :ref="'popover-' + scope.row.order_id">

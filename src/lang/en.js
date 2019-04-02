@@ -203,8 +203,8 @@ export default {
     expense: 'Expense',
     total: 'total:',
     confirmPurchase: 'Pay now',       
-    paySuccess: 'Paid successfully',
-    payFail: 'payment fail',
+    paySuccess: 'Paid successfully!',
+    payFail: 'Failed to pay!',
     systemError: 'Sorry, the system is maintaining',
     payLoadingTip: 'Jumping to payment page...',
     checkResultLoadingTip: 'Checking payment status...'

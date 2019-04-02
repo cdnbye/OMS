@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block; text-align: left; width: 100%">
     <el-input
-      style="width: 66%"
+      style="width: 55%"
       :placeholder="currentDomain.domain ? currentDomain.domain : $t('domainTable.none')"
       :disabled="true"
     >
