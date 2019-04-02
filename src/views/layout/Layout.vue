@@ -6,8 +6,6 @@
       <Navbar />
       <TagsView />
       <AppMain/>
-      <!-- show为false则不显示广告 -->
-      <Advertisement :show="true" />
     </div>
   </div>
 </template>
@@ -15,7 +13,6 @@
 <script>
 import { Navbar, Sidebar, AppMain, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
-import Advertisement from '@/components/Advertisement'
 
 export default {
   name: 'Layout',
@@ -23,8 +20,7 @@ export default {
     Navbar,
     Sidebar,
     AppMain,
-    TagsView,
-    Advertisement
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
