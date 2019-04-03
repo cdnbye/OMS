@@ -28,7 +28,8 @@ export default {
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
     package: 'Traffic Packages',
-    order: 'Orders History'
+    order: 'Orders History',
+    p2pConfig: 'P2P Config'
   },
   navbar: {
     logOut: 'Log Out',
@@ -223,6 +224,13 @@ export default {
     finish: 'Finish',
     fail: 'Close',
     tip: 'Sure to close order?',
-    alipay: 'alipay'
+    alipay: 'alipay',
+    packageName: 'Package',
+    amount: 'Amount',
+    totalTraffic: 'Traffic'
+  },
+  p2pConfig: {
+    configSuccess: 'Successful configuration',
+    configFail: 'Only paid users can turn P2P on / off'
   }
 }

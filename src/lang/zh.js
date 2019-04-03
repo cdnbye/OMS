@@ -28,7 +28,8 @@ export default {
     domainInfo: '域名信息',
     domainList: '域名列表',
     package: '购买流量包',
-    order: '历史订单'
+    order: '历史订单',
+    p2pConfig: 'P2P配置'
   },
   navbar: {
     logOut: '退出登录',
@@ -223,6 +224,13 @@ export default {
     finish: '完成',
     fail: '关闭',
     tip: '确认关闭订单吗？',
-    alipay: '支付宝'
+    alipay: '支付宝',
+    packageName: '商品名称',
+    amount: '数量',
+    totalTraffic: '流量'
+  },
+  p2pConfig: {
+    configSuccess: '配置成功',
+    configFail: '只有付费用户才能开启/关闭P2P'
   }
 }

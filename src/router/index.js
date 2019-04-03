@@ -342,6 +342,29 @@ export const asyncRouterMap = [
       }
     ]
   },
+  // user router P2P配置
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/config',
+    meta: {
+      title: 'p2pConfig',
+      icon: 'link',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: '/user/config',
+        component: () => import('@/views/p2pConfig/user'),
+        name: 'P2PConfig',
+        meta: { 
+          title: 'p2pConfig',
+          roles: ['user'],
+          noCache: true
+        }
+      }
+    ]
+  },
   //修改邮箱密码
   {
     path: '/user/edit',

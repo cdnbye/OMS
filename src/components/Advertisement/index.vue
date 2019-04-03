@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ad-container">
 
     <div id="first-ad" :style="device==='mobile'?'height: 45px; width: 100%':'width: 405px; height: 45px; float: left'">
       <div class="operate">
@@ -14,7 +14,6 @@
         <span class="btn" @click="handleClose('second-ad')"><i class="el-icon-close"/></span>
       </div>
     </div>
-
 
     <div id="ad">
       <div class="operate">
@@ -41,6 +40,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      firstShow: true
+    }
+  },
   computed: {
     ...mapGetters([
       'roles',
@@ -56,6 +60,12 @@ export default {
           _this.handleShow('second-ad')          
         }, afterShow);
       }
+    },
+    firstShow(val) {
+      if(!val) {
+        const container = document.getElementsByClassName('ad-container')[0]
+        container.style.display = 'block'
+      }
     }
   },
   mounted(){
@@ -63,7 +73,6 @@ export default {
     if(this.show && this.roles.indexOf('user') > -1) {
       _this.handleShow('first-ad')
       _this.handleShow('second-ad')
-
       setTimeout(() => {
         _this.handleShow('ad')
       }, afterShow)
@@ -73,11 +82,15 @@ export default {
     handleShow(id) {
       const ad = document.getElementById(id)
       ad.style.display = 'block'
+      const _this = this
       setTimeout(() => {
-        ad.style.display = 'none'        
+        _this.handleClose(id)
       }, afterHide)
     },
     handleClose(id) {
+      if(id === 'first-ad') {
+        this.firstShow = false
+      }
       const ad = document.getElementById(id)
       ad.style.display = 'none'
     }
@@ -86,6 +99,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .ad-container {
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    justify-content: space-between;
+  }
   #ad {
     display: none;
     position: fixed;

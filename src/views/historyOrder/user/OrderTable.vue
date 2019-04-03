@@ -1,7 +1,25 @@
 <template>
   <div :style="device === 'mobile' ? {} : {padding: '30px 120px'}" v-loading="payLoading" :element-loading-text="$t('package.payLoadingTip')">
-    <el-table border :data="orderData" v-loading="tableLoading">
-      <el-table-column fixed align="center" prop="created_at" :label="$t('order.createTime')"></el-table-column>
+    <el-table border :data="orderData" v-loading="tableLoading" style="width: 100%">
+    <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="table-expand">
+          <template v-for="item in props.row.details">
+          <el-form-item :label="$t('order.packageName')" :key="item.order_id">
+            <span>{{ item.subject }}</span>
+          </el-form-item>
+          <el-form-item :label="$t('order.amount')" :key="item.order_id">
+            <span>{{ item.amount }}</span>
+          </el-form-item>
+          <el-form-item :label="$t('order.totalTraffic')" :key="item.order_id">
+            <span>{{ item.traffic*item.amount }} TB</span>
+          </el-form-item>
+          </template>
+        </el-form>
+      </template>
+    </el-table-column>
+
+      <el-table-column align="center" prop="created_at" :label="$t('order.createTime')"></el-table-column>
       <el-table-column align="center" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
       <el-table-column align="center" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>
       <el-table-column align="center" prop="price" :label="$t('order.price')"></el-table-column>
@@ -162,3 +180,19 @@ export default {
   }
 }
 </script>
+
+<style lang="css" scoped>
+  .table-expand {
+    font-size: 0;
+  }
+  .table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .table-expand .el-form-item {
+    text-align: center;
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 33%;
+  }
+</style>
