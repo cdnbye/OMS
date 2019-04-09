@@ -146,28 +146,28 @@ export const asyncRouterMap = [
       }
     ]
   },
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true,
-    meta: {
-      title: 'permission',
-      icon: 'lock',
-      roles: ['admin']
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/test/index'),
-        name: 'PagePermission',
-        meta: {
-          title: 'pagePermission',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/permission',
+  //   component: Layout,
+  //   redirect: '/permission/page',
+  //   alwaysShow: true,
+  //   meta: {
+  //     title: 'permission',
+  //     icon: 'lock',
+  //     roles: ['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'page',
+  //       component: () => import('@/views/test/index'),
+  //       name: 'PagePermission',
+  //       meta: {
+  //         title: 'pagePermission',
+  //         roles: ['admin']
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/history',
     component: Layout,

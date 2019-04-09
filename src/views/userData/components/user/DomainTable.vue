@@ -73,7 +73,8 @@
         <ol>
           <li>
             <div class="pv-content">
-              <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ getDomain(checkDomainData.domain) }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4>
+              <!-- <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ getDomain(checkDomainData.domain) }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4> -->
+              <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ checkDomainData.domain }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4>
               <h4>{{checkDomainData.text}}</h4>
             </div>
           </li>
@@ -242,17 +243,17 @@
           console.log(err)
         })
       },
-      getDomain(domain) {
-        let temp = ''
-        temp = domain.replace('http://', '')
-        temp = temp.replace('https://', '')
-        if (temp.indexOf('/') > -1)
-          temp = temp.substr(0, temp.indexOf('/'))
-        if (temp.indexOf(':') > -1)
-          temp = temp.substr(0, temp.indexOf(':'))
-        const arr = temp.split('.')
-        return arr[arr.length - 2] + '.' + arr[arr.length - 1]
-      },
+      // getDomain(domain) {
+      //   let temp = ''
+      //   temp = domain.replace('http://', '')
+      //   temp = temp.replace('https://', '')
+      //   if (temp.indexOf('/') > -1)
+      //     temp = temp.substr(0, temp.indexOf('/'))
+      //   if (temp.indexOf(':') > -1)
+      //     temp = temp.substr(0, temp.indexOf(':'))
+      //   const arr = temp.split('.')
+      //   return arr[arr.length - 2] + '.' + arr[arr.length - 1]
+      // },
       handleDeleteDomain(domainData) {
         deleteDomain(domainData.id).then(res => {
           this.$message({

@@ -11,74 +11,57 @@
       </el-option>
     </el-select>
 
-     <el-input 
-      style="width: 200px;float: right" 
-      class="filter-item" 
-      prefix-icon="el-icon-search"
-      placeholder="请输入内容"
-      v-model="searchValue"
-      @keyup.enter.native="handleSearch"/>
+    <el-checkbox v-model="showValid" @change="showValidChange">显示已绑定</el-checkbox>
+
+    <el-input 
+    style="width: 200px;float: right" 
+    class="filter-item" 
+    prefix-icon="el-icon-search"
+    placeholder="请输入内容"
+    v-model="searchValue"
+    @keyup.enter.native="handleSearch"/>
   </div>
   <el-table
     :data="tableData"
     v-loading="loading"
     @filter-change="tableFilter"
     style="width: 100%">
-    <el-table-column
-      align="center"
-      prop="host"
-      label="host">
+    <el-table-column align="center" label="host">
+      <template slot-scope="scope">
+        <span><a @click="hostClick(scope.row.host)">{{scope.row.host}}</a></span>
+      </template>
     </el-table-column>
-
-    <el-table-column
+    <!-- <el-table-column
       align="center"
       prop="p2p_month"
       label="近一月p2p流量(GB)">
     </el-table-column>
-
     <el-table-column
       align="center"
       prop="http_month"
       label="近一月http流量(GB)">
     </el-table-column>
-
     <el-table-column
       align="center"
       prop="p2p_rt"
       label="p2p实时带宽(mbps)">
     </el-table-column>
-
     <el-table-column
       align="center"
       prop="http_rt"
       label="http实时带宽(mbps)">
+    </el-table-column> -->
+    <el-table-column align="center" prop="num" label="人数"></el-table-column>
+    <el-table-column align="center" prop="max_num" label="最大人数"></el-table-column>
+    <el-table-column align="center" prop="agent" label="代理商" column-key="agent" :filter-multiple="false" :filters="[{ text: 'btjson', value: 'btjson' }]"></el-table-column>
+    <el-table-column align="center" label="黑名单">
+      <template slot-scope="scope">
+        <el-switch :value="scope.row.blocked" active-color="red" @change="value => handleSwitchChange(value, scope.row)"></el-switch>
+      </template>
     </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="num"
-      label="人数">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="max_num"
-      label="最大人数">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="agent"
-      label="代理商"
-      column-key="agent"
-      :filter-multiple="false"
-      :filters="[{ text: 'btjson', value: 'btjson' }]"
-      >
-    </el-table-column>
-
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="handleTest(scope.row)">详情</el-button>
+        <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">详情</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -100,7 +83,7 @@
 </template>
 
   <script>
-  import { fetchDomain, fetchDomainByFilter, fetchHostNum, searchHost } from '@/api/userDomain'
+  import { fetchDomain, blockDomain, fetchHostNum, searchHost } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
   import { getID } from '@/utils/auth'
 
@@ -108,12 +91,23 @@
     data() {
       return {
         loading: false,
+        showValid: false,
         total: 0,
         tableData: [],
         tableParam: {
           page: 1,
           pageSize: 10
         },
+
+        filters: [
+          {
+            name: 'isvalid'
+          },
+          {
+            name: 'agent'
+          }
+        ],
+
         searchValue: '',
         selectValue: 'num',
         selectOptions: [
@@ -142,12 +136,53 @@
       ])
     },
     methods: {
-      tableFilter(filters) {
-        console.log(filters)
-        this.fetchTableByFilter([{
-          name: 'agent',
-          value: filters.agent
-        }])
+      hostClick(value) {
+        window.open(`http://${value}`)
+        window.open(`https://${value}`)
+      },
+      handleSwitchChange(value, domain) {
+        const data = {
+          domain: domain.host,
+          blocked: value
+        }
+        this.loading = true
+        blockDomain(data)
+          .then(res => {
+            this.tableData.forEach(item => {
+              if(item.id === domain.id)
+                item.blocked = value
+            })
+            this.$message({
+              message: value?'成功添加至黑名单':'已从黑名单中移除',
+              type: 'success'
+            })
+            this.loading = false
+          })
+          .catch(err => {
+            this.loading = false
+            console.log(err)
+          })
+      },
+      tableFilter(filter) {
+        if(filter.agent.length > 0) {
+          this.filters.forEach(item => {
+            if(item.name === 'agent')
+              item.value = filter.agent[0]
+          })
+        } else {
+          this.filters.forEach(item => {
+            if(item.name === 'agent')
+              delete item.value
+          })
+        }
+        this.fetchTableData()
+      },
+      showValidChange(value) {
+        this.filters.forEach(item => {
+          if(item.name === 'isvalid')
+            item.value = value
+        })
+        this.fetchTableData()
       },
       formatData(data) {
         data.forEach(item => {
@@ -169,30 +204,18 @@
         })
         return data
       },
-      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue) {
+      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue, filters=this.filters) {
         this.loading = true
-        fetchDomain(page, pageSize, order).then(res => {
+        fetchDomain(page, pageSize, order, filters).then(res => {
           this.loading = false
           this.tableData = this.formatData(res.data)
         }).catch(err => {
+          this.tableData = []
           this.loading = false
           console.log(err)
         })
         fetchHostNum().then(res => {
           this.total = res.data.num
-        })
-      },
-
-      fetchTableByFilter(filter) {
-        this.loading = true
-        fetchDomainByFilter(this.tableParam.page, this.tableParam.pageSize, this.selectValue, filter).then(res => {
-          if(res.data) {
-            this.loading = false
-            this.tableData = this.formatData(res.data)
-          }
-        }).catch(err => {
-          this.loading = false
-          console.log(err)
         })
       },
 
@@ -218,7 +241,7 @@
           this.fetchTableData()
         }
       },
-      handleTest(val) {
+      handleCheckDetail(val) {
         this.$router.push({
           name: 'UserLiveData',
           params: {

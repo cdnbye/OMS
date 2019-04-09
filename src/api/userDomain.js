@@ -8,21 +8,23 @@ export function fetchHostNum() {
   })
 }
 
-export function fetchDomain(page, pageSize, order) {
-  return request({
-    url: `host?page=${page}&page_size=${pageSize}&order=${order}`,
-    method: 'get'
-  })
-}
-
-export function fetchDomainByFilter(page, pageSize, order, filters) {
+export function fetchDomain(page, pageSize, order, filters) {
   let url = `host?page=${page}&page_size=${pageSize}&order=${order}`
   filters.forEach(item => {
-    url += `&${item.name}=${item.value}`
+    if(item.value)
+      url += `&${item.name}=${item.value}`
   })
   return request({
     url,
     method: 'get'
+  })
+}
+
+export function blockDomain(data) {
+  return request({
+    url: `/host/block`,
+    method: 'post',
+    data
   })
 }
 
