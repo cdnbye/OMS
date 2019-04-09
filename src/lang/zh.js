@@ -96,7 +96,7 @@ export default {
     terminalDis: '终端分布',
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
-    p2pTip: '如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置',
+    p2pTip: '采用北京时间计时。<br/>如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置。',
     freeTip: '绑定后的域名每日赠送10GB流量，签到后再额外赠送40GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用流量包抵扣。<br/>如果可用流量为零，则停止P2P服务。',
     remainTip: '流量包用于提高P2P流量额度，请及时<a style="color: #337ab7" href="#/user/package">购买</a>，以避免服务中断。',
     checkin: '签到免费领流量',
@@ -109,9 +109,10 @@ export default {
     bindDomainTip: '输入你的网站地址，例如：\nwww.example.com',
     bindDomainTError: '请输入正确的域名！',
     domain: '域名',
-    status: '可用状态',
+    status: '状态',
     available: '可用',
     unavailable: '不可用',
+    illegal: '非法网站',
     operation: '操作',
     verifyDomain: '验证域名',
     certification: '认证',
@@ -204,7 +205,7 @@ export default {
     expense: '费用',
     total: '总计：',
     confirmPurchase: '确认购买',
-    paySuccess: '付款成功',
+    paySuccess: '付款成功，订单信息已经发送至您的邮箱。',
     payFail: '付款失败',
     systemError: '抱歉，系统正在维护中',
     payLoadingTip: '正在跳转至支付页面',
@@ -216,6 +217,7 @@ export default {
     flowPackage: '流量包',
     payMethod: '支付方式',
     price: '价格',
+    currency:'币种',
     status: '订单状态',
     action: '操作',
     pay: '付款',
@@ -230,7 +232,13 @@ export default {
     totalTraffic: '流量'
   },
   p2pConfig: {
+    status: '状态',
+    open: '开启',
+    close: '关闭',
+    illegal: '非法网站',
     configSuccess: '配置成功',
-    configFail: '只有付费用户才能开启/关闭P2P'
+    configFail: '只有付费用户才能开启/关闭P2P',
+    desc: '如果您在同一个账号同时绑定了多个域名，则开启P2P的所有域名会共享流量包。您可以在这里关闭某个域名的P2P服务从而节省流量包消耗。',
+    switchErr: '至少一个域名需要保持开启状态。'
   }
 }

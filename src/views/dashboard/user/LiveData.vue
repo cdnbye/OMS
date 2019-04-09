@@ -209,7 +209,7 @@ export default {
         .then(res => {
           if(res.data.repeat) {
             this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
-              confirmButtonText: this.$t('common.ok'),
+              confirmButtonText: this.$t('common.ok')
             })
           } else {
             this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {

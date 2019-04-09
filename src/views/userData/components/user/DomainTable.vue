@@ -11,14 +11,19 @@
 
   <el-table border :data="tableData" v-loading="loading" style="width: 100%">
     <el-table-column align="center" prop="domain" :label="$t('domainTable.domain')"></el-table-column>
-    <el-table-column align="center" prop="isValid" :formatter="formatter" :label="$t('domainTable.status')"></el-table-column>
+    <el-table-column align="center" :label="$t('domainTable.status')">
+      <template slot-scope="scope">
+        <span :style="scope.row.blocked?'color: red':''">
+          {{ formatterStatus(scope.row) }}
+        </span>
+      </template>
+    </el-table-column>
     <el-table-column align="center" prop="text" label="text"></el-table-column>
-
     <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
         <el-button v-if="scope.row.isValid !== 1" type="primary" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
         <el-popover
-          style="margin-left: 10px"
+          :style="device==='mobile'?'':'margin-left: 10px'"
           trigger="manual"
           placement="top"
           width="160"
@@ -68,7 +73,7 @@
         <ol>
           <li>
             <div class="pv-content">
-              <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ get1Domain(checkDomainData.domain) }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4>
+              <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ getDomain(checkDomainData.domain) }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4>
               <h4>{{checkDomainData.text}}</h4>
             </div>
           </li>
@@ -237,7 +242,7 @@
           console.log(err)
         })
       },
-      get1Domain(domain) {
+      getDomain(domain) {
         let temp = ''
         temp = domain.replace('http://', '')
         temp = temp.replace('https://', '')
@@ -277,7 +282,10 @@
           }
         })
       },
-      formatter(row) {
+      formatterStatus(row) {
+        if(row.blocked) {
+          return this.$t('domainTable.illegal')
+        }
         return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('domainTable.available')
       },
       saveFile() {

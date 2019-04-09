@@ -102,7 +102,7 @@
             <em>{{totalPrice}} <span class="unit">USD</span></em>
           </div>
         </div>
-        <el-button type="warning" @click="handleBuyClick">Create order</el-button>
+        <el-button type="warning" @click="handleBuyClick">Create Order</el-button>
       </div>
     </el-card>
   </div>

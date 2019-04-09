@@ -28,7 +28,7 @@ export default {
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
     package: 'Traffic Packages',
-    order: 'Orders History',
+    order: 'Order History',
     p2pConfig: 'P2P Config'
   },
   navbar: {
@@ -96,7 +96,7 @@ export default {
     terminalDis: 'Terminal Distribution',
     liveDis: 'Live/VOD Distribution',
     natDis: 'Network Type Distribution',
-    p2pTip: 'Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/en/m3u8" target="_blank">here</a>',
+    p2pTip: 'UTC+8 adopted.<br/>Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/en/m3u8" target="_blank">here</a>',
     freeTip: '10GB of traffic will be given after the domain name is bound with an additional 40 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by traffic package. <br/>If there is no available traffic, P2P service will be stopped.',
     remainTip: 'The traffic packages is used to increase avaliable P2P traffic. Please <a style="color: #337ab7" href="/user/package">buy</a> it in time to avoid service interruption.',
     checkin: 'Sign in for free traffic',
@@ -112,8 +112,9 @@ export default {
     status: 'State',
     available: 'Available',
     unavailable: 'Unavailable',
+    illegal: 'Illegal website',
     operation: 'Operation',
-    verifyDomain: 'Verity domain',
+    verifyDomain: 'Verify domain',
     certification: 'Verify',
     certificationTip: 'You need to verify your domain name of the added website. The public domain name can be verified by any of the following methods. The intranet domain name only supports DNS authentication for security reasons. Notice: Verify the domain of the web site that host the player, not the domain name of the m3u8 address.',
     doneTip: 'Click the "Verify Now" button when you are done',
@@ -203,8 +204,8 @@ export default {
     quantity: 'Quantity',
     expense: 'Expense',
     total: 'total:',
-    confirmPurchase: 'Pay now',       
-    paySuccess: 'Paid successfully!',
+    confirmPurchase: 'Pay Now',       
+    paySuccess: 'Paid successfully. Your order information has been sent to your mailbox.',
     payFail: 'Failed to pay!',
     systemError: 'Sorry, the system is maintaining',
     payLoadingTip: 'Jumping to payment page...',
@@ -213,16 +214,17 @@ export default {
   order: {
     createTime: 'Date',
     type: 'Type',
-    payMethod: 'Payment method',
-    flowPackage: 'Traffic package',
+    payMethod: 'Payment Method',
+    flowPackage: 'Traffic Package',
     price: 'Price',
+    currency:'Currency',
     status: 'Order status',
     action: 'Action',
     pay: 'Pay',
     close: 'Close',
     waitPay: 'Pending',
-    finish: 'Finish',
-    fail: 'Close',
+    finish: 'Finished',
+    fail: 'Closed',
     tip: 'Sure to close order?',
     alipay: 'alipay',
     packageName: 'Package',
@@ -230,7 +232,13 @@ export default {
     totalTraffic: 'Traffic'
   },
   p2pConfig: {
+    status: 'Status',
+    open: 'Open',
+    close: 'Close',
+    illegal: 'Illegal website',
     configSuccess: 'Successful configuration',
-    configFail: 'Only paid users can turn P2P on / off'
+    configFail: 'Only paid users can turn P2P on / off',
+    desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
+    switchErr: 'At least one domain name needs to remain open.'
   }
 }

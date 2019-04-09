@@ -23,6 +23,7 @@
       <el-table-column align="center" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
       <el-table-column align="center" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>
       <el-table-column align="center" prop="price" :label="$t('order.price')"></el-table-column>
+      <el-table-column align="center" prop="currency" :label="$t('order.currency')"></el-table-column>
 
       <el-table-column align="center"  :label="$t('order.status')">
         <template slot-scope="scope" :formatter="formatterStatus">
@@ -34,7 +35,7 @@
         <template slot-scope="scope">
           <el-button v-if="scope.row.trade_status === 'WAIT_BUYER_PAY'" type="primary" size="mini" @click="handlePay(scope.row)">{{ $t('order.pay') }}</el-button>
           <el-popover
-            style="margin-left: 10px"
+            :style="device==='mobile'?'':'margin-left: 10px'"
             trigger="manual"
             placement="top"
             width="160"
