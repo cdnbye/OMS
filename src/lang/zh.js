@@ -3,6 +3,7 @@ export default {
     dashboard: '实时数据分析',
     liveData: '实时数据',
     basicAnalysis: '实时数据分析',
+    financial: '财务信息',
     disChart: '分布图',
     Operational: '整体运营数据',
     bandwidth: '带宽趋势图',
@@ -29,7 +30,8 @@ export default {
     domainList: '域名列表',
     package: '购买流量包',
     order: '历史订单',
-    p2pConfig: 'P2P配置'
+    p2pConfig: 'P2P配置',
+    edit: '编辑信息'
   },
   navbar: {
     logOut: '退出登录',
@@ -117,7 +119,7 @@ export default {
     operation: '操作',
     verifyDomain: '验证域名',
     certification: '认证',
-    certificationTip: '您需要对添加的网站进行域名所有权认证，公网域名可以选择以下任意一种方式进行验证，内网域名由于安全原因只支持DNS验证。域名是指视频网站的域名，不是流地址(m3u8)的域名。',
+    certificationTip: '您需要对添加的网站进行域名所有权认证，可以选择以下任意一种方式进行验证。域名是指视频网站的域名，不是流地址(m3u8)的域名。',
     doneTip: '完成操作后请点击"立即验证"按钮',
     verifyLater: '稍后验证',
     verifyNow: '立即验证',

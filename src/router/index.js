@@ -71,6 +71,30 @@ export const asyncRouterMap = [
       }
     ]
   },
+
+  {
+    path: '/financial',
+    component: Layout,
+    redirect: '/financial/page',
+    alwaysShow: true,
+    meta: {
+      title: 'financial',
+      icon: 'documentation',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/financeInfo'),
+        name: 'Financial',
+        meta: {
+          title: 'financial',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+
   //user router
   {
     path: '/user',
@@ -408,15 +432,6 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'whole',
-        component: () => import('@/views/test/index'),
-        name: 'Whole',
-        meta: {
-          title: 'whole',
-          roles: ['admin']
-        }
-      },
-      {
         path: 'list',
         component: () => import('@/views/userData/userList'),
         name: 'List',
@@ -484,15 +499,6 @@ export const asyncRouterMap = [
         name: 'TrackerConfig',
         meta: {
           title: 'trackerConfig',
-          roles: ['admin']
-        }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/test/index'),
-        name: 'UserConfig',
-        meta: {
-          title: 'userConfig',
           roles: ['admin']
         }
       },

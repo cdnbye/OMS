@@ -37,11 +37,23 @@
             <PointTip :content="$t('dashboard.freeTip')" />
           </div>
           <div class="card-panel-description">
+            <span class="card-panel-num">+∞</span>
+            <div class="card-panel-text">{{ $t('dashboard.free') }}</div>
+          </div>
+        </div>
+      </el-col>
+
+      <!-- <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.freeTip')" />
+          </div>
+          <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.flow.free.num }}</span>
             <div class="card-panel-text">{{ $t('dashboard.free') }} ({{ statis.flow.free.unit }})</div>
           </div>
         </div>
-      </el-col>
+      </el-col> -->
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">

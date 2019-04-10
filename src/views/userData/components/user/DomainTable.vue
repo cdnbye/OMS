@@ -21,20 +21,22 @@
     <el-table-column align="center" prop="text" label="text"></el-table-column>
     <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
-        <el-button v-if="scope.row.isValid !== 1" type="primary" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
-        <el-popover
-          :style="device==='mobile'?'':'margin-left: 10px'"
-          trigger="manual"
-          placement="top"
-          width="160"
-          :ref="'popover-' + scope.row.id">
-          <p>{{ $t('domainTable.tip') }}</p>
-          <div style="text-align: right; margin: 0">
-            <el-button type="text" size="mini" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
-            <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
-          </div>
-          <el-button slot="reference" type="danger" size="mini" @click="pShow(scope.row.id)">{{ $t('domainTable.delete') }}</el-button>
-        </el-popover>
+        <template v-if="!scope.row.blocked">
+          <el-button v-if="scope.row.isValid !== 1" type="primary" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
+          <el-popover
+            :style="device==='mobile'?'':'margin-left: 10px'"
+            trigger="manual"
+            placement="top"
+            width="160"
+            :ref="'popover-' + scope.row.id">
+            <p>{{ $t('domainTable.tip') }}</p>
+            <div style="text-align: right; margin: 0">
+              <el-button type="text" size="mini" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
+              <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
+            </div>
+            <el-button slot="reference" type="danger" size="mini" @click="pShow(scope.row.id)">{{ $t('domainTable.delete') }}</el-button>
+          </el-popover>
+        </template>
       </template>
     </el-table-column>
   </el-table>

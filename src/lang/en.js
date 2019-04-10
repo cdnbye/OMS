@@ -3,6 +3,7 @@ export default {
     dashboard: 'Realtime data',
     liveData: 'Live data',
     basicAnalysis: 'Realtime Analysis',
+    financial: 'Finance Info',
     disChart: 'Distribution',
     Operational: 'Operational data',
     bandwidth: 'bandwidth',
@@ -29,7 +30,8 @@ export default {
     domainList: 'Domain List',
     package: 'Traffic Packages',
     order: 'Order History',
-    p2pConfig: 'P2P Config'
+    p2pConfig: 'P2P Config',
+    edit: 'edit'
   },
   navbar: {
     logOut: 'Log Out',
@@ -117,7 +119,7 @@ export default {
     operation: 'Operation',
     verifyDomain: 'Verify domain',
     certification: 'Verify',
-    certificationTip: 'You need to verify your domain name of the added website. The public domain name can be verified by any of the following methods. The intranet domain name only supports DNS authentication for security reasons. Notice: Verify the domain of the web site that host the player, not the domain name of the m3u8 address.',
+    certificationTip: 'You need to verify your domain name of the added website. You can choose any of the following methods. Notice: Verify the domain of the web site that host the player, not the domain name of the m3u8 address.',
     doneTip: 'Click the "Verify Now" button when you are done',
     verifyLater: 'Verify Later',
     verifyNow: 'Verify Now',
@@ -228,8 +230,8 @@ export default {
     fail: 'Closed',
     tip: 'Sure to close order?',
     alipay: 'alipay',
-    packageName: 'Package',
-    amount: 'Amount',
+    packageName: 'Item',
+    amount: 'Quantity',
     totalTraffic: 'Traffic'
   },
   p2pConfig: {

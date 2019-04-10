@@ -260,6 +260,7 @@ export default {
 
 <style>
   .edit-container {
+    text-align: left;
     padding: 16px 32px; 
     background-color: #f0f2f5;
     height: calc(100vh - 84px);

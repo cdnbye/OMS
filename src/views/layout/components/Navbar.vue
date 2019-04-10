@@ -1,23 +1,17 @@
 <template>
   <div class="navbar">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-
     <!-- <breadcrumb class="breadcrumb-container"/> -->
-
     <div class="right-menu">
       <lang-select class="international right-menu-item"/>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="user-avatar">
+          <img v-bind:src="Avatar" class="user-avatar">
+          <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="user-avatar"> -->
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <!-- <router-link to="/">
-            <el-dropdown-item>
-              {{ $t('navbar.dashboard') }}
-            </el-dropdown-item>
-          </router-link> -->
           <a target="_blank" href="https://docs.cdnbye.com/">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
@@ -44,8 +38,14 @@ import { mapGetters } from 'vuex'
 // import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
+import Logo from '@/assets/logo.png'
 
 export default {
+  data() {
+    return {
+      Avatar: Logo
+    }
+  },
   components: {
     // Breadcrumb,
     Hamburger,
