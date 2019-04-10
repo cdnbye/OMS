@@ -23,3 +23,11 @@ export function changeMail(data) {
     data
   })
 }
+
+export function frozenUser(data) {
+  return request({
+    url: `user/frozen`,
+    method: 'post',
+    data
+  })
+}

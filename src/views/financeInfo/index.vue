@@ -1,14 +1,6 @@
 <template>
   <div class="app-main" v-loading="loading">
     <el-row :gutter="20" class="panel-group">
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-          <div class="card-panel-description">
-            <span class="card-panel-num">{{ financeData.payed_num }}</span>
-            <div class="card-panel-text">付费用户数</div>
-          </div>
-        </div>
-      </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
@@ -22,8 +14,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ financeData.total_num }}</span>
-            <div class="card-panel-text">总用户数</div>
+            <span class="card-panel-num">{{ financeData.payed_num }}</span>
+            <div class="card-panel-text">付费用户数</div>
           </div>
         </div>
       </el-col>
@@ -40,8 +32,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ financeData.income_rmb_today }}</span>
-            <div class="card-panel-text">今日人民币收入</div>
+            <span class="card-panel-num">{{ financeData.total_num }}</span>
+            <div class="card-panel-text">总用户数</div>
           </div>
         </div>
       </el-col>
@@ -49,8 +41,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ financeData.income_usd_today }}</span>
-            <div class="card-panel-text">今日美元收入</div>
+            <span class="card-panel-num">{{ financeData.income_rmb_today }}</span>
+            <div class="card-panel-text">今日人民币收入</div>
           </div>
         </div>
       </el-col>
@@ -67,6 +59,15 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.income_usd_today }}</span>
+            <div class="card-panel-text">今日美元收入</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
             <span class="card-panel-num">{{ financeData.orders_usd_today }}</span>
             <div class="card-panel-text">今日美元订单数</div>
           </div>
@@ -76,17 +77,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ (financeData.income_rmb).toFixed(2) }}</span>
+            <span class="card-panel-num">{{ financeData.income_rmb }}</span>
             <div class="card-panel-text">总的人民币收入</div>
-          </div>
-        </div>
-      </el-col>
-
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-          <div class="card-panel-description">
-            <span class="card-panel-num">{{ (financeData.income_usd).toFixed(2) }}</span>
-            <div class="card-panel-text">总的美元收入</div>
           </div>
         </div>
       </el-col>
@@ -103,6 +95,15 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.income_usd }}</span>
+            <div class="card-panel-text">总的美元收入</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
             <span class="card-panel-num">{{ financeData.orders_usd }}</span>
             <div class="card-panel-text">总的美元订单数</div>
           </div>
@@ -112,8 +113,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ financeData.orders_total }}</span>
-            <div class="card-panel-text">总订单数</div>
+            <span class="card-panel-num">{{ financeData.orders_closed }}</span>
+            <div class="card-panel-text">关闭订单数</div>
           </div>
         </div>
       </el-col>
@@ -121,8 +122,8 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ financeData.orders_closed }}</span>
-            <div class="card-panel-text">关闭订单数</div>
+            <span class="card-panel-num">{{ financeData.orders_total }}</span>
+            <div class="card-panel-text">总订单数</div>
           </div>
         </div>
       </el-col>
@@ -150,7 +151,7 @@ export default {
       financeInfo()
         .then(res => {
           if(res.data) {
-            this.financeData = {...res.data}
+            this.financeData = {...res.data, income_rmb: res.data.income_rmb.toFixed(2), income_usd: res.data.income_usd.toFixed(2)}
             this.loading = false
           }
         })

@@ -10,67 +10,22 @@
       >
       </el-option>
     </el-select>
-
-    <!-- <el-input 
-      style="width: 200px;float: right" 
-      class="filter-item" 
-      prefix-icon="el-icon-search"
-      placeholder="请输入内容"
-      v-model="searchValue"
-      @keyup.enter.native="handleSearch"/> -->
   </div>
   <el-table
     :data="tableData"
     v-loading="loading"
     style="width: 100%">
-
-    <el-table-column
-      align="center"
-      prop="uid"
-      label="ID">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="username"
-      label="用户名">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="email"
-      label="邮箱">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="reg_date"
-      label="注册时间">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="agent"
-      label="agent">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="domain"
-      label="域名">
-    </el-table-column>
-
-    <el-table-column
-      align="center"
-      prop="enable"
-      label="禁用状态">
-    </el-table-column>
-
-    <!-- <el-table-column label="action" align="center" class-name="small-padding fixed-width">
+    <el-table-column align="center" prop="uid" label="ID"></el-table-column>
+    <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+    <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
+    <el-table-column align="center" prop="reg_date" label="注册时间"></el-table-column>
+    <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>
+    <el-table-column align="center" prop="domain" label="域名"></el-table-column>
+    <el-table-column align="center" label="禁用状态">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="handleTest(scope.row)">详情</el-button>
+        <el-switch :value="scope.row.enable===0" active-color="red" @change="value => switchChange(value, scope.row)"></el-switch>
       </template>
-    </el-table-column> -->
+    </el-table-column>
   </el-table>
 
   <div class="pagination-container">
@@ -88,6 +43,7 @@
 
   <script>
   import { fetchUserList } from '@/api/userDomain'
+  import { frozenUser } from '@/api/user'
   import moment from 'moment'
 
   export default {
@@ -99,8 +55,6 @@
           page: 1,
           pageSize: 10
         },
-
-        searchValue: '',
 
         selectValue: 'uid',
         selectOptions: [
@@ -135,27 +89,51 @@
         ]
       }
     },
+    mounted() {
+      this.fetchTableData()
+    },
     methods: {
       formatData(data) {
         const temp = [...data]
         temp.forEach(item => {
           item.reg_date = moment(item.reg_date * 1000).format('YYYY-MM-DD HH:mm')
-          item.enable = item.enable === 0 ? '禁用' : '正常'
+          item.checkin = moment(item.checkin).format('YYYY-MM-DD HH:mm')
         })
         return temp
       },
       fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue) {
         this.loading = true
         fetchUserList(page, pageSize, order).then(res => {
-          this.loading = false
           if(res.data) {
             this.tableData = this.formatData(res.data)
-          } else {
-            this.tableData = []
           }
+          this.loading = false
         }).catch(err => {
+          this.tableData = []
           this.loading = false
           console.log(err)
+        })
+      },
+      handleFrozenUser(data) {
+        this.loading = true
+        frozenUser(data)
+          .then(res => {
+            this.loading = false
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            })
+            this.fetchTableData()
+          })
+          .catch(err => {
+            this.loading = false
+            console.log(err)
+          })
+      },
+      switchChange(value, user) {
+        this.handleFrozenUser({
+          uid: user.uid,
+          frozen: value
         })
       },
       handleSizeChange(pageSize) {
@@ -168,24 +146,7 @@
       },
       selectChange(val) {
         this.fetchTableData()
-      },
-      handleSearch(e){
-        const host = e.target.value.trim()
-        if(host) {
-          searchHost(host).then(res => {
-            this.tableData = this.formatData(res.data)
-            // this.total = res.data ? res.data.length : 0
-          })
-        } else {
-          this.fetchTableData()
-        }
-      },
-      handleTest(val) {
-        console.log(val)
       }
-    },
-    mounted() {
-      this.fetchTableData()
     }
   }
   </script>
