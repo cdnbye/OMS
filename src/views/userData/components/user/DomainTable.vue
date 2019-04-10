@@ -75,7 +75,7 @@
             <div class="pv-content">
               <!-- <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ getDomain(checkDomainData.domain) }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4> -->
               <h4>{{ $t('domainTable.userVerifyDomain.verifyTipHead') }}{{ checkDomainData.domain }}{{ $t('domainTable.userVerifyDomain.verifyTipEnd') }}</h4>
-              <h4>{{checkDomainData.text}}</h4>
+              <h4>{{ checkDomainData.text }}</h4>
             </div>
           </li>
           <li>
@@ -133,9 +133,10 @@
           :placeholder="$t('domainTable.bindDomainTip')"/>
       </el-form-item>
     </el-form>
+    <div class="bind-warning" :style="device==='mobile'?'padding: 10px 8px 5px;':'padding: 10px 20px 20px;'">{{ $t('domainTable.bindWarning') }}</div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="dialogVisible = false">{{$t('common.cancel')}}</el-button>
-      <el-button type="primary" @click="addDomainSubmit">{{$t('common.ok')}}</el-button>
+      <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
+      <el-button type="primary" @click="addDomainSubmit">{{ $t('common.ok') }}</el-button>
     </span>
   </el-dialog>
 
@@ -351,6 +352,14 @@
     position: absolute;
     border-radius: 100%;
     border: 2px solid transparent;
+  }
+  .bind-warning {
+    text-align: left;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    
+    width: 50%;
   }
 </style>
 

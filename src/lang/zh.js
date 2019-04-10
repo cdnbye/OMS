@@ -107,6 +107,7 @@ export default {
   domainTable: {
     bindDomain: '绑定域名',
     bindDomainTip: '输入你的网站地址，例如：\nwww.example.com',
+    bindWarning: 'CDNBye不对色情等非法内容提供P2P服务，请确保您的网站符合法律规范。',
     bindDomainTError: '请输入正确的域名！',
     domain: '域名',
     status: '状态',

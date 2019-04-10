@@ -107,6 +107,7 @@ export default {
   domainTable: {
     bindDomain: 'Bind Your Domain',
     bindDomainTip: 'Enter your domain name，such as:\nwww.example.com',
+    bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
     bindDomainTError: 'PLease input the correct domain!',
     domain: 'Domain',
     status: 'State',

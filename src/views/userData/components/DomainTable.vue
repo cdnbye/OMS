@@ -1,6 +1,30 @@
 <template>
 <div class="app-container">
-  <div class="filter-container">
+  <el-row type="flex" justify="space-between">
+    <el-col :span="device==='mobile'?24:6">
+      <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
+        <el-option
+          v-for="item in selectOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </el-col>
+    <el-col :span="device==='mobile'?24:6">
+      <el-checkbox v-model="showValid" @change="showValidChange">显示已绑定</el-checkbox>
+    </el-col>
+    <el-col :span="device==='mobile'?24:6">
+      <el-input 
+        class="filter-item" 
+        prefix-icon="el-icon-search"
+        placeholder="请输入内容"
+        v-model="searchValue"
+        @keyup.enter.native="handleSearch"/>
+    </el-col>
+  </el-row>
+  <!-- <div class="filter-container">
     <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
       <el-option
         v-for="item in selectOptions"
@@ -20,7 +44,7 @@
     placeholder="请输入内容"
     v-model="searchValue"
     @keyup.enter.native="handleSearch"/>
-  </div>
+  </div> -->
   <el-table
     :data="tableData"
     v-loading="loading"
