@@ -28,7 +28,7 @@ export default {
     onlineNum: 'Online Viewers Trend',
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
-    package: 'Traffic Packages',
+    package: 'Traffic Package',
     order: 'Order History',
     p2pConfig: 'P2P Config',
     edit: 'edit'

@@ -23,7 +23,12 @@
     <el-table-column align="center" prop="domain" label="域名"></el-table-column>
     <el-table-column align="center" label="禁用状态">
       <template slot-scope="scope">
-        <el-switch :value="scope.row.enable===0" active-color="red" @change="value => switchChange(value, scope.row)"></el-switch>
+        <el-switch :value="scope.row.enable===0" active-color="red" @change="value => frozenSwitchChange(value, scope.row)"></el-switch>
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="管理员权限">
+      <template slot-scope="scope">
+        <el-switch :value="scope.row.admin" active-color="#42b983" @change="value => adminSwitchChange(value, scope.row)"></el-switch>
       </template>
     </el-table-column>
   </el-table>
@@ -43,7 +48,7 @@
 
   <script>
   import { fetchUserList } from '@/api/userDomain'
-  import { frozenUser } from '@/api/user'
+  import { frozenUser, adminUser } from '@/api/user'
   import moment from 'moment'
 
   export default {
@@ -130,10 +135,32 @@
             console.log(err)
           })
       },
-      switchChange(value, user) {
+      handleAdminUser(data) {
+        this.loading = true
+        adminUser(data)
+          .then(res => {
+            this.loading = false
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            })
+            this.fetchTableData()
+          })
+          .catch(err => {
+            this.loading = false
+            console.log(err)
+          })
+      },
+      frozenSwitchChange(value, user) {
         this.handleFrozenUser({
           uid: user.uid,
           frozen: value
+        })
+      },
+      adminSwitchChange(value, user) {
+        this.handleAdminUser({
+          uid: user.uid,
+          admin: value
         })
       },
       handleSizeChange(pageSize) {

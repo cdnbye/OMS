@@ -134,6 +134,8 @@
 <script>
 import { financeInfo } from '@/api/finance'
 
+let int = null
+
 export default {
   name: 'Finance',
   data() {
@@ -144,14 +146,30 @@ export default {
   },
   mounted() {
     this.getFinanceData()
+    this.loopGetData()
+  },
+  beforeDestroy() {
+    clearTimeout(int)
   },
   methods: {
+    loopGetData() {
+      int = setTimeout(() => {
+        this.getFinanceData()
+        this.loopGetData()
+      }, 60000);
+    },
     getFinanceData() {
       this.loading = true
       financeInfo()
         .then(res => {
           if(res.data) {
-            this.financeData = {...res.data, income_rmb: res.data.income_rmb.toFixed(2), income_usd: res.data.income_usd.toFixed(2)}
+            this.financeData = {
+              ...res.data, 
+              income_rmb: res.data.income_rmb.toFixed(2),
+              income_usd: res.data.income_usd.toFixed(2),
+              income_rmb_today: res.data.income_rmb_today.toFixed(2),
+              income_usd_today: res.data.income_usd_today.toFixed(2)
+            }
             this.loading = false
           }
         })

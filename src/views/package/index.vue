@@ -31,7 +31,7 @@
     <el-alert style="margin-bottom: 20px" type="info" show-icon :title="$t('package.packageSubTitle')" :description="$t('package.packageSub')" />
 
     <template v-for="(item, index) in packages">
-      <el-row :key="item.subject" style="margin-bottom: 20px">
+      <el-row :key="item.subject" :style="index==(packages.length-1)?{'margin-bottom':'20px','visibility':'hidden'}:{'margin-bottom':'20px'}">
         <el-col :span="24">
           <el-card shadow="never">
             <template v-if="paySelect === 'alipay'">
@@ -146,11 +146,17 @@ export default {
         .then(res => {
           if(this.paySelect === 'alipay') {
             this.packages = [...res.data.list_cn]
+
+            this.packages.push({...res.data.list_cn[0], subject: 'hide'})
+
             this.packages.forEach(item => {
               this.selectPackage.cn.push({...item, amount: 0})
             })
           } else {
             this.packages = [...res.data.list_en]
+
+            this.packages.push({...res.data.list_en[0], subject: 'hide'})
+
             this.packages.forEach(item => {
               this.selectPackage.en.push({...item, amount: 0})
             })

@@ -12,7 +12,7 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <a target="_blank" href="https://docs.cdnbye.com/">
+          <a target="_blank" :href="language==='en'?'https://docs.cdnbye.com/#/en/':'https://docs.cdnbye.com/'">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
             </el-dropdown-item>
@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'language',
       'sidebar',
       'name',
       'device'

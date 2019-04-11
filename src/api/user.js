@@ -31,3 +31,11 @@ export function frozenUser(data) {
     data
   })
 }
+
+export function adminUser(data) {
+  return request({
+    url: `user/admin`,
+    method: 'post',
+    data
+  })
+}
