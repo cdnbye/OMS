@@ -39,3 +39,10 @@ export function adminUser(data) {
     data
   })
 }
+
+export function searchUser(mail) {
+  return request({
+    url: `user/search?keywords=${mail}`,
+    method: 'get'
+  })
+}

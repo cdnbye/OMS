@@ -26,23 +26,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
-//多久显示广告 单位：毫秒
-const afterShow = 15000
-//显示后多久自动关闭 单位：毫秒
-const afterHide = 15000
+import config from '../../../config/adConfig'
 
 export default {
   name: 'Advertisement',
-  props: {
-    show: {
-      type: Boolean,
-      required: true
-    }
-  },
   data() {
     return {
-      firstShow: true
+      firstShow: true,
+      config: config
     }
   },
   computed: {
@@ -58,7 +49,7 @@ export default {
         _this.handleClose('second-ad')
         setTimeout(() => {
           _this.handleShow('second-ad')          
-        }, afterShow);
+        }, config.afterShow);
       }
     },
     firstShow(val) {
@@ -70,22 +61,34 @@ export default {
   },
   mounted(){
     const _this = this
-    if(this.show && this.roles.indexOf('user') > -1) {
+    if(this.config.show && this.roles.indexOf('user') > -1) {
+      _this.initADImage()
       _this.handleShow('first-ad')
       _this.handleShow('second-ad')
       setTimeout(() => {
         _this.handleShow('ad')
-      }, afterShow)
+      }, config.afterShow)
     }
   },
   methods: {
+    initADImage() {
+      const leftTopAD = document.getElementById('first-ad')
+      const rightTopAD = document.getElementById('second-ad')
+      const botAD = document.getElementById('ad')
+      const leftImg = require(`../../assets/ads/${this.config.leftTopAD}`)
+      const rightImg = require(`../../assets/ads/${this.config.rightTopAD}`)
+      const botImg = require(`../../assets/ads/${this.config.botAD}`)
+      leftTopAD.style.backgroundImage = 'url(' + leftImg + ')'
+      rightTopAD.style.backgroundImage = 'url(' + rightImg + ')'
+      botAD.style.backgroundImage = 'url(' + botImg + ')'
+    },
     handleShow(id) {
       const ad = document.getElementById(id)
       ad.style.display = 'block'
       const _this = this
       setTimeout(() => {
         _this.handleClose(id)
-      }, afterHide)
+      }, config.afterHide)
     },
     handleClose(id) {
       if(id === 'first-ad') {
@@ -111,7 +114,9 @@ export default {
     height: 240px;
     right: 0;
     bottom: 0;
-    background: url('./ad.jpg') no-repeat center;
+    // background: url('./ad.jpg') no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: 240px 240px;
     z-index: 999;
   }
@@ -132,13 +137,17 @@ export default {
   #first-ad {
     display: none;
     margin: 8px 0;
-    background: url('./lookfor.jpg') no-repeat center;
+    // background: url('./lookfor.jpg') no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: 100% 100%;
   }
   #second-ad {
     display: none;
     margin: 8px 0;
-    background: url('./lookfor.jpg') no-repeat center;
+    // background: url('./lookfor.jpg') no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: 100% 100%;
   }
 </style>

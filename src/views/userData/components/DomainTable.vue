@@ -19,65 +19,29 @@
       <el-input 
         class="filter-item" 
         prefix-icon="el-icon-search"
-        placeholder="请输入内容"
+        placeholder="请输入域名"
         v-model="searchValue"
         @keyup.enter.native="handleSearch"/>
     </el-col>
   </el-row>
-  <!-- <div class="filter-container">
-    <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
-      <el-option
-        v-for="item in selectOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
-
-    <el-checkbox v-model="showValid" @change="showValidChange">显示已绑定</el-checkbox>
-
-    <el-input 
-    style="width: 200px;float: right" 
-    class="filter-item" 
-    prefix-icon="el-icon-search"
-    placeholder="请输入内容"
-    v-model="searchValue"
-    @keyup.enter.native="handleSearch"/>
-  </div> -->
   <el-table
     :data="tableData"
     v-loading="loading"
     @filter-change="tableFilter"
     style="width: 100%">
-    <el-table-column align="center" label="host">
+    <el-table-column align="center" label="域名">
       <template slot-scope="scope">
         <span><a @click="hostClick(scope.row.host)">{{scope.row.host}}</a></span>
       </template>
     </el-table-column>
-    <!-- <el-table-column
-      align="center"
-      prop="p2p_month"
-      label="近一月p2p流量(GB)">
-    </el-table-column>
-    <el-table-column
-      align="center"
-      prop="http_month"
-      label="近一月http流量(GB)">
-    </el-table-column>
-    <el-table-column
-      align="center"
-      prop="p2p_rt"
-      label="p2p实时带宽(mbps)">
-    </el-table-column>
-    <el-table-column
-      align="center"
-      prop="http_rt"
-      label="http实时带宽(mbps)">
-    </el-table-column> -->
     <el-table-column align="center" prop="num" label="人数"></el-table-column>
     <el-table-column align="center" prop="max_num" label="最大人数"></el-table-column>
-    <el-table-column align="center" prop="agent" label="代理商" column-key="agent" :filter-multiple="false" :filters="[{ text: 'btjson', value: 'btjson' }]"></el-table-column>
+    <el-table-column align="center" label="是否绑定">
+      <template slot-scope="scope">
+        <span>{{ scope.row.isvalid ? '已绑定' : '未绑定' }}</span>
+      </template>
+    </el-table-column>
+    <!-- <el-table-column align="center" prop="agent" label="代理商" column-key="agent" :filter-multiple="false" :filters="[{ text: 'btjson', value: 'btjson' }]"></el-table-column> -->
     <el-table-column align="center" label="黑名单">
       <template slot-scope="scope">
         <el-switch :value="scope.row.blocked" active-color="red" @change="value => handleSwitchChange(value, scope.row)"></el-switch>
@@ -115,7 +79,7 @@
     data() {
       return {
         loading: false,
-        showValid: false,
+        showValid: true,
         total: 0,
         tableData: [],
         tableParam: {
@@ -125,7 +89,8 @@
 
         filters: [
           {
-            name: 'isvalid'
+            name: 'isvalid',
+            value: true
           },
           {
             name: 'agent'
@@ -135,6 +100,10 @@
         searchValue: '',
         selectValue: 'num',
         selectOptions: [
+          {
+            label: 'id',
+            value: 'id'
+          },
           {
             label: '最大人数',
             value: 'max_num'
@@ -159,6 +128,9 @@
         'device'
       ])
     },
+    mounted() {
+      this.fetchTableData()
+    },
     methods: {
       hostClick(value) {
         window.open(`http://${value}`)
@@ -173,11 +145,12 @@
         blockDomain(data)
           .then(res => {
             this.tableData.forEach(item => {
-              if(item.id === domain.id)
+              if(item.host_id === domain.host_id) {
                 item.blocked = value
+              }
             })
             this.$message({
-              message: value?'成功添加至黑名单':'已从黑名单中移除',
+              message: value ? '成功添加至黑名单' : '已从黑名单中移除',
               type: 'success'
             })
             this.loading = false
@@ -242,7 +215,6 @@
           this.total = res.data.num
         })
       },
-
       handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize
         this.fetchTableData()
@@ -258,7 +230,12 @@
         const host = e.target.value.trim()
         if(host) {
           searchHost(host).then(res => {
-            this.tableData = this.formatData(res.data)
+            // this.tableData = this.formatData(res.data)
+            if(this.showValid) {
+              this.tableData = res.data.filter(item => item.isvalid)
+            } else {
+              this.tableData = [...res.data]
+            }
             this.total = res.data ? res.data.length : 0
           })
         } else {
@@ -277,9 +254,6 @@
         })
         console.log(val)
       }
-    },
-    mounted() {
-      this.fetchTableData()
     }
   }
   </script>

@@ -1,16 +1,26 @@
 <template>
 <div class="app-container">
-  <div class="filter-container">
-    <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
-      <el-option
-        v-for="item in selectOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
-  </div>
+  <el-row type="flex" justify="space-between">
+    <el-col :span="12">
+      <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
+        <el-option
+          v-for="item in selectOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </el-col>
+    <el-col :span="12">
+      <el-input 
+        class="filter-item" 
+        prefix-icon="el-icon-search"
+        placeholder="请输入邮箱"
+        v-model="searchValue"
+        @keyup.enter.native="handleSearch"/>
+    </el-col>
+  </el-row>
   <el-table
     :data="tableData"
     v-loading="loading"
@@ -48,7 +58,7 @@
 
   <script>
   import { fetchUserList } from '@/api/userDomain'
-  import { frozenUser, adminUser } from '@/api/user'
+  import { frozenUser, adminUser, searchUser } from '@/api/user'
   import moment from 'moment'
 
   export default {
@@ -61,6 +71,7 @@
           pageSize: 10
         },
 
+        searchValue: '',
         selectValue: 'uid',
         selectOptions: [
           {
@@ -128,7 +139,11 @@
               type: 'success',
               message: '操作成功'
             })
-            this.fetchTableData()
+            this.tableData.forEach(item => {
+              if(item.uid === data.uid) {
+                item.enable = data.frozen ? 0 : 1
+              }
+            })
           })
           .catch(err => {
             this.loading = false
@@ -144,7 +159,11 @@
               type: 'success',
               message: '操作成功'
             })
-            this.fetchTableData()
+            this.tableData.forEach(item => {
+              if(item.uid === data.uid) {
+                item.admin = data.admin
+              }
+            })
           })
           .catch(err => {
             this.loading = false
@@ -162,6 +181,20 @@
           uid: user.uid,
           admin: value
         })
+      },
+      handleSearch() {
+        if(this.searchValue) {
+          searchUser(this.searchValue)
+            .then(res => {
+              this.tableData = [...res.data]
+            })
+            .catch(err => {
+              this.tableData = []
+              console.log(err)
+            })
+        } else {
+          this.fetchTableData()
+        }
       },
       handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize
