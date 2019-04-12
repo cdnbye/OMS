@@ -90,7 +90,8 @@ export default {
       fetchGlobalData().then(res => {
         if(res.data) {
           this.onlineNum = res.data.num_rt
-          fetchDomain(1, 10, 'num').then(res => {
+          fetchDomain(1, 10, 'num', [])
+            .then(res => {
               if(res.data) {
                   let total = 0
                   res.data.forEach(item => {
@@ -105,7 +106,10 @@ export default {
                       value: this.onlineNum - total
                   })
               }
-          })
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
       })
       fetchLiveData('version').then(res => {
