@@ -20,6 +20,13 @@ export default {
       tipVisible: false
     }
   },
+  watch: {
+    currentDomain(domain) {
+      if(domain.id !== undefined) {
+        this.tipVisible = false
+      }
+    }
+  },
   mounted() {
     if(this.roles.indexOf('user') > -1 && this.currentDomain.id === undefined) {
       this.tipVisible = true

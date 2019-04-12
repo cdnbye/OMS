@@ -61,13 +61,17 @@ export default {
   },
   mounted(){
     const _this = this
-    if(this.config.show && this.roles.indexOf('user') > -1) {
+    if(this.roles.indexOf('user') > -1) {
       _this.initADImage()
-      _this.handleShow('first-ad')
-      _this.handleShow('second-ad')
-      setTimeout(() => {
-        _this.handleShow('ad')
-      }, config.afterShow)
+      if(_this.config.showTop) {
+        _this.handleShow('first-ad')
+        _this.handleShow('second-ad')
+      }
+      if(_this.config.showBot) {
+        setTimeout(() => {
+          _this.handleShow('ad')
+        }, config.afterShow)
+      }
     }
   },
   methods: {
