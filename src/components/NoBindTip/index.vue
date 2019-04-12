@@ -4,7 +4,7 @@
     :width="device === 'mobile' ? '80%' : '30%'">
     <span>{{ $t('dashboard.tip') }}</span>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">{{ $t('common.cancel') }}</el-button>
+      <el-button @click="tipVisible = false">{{ $t('common.cancel') }}</el-button>
       <el-button type="primary" @click="handlePush">{{ $t('dashboard.goBind') }}</el-button>
     </span>
   </el-dialog>
@@ -15,24 +15,26 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'NoBindTip',
-  props: {
-    tipVisible: {
-      type: Boolean,
-      required: true
-    },
-    handleClose: {
-      type: Function,
-      required: true
+  data() {
+    return {
+      tipVisible: false
+    }
+  },
+  mounted() {
+    if(this.roles.indexOf('user') > -1 && this.currentDomain.id === undefined) {
+      this.tipVisible = true
     }
   },
   computed: {
     ...mapGetters([
-      'device'
+      'device',
+      'currentDomain',
+      'roles'
     ])
   },
   methods: {
     handlePush() {
-      this.handleClose()
+      this.tipVisible = false
       this.$router.push('/user/domain')
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <world-map :countryData="countryData" />
-    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
+    <NoBindTip />
 </div>
 </template>
 
@@ -15,7 +15,6 @@ export default {
   name: 'WorldDis',
   data() {
     return {
-      tipVisible: false,
       countryData: []
     }
   },
@@ -31,8 +30,6 @@ export default {
   mounted() {
     if(this.currentDomain.id) {
       this.fetchData()
-    } else {
-      this.tipVisible = true
     }
   },
   methods: {
@@ -44,9 +41,6 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-    },
-    handleCloseTip() {
-      this.tipVisible = false
     }
   }
 }

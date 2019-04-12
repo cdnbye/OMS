@@ -21,7 +21,7 @@
       </el-form-item>
     </el-form>
     <LineChart :chart-data="lineChartData" :option="option" />
-    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
+    <NoBindTip />
   </div>
 </template>
 
@@ -41,7 +41,6 @@ export default {
   },
   data() {
     return {
-      tipVisible: false,
       lineChartData: {
         P2P: []
       },
@@ -64,8 +63,6 @@ export default {
   mounted() {
     if(this.currentDomain.id) {
       this.getData()
-    } else {
-      this.tipVisible = true
     }
   },
   methods: {
@@ -105,9 +102,6 @@ export default {
     },
     getTimeStamp(date) {
       return moment(date).format('X')
-    },
-    handleCloseTip() {
-      this.tipVisible = false
     }
   }
 }

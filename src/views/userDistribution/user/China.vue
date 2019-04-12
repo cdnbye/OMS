@@ -1,7 +1,7 @@
 <template>
   <div>
     <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
-    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
+    <NoBindTip />
   </div>
 </template>
 
@@ -15,7 +15,6 @@ export default {
   name: 'ChinaDis',
   data() {
     return {
-      tipVisible: false,
       cityData: [],
       provinceData: [],
       total: 0
@@ -33,8 +32,6 @@ export default {
   mounted() {
     if(this.currentDomain.id) {
       this.fetchData()
-    } else {
-      this.tipVisible = true
     }
   },
   methods: {
@@ -64,9 +61,6 @@ export default {
           })
         }
       })
-    },
-    handleCloseTip() {
-      this.tipVisible = false
     }
   }
 }

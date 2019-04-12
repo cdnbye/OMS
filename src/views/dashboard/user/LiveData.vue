@@ -86,7 +86,7 @@
       </el-col>
     </el-row>
     <Dis :data="disData"/>
-    <NoBindTip :tipVisible="tipVisible" :handleClose="handleCloseTip" />
+    <NoBindTip />
   </div>
 </template>
 
@@ -117,7 +117,6 @@ export default {
   },
   data() {
     return {
-      tipVisible: false,
       checkinLoading: false,
       checkResultLoading: false,
 
@@ -154,7 +153,7 @@ export default {
     ])
   },
   mounted() {
-    if(this.$route.params.id && this.$route.params.uid) {
+    if(this.$route.params.id !== undefined && this.$route.params.uid !== undefined) {
       this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
       this.getDisData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
     } else {
@@ -247,9 +246,6 @@ export default {
       clearInterval(int)
       this.loopGetData(uid, id)
     },
-    handleCloseTip() {
-      this.tipVisible = false
-    },
     checkPayResult() {
       const paramObj = getQueryObj()
       if(paramObj.payment) {
@@ -341,18 +337,13 @@ export default {
             store.dispatch('setValidDomain', validDomain)
             this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
             this.getDisData(this.currentDomain.uid, this.currentDomain.id)
-          } else {
-            this.tipVisible = true
           }
-        } else {
-          this.tipVisible = true
         }
       }).catch(err => {
         console.log(err)
       })
     },
     goBuy() {
-      console.log('===')
       this.$router.push('/user/package')
     }
   }
