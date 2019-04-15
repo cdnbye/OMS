@@ -253,37 +253,37 @@ export const asyncRouterMap = [
     ]
   },
   // user router 历史数据
-  // {
-  //   path: '/history',
-  //   component: Layout,
-  //   redirect: '/history/P2P',
-  //   alwaysShow: true,
-  //   meta: {
-  //     title: 'dataAnalysis',
-  //     icon: 'chart',
-  //     roles: ['user']
-  //   },
-  //   children: [
-  //     {
-  //       path: 'p2p_rate',
-  //       component: () => import('@/views/historyData/P2P'),
-  //       name: 'P2PRate',
-  //       meta: {
-  //         title: 'p2pTraffic',
-  //         roles: ['user']
-  //       }
-  //     },
-  //     {
-  //       path: 'online',
-  //       component: () => import('@/views/historyData/OnlineNum'),
-  //       name: 'Online',
-  //       meta: {
-  //         title: 'onlineNum',
-  //         roles: ['user']
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/history',
+    component: Layout,
+    redirect: '/history/P2P',
+    alwaysShow: true,
+    meta: {
+      title: 'dataAnalysis',
+      icon: 'chart',
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'p2p_rate',
+        component: () => import('@/views/historyData/P2P'),
+        name: 'P2PRate',
+        meta: {
+          title: 'p2pTraffic',
+          roles: ['user']
+        }
+      },
+      {
+        path: 'online',
+        component: () => import('@/views/historyData/OnlineNum'),
+        name: 'Online',
+        meta: {
+          title: 'onlineNum',
+          roles: ['user']
+        }
+      }
+    ]
+  },
 
   // user router
   {
