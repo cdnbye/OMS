@@ -44,7 +44,7 @@
           width="160"
           :ref="'popover-' + scope.row.uid"
           >
-          <p>{{ $t('domainTable.tip') }}</p>
+          <p>{{ scope.row.admin ? '确认取消该用户的管理员权限吗？' : '确定将该用户设置为管理员吗？' }}</p>
           <div style="text-align: right; margin: 0">
             <el-button type="text" size="mini" @click="pClose(scope.row.uid)">{{ $t('common.cancel') }}</el-button>
             <el-button type="primary" size="mini" @click="handleAdminUser(scope.row)">{{ $t('common.ok') }}</el-button>
