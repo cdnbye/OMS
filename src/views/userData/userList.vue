@@ -33,7 +33,19 @@
     <el-table-column align="center" prop="domain" label="域名"></el-table-column>
     <el-table-column align="center" label="禁用状态">
       <template slot-scope="scope">
-        <el-switch :value="scope.row.enable===0" active-color="red" @change="value => frozenSwitchChange(value, scope.row)"></el-switch>
+        <el-popover
+          trigger="manual"
+          placement="top"
+          width="160"
+          :ref="'popover-' + scope.row.username"
+          >
+          <p>{{ scope.row.enable ? '确认禁用该用户？' : '取消禁用该用户？' }}</p>
+          <div style="text-align: right; margin: 0">
+            <el-button type="text" size="mini" @click="pClose(scope.row.username)">{{ $t('common.cancel') }}</el-button>
+            <el-button type="primary" size="mini" @click="handleFrozenUser(scope.row)">{{ $t('common.ok') }}</el-button>
+          </div>
+          <el-switch slot="reference" :value="scope.row.enable===0" active-color="red" @change="pShow(scope.row.username)"></el-switch>
+        </el-popover>
       </template>
     </el-table-column>
     <el-table-column align="center" label="管理员权限">
@@ -148,19 +160,23 @@
           console.log(err)
         })
       },
-      handleFrozenUser(data) {
+      handleFrozenUser(user) {
+        const data = {
+          uid: user.uid,
+          frozen: user.enable ? true : false
+        }
         this.loading = true
         frozenUser(data)
           .then(res => {
+            this.pClose(user.username)
             this.loading = false
             this.$message({
               type: 'success',
               message: '操作成功'
             })
             this.tableData.forEach(item => {
-              if(item.uid === data.uid) {
+              if(item.uid === data.uid)
                 item.enable = data.frozen ? 0 : 1
-              }
             })
           })
           .catch(err => {
@@ -190,12 +206,6 @@
             this.loading = false
             console.log(err)
           })
-      },
-      frozenSwitchChange(value, user) {
-        this.handleFrozenUser({
-          uid: user.uid,
-          frozen: value
-        })
       },
       handleSearch() {
         if(this.searchValue) {
