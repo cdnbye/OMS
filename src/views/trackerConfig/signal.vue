@@ -29,7 +29,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchData()
+    this.loopGetData()
   },
   methods: {
     fetchData() {
@@ -44,6 +44,12 @@ export default {
             item.value = 0
           })
       })
+    },
+    loopGetData() {
+      this.fetchData()
+      setTimeout(() => {
+        this.loopGetData()
+      }, 15000);
     }
   }
 }
