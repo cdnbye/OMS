@@ -104,7 +104,8 @@ export default {
     checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
     haveChecked: '你今天已经签到了哦~',
-    checkinFail: '签到失败，请重试！'
+    checkinFail: '签到失败，请重试！',
+    trafficUseOut: '您的可用流量已用完，请前往购买流量包'
   },
   domainTable: {
     bindDomain: '绑定域名',

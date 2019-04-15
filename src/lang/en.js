@@ -104,7 +104,8 @@ export default {
     checkin: 'Sign in for free traffic',
     checkinSuccess: 'Sign in successfully!',
     haveChecked: 'You have signed in today',
-    checkinFail: 'Sign in failed, please try again!'
+    checkinFail: 'Sign in failed, please try again!',
+    trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.'
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
