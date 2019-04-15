@@ -38,7 +38,19 @@
     </el-table-column>
     <el-table-column align="center" label="管理员权限">
       <template slot-scope="scope">
-        <el-switch :value="scope.row.admin" active-color="#42b983" @change="value => adminSwitchChange(value, scope.row)"></el-switch>
+        <el-popover
+          trigger="manual"
+          placement="top"
+          width="160"
+          :ref="'popover-' + scope.row.uid"
+          >
+          <p>{{ $t('domainTable.tip') }}</p>
+          <div style="text-align: right; margin: 0">
+            <el-button type="text" size="mini" @click="pClose(scope.row.uid)">{{ $t('common.cancel') }}</el-button>
+            <el-button type="primary" size="mini" @click="handleAdminUser(scope.row)">{{ $t('common.ok') }}</el-button>
+          </div>
+          <el-switch slot="reference" :value="scope.row.admin" active-color="#42b983" @change="pShow(scope.row.uid)"></el-switch>
+        </el-popover>
       </template>
     </el-table-column>
   </el-table>
@@ -109,6 +121,12 @@
       this.fetchTableData()
     },
     methods: {
+      pShow(id) {
+        this.$refs[`popover-` + id].doShow()
+      },
+      pClose(id) {
+        this.$refs[`popover-` + id].doClose()
+      },
       formatData(data) {
         const temp = [...data]
         temp.forEach(item => {
@@ -150,19 +168,22 @@
             console.log(err)
           })
       },
-      handleAdminUser(data) {
+      handleAdminUser(user) {
         this.loading = true
-        adminUser(data)
+        adminUser({
+          uid: user.uid,
+          admin: !user.admin
+        })
           .then(res => {
+            this.pClose(user.uid)
             this.loading = false
             this.$message({
               type: 'success',
               message: '操作成功'
             })
             this.tableData.forEach(item => {
-              if(item.uid === data.uid) {
-                item.admin = data.admin
-              }
+              if(item.uid === user.uid)
+                item.admin = !item.admin
             })
           })
           .catch(err => {
@@ -174,12 +195,6 @@
         this.handleFrozenUser({
           uid: user.uid,
           frozen: value
-        })
-      },
-      adminSwitchChange(value, user) {
-        this.handleAdminUser({
-          uid: user.uid,
-          admin: value
         })
       },
       handleSearch() {
@@ -204,7 +219,7 @@
         this.tableParam.page = page
         this.fetchTableData()
       },
-      selectChange(val) {
+      selectChange() {
         this.fetchTableData()
       }
     }
