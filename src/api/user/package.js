@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 获取订单信息
 export function fetchPackage() {
   return request({
     url: `goods/flow_packet`,
@@ -7,6 +8,7 @@ export function fetchPackage() {
   })
 }
 
+// 用户创建订单
 export function createOrder(userID, data) {
   return request({
     url: `order/user_id/${userID}`,
@@ -15,6 +17,7 @@ export function createOrder(userID, data) {
   })
 }
 
+// 获取支付地址
 export function fetchPayUrl(payMethod, orderID, device) {
   const param = device === 'mobile' ? '&mobile=true' : ''
   return request({
@@ -23,6 +26,7 @@ export function fetchPayUrl(payMethod, orderID, device) {
   })
 }
 
+// 检查支付宝支付状态
 export function checkAlipayOrder(orderID) {
   return request({
     url: `charge/alipay/query?order_id=${orderID}`,
@@ -30,6 +34,7 @@ export function checkAlipayOrder(orderID) {
   })
 }
 
+// 检查paypal支付状态
 export function checkPaypalOrder(orderID, paymentID, payerID) {
   return request({
     url: `charge/paypal/query?order_id=${orderID}&payment_id=${paymentID}&payer_id=${payerID}`,
@@ -37,6 +42,7 @@ export function checkPaypalOrder(orderID, paymentID, payerID) {
   })
 }
 
+// 用户签到
 export function checkIn(userID, data) {
   return request({
     url: `user/user_id/${userID}/checkin`,

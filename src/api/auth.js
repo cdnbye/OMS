@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import { validateEmail } from '@/utils/validate'
 
+// 登录
 export function loginByUsername(username, passwd) {
   const data = {
     passwd
@@ -17,6 +18,7 @@ export function loginByUsername(username, passwd) {
   })
 }
 
+// 注册
 export function signup(data) {
   return request({
     url: 'user',
@@ -25,6 +27,7 @@ export function signup(data) {
   })
 }
 
+// 发送验证码
 export function sendCode(data) {
   return request({
     url: '/vcode',
@@ -33,6 +36,7 @@ export function sendCode(data) {
   })
 }
 
+// 重置密码
 export function resetPasswd(data) {
   return request({
     url: '/user/passwd_forget',

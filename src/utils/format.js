@@ -1,8 +1,10 @@
+//sha256 加密
 export function setSha256(value) {
   const sha256 = require("js-sha256").sha256
   return sha256(value)
 }
 
+// 对带宽数据进行处理，返回数值及单位
 export function formatBandwidth(val) {
   const mbps = 1024
   const gbps = 1024 * 1024
@@ -49,6 +51,7 @@ export function getBandwidthNum(val, unit) {
   return value
 }
 
+// 对流量数据进行处理，返回数值及单位
 export function formatTraffic(val) {
   const mb = 1024
   const gb = 1024 * 1024
@@ -78,6 +81,7 @@ export function formatTraffic(val) {
   return value
 }
 
+// 饼图不显示iOS的数据
 export function formatPieData(data) {
   const temp = data.filter(a => {
     return a.value > 0 && a.name !== 'iOS'
@@ -85,6 +89,7 @@ export function formatPieData(data) {
   return temp
 }
 
+// 获取路径中query参数并返回对象格式
 export function getQueryObj(url) {
   url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf("?") + 1)

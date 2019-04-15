@@ -37,6 +37,29 @@ export const constantRouterMap = [
   }
 ]
 
+// 动态路由
+// {
+//   path: '/',                对应浏览器路径
+//   component: Layout,        
+//   redirect: '/liveData',
+//   alwaysShow: true,         是否显示到sidebar中，如修改密码邮箱就不显示，值为false
+//   meta: {
+//     title: 'dashboard',     sidebar中的名称，对应多语言中的字段  /src/lang
+//     icon: 'dashboard',      sidebar中的图标，对应icons中的字段  /src/icons
+//     roles: ['admin']        路由对应的用户，admin为管理员，user为用户
+//   },
+//   children: [
+//     {
+//       path: '/liveData',
+//       component: () => import('@/views/dashboard/LiveData'),
+//       name: 'LiveData',
+//       meta: {
+//         title: 'liveData',
+//         roles: ['admin'],
+//       }
+//     }
+//   ]
+// }
 export const asyncRouterMap = [
   {
     path: '/',
@@ -136,15 +159,12 @@ export const asyncRouterMap = [
         name: 'UserLiveData',
         meta: { 
           title: 'basicAnalysis', 
-          icon: 'dashboard', 
           roles: ['admin'],
           noCache: true
         }
       }
     ]
   },
-
-
 
   //user router
   {
@@ -264,6 +284,7 @@ export const asyncRouterMap = [
   //     }
   //   ]
   // },
+
   // user router
   {
     path: '/distribution',

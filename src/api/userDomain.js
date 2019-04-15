@@ -8,6 +8,7 @@ export function fetchHostNum() {
   })
 }
 
+// 获取域名列表
 export function fetchDomain(page, pageSize, order, filters) {
   let url = `host?page=${page}&page_size=${pageSize}&order=${order}`
   filters.forEach(item => {
@@ -20,6 +21,7 @@ export function fetchDomain(page, pageSize, order, filters) {
   })
 }
 
+// 将域名拉黑或从黑名单移除
 export function blockDomain(data) {
   return request({
     url: `/host/block`,
@@ -28,6 +30,7 @@ export function blockDomain(data) {
   })
 }
 
+// 查找域名
 export function searchHost(host) {
   return request({
     url: `host/search?keywords=${host}`,
@@ -35,6 +38,7 @@ export function searchHost(host) {
   })
 }
 
+// 获取用户列表
 export function fetchUserList(page, pageSize, order) {
   return request({
     url: `user?page=${page}&page_size=${pageSize}&order=${order}`,
@@ -42,6 +46,7 @@ export function fetchUserList(page, pageSize, order) {
   })
 }
 
+// 获取某用户的域名列表
 export function fetchUserDomain(page, pageSize) {
   return request({
     url: `user/user_id/${getID()}/domain?page=${page}&page_size=${pageSize}`,
@@ -49,6 +54,7 @@ export function fetchUserDomain(page, pageSize) {
   })
 }
 
+// 绑定域名
 export function bindDomain(data) {
   return request({
     url: `user/user_id/${getID()}/domain`,
@@ -57,6 +63,7 @@ export function bindDomain(data) {
   })
 }
 
+// 认证域名
 export function checkDomain(domainID) {
   return request({
     url: `user/user_id/${getID()}/domain/domain_id/${domainID}`,
@@ -64,6 +71,7 @@ export function checkDomain(domainID) {
   })
 }
 
+// 用户删除域名
 export function deleteDomain(domainID) {
   return request({
     url: `user/user_id/${getID()}/domain/domain_id/${domainID}`,

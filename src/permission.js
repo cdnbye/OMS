@@ -1,6 +1,5 @@
 import router from './router/index'
 import store from './store'
-import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // getToken from cookie
 import { Base64 } from 'js-base64'
 

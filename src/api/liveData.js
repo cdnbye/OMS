@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 全局数据接口
 export function fetchGlobalData() {
   return request({
     url: 'global',

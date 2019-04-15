@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 获取tracker配置
 export function fetchTrackerConfig() {
   return request({
     url: 'tracker/config',
@@ -7,6 +8,7 @@ export function fetchTrackerConfig() {
   })
 }
 
+// 修改tracker配置
 export function configTracker(data) {
   return request({
     url: 'tracker/config',

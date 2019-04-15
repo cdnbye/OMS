@@ -93,6 +93,7 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
+import { getID } from '@/utils/auth'
 
 import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
 import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
@@ -216,7 +217,7 @@ export default {
     },
     handleCheckin() {
       this.checkinLoading = true
-      checkIn(this.currentDomain.uid, {user_id: this.currentDomain.uid})
+      checkIn(getID(), {user_id: getID()})
         .then(res => {
           if(res.data.repeat) {
             this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
