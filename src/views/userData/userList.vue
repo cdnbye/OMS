@@ -1,6 +1,6 @@
 <template>
 <div class="app-container">
-  <el-row type="flex" justify="space-between">
+  <el-row type="flex" justify="space-between" :gutter="20" style="margin: 20px 0">
     <el-col :span="12">
       <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
         <el-option
@@ -11,6 +11,9 @@
         >
         </el-option>
       </el-select>
+    </el-col>
+    <el-col :span="12">
+      <el-checkbox v-model="showAdmin" @change="showAdminUser">显示管理员</el-checkbox>
     </el-col>
     <el-col :span="12">
       <el-input 
@@ -81,7 +84,7 @@
 </template>
 
   <script>
-  import { fetchUserList } from '@/api/userDomain'
+  import { fetchUserList, fetchAdminUser } from '@/api/userDomain'
   import { frozenUser, adminUser, searchUser } from '@/api/user'
   import moment from 'moment'
 
@@ -94,7 +97,7 @@
           page: 1,
           pageSize: 10
         },
-
+        showAdmin: false,
         searchValue: '',
         selectValue: 'uid',
         selectOptions: [
@@ -138,6 +141,25 @@
       },
       pClose(id) {
         this.$refs[`popover-` + id].doClose()
+      },
+      showAdminUser(value) {
+        this.loading = true
+        if(value) {
+          fetchAdminUser()
+            .then(res => {
+              if(res.data) {
+                this.loading = false
+                this.tableData = [...res.data]
+              }
+            })
+            .catch(err => {
+              this.loading = false
+              this.tableData = []
+              console.log(err)
+            })
+        } else {
+          this.fetchTableData()
+        }
       },
       formatData(data) {
         const temp = [...data]

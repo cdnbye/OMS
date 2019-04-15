@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import { getID } from '@/utils/auth'
 
+// 获取活跃域名总数
 export function fetchHostNum() {
   return request({
     url: `host/num?ts=${((new Date().getTime()) / 1000).toFixed() - 1800}`,
@@ -76,5 +77,13 @@ export function deleteDomain(domainID) {
   return request({
     url: `user/user_id/${getID()}/domain/domain_id/${domainID}`,
     method: 'delete'
+  })
+}
+
+// 管理员权限用户列表
+export function fetchAdminUser() {
+  return request({
+    url: `user/admin`,
+    method: 'get'
   })
 }

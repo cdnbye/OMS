@@ -69,10 +69,8 @@
 
   <div class="pagination-container">
     <el-pagination
-      v-show="total>0"
       :small="device === 'mobile'"
-      :layout="device === 'mobile' ? 'total, prev, pager, next' : 'total, sizes, prev, pager, next'"
-      :total="total"
+      :layout="device === 'mobile' ? 'prev, pager, next' : 'sizes, prev, pager, next'"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="tableParam.pageSize"
       :current-page="tableParam.page"
@@ -84,7 +82,7 @@
 </template>
 
   <script>
-  import { fetchDomain, blockDomain, fetchHostNum, searchHost } from '@/api/userDomain'
+  import { fetchDomain, blockDomain, searchHost } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
   import { getID } from '@/utils/auth'
 
@@ -93,7 +91,6 @@
       return {
         loading: false,
         showValid: true,
-        total: 0,
         tableData: [],
         tableParam: {
           page: 1,
@@ -230,9 +227,6 @@
           this.loading = false
           console.log(err)
         })
-        fetchHostNum().then(res => {
-          this.total = res.data.num
-        })
       },
       handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize
@@ -249,13 +243,11 @@
         const host = e.target.value.trim()
         if(host) {
           searchHost(host).then(res => {
-            // this.tableData = this.formatData(res.data)
             if(this.showValid) {
               this.tableData = res.data.filter(item => item.isvalid)
             } else {
               this.tableData = [...res.data]
             }
-            this.total = res.data ? res.data.length : 0
           })
         } else {
           this.fetchTableData()
@@ -265,7 +257,6 @@
         this.$router.push({
           name: 'UserLiveData',
           params: {
-            // uid: val.uid,
             uid: getID(),
             id: val.id,
             hostId: val.host_id,
