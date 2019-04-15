@@ -44,7 +44,20 @@
     <!-- <el-table-column align="center" prop="agent" label="代理商" column-key="agent" :filter-multiple="false" :filters="[{ text: 'btjson', value: 'btjson' }]"></el-table-column> -->
     <el-table-column align="center" label="黑名单">
       <template slot-scope="scope">
-        <el-switch :value="scope.row.blocked" active-color="red" @change="value => handleSwitchChange(value, scope.row)"></el-switch>
+
+        <el-popover
+          trigger="manual"
+          placement="top"
+          width="160"
+          :ref="'popover-' + scope.row.host_id"
+          >
+          <p>{{ scope.row.blocked ? '确认从黑名单中移除吗？' : '确定加入黑名单吗？' }}</p>
+          <div style="text-align: right; margin: 0">
+            <el-button type="text" size="mini" @click="pClose(scope.row.host_id)">{{ $t('common.cancel') }}</el-button>
+            <el-button type="primary" size="mini" @click="handleSwitchChange(scope.row)">{{ $t('common.ok') }}</el-button>
+          </div>
+          <el-switch slot="reference" :value="scope.row.blocked" active-color="red" @change="pShow(scope.row.host_id)"></el-switch>
+        </el-popover>
       </template>
     </el-table-column>
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
@@ -132,25 +145,31 @@
       this.fetchTableData()
     },
     methods: {
+      pShow(id) {
+        this.$refs[`popover-` + id].doShow()
+      },
+      pClose(id) {
+        this.$refs[`popover-` + id].doClose()
+      },
       hostClick(value) {
         window.open(`http://${value}`)
         window.open(`https://${value}`)
       },
-      handleSwitchChange(value, domain) {
+      handleSwitchChange(domain) {
         const data = {
           domain: domain.host,
-          blocked: value
+          blocked: !domain.blocked
         }
         this.loading = true
         blockDomain(data)
           .then(res => {
+            this.pClose(domain.host_id)
             this.tableData.forEach(item => {
-              if(item.host_id === domain.host_id) {
-                item.blocked = value
-              }
+              if(item.host_id === domain.host_id)
+                item.blocked = !item.blocked
             })
             this.$message({
-              message: value ? '成功添加至黑名单' : '已从黑名单中移除',
+              message: domain.blocked ? '成功添加至黑名单' : '已从黑名单中移除',
               type: 'success'
             })
             this.loading = false
