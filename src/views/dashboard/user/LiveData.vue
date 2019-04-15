@@ -180,22 +180,21 @@ export default {
           this.statis.flow.free = formatTraffic(data.flow.free)
 
           // 如果剩余流量为0，则提醒用户购买
-          if(data.flow.remain === 0) {
-            if(this.remainTrafficFlag) {
-              this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
-                confirmButtonText: this.$t('common.ok'),
-                cancelButtonText: this.$t('common.cancel')
-              })
-                .then(() => {
-                  this.goBuy()
-                })
-                .catch(() => {
-                  return
-                })
-              this.remainTrafficFlag = false
-            }
-            
-          }
+          // if(data.flow.remain === 0) {
+          //   if(this.remainTrafficFlag) {
+          //     this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
+          //       confirmButtonText: this.$t('common.ok'),
+          //       cancelButtonText: this.$t('common.cancel')
+          //     })
+          //       .then(() => {
+          //         this.goBuy()
+          //       })
+          //       .catch(() => {
+          //         return
+          //       })
+          //     this.remainTrafficFlag = false
+          //   }
+          // }
         })
         .catch(err => {
           console.log(err)
