@@ -52,7 +52,7 @@ export default {
     sendTitle: '验证码已发送至手机',
     phoneWarn: '请输入手机号码',
     phoneError: '请输入正确的手机号码',
-    passwdError: '密码必须在6到12位之间',
+    passwdError: '密码必须在6到18位之间',
     vcodeError: '验证码不能小于4位',
   },
   login: {
@@ -181,7 +181,7 @@ export default {
       old: '旧密码',
       noneError: '请输入密码',
       blankError: '密码不允许包含空格',
-      lengthError: '请输入6到12位的密码',
+      lengthError: '请输入6到18位的密码',
     },
   },
   common: {

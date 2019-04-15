@@ -52,7 +52,7 @@ export default {
     sendTitle: 'The verification code has been sent to your mobile',
     phoneWarn: 'Please enter your phone number',
     phoneError: 'Please enter the correct phone number',
-    passwdError: 'The password must be between 6 and 12 digits',
+    passwdError: 'The password must be between 6 and 18 digits',
     vcodeError: 'The verification code can not be less than 4 digits',
   },
   login: {
@@ -181,7 +181,7 @@ export default {
       old: 'old password',
       noneError: 'Please enter your password',
       blankError: 'Passwords are not allowed to contain spaces',
-      lengthError: 'Please enter a 6 to 12 digit password',
+      lengthError: 'Please enter a 6 to 18 digit password',
     },
   },
   common: {
