@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   showTop: true,                //是否显示顶部广告
   showBot: false,                //是否显示底部广告
   afterShow: 15000,             //多久显示广告 单位：毫秒
