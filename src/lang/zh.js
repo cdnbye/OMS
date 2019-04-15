@@ -15,12 +15,12 @@ export default {
     list: '用户列表',
     userDomain: '域名列表',
     p2pRate: 'P2P分享率',
-    whole: '总体信息',
     userDistribution: '用户地理分布',
     chinaDistribution: '中国分布图',
     worldDistribution: '世界分布图',
     config: '配置管理',
     trackerConfig: 'tracker配置',
+    SignalConfig: '信令管理',
     userConfig: '客户管理',
 
     dataAnalysis: '高级数据分析',

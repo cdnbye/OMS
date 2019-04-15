@@ -93,7 +93,6 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
-import { getID } from '@/utils/auth'
 
 import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
 import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
@@ -169,17 +168,19 @@ export default {
     formatTraffic,
 
     getData(uid, id, hostId) {
-      fetchGlobalData(uid, id, hostId).then(res => {
-        const { data } = res
-        this.statis.online = data.num_rt
-        this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
-        this.statis.frequency_day = data.api_frequency_day
-        this.statis.num_max = data.num_max
-        this.statis.flow.remain = data.flow.remain
-        this.statis.flow.free = formatTraffic(data.flow.free)
-      }).catch(err => {
-        console.log(err)
-      })
+      fetchGlobalData(uid, id, hostId)
+        .then(res => {
+          const { data } = res
+          this.statis.online = data.num_rt
+          this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+          this.statis.frequency_day = data.api_frequency_day
+          this.statis.num_max = data.num_max
+          this.statis.flow.remain = data.flow.remain
+          this.statis.flow.free = formatTraffic(data.flow.free)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     getDisData(uid, id, hostID) {
       fetchDisData(uid, id, 'version', hostID).then(res => {
@@ -216,32 +217,42 @@ export default {
       }, 20000)
     },
     handleCheckin() {
-      this.checkinLoading = true
-      checkIn(getID(), {user_id: getID()})
-        .then(res => {
-          if(res.data.repeat) {
-            this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
-              confirmButtonText: this.$t('common.ok')
-            })
-          } else {
-            this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {
-              type: 'success',
+      if(this.currentDomain.id !== undefined) {
+        this.checkinLoading = true
+        checkIn(this.currentDomain.uid, {user_id: this.currentDomain.uid})
+          .then(res => {
+            if(res.data.repeat) {
+              this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
+                confirmButtonText: this.$t('common.ok')
+              })
+            } else {
+              this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {
+                type: 'success',
+                confirmButtonText: this.$t('common.ok'),
+                showCancelButton: false
+              })
+              this.getData(this.currentDomain.uid, this.currentDomain.id)
+            }
+            this.checkinLoading = false
+          })
+          .catch(err => {
+            this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {
+              type: 'error',
               confirmButtonText: this.$t('common.ok'),
               showCancelButton: false
             })
-            this.getData(this.currentDomain.uid, this.currentDomain.id)
-          }
-          this.checkinLoading = false
-        })
-        .catch(err => {
-          this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {
-            type: 'error',
-            confirmButtonText: this.$t('common.ok'),
-            showCancelButton: false
+            this.checkinLoading = false
+            console.log(err)
           })
-          this.checkinLoading = false
-          console.log(err)
+      } else {
+        this.$messageBox.confirm(this.$t('dashboard.tip'), {
+          confirmButtonText: this.$t('common.ok'),
+          cancelButtonText: this.$t('common.cancel')
         })
+          .then(() => {
+            this.$router.push('/user/domain')
+          })
+      }
     },
     handleSwitchDomain(uid, id) {
       clearInterval(int)

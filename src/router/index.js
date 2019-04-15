@@ -461,15 +461,15 @@ export const asyncRouterMap = [
           roles: ['admin']
         }
       },
-      {
-        path: 'user_domain',
-        component: () => import('@/views/userData/bindDomain'),
-        name: 'UserDomain',
-        meta: {
-          title: 'userDomain',
-          roles: ['admin']
-        }
-      }
+      // {
+      //   path: 'user_domain',
+      //   component: () => import('@/views/userData/bindDomain'),
+      //   name: 'UserDomain',
+      //   meta: {
+      //     title: 'userDomain',
+      //     roles: ['admin']
+      //   }
+      // }
     ]
   },
   {
@@ -523,6 +523,15 @@ export const asyncRouterMap = [
           roles: ['admin']
         }
       },
+      {
+        path: 'signal',
+        component: () => import('@/views/trackerConfig/signal'),
+        name: 'Signal',
+        meta: {
+          title: 'SignalConfig',
+          roles: ['admin']
+        }
+      }
     ]
   },
 
