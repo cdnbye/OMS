@@ -113,8 +113,8 @@ import { fetchPackage, createOrder } from '@/api/user/package'
 import { mapGetters } from 'vuex'
 import { getID } from '@/utils/auth'
 
-import Alipay from '@/assets/ali_pay.png'
-import Paypal from '@/assets/paypal.jpeg'
+// import Alipay from '@/assets/ali_pay.png'
+// import Paypal from '@/assets/paypal.jpeg'
 
 export default {
   name: 'Package',
@@ -124,8 +124,8 @@ export default {
       noSelectVisible: false,
       paySelect: 'alipay',
       payImg: {
-        ali: Alipay,
-        paypal: Paypal
+        ali: require('../../assets/ali_pay.png'),
+        paypal: require('../../assets/paypal.jpeg')
       },
       totalPrice: 0,
       packages: [],

@@ -1,20 +1,22 @@
 <template>
   <el-row :gutter="20" class="panel-group">
     <template v-for="item in list">
-    <el-col :key="item.url" :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{item.value}}</span>
-          <div class="card-panel-text">{{item.url}}连接数</div>
+      <el-col :key="item.url" :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{item.value}}</span>
+            <div class="card-panel-text">{{item.url}}连接数</div>
+          </div>
         </div>
-      </div>
-    </el-col>
+      </el-col>
     </template>
   </el-row>
 </template>
 
 <script>
 import axios from 'axios'
+
+let int = null
 
 export default {
   name: 'Signal',
@@ -30,6 +32,9 @@ export default {
   },
   mounted() {
     this.loopGetData()
+  },
+  beforeDestroy() {
+    clearTimeout(int)
   },
   methods: {
     fetchData() {
@@ -47,7 +52,7 @@ export default {
     },
     loopGetData() {
       this.fetchData()
-      setTimeout(() => {
+      int = setTimeout(() => {
         this.loopGetData()
       }, 15000);
     }

@@ -516,11 +516,12 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'tracker',
-        component: () => import('@/views/trackerConfig/index'),
+        component: () => import('@/views/trackerConfig/tracker'),
         name: 'TrackerConfig',
         meta: {
           title: 'trackerConfig',
-          roles: ['admin']
+          roles: ['admin'],
+          noCache: true
         }
       },
       {
@@ -529,7 +530,8 @@ export const asyncRouterMap = [
         name: 'Signal',
         meta: {
           title: 'SignalConfig',
-          roles: ['admin']
+          roles: ['admin'],
+          noCache: true
         }
       }
     ]
