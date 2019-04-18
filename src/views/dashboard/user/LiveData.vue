@@ -180,7 +180,7 @@ export default {
           this.statis.flow.free = formatTraffic(data.flow.free)
 
           // 如果剩余流量为0，则提醒用户购买
-          if(data.flow.remain === 0) {
+          if(data.flow.free === 0 && data.flow.remain === 0) {
             if(this.remainTrafficFlag) {
               this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
                 confirmButtonText: this.$t('common.ok'),
