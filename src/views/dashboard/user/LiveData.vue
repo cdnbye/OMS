@@ -31,7 +31,7 @@
         </div>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <!-- <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="tip">
             <PointTip :content="$t('dashboard.freeTip')" />
@@ -41,9 +41,9 @@
             <div class="card-panel-text">{{ $t('dashboard.free') }}</div>
           </div>
         </div>
-      </el-col>
+      </el-col> -->
 
-      <!-- <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="tip">
             <PointTip :content="$t('dashboard.freeTip')" />
@@ -53,7 +53,7 @@
             <div class="card-panel-text">{{ $t('dashboard.free') }} ({{ statis.flow.free.unit }})</div>
           </div>
         </div>
-      </el-col> -->
+      </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
