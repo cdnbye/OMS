@@ -61,13 +61,11 @@
 </template>
 
 <script>
-import LangSelect from '@/components/LangSelect'
 import { validateEmail } from '@/utils/validate'
 import { sendCode, resetPasswd } from '@/api/auth'
 
 export default {
   name: 'PasswdReset',
-  components: { LangSelect },
   data() {
     const formValidateMail = (rule, value, callback) => {
       if (!validateEmail(value)) {

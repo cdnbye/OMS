@@ -1,7 +1,5 @@
 <template>
   <div class="edit-container">
-    <el-row>
-      <el-col :span="12" style="margin: 0 auto">
       <el-card>
         <p>
           <span>{{$t('myInfo.mail')}}{{userInfo.email}}</span>&nbsp;
@@ -10,7 +8,7 @@
         <el-dialog
           :title="$t('myInfo.changeMail.change')"
           :visible.sync="mailDialogVisible"
-          width="30%">
+          :width="device==='mobile'?'80%':'30%'">
           <el-form ref="emailForm" :model="emailForm" :rules="emailRules">
               <el-form-item prop="email">
                   <el-input :placeholder="$t('myInfo.changeMail.newMail')" v-model="emailForm.email"></el-input>
@@ -40,7 +38,7 @@
           <el-dialog
           :title="$t('myInfo.changePasswd.change')"
           :visible.sync="passwdDialogVisible"
-          width="30%">
+          :width="device==='mobile'?'80%':'30%'">
             <el-form ref="passwdForm" :model="passwdForm" :rules="passwdRules">
               <el-form-item prop="passwd">
                   <el-input :placeholder="$t('myInfo.changePasswd.old')" v-model="passwdForm.passwd" type="password"></el-input>
@@ -59,13 +57,12 @@
           <span>{{$t('myInfo.time')}}{{userInfo.time}}</span>
         </p>
       </el-card>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 import { fetchUserData, changePasswd, changeMail } from '@/api/user'
 import { sendCode } from '@/api/auth'
 import { setSha256 } from '@/utils/format'
@@ -149,6 +146,11 @@ export default {
       loading: false,
       },
     };
+  },
+  computed: {
+    ...mapGetters([
+      'device'
+    ])
   },
   mounted() {
     this.getUserData()
