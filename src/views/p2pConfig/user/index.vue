@@ -60,14 +60,15 @@ export default {
         console.log(err)
       })
     },
-    checkCanCloseP2P() {
-      let openNum = 0
-      this.tableData.forEach(item => {
-        if(!item.blocked && !item.disable_p2p)
-          openNum += 1
-      })
-      return openNum >= 2 ? true : false
-    },
+    // 检查是否可以关闭P2P
+    // checkCanCloseP2P() {
+    //   let openNum = 0
+    //   this.tableData.forEach(item => {
+    //     if(!item.blocked && !item.disable_p2p)
+    //       openNum += 1
+    //   })
+    //   return openNum >= 2 ? true : false
+    // },
     handleP2PConfig(uid, id, data) {
       this.loading = true
       p2pConfig(uid, id, data)
@@ -94,17 +95,18 @@ export default {
     },
     handleSwitchChange(domain, value) {
       const data = { disable: !value }
-      if(value) {
-        this.handleP2PConfig(domain.uid, domain.id, data)
-      } else {
-        if(this.checkCanCloseP2P()) {
-          this.handleP2PConfig(domain.uid, domain.id, data)
-        } else {
-          this.$messageBox.alert(this.$t('p2pConfig.switchErr'), {
-            confirmButtonText: this.$t('common.ok')
-          })
-        }
-      }
+      this.handleP2PConfig(domain.uid, domain.id, data)
+      // if(value) {
+      //   this.handleP2PConfig(domain.uid, domain.id, data)
+      // } else {
+      //   if(this.checkCanCloseP2P()) {
+      //     this.handleP2PConfig(domain.uid, domain.id, data)
+      //   } else {
+      //     this.$messageBox.alert(this.$t('p2pConfig.switchErr'), {
+      //       confirmButtonText: this.$t('common.ok')
+      //     })
+      //   }
+      // }
     }
   },
 }

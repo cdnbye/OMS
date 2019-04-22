@@ -96,7 +96,7 @@
       <div v-else>
         <div class="buy">
           <div class="tip">
-            Total cost:
+            Total Amount:
           </div>
           <div class="total-price">
             <em>{{totalPrice}} <span class="unit">USD</span></em>

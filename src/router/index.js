@@ -229,7 +229,8 @@ export const asyncRouterMap = [
         name: 'bandwidth',
         meta: {
           title: 'bandwidth',
-          roles: ['admin']
+          roles: ['admin'],
+          noCache: true
         }
       },
       {
@@ -238,7 +239,8 @@ export const asyncRouterMap = [
         name: 'P2PRate',
         meta: {
           title: 'p2pRate',
-          roles: ['admin']
+          roles: ['admin'],
+          noCache: true
         }
       },
       {
@@ -247,7 +249,8 @@ export const asyncRouterMap = [
         name: 'Online',
         meta: {
           title: 'online',
-          roles: ['admin']
+          roles: ['admin'],
+          noCache: true
         }
       }
     ]
@@ -270,7 +273,8 @@ export const asyncRouterMap = [
         name: 'P2PRate',
         meta: {
           title: 'p2pTraffic',
-          roles: ['user']
+          roles: ['user'],
+          noCache: true
         }
       },
       {
@@ -279,7 +283,8 @@ export const asyncRouterMap = [
         name: 'Online',
         meta: {
           title: 'onlineNum',
-          roles: ['user']
+          roles: ['user'],
+          noCache: true
         }
       }
     ]

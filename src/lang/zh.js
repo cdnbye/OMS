@@ -149,11 +149,6 @@ export default {
     documentation: '使用文档',
     github: 'Github 地址'
   },
-  errorLog: {
-    tips: '请点击右上角bug小图标',
-    description: '现在的管理后台基本都是spa的形式了，它增强了用户体验，但同时也会增加页面出问题的可能性，可能一个小小的疏忽就导致整个页面的死锁。好在 Vue 官网提供了一个方法来捕获处理异常，你可以在其中进行错误处理或者异常上报。',
-    documentation: '文档介绍'
-  },
   tagsView: {
     refresh: '刷新',
     close: '关闭',
@@ -201,7 +196,7 @@ export default {
     noBuyTip: '请先选择你要购买的流量包',
     payMethod: '付款方式',
     packageSubTitle: '流量包说明：',
-    packageSub: '每个用户所能消耗的P2P流量有额度限制，不同额度的流量包用于提高对应的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。',
+    packageSub: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。',
 
     packageInfo: '套餐信息',
     unitPrice: '单价',
