@@ -56,6 +56,7 @@ export const constantRouterMap = [
 //       meta: {
 //         title: 'liveData',
 //         roles: ['admin'],
+//         noCache: true,       是否缓存
 //       }
 //     }
 //   ]
