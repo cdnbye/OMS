@@ -114,7 +114,7 @@ export default {
       if(row.type === 'flow_packet_cn' || row.type === 'flow_packet_en'){
         type = this.$t('order.flowPackage')
       } else {
-        type = this.language === 'en' ? row.details[0].type : row.details[0].subject
+        type = this.language === 'en' ? row.details[0].subject : row.details[0].subject
       }
       return type
     },

@@ -93,6 +93,7 @@ export default {
     serveNum: 'Served Viewers Today',
     maxOnlineNum: 'Peak Concurrent Viewers',
     remain: 'Remaining Purchased Traffic',
+    monthlyRemain: 'Today Remaining Purchased Traffic',
     free: 'Remaining Free Traffic',
     versionDis: 'Version Distribution',
     tagDis: 'Tag Distribution',
@@ -210,7 +211,11 @@ export default {
     payFail: 'Failed to pay!',
     systemError: 'Sorry, the system is maintaining',
     payLoadingTip: 'Jumping to payment page...',
-    checkResultLoadingTip: 'Checking payment status...'
+    checkResultLoadingTip: 'Checking payment status...',
+
+    buyFlow: 'Buy traffic package',
+    buyMonthly: 'Buy monthly/annual package',
+    monthly: 'Valid Until '
   },
   order: {
     createTime: 'Date',

@@ -30,7 +30,7 @@
                   <span class="shop-card-tips" :style="item.original_price - item.price > 0 ? {display: 'inline-block'} : {display: 'none'}">
                     立减 ￥ {{ (item.original_price - item.price).toFixed(2) }}
                   </span>
-                  <span class="shop-card-txt">有效期一个月</span>
+                  <span class="shop-card-txt">{{ item.type.indexOf('month') > -1 ? '一个月有效' : '一年有效' }}</span>
                 </div>
                 <div class="item-price">
                   <span class="price">
@@ -52,7 +52,7 @@
                   <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
                     {{((item.original_price - item.price)/item.original_price * 100).toFixed(1)}}% off
                   </span>
-                  <span class="shop-card-txt">Valid for one month</span>
+                  <span class="shop-card-txt">{{ item.type.indexOf('month') > -1 ? 'Valid for one month' : 'Valid for one year' }}</span>
                 </div>
                 <div class="item-price">
                   <span class="price">

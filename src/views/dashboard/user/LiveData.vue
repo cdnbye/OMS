@@ -49,7 +49,7 @@
             <PointTip :content="$t('dashboard.freeTip')" />
           </div>
           <div class="card-panel-description">
-            <span class="card-panel-num">{{ statis.flow.free.num }}</span>
+            <span class="card-panel-num">{{ statis.whiteList ? '+∞' : statis.flow.free.num }}</span>
             <div class="card-panel-text">{{ $t('dashboard.free') }} ({{ statis.flow.free.unit }})</div>
           </div>
         </div>
@@ -61,8 +61,10 @@
             <PointTip :content="$t('dashboard.remainTip')" />
           </div>
           <div class="card-panel-description">
-            <span class="card-panel-num" :style="statis.flow.remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).num }}</span>
-            <div class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})</div>
+            <span class="card-panel-num" :style="statis.flow.remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).num>=999?'+∞':formatTraffic(statis.flow.remain).num }}</span>
+
+            <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ formatType() }} {{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})</div>
+            <div v-if="statis.type.product_type > 0" class="card-panel-text">{{ formatType() }} {{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.remain).unit }})</div>
           </div>
         </div>
       </el-col>
@@ -93,6 +95,7 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 import { fetchGlobalData, fetchNum, fetchDisData } from '@/api/user/liveData'
 import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
@@ -106,6 +109,15 @@ import PointTip from '@/components/PointTip'
 import Dis from './Distribution'
 
 let int = undefined
+const types = {
+  0: 'flow_package',
+  1: 'monthly_10TB',
+  2: 'monthly_20TB',
+  3: 'monthly_unlimited',
+  4: 'annual_10TB',
+  5: 'annual_20TB',
+  6: 'unlimited',
+}
 
 export default {
   name: 'LiveData',
@@ -122,6 +134,11 @@ export default {
       remainTrafficFlag: true,
 
       statis: {
+        whiteList: false,
+        type: {
+          product_type: 0,
+          time: ''
+        },
         online: 0,
         traffic_p2p: {
           num: 0,
@@ -168,6 +185,14 @@ export default {
   methods: {
     formatTraffic,
 
+    formatType() {
+      if(this.statis.type.product_type === 0) {
+        return ''
+      } else {
+        const time = this.statis.type.time ? moment(this.statis.type.time).format('YYYY-MM-DD') : ''
+        return this.$t('package.monthly') + time
+      }
+    },
     getData(uid, id, hostId) {
       fetchGlobalData(uid, id, hostId)
         .then(res => {
@@ -179,18 +204,25 @@ export default {
           this.statis.flow.remain = data.flow.remain
           this.statis.flow.free = formatTraffic(data.flow.free)
 
+          this.statis.whiteList = data.whiteList
+          this.statis.type.product_type = data.flow.product_type
+          this.statis.type.time = data.flow.duetime
+          
           // 如果剩余流量为0，则提醒用户购买
           if(data.flow.free === 0 && data.flow.remain === 0) {
             if(this.remainTrafficFlag) {
               this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
-                confirmButtonText: this.$t('common.ok'),
-                cancelButtonText: this.$t('common.cancel')
+                distinguishCancelAndClose: true,
+                confirmButtonText: this.$t('package.buyFlow'),
+                cancelButtonText: this.$t('package.buyMonthly')
               })
                 .then(() => {
-                  this.goBuy()
+                  this.$router.push('/user/package')
                 })
-                .catch(() => {
-                  return
+                .catch(action => {
+                   action === 'cancel'
+                   ? this.$router.push('/user/monthly_package')
+                   : console.log('-') 
                 })
               this.remainTrafficFlag = false
             }
@@ -375,9 +407,6 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-    },
-    goBuy() {
-      this.$router.push('/user/package')
     }
   }
 }
