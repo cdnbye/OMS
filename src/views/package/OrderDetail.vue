@@ -52,18 +52,25 @@ export default {
   },
   mounted() {
     if(this.$route.query.payMethod) {
-      this.tableData = [...JSON.parse(this.$route.query.buyData)]
-      this.tableData.forEach(item => {
-        item.total = (item.amount * item.price).toFixed(2)
-      })
-      this.payMethod = this.$route.query.payMethod
-      this.totalPrice = this.$route.query.totalPrice
-      this.orderID = this.$route.query.orderID
+      this.formatData()
     } else {
       this.$router.push('/user/package')
     }
   },
   methods: {
+    formatData() {
+      this.tableData = [...JSON.parse(this.$route.query.buyData)]
+      console.log(this.tableData)
+      this.tableData.forEach(item => {
+        item.total = item.amount ? (item.amount * item.price).toFixed(2) : item.price.toFixed(2)
+        if(!item.amount) {
+          item.amount = 1
+        }
+      })
+      this.payMethod = this.$route.query.payMethod
+      this.totalPrice = this.$route.query.totalPrice
+      this.orderID = this.$route.query.orderID
+    },
     payClick() {
       this.handleFetchPayUrl()
     },

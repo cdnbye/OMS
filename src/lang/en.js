@@ -29,6 +29,7 @@ export default {
     domainInfo: 'Domain Info',
     domainList: 'Domain List',
     package: 'Traffic Package',
+    monthlyPackage: 'Monthly/Annual Package',
     order: 'Order History',
     p2pConfig: 'P2P Config',
     edit: 'edit'
@@ -197,6 +198,7 @@ export default {
     payMethod: 'Payment method',
     packageSubTitle: 'Notice: ',
     packageSub: 'Each user can consume a certain amount of P2P traffic. You can increase quota of traffic by buying the listed traffic packages below.  It takes effect immediately after purchase. Refunds are not supported. Contact service@cdnbye.com if you have problems.',
+    monthlyPackageSub: 'The annual and monthly packages can provide the corresponding amount of traffic per day. It is valid for one month or one year. It takes effect immediately after purchase. Refunds are not supported. Contact service@cdnbye.com if you have problems.',
 
     packageInfo: 'Package info',
     unitPrice: 'Unit price',

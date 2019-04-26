@@ -336,7 +336,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: '/user/package',
-        component: () => import('@/views/package'),
+        component: () => import('@/views/package/package'),
         name: 'Package',
         meta: { 
           title: 'package',
@@ -347,6 +347,30 @@ export const asyncRouterMap = [
       }
     ]
   },
+    // user router 包年包月套餐列表
+    {
+      path: '/user',
+      component: Layout,
+      redirect: '/user/monthly_package',
+      meta: {
+        title: 'monthlyPackage',
+        icon: 'shoppingCard',
+        roles: ['user']
+      },
+      children: [
+        {
+          path: '/user/monthly_package',
+          component: () => import('@/views/package/monthlyPackage'),
+          name: 'MonthlyPackage',
+          meta: { 
+            title: 'monthlyPackage',
+            icon: 'shoppingCard', 
+            roles: ['user'],
+            noCache: true
+          }
+        }
+      ]
+    },
   // user router 订单详情
   {
     path: '/user',

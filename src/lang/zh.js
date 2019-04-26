@@ -29,6 +29,7 @@ export default {
     domainInfo: '域名信息',
     domainList: '域名列表',
     package: '购买流量包',
+    monthlyPackage: '包年包月套餐',
     order: '历史订单',
     p2pConfig: 'P2P配置',
     edit: '编辑信息'
@@ -197,6 +198,7 @@ export default {
     payMethod: '付款方式',
     packageSubTitle: '流量包说明：',
     packageSub: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。',
+    monthlyPackageSub: '包年包月套餐可提供每天对应额度的流量，有效期分为一个月或一年。不支持退款。支付遇到问题请联系 service@cdnbye.com。',
 
     packageInfo: '套餐信息',
     unitPrice: '单价',

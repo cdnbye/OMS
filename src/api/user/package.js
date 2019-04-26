@@ -1,9 +1,17 @@
 import request from '@/utils/request'
 
-// 获取订单信息
+// 获取套餐信息
 export function fetchPackage() {
   return request({
     url: `goods/flow_packet`,
+    method: 'get'
+  })
+}
+
+// 获取包年包月套餐信息
+export function fetchMonthlyPackage() {
+  return request({
+    url: `goods/monthly_packet`,
     method: 'get'
   })
 }

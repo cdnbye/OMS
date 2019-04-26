@@ -5,15 +5,17 @@
       <template slot-scope="props">
         <el-form label-position="left" inline class="table-expand">
           <template v-for="item in props.row.details">
-          <el-form-item :label="$t('order.packageName')" :key="item.order_id">
-            <span>{{ item.subject }}</span>
-          </el-form-item>
-          <el-form-item :label="$t('order.amount')" :key="item.order_id">
-            <span>{{ item.amount }}</span>
-          </el-form-item>
-          <el-form-item :label="$t('order.totalTraffic')" :key="item.order_id">
-            <span>{{ item.traffic*item.amount }} TB</span>
-          </el-form-item>
+            <template v-if="item.amount">
+              <el-form-item :label="$t('order.packageName')" :key="item.order_id">
+                <span>{{ item.subject }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('order.amount')" :key="item.order_id">
+                <span>{{ item.amount }}</span>
+              </el-form-item>
+              <el-form-item :label="$t('order.totalTraffic')" :key="item.order_id">
+                <span>{{ item.traffic*item.amount }} TB</span>
+              </el-form-item>
+            </template>
           </template>
         </el-form>
       </template>
@@ -78,7 +80,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'device'
+      'device',
+      'language'
     ])
   },
   mounted() {
@@ -107,7 +110,13 @@ export default {
         })
     },
     formatterType(row) {
-      return (row.type === 'flow_packet_cn' || row.type === 'flow_packet_en') ? this.$t('order.flowPackage') : ''
+      let type = ''
+      if(row.type === 'flow_packet_cn' || row.type === 'flow_packet_en'){
+        type = this.$t('order.flowPackage')
+      } else {
+        type = this.language === 'en' ? row.details[0].type : row.details[0].subject
+      }
+      return type
     },
     formatterPayMethod(row) {
       return (row.payment === 'alipay') ? this.$t('order.alipay') : row.payment

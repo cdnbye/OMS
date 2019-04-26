@@ -27,13 +27,13 @@
         <el-button type="primary" @click="noSelectVisible = false">{{ $t('common.ok') }}</el-button>
       </span>
     </el-dialog>
-
+    <!-- 套餐顶部说明 -->
     <el-alert style="margin-bottom: 20px" type="info" show-icon :title="$t('package.packageSubTitle')" :description="$t('package.packageSub')" />
 
     <template v-for="(item, index) in packages">
       <el-row :key="item.subject" :style="index==(packages.length-1)?{'margin-bottom':'20px','visibility':'hidden'}:{'margin-bottom':'20px'}">
         <el-col :span="24">
-          <el-card shadow="never" :body-style="device==='mobile'?'padding: 20px 8px':''">
+          <el-card shadow="never" :body-style="device==='mobile'?'padding: 20px 10px':''">
             <template v-if="paySelect === 'alipay'">
               <div class="container">
                 <div class="item-desc">
@@ -81,7 +81,9 @@
         </el-col>
       </el-row>
     </template>
-    <el-card :body-style="{'text-align': 'left', 'position': 'fixed', 'bottom': 0, 'width': '100%', 'z-index': 99, 'background-color': '#fff'}">
+
+
+    <div class="create-order">
       <div v-if="paySelect === 'alipay'">
         <div class="buy">
           <div class="tip">
@@ -104,7 +106,7 @@
         </div>
         <el-button type="warning" @click="handleBuyClick">Create Order</el-button>
       </div>
-    </el-card>
+    </div>
   </div>
 </template>
 
@@ -237,12 +239,10 @@ export default {
     }
   }
   .container {
-    display: -webkit-flex; /* Safari */
-    display: flex;
-    justify-content: space-between;
     .item-desc {
+      display: inline-block;
+      width: 33.3%;
       text-align: left;
-      flex-grow: 2;
       .shop-card-em {
         font-size: 24px;
         color: #333;
@@ -266,7 +266,9 @@ export default {
       }
     }
     .item-price {
-      flex-grow: 1;
+      display: inline-block;
+      text-align: right;
+      width: 33.3%;
       .price {
         span {
           vertical-align: top;
@@ -286,6 +288,11 @@ export default {
           display: inline-block;
         }
       }
+    }
+    .count {
+      display: inline-block;
+      width: 33.3%;
+      text-align: right;
     }
   }
   .tip {
@@ -308,5 +315,16 @@ export default {
   }
   .buy {
     margin-bottom: 12px;
+  }
+  .create-order {
+    text-align: left;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 99;
+    background-color: rgb(255, 255, 255);
+    padding: 24px 30px;
+    -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   }
 </style>
