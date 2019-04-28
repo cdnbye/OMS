@@ -1,8 +1,8 @@
 <template>
 <div class="app-container">
-  <el-row type="flex" justify="space-between">
-    <el-col :span="device==='mobile'?24:6">
-      <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
+  <el-row :gutter="20" style="margin-bottom: 20px">
+    <el-col :xs="24" :sm="12" :lg="6">
+      <el-select v-model="selectValue" @change="selectChange" class="filter-item">
         <el-option
           v-for="item in selectOptions"
           :key="item.value"
@@ -12,10 +12,16 @@
         </el-option>
       </el-select>
     </el-col>
-    <el-col :span="device==='mobile'?24:6">
+    <el-col :xs="8" :sm="12" :lg="4">
       <el-checkbox v-model="showValid" @change="showValidChange">显示已绑定</el-checkbox>
     </el-col>
-    <el-col :span="device==='mobile'?24:6">
+    <el-col :xs="8" :sm="12" :lg="4">
+      <el-checkbox v-model="showWhite" @change="showWhitelistChange" :disabled="filters[1].value">显示白名单</el-checkbox>
+    </el-col>
+    <el-col :xs="8" :sm="12" :lg="4">
+      <el-checkbox v-model="showBlack" @change="showBlacklistChange" :disabled="filters[2].value">显示黑名单</el-checkbox>
+    </el-col>
+    <el-col :xs="24" :sm="12" :lg="6">
       <el-input 
         class="filter-item" 
         prefix-icon="el-icon-search"
@@ -42,9 +48,9 @@
       </template>
     </el-table-column>
     <!-- <el-table-column align="center" prop="agent" label="代理商" column-key="agent" :filter-multiple="false" :filters="[{ text: 'btjson', value: 'btjson' }]"></el-table-column> -->
+
     <el-table-column align="center" label="黑名单">
       <template slot-scope="scope">
-
         <el-popover
           trigger="manual"
           placement="top"
@@ -60,6 +66,25 @@
         </el-popover>
       </template>
     </el-table-column>
+
+    <el-table-column align="center" label="白名单">
+      <template slot-scope="scope">
+        <el-popover
+          trigger="manual"
+          placement="top"
+          width="160"
+          :ref="'popover-' + scope.row.host"
+          >
+          <p>{{ scope.row.whitelist ? '确认从白名单中移除吗？' : '确定加入白名单吗？' }}</p>
+          <div style="text-align: right; margin: 0">
+            <el-button type="text" size="mini" @click="pClose(scope.row.host)">{{ $t('common.cancel') }}</el-button>
+            <el-button type="primary" size="mini" @click="whiteListChange(scope.row)">{{ $t('common.ok') }}</el-button>
+          </div>
+          <el-switch slot="reference" :value="scope.row.whitelist" active-color="green" @change="pShow(scope.row.host)"></el-switch>
+        </el-popover>
+      </template>
+    </el-table-column>
+
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
         <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">详情</el-button>
@@ -82,7 +107,7 @@
 </template>
 
   <script>
-  import { fetchDomain, blockDomain, searchHost } from '@/api/userDomain'
+  import { fetchDomain, blockDomain, whiteDomain, searchHost } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
   import { getID } from '@/utils/auth'
 
@@ -91,6 +116,8 @@
       return {
         loading: false,
         showValid: true,
+        showWhite: false,
+        showBlack: false,
         tableData: [],
         tableParam: {
           page: 1,
@@ -101,6 +128,14 @@
           {
             name: 'isvalid',
             value: true
+          },
+          {
+            name: 'blocked',
+            value: false
+          },
+          {
+            name: 'whitelist',
+            value: false
           },
           {
             name: 'agent'
@@ -153,6 +188,14 @@
         window.open(`https://${value}`)
       },
       handleSwitchChange(domain) {
+        if(domain.whitelist && !domain.blocked) {
+          this.pClose(domain.host_id)
+          this.$message({
+            message: '不能同时添加到白名单和黑名单',
+            type: 'error'
+          })
+          return
+        }
         const data = {
           domain: domain.host,
           blocked: !domain.blocked
@@ -173,7 +216,37 @@
           })
           .catch(err => {
             this.loading = false
-            console.log(err)
+          })
+      },
+      whiteListChange(domain) {
+        if(!domain.whitelist && domain.blocked) {
+          this.pClose(domain.host)
+          this.$message({
+            message: '不能同时添加到白名单和黑名单',
+            type: 'error'
+          })
+          return
+        }
+        const data = {
+          domain: domain.host,
+          whitelist: !domain.whitelist
+        }
+        this.loading = true
+        whiteDomain(data)
+          .then(res => {
+            this.pClose(domain.host)
+            this.tableData.forEach(item => {
+              if(item.host_id === domain.host_id)
+                item.whitelist = !item.whitelist
+            })
+            this.$message({
+              message: domain.whitelist ? '成功添加至白名单' : '已从白名单中移除',
+              type: 'success'
+            })
+            this.loading = false
+          })
+          .catch(err => {
+            this.loading = false
           })
       },
       tableFilter(filter) {
@@ -193,6 +266,20 @@
       showValidChange(value) {
         this.filters.forEach(item => {
           if(item.name === 'isvalid')
+            item.value = value
+        })
+        this.fetchTableData()
+      },
+      showWhitelistChange(value) {
+        this.filters.forEach(item => {
+          if(item.name === 'whitelist')
+            item.value = value
+        })
+        this.fetchTableData()
+      },
+      showBlacklistChange(value) {
+        this.filters.forEach(item => {
+          if(item.name === 'blocked')
             item.value = value
         })
         this.fetchTableData()
@@ -225,7 +312,6 @@
         }).catch(err => {
           this.tableData = []
           this.loading = false
-          console.log(err)
         })
       },
       handleSizeChange(pageSize) {
@@ -262,7 +348,6 @@
             hostId: val.host_id,
           }
         })
-        console.log(val)
       }
     }
   }

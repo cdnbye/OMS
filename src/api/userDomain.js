@@ -31,6 +31,15 @@ export function blockDomain(data) {
   })
 }
 
+// 将域名加入或从白名单移除
+export function whiteDomain(data) {
+  return request({
+    url: `/host/whitelist`,
+    method: 'post',
+    data
+  })
+}
+
 // 查找域名
 export function searchHost(host) {
   return request({

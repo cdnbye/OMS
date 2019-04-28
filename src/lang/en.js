@@ -93,7 +93,7 @@ export default {
     serveNum: 'Served Viewers Today',
     maxOnlineNum: 'Peak Concurrent Viewers',
     remain: 'Remaining Purchased Traffic',
-    monthlyRemain: 'Today Remaining Purchased Traffic',
+    monthlyRemain: 'Remaining Traffic Today',
     free: 'Remaining Free Traffic',
     versionDis: 'Version Distribution',
     tagDis: 'Tag Distribution',

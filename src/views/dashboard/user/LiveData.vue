@@ -190,7 +190,7 @@ export default {
         return ''
       } else {
         const time = this.statis.type.time ? moment(this.statis.type.time).format('YYYY-MM-DD') : ''
-        return this.$t('package.monthly') + time
+        return this.$t('package.monthly') + `(${time})`
       }
     },
     getData(uid, id, hostId) {
@@ -210,7 +210,7 @@ export default {
           
           // 如果剩余流量为0，则提醒用户购买
           if(data.flow.free === 0 && data.flow.remain === 0) {
-            if(this.remainTrafficFlag) {
+            if(this.remainTrafficFlag && getQueryObj().payment === undefined) {
               this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
                 distinguishCancelAndClose: true,
                 confirmButtonText: this.$t('package.buyFlow'),
