@@ -63,7 +63,7 @@
                   <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
                     {{((item.original_price - item.price)/item.original_price * 100).toFixed(1)}}% off
                   </span>
-                  <span class="shop-card-txt">Permanently</span>
+                  <span class="shop-card-txt"></span>
                 </div>
                 <div class="item-price">
                   <span class="price">

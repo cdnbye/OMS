@@ -93,7 +93,7 @@ export default {
     serveNum: '今日服务人数',
     maxOnlineNum: '最高在线人数',
     remain: '剩余流量包流量',
-    monthlyRemain: '今日剩余流量包流量',
+    monthlyRemain: '今日剩余流量',
     free: '剩余免费流量',
     versionDis: '版本分布',
     tagDis: 'Tag分布',
@@ -215,7 +215,7 @@ export default {
 
     buyFlow: '购买流量包',
     buyMonthly: '购买包年包月服务',
-    monthly: '包年包月至 '
+    monthly: '有效期至 '
   },
   order: {
     createTime: '创建时间',
