@@ -214,7 +214,7 @@ export default {
           
           // 如果剩余流量为0，则提醒用户购买
           if(data.flow.free === 0 && data.flow.remain === 0) {
-            if(this.remainTrafficFlag && getQueryObj().payment === undefined) {
+            if(this.remainTrafficFlag && getQueryObj().payment === undefined && !data.whitelist) {
               this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
                 distinguishCancelAndClose: true,
                 confirmButtonText: this.$t('package.buyFlow'),
