@@ -204,7 +204,7 @@ export default {
           this.statis.flow.remain = data.flow.remain
           this.statis.flow.free = formatTraffic(data.flow.free)
 
-          this.statis.whiteList = data.whiteList
+          this.statis.whiteList = data.whitelist
           this.statis.type.product_type = data.flow.product_type
           this.statis.type.time = data.flow.duetime
           
