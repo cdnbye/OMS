@@ -63,8 +63,12 @@
           <div class="card-panel-description">
             <span class="card-panel-num" :style="statis.flow.remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).num>=999?'+∞':formatTraffic(statis.flow.remain).num }}</span>
 
-            <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }}){{ formatType() }} </div>
-            <div v-if="statis.type.product_type > 0" class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.remain).unit }}){{ formatType() }} </div>
+            <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})
+              <div>{{ formatType() }}</div>
+            </div>
+            <div v-if="statis.type.product_type > 0" class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.remain).unit }})
+              <div>{{ formatType() }}</div>
+            </div>
           </div>
         </div>
       </el-col>
