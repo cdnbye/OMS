@@ -101,7 +101,7 @@ export default {
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
     p2pTip: '采用北京时间计时。<br/>如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置。',
-    freeTip: '绑定后的域名每日赠送10GB流量，签到后再额外赠送40GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用流量包抵扣。<br/>如果可用流量为零，则停止P2P服务。',
+    freeTip: '绑定后的域名每日赠送10GB流量，签到后再额外赠送40GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用付费流量抵扣。<br/>如果可用流量为零，则停止P2P服务。',
     remainTip: '请及时购买<a style="color: #337ab7" href="#/user/package">流量包</a>或者<a style="color: #337ab7" href="#/user/monthly_package">包年包月套餐</a>，以避免服务中断。',
     checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
