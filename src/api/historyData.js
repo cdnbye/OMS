@@ -9,7 +9,7 @@ export function fetchNum(start, end) {
 
 export function fetchP2PTraffic(start, end) {
   return request({
-    url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=5`,
+    url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=1440`,
     method: 'get'
   })
 }
@@ -23,7 +23,7 @@ export function fetchP2PBandwidth(year, month) {
 
 export function fetchHttpTraffic(start, end) {
   return request({
-    url: `global/http?start_ts=${start}&end_ts=${end}&gran=5`,
+    url: `global/http?start_ts=${start}&end_ts=${end}&gran=1440`,
     method: 'get'
   })
 }

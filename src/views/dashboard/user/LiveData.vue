@@ -12,6 +12,9 @@
     <el-row :gutter="20" class="panel-group">
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.onlinesTip')" />
+          </div>
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.online | positive }}</span>
             <div class="card-panel-text">{{ $t('dashboard.online') }}</div>
@@ -61,12 +64,12 @@
             <PointTip :content="$t('dashboard.remainTip')" />
           </div>
           <div class="card-panel-description">
-            <span class="card-panel-num" :style="statis.flow.remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=999?'+∞':formatTraffic(statis.flow.remain).num }}</span>
+            <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.totalRemain).unit==='TB' && formatTraffic(statis.flow.totalRemain).num>=999?'+∞':formatTraffic(statis.flow.totalRemain).num }}</span>
 
-            <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})
+            <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.totalRemain).unit }})
               <div>{{ formatType() }}</div>
             </div>
-            <div v-if="statis.type.product_type > 0" class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.remain).unit }})
+            <div v-if="statis.type.product_type > 0" class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.totalRemain).unit }})
               <div>{{ formatType() }}</div>
             </div>
           </div>
@@ -75,6 +78,9 @@
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.viewsTip')" />
+          </div>
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.frequency_day }}</span>
             <div class="card-panel-text">{{ $t('dashboard.serveNum') }}</div>
@@ -152,6 +158,8 @@ export default {
         num_max: 0,
         flow: {
           remain: 0,
+          daily_remain: 0,
+          totalRemain: 0,
           free: {
             num: 0,
             unit: 'KB'
@@ -206,6 +214,8 @@ export default {
           this.statis.frequency_day = data.api_frequency_day
           this.statis.num_max = data.num_max
           this.statis.flow.remain = data.flow.remain
+          this.statis.flow.daily_remain = data.flow.daily_remain
+          this.statis.flow.totalRemain = data.flow.daily_remain + data.flow.remain
           this.statis.flow.free = formatTraffic(data.flow.free)
 
           this.statis.whiteList = data.whitelist
@@ -213,7 +223,7 @@ export default {
           this.statis.type.time = data.flow.duetime
           
           // 如果剩余流量为0，则提醒用户购买
-          if(data.flow.free === 0 && data.flow.remain === 0) {
+          if(data.flow.free === 0 && data.flow.remain === 0 && data.flow.daily_remain === 0) {
             if(this.remainTrafficFlag && getQueryObj().payment === undefined && !data.whitelist) {
               this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
                 distinguishCancelAndClose: true,

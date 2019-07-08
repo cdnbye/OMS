@@ -3,8 +3,8 @@
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
-          <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
-          <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
+          <!--<el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>-->
+          <!--<el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>-->
           <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
           <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
         </el-radio-group>
@@ -27,8 +27,12 @@
 <script>
 import moment from 'moment'
 import LineChart from '@/components/LineChart'
-import { formatBandwidth, getBandwidthNum } from '@/utils/format'
+import { formatTraffic } from '@/utils/format'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
+
+/*
+ 已改成显示流量
+ */
 
 export default {
   name: 'Bandwidth',
@@ -41,8 +45,8 @@ export default {
       //   expectedData: [100, 120, 161, 134, 105, 160, 165],
       //   actualData: [120, 82, 91, 154, 162, 140, 145]
       // },
-      date: [moment().subtract(1, 'hour'), moment()],
-      radio: 'hour',
+      date: [moment().subtract(1, 'week'), moment()],
+      radio: 'week',
       bandwidthData: {
         p2p: [],
         http: []
@@ -50,7 +54,7 @@ export default {
       option: {
         xData: [],
         unit: '',
-        yName: '带宽'
+        yName: '流量'
       }
     }
   },
@@ -90,29 +94,31 @@ export default {
     formatData(res) {
       const data = res.data.list
       const trafficValue = [...res.data.list]
-      trafficValue.sort(function(a, b) {
-        return b.alue - a.vavlue > 0
-      })
-      this.option.unit = this.option.unit ? this.option.unit : formatBandwidth(trafficValue[(trafficValue.length - 1)].value).unit
+      // trafficValue.sort(function(a, b) {
+      //   return b.value - a.value > 0
+      // })
+      this.option.unit = this.option.unit ? this.option.unit : formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []
       this.bandwidthData.p2p = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.bandwidthData.p2p.push(getBandwidthNum((item.value * 8 / 300), this.option.unit))
+        const traffic = formatTraffic(item.value)
+        this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
+        this.bandwidthData.p2p.push(traffic.num)
       })
     },
     formatHttpData(res) {
       const data = res.data.list
       const trafficValue = [...res.data.list]
-      trafficValue.sort(function(a, b) {
-        return b.alue - a.vavlue > 0
-      })
-      this.option.unit = this.option.unit ? this.option.unit : formatBandwidth(trafficValue[(trafficValue.length - 1)].value).unit
+      // trafficValue.sort(function(a, b) {
+      //   return b.value - a.value > 0
+      // })
+      this.option.unit = this.option.unit ? this.option.unit : formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []
       this.bandwidthData.http = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-        this.bandwidthData.http.push(getBandwidthNum((item.value * 8 / 300), this.option.unit))
+        const traffic = formatTraffic(item.value)
+        this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
+        this.bandwidthData.http.push(traffic.num)
       })
     },
     getTimeStamp(date) {

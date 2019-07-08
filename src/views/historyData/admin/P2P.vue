@@ -3,8 +3,8 @@
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
-          <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
-          <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
+          <!--<el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>-->
+          <!--<el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>-->
           <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
           <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
         </el-radio-group>
@@ -39,8 +39,8 @@ export default {
       lineChartData: {
         P2P分享率: []
       },
-      date: [moment().subtract(1, 'hour'), moment()],
-      radio: 'hour',
+      date: [moment().subtract(1, 'week'), moment()],
+      radio: 'week',
       httpData: [],
       p2pData: [],
       option: {
@@ -74,7 +74,7 @@ export default {
     formatData() {
       if(this.httpData.length > 0 && this.p2pData.length > 0) {
         this.p2pData.forEach((item, index) => {
-          this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
+          this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
           const value = (item.value / (item.value + this.httpData[index].value) * 100).toFixed(2)
           if(item.value + this.httpData[index].value === 0) {
             this.lineChartData.P2P分享率.push(0)

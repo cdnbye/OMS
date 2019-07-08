@@ -42,6 +42,7 @@
     </el-table-column>
     <el-table-column align="center" prop="num" label="人数"></el-table-column>
     <el-table-column align="center" prop="max_num" label="最大人数"></el-table-column>
+    <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
     <el-table-column align="center" label="是否绑定">
       <template slot-scope="scope">
         <span>{{ scope.row.isvalid ? '已绑定' : '未绑定' }}</span>
