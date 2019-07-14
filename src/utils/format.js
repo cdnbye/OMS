@@ -81,6 +81,29 @@ export function formatTraffic(val) {
   return value
 }
 
+export function getTrafficNum(val, unit) {
+    let value = 0
+    const mb = 1024
+    const gb = 1024 * 1024
+    const tb = 1024 * 1024 * 1024
+    switch (unit) {
+        case 'TB':
+            value =  (val / tb).toFixed(2)
+            break;
+        case 'GB':
+            value = (val / gb).toFixed(2)
+            break;
+        case 'MB':
+            value = (val/mb).toFixed(2)
+            break;
+        default:
+            value = val.toFixed(2)
+            break;
+    }
+    return value
+
+}
+
 // 饼图不显示iOS的数据
 export function formatPieData(data) {
   const temp = data.filter(a => {

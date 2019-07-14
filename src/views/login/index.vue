@@ -50,12 +50,14 @@
 import { validateEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import { setSha256 } from '@/utils/format'
+import { trim } from '@/utils'
 
 export default {
   name: 'Login',
   components: { LangSelect },
   data() {
     const validateUsername = (rule, value, callback) => {
+      value = trim(value)
       if (!validateEmail(value)) {
         const error = this.$t('auth.usernameError')
         callback(new Error(error))
@@ -98,7 +100,7 @@ export default {
       const temp = {...data}
       delete temp.username
       temp.passwd = setSha256(data.passwd)
-      temp.email = data.username
+      temp.email = trim(data.username)
       return temp
     },
     showPwd() {

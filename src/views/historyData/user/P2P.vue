@@ -31,7 +31,7 @@ import NoBindTip from '@/components/NoBindTip'
 import LineChart from '@/components/LineChart'
 import { fetchP2PTraffic } from '@/api/user/historyData'
 import { mapGetters } from 'vuex'
-import { formatTraffic } from '@/utils/format'
+import { formatTraffic, getTrafficNum } from '@/utils/format'
 
 export default {
   name: 'Bandwidth',
@@ -44,7 +44,7 @@ export default {
       lineChartData: {
         P2P: []
       },
-      date: [moment().subtract(1, 'week'), moment()],
+      date: [moment().startOf('day').subtract(1, 'week'), moment().startOf('day')],
       radio: 'week',
       p2pData: [],
       option: {
@@ -73,13 +73,18 @@ export default {
       this.p2pData = []
       this.option.xData = []
       this.lineChartData.P2P = []
+
       fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end).then(res => {
+        const trafficValue = [...res.data.list]
+        trafficValue.sort(function(a, b) {
+            return b.value - a.value > 0
+        })
+        this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
         res.data.list.forEach((item, index) => {
           this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
-          const traffic = formatTraffic(item.value)
-          this.option.unit = traffic.unit
-          this.lineChartData.P2P.push(traffic.num)
+          this.lineChartData.P2P.push(getTrafficNum(item.value, this.option.unit))
         })
+
       })
     },
     selectChange(val) {
@@ -91,10 +96,10 @@ export default {
           this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
           break;
         case 'week':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'week')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'week')), this.getTimeStamp(moment().startOf('day')))
           break;
         case 'month':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'month')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'month')), this.getTimeStamp(moment().startOf('day')))
           break;
         default:
           break;

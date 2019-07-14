@@ -47,3 +47,8 @@ export function downloadFile(content, filename) {
   // 然后移除
   document.body.removeChild(eleLink)
 }
+
+//删除左右两端的空格
+export function trim(str){
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}

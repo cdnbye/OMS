@@ -27,7 +27,7 @@
 <script>
 import moment from 'moment'
 import LineChart from '@/components/LineChart'
-import { formatTraffic } from '@/utils/format'
+import { formatTraffic, getTrafficNum } from '@/utils/format'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
 /*
@@ -45,7 +45,7 @@ export default {
       //   expectedData: [100, 120, 161, 134, 105, 160, 165],
       //   actualData: [120, 82, 91, 154, 162, 140, 145]
       // },
-      date: [moment().subtract(1, 'week'), moment()],
+      date: [moment().startOf('day').subtract(1, 'week'), moment().startOf('day')],
       radio: 'week',
       bandwidthData: {
         p2p: [],
@@ -66,11 +66,11 @@ export default {
       this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
     },
     getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
-      fetchP2PTraffic(start, end).then(res => {
-        this.formatData(res)
-      })
       fetchHttpTraffic(start, end).then(res => {
         this.formatHttpData(res)
+        fetchP2PTraffic(start, end).then(res => {
+            this.formatData(res)
+        })
       })
     },
     selectChange(val) {
@@ -82,10 +82,10 @@ export default {
           this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
           break;
         case 'week':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'week')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'week')), this.getTimeStamp(moment().startOf('day')))
           break;
         case 'month':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'month')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'month')), this.getTimeStamp(moment().startOf('day')))
           break;
         default:
           break;
@@ -93,32 +93,25 @@ export default {
     },
     formatData(res) {
       const data = res.data.list
-      const trafficValue = [...res.data.list]
-      // trafficValue.sort(function(a, b) {
-      //   return b.value - a.value > 0
-      // })
-      this.option.unit = this.option.unit ? this.option.unit : formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []
       this.bandwidthData.p2p = []
       data.forEach(item => {
-        const traffic = formatTraffic(item.value)
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
-        this.bandwidthData.p2p.push(traffic.num)
+        this.bandwidthData.p2p.push(getTrafficNum(item.value, this.option.unit))
       })
     },
     formatHttpData(res) {
       const data = res.data.list
       const trafficValue = [...res.data.list]
-      // trafficValue.sort(function(a, b) {
-      //   return b.value - a.value > 0
-      // })
+      trafficValue.sort(function(a, b) {
+        return b.value - a.value > 0
+      })
       this.option.unit = this.option.unit ? this.option.unit : formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []
       this.bandwidthData.http = []
       data.forEach(item => {
-        const traffic = formatTraffic(item.value)
         this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
-        this.bandwidthData.http.push(traffic.num)
+        this.bandwidthData.http.push(getTrafficNum(item.value, this.option.unit))
       })
     },
     getTimeStamp(date) {

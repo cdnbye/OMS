@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       list: [
-        { url: 'signalcloud.cdnbye.com:9002', value: 0 },
+        { url: 'signalcloud.cdnbye.com', value: 0 },
         { url: 'signal.cdnbye.com', value: 0 },
         { url: 'signalhub.cdnbye.com', value: 0 },
         { url: 'opensignal.cdnbye.com', value: 0 },
