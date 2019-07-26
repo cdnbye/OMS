@@ -7,9 +7,10 @@ export function fetchNum(uid, domainID, start, end) {
   })
 }
 
-export function fetchP2PTraffic(uid, domainID, start, end) {
+export function fetchP2PTraffic(uid, domainID, start, end, gran) {
+  if (!gran) gran = 5
   return request({
-    url: `user/user_id/${uid}/domain/domain_id/${domainID}/p2p?start_ts=${start}&end_ts=${end}&gran=1440`,
+    url: `user/user_id/${uid}/domain/domain_id/${domainID}/p2p?start_ts=${start}&end_ts=${end}&gran=${gran}`,
     method: 'get'
   })
 }

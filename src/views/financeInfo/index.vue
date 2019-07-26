@@ -23,8 +23,26 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.total_bound_domain }}</span>
+            <div class="card-panel-text">绑定域名总数</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
             <span class="card-panel-num">{{ financeData.total_num_bound }}</span>
-            <div class="card-panel-text">绑定域名的用户数</div>
+            <div class="card-panel-text">绑定域名用户数</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.checkin_num }}</span>
+            <div class="card-panel-text">今日签到用户数</div>
           </div>
         </div>
       </el-col>
@@ -70,6 +88,15 @@
           <div class="card-panel-description">
             <span class="card-panel-num">{{ financeData.orders_usd_today }}</span>
             <div class="card-panel-text">今日美元订单数</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.income_rmb_month }}</span>
+            <div class="card-panel-text">近30天人民币收入</div>
           </div>
         </div>
       </el-col>
@@ -168,7 +195,8 @@ export default {
               income_rmb: res.data.income_rmb.toFixed(2),
               income_usd: res.data.income_usd.toFixed(2),
               income_rmb_today: res.data.income_rmb_today.toFixed(2),
-              income_usd_today: res.data.income_usd_today.toFixed(2)
+              income_usd_today: res.data.income_usd_today.toFixed(2),
+              income_rmb_month: res.data.income_rmb_month.toFixed(2),
             }
             this.loading = false
           }

@@ -86,7 +86,7 @@ export default {
   dashboard : {
     currentDomain: 'Current Domain: ',
     goBind: 'Go bind',
-    switchDomain: 'Switch Domain',
+    switchDomain: 'Switch Domain/AppID',
     tip: 'You have not bound a domain name, are you binding now?',
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
@@ -113,7 +113,7 @@ export default {
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
-    bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com',
+    bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com\nNotice: Verify the domain of the web site that host the player, or the domain of src while using iframe.',
     bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
     bindDomainTError: 'PLease input the correct domain!',
     domain: 'Domain',
@@ -124,7 +124,7 @@ export default {
     operation: 'Operation',
     verifyDomain: 'Verify domain',
     certification: 'Verify',
-    certificationTip: 'You need to verify your domain name of the added website. You can choose any of the following methods. Notice: Verify the domain of the web site that host the player, not the domain name of the m3u8 address.',
+    certificationTip: 'You need to verify your domain name of the added website. You can choose any of the following methods.',
     doneTip: 'Click the "Verify Now" button when you are done',
     verifyLater: 'Verify Later',
     verifyNow: 'Verify Now',

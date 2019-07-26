@@ -86,7 +86,7 @@ export default {
   dashboard: {
     currentDomain: '当前域名：',
     goBind: '去绑定',
-    switchDomain: '切换域名',
+    switchDomain: '切换域名/AppID',
     tip: '您还未绑定域名，是否现在绑定？',
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
@@ -113,7 +113,7 @@ export default {
   },
   domainTable: {
     bindDomain: '绑定域名',
-    bindDomainTip: '输入你的网站地址，例如：(IP地址无效)\nwww.example.com',
+    bindDomainTip: '输入你的网站域名(请勿输入IP地址)，例如：\nwww.example.com\n注意：域名是指播放器所在的域名（如果嵌入iframe则是src的域名），不是流地址(m3u8)的域名。',
     bindWarning: 'CDNBye不对色情等非法内容提供P2P服务，请确保您的网站符合法律规范。',
     bindDomainTError: '请输入正确的域名！',
     domain: '域名',
@@ -124,7 +124,7 @@ export default {
     operation: '操作',
     verifyDomain: '验证域名',
     certification: '认证',
-    certificationTip: '您需要对添加的网站进行域名所有权认证，可以选择以下任意一种方式进行验证。域名是指视频网站的域名，不是流地址(m3u8)的域名。',
+    certificationTip: '您需要对添加的网站进行域名所有权认证，可以选择以下任意一种方式进行验证。',
     doneTip: '完成操作后请点击"立即验证"按钮',
     verifyLater: '稍后验证',
     verifyNow: '立即验证',

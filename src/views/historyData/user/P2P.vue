@@ -3,8 +3,8 @@
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
-          <!--<el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>-->
-          <!--<el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>-->
+          <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
+          <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
           <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
           <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
         </el-radio-group>
@@ -58,7 +58,10 @@ export default {
     ...mapGetters([
       'userDomain',
       'currentDomain'
-    ])
+    ]),
+    displayDay() {
+        return this.radio === 'week' || this.radio === 'month'
+    }
   },
   mounted() {
     if(this.currentDomain.id) {
@@ -73,15 +76,22 @@ export default {
       this.p2pData = []
       this.option.xData = []
       this.lineChartData.P2P = []
-
-      fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end).then(res => {
+      let gran = 5    // 显示粒度5分钟
+      if (this.displayDay) {
+          gran = 1440     // 显示粒度一天
+      }
+      fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
         const trafficValue = [...res.data.list]
         trafficValue.sort(function(a, b) {
             return b.value - a.value > 0
         })
         this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
         res.data.list.forEach((item, index) => {
-          this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
+            if (this.displayDay) {
+                this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
+            } else {
+                this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
+            }
           this.lineChartData.P2P.push(getTrafficNum(item.value, this.option.unit))
         })
 

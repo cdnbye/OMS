@@ -6,8 +6,8 @@ export function isvalidUsername(str) {
 
 /* 合法uri*/
 export function validateURL(textval) {
-  //const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2,3}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
-  // const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|work|ml|wiki|ren|im|gq|net|org|biz|arpa|bg|info|club|idv|top|us|cz|vip|xyz|la|vc|co|se|ltd|wang|cc|in|mobi|fun|education|ooo|hk|ink|tk|news|live|art|online|xin|ws|kr|pw|tw|me|asia|space|website|win|video|gr|to|site|name|pro|aero|coop|museum|[a-zA-Z]{2,3}))(:[0-9]+)*$/
+  const ipPattern = /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/
+  if (ipPattern.test(textval)) return false
   const urlregex = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/
   return urlregex.test(textval)
 }
