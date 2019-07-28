@@ -1,15 +1,22 @@
 <template>
 <div class="app-container">
-  <el-row>
+  <el-alert
+    :title="$t('app.title')" 
+    :description="$t('app.desc')"
+    type="info"
+    show-icon>
+  </el-alert>
+  <el-row style="margin: 15px">
     <template v-if="hasToken">
       <el-col :xs="20" :sm="12" :lg="12">
-        <el-input v-model="inputToken" :disabled="true"></el-input>
+        <el-input v-model="inputToken" :disabled="true">
+              <template slot="prepend">Token: </template>
+        </el-input>
       </el-col>
       <el-col :xs="3" :sm="2" :lg="1">
         <el-tooltip placement="top">
           <div slot="content">{{ $t('app.copy') }}</div>
           <el-button icon="el-icon-tickets" @click="handleCopy"></el-button>
-          
         </el-tooltip>
       </el-col>
     </template>
@@ -92,7 +99,7 @@
       <el-form-item prop="app_id" label-width="100px" required>
         <template slot="label">
           <span>app id</span>
-          <PointTip :content="$t('app.appID')" />
+          <PointTip style="margin-left: 4px" :content="$t('app.appID')" />
         </template>
         <el-input v-model="form.app_id" :placeholder="$t('app.appID')"></el-input>
       </el-form-item>
@@ -248,8 +255,10 @@
           .then(res => {
             this.fetchData()
             this.$message.success(this.$t('app.deleteItemSuccess'))
+            this.pClose(item.id)
           })
           .catch(err => {
+            this.pClose(item.id)
             console.log(err)
           })
       },

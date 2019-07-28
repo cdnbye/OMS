@@ -267,6 +267,8 @@ export default {
     name: 'Name',
     platform: 'Platform',
     copy: 'Click to copy',
-    watch: 'Watch'
+    watch: 'Watch',
+    title: 'Title',
+    desc: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。'
   }
 }
