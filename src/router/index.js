@@ -119,6 +119,29 @@ export const asyncRouterMap = [
     ]
   },
 
+    //user router
+    {
+      path: '/app',
+      component: Layout,
+      redirect: 'user/app',
+      meta: {
+        title: 'appInfo',
+        icon: 'list',
+        roles: ['user']
+      },
+      children: [
+        {
+          path: 'app',
+          component: () => import('@/views/app'),
+          name: 'App',
+          meta: {
+            title: 'appInfo',
+            roles: ['user']
+          }
+        }
+      ]
+    },
+
   //user router
   {
     path: '/user',

@@ -32,7 +32,8 @@ export default {
     monthlyPackage: '包年包月套餐',
     order: '历史订单',
     p2pConfig: 'P2P配置',
-    edit: '编辑信息'
+    edit: '编辑信息',
+    appInfo: 'app',
   },
   navbar: {
     logOut: '退出登录',
@@ -248,5 +249,22 @@ export default {
     configFail: '只有付费用户才能开启/关闭P2P',
     desc: '如果您在同一个账号同时绑定了多个域名，则开启P2P的所有域名会共享流量包。您可以在这里关闭某个域名的P2P服务从而节省流量包消耗。',
     switchErr: '至少一个域名需要保持开启状态。'
+  },
+  app: {
+    createToken: '获取Token',
+    createTokenSuccess: '获取token成功',
+    createFormItem: '+ 创建应用',
+    createItemSuccess: '创建成功',
+    createTip: '每个用户最多创建20个应用',
+    appName: 'app名称',
+    appID: 'app Id',
+    platform: '平台',
+    sureCreateToken: '确定要获取token吗？',
+    sureDelete: '确定要删除吗？',
+    deleteItemSuccess: '删除成功',
+    createTime: '创建时间',
+    name: '名称',
+    platform: '平台',
+    copy: '点击复制'
   }
 }

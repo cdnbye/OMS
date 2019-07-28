@@ -32,7 +32,8 @@ export default {
     monthlyPackage: 'Monthly/Annual Package',
     order: 'Order History',
     p2pConfig: 'P2P Config',
-    edit: 'edit'
+    edit: 'edit',
+    appInfo: 'app'
   },
   navbar: {
     logOut: 'Log Out',
@@ -248,5 +249,22 @@ export default {
     configFail: 'Only paid users can turn P2P on / off',
     desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
     switchErr: 'At least one domain name needs to remain open.'
+  },
+  app: {
+    createToken: 'Create Token',
+    createTokenSuccess: 'Create token successfully',
+    createFormItem: '+ Create',
+    createItemSuccess: 'Create successfully',
+    createTip: 'Create up to 20 apps per user',
+    appName: 'App Name',
+    appID: 'App Id',
+    platform: 'Platform',
+    sureCreateToken: 'Sure to get token?',
+    sureDelete: 'Sure to delete?',
+    deleteItemSuccess: 'Delete successfully',
+    createTime: 'Create Time',
+    name: 'Name',
+    platform: 'Platform',
+    copy: 'Click to copy'
   }
 }
