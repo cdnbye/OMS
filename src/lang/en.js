@@ -33,7 +33,7 @@ export default {
     order: 'Order History',
     p2pConfig: 'P2P Config',
     edit: 'edit',
-    appInfo: 'app'
+    appInfo: 'App Management'
   },
   navbar: {
     logOut: 'Log Out',
@@ -255,6 +255,7 @@ export default {
     createTokenSuccess: 'Create token successfully',
     createFormItem: '+ Create',
     createItemSuccess: 'Create successfully',
+    createTitle: 'Input info',
     createTip: 'Create up to 20 apps per user',
     appName: 'App Name',
     appID: 'App Id',
@@ -265,6 +266,7 @@ export default {
     createTime: 'Create Time',
     name: 'Name',
     platform: 'Platform',
-    copy: 'Click to copy'
+    copy: 'Click to copy',
+    watch: 'Watch'
   }
 }

@@ -33,7 +33,7 @@ export default {
     order: '历史订单',
     p2pConfig: 'P2P配置',
     edit: '编辑信息',
-    appInfo: 'app',
+    appInfo: '应用管理',
   },
   navbar: {
     logOut: '退出登录',
@@ -255,6 +255,7 @@ export default {
     createTokenSuccess: '获取token成功',
     createFormItem: '+ 创建应用',
     createItemSuccess: '创建成功',
+    createTitle: '输入应用信息',
     createTip: '每个用户最多创建20个应用',
     appName: 'app名称',
     appID: 'app Id',
@@ -263,8 +264,9 @@ export default {
     sureDelete: '确定要删除吗？',
     deleteItemSuccess: '删除成功',
     createTime: '创建时间',
-    name: '名称',
+    name: '应用名称',
     platform: '平台',
-    copy: '点击复制'
+    copy: '点击复制',
+    watch: '监控'
   }
 }

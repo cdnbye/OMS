@@ -9,6 +9,7 @@
         <el-tooltip placement="top">
           <div slot="content">{{ $t('app.copy') }}</div>
           <el-button icon="el-icon-tickets" @click="handleCopy"></el-button>
+          
         </el-tooltip>
       </el-col>
     </template>
@@ -49,7 +50,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="ID" align="center">
+      <el-table-column label="AppId" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.app_id }}</span>
         </template>
@@ -63,6 +64,7 @@
 
       <el-table-column :label="$t('domainTable.operation')" align="center">
         <template slot-scope="scope">
+          <el-button slot="reference" size="mini" type="primary" @click="handleWatch(scope.row)">{{ $t('app.watch') }}</el-button>
 
           <el-popover placement="top" width="160" :ref="'popover-' + scope.row.id" trigger="manual">
             <p>{{ $t('app.sureDelete') }}</p>
@@ -70,25 +72,37 @@
               <el-button size="mini" type="text" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
               <el-button type="primary" size="mini" @click="handleDelete(scope.row)">{{ $t('common.ok') }}</el-button>
             </div>
-            <el-button slot="reference" size="mini" type="danger" @click="pShow(scope.row.id)">{{ $t('domainTable.delete') }}</el-button>
+            <el-button slot="reference" size="mini" type="danger" @click="pShow(scope.row.id)" :style="device==='mobile'?'':'margin-left: 10px'">{{ $t('domainTable.delete') }}</el-button>
           </el-popover>
-
         </template>
       </el-table-column>
     </el-table>
   </template>
 
-  <el-dialog :title="$t('app.createTip')" :visible.sync="dialogFormVisible" :width="device==='mobile'?'85%':''">
-    <el-form :model="form" label-position="left" label-width="120px">
-      <el-form-item label="name" label-width="100px">
-        <el-input v-model="form.app_name"></el-input>
+  <el-dialog  :visible.sync="dialogFormVisible" :width="device==='mobile'?'85%':''">
+    <div slot="title">
+      <p>{{ $t('app.createTitle') }}</p>
+      <p style="font-size: 12px">{{ $t('app.createTip') }}</p>
+    </div>
+    <el-form :model="form" label-position="left" label-width="120px" ref="createForm">
+      <el-form-item prop="app_name" label="name" label-width="100px" required>
+        <el-input v-model="form.app_name" :placeholder="$t('app.appName')"></el-input>
       </el-form-item>
 
-      <el-form-item label="app id" label-width="100px">
-        <el-input v-model="form.app_id"></el-input>
+      <el-form-item prop="app_id" label-width="100px" required>
+        <template slot="label">
+          <span>app id</span>
+          <PointTip :content="$t('app.appID')" />
+        </template>
+        <el-input v-model="form.app_id" :placeholder="$t('app.appID')"></el-input>
       </el-form-item>
 
-      <el-form-item label="platform" label-width="100px">
+      <!-- <el-form-item prop="app_id" label="app id" label-width="100px" required>
+        <el-input v-model="form.app_id" :placeholder="$t('app.appID')"></el-input>
+        <PointTip :content="$t('app.appID')" />
+      </el-form-item> -->
+
+      <el-form-item prop="platform" label="platform" label-width="100px" required style="float: left">
         <el-select v-model="form.platform" placeholder="请选择平台">
           <el-option label="PC" value="pc"></el-option>
           <el-option label="Android" value="android"></el-option>
@@ -111,10 +125,11 @@
   import { getID } from '@/utils/auth'
   import moment from 'moment'
   import { copy } from '@/utils'
+  import PointTip from '@/components/PointTip'
 
-  import pcImg from '@/assets/logo.png'
-  import iosImg from '@/assets/logo.png'
-  import androidImg from '@/assets/logo.png'
+  import pcImg from '@/assets/platform/electron.png'
+  import iosImg from '@/assets/platform/ios.png'
+  import androidImg from '@/assets/platform/android.png'
 
   export default {
     name: 'app',
@@ -133,8 +148,11 @@
           app_name: '',
           app_id: '',
           platform : '',
-        }
+        },
       }
+    },
+    components: {
+      PointTip
     },
     computed: {
       ...mapGetters([
@@ -200,19 +218,25 @@
         })
       },
       handleCreateItem() {
-        this.createItemLoading = true
-        createItem(getID(), this.form)
-          .then(res => {
-            if(res.data.success) {
-              this.dialogFormVisible = false
-              this.createItemLoading = false
-              this.$message.success(this.$t('app.createItemSuccess'))
-              this.fetchData()
-            }
-          })
-          .catch(err => {
-            this.createItemLoading = false
-          })
+        this.$refs.createForm.validate(valid => {
+          if(valid) {
+            this.createItemLoading = true
+            createItem(getID(), this.form)
+              .then(res => {
+                if(res.data.success) {
+                  this.dialogFormVisible = false
+                  this.createItemLoading = false
+                  this.$message.success(this.$t('app.createItemSuccess'))
+                  this.fetchData()
+                }
+              })
+              .catch(err => {
+                this.createItemLoading = false
+              })
+          } else {
+            return false
+          }
+        })
       },
       handleDelete(item) {
         const data = {
@@ -220,7 +244,7 @@
           user_id: getID(),
           domain_id: item.domain_id
         }
-        deleteItem(getID, data)
+        deleteItem(getID(), data)
           .then(res => {
             this.fetchData()
             this.$message.success(this.$t('app.deleteItemSuccess'))
@@ -228,6 +252,16 @@
           .catch(err => {
             console.log(err)
           })
+      },
+      handleWatch(item) {
+        this.$router.push({
+          name: 'UserLiveData',
+          params: {
+            uid: getID(),
+            // id: val.id,
+            hostId: item.domain_id,
+          }
+        })
       },
       handleCopy() {
         copy(this.inputToken, () => {this.$message.success('success')})

@@ -1,21 +1,21 @@
 <template>
   <div class="ad-container">
 
-    <div id="first-ad" :style="device==='mobile'?'height: 45px; width: 100%':'width: 405px; height: 45px; float: left'">
+    <div id="first-ad" :style="device==='mobile'?'height: 45px; width: 100%':'width: 405px; height: 45px; float: left'" @click="handleFirstClick">
       <div class="operate">
         <span class="word">广告</span>
         <span class="btn" @click="handleClose('first-ad')"><i class="el-icon-close"/></span>
       </div>
     </div>
 
-    <div id="second-ad" :style="device==='mobile'?'height: 45px; width: 100%':'width: 405px; height: 45px; float: right'">
+    <div id="second-ad" :style="device==='mobile'?'height: 45px; width: 100%':'width: 405px; height: 45px; float: right'" @click="handleSecondClick">
       <div class="operate">
         <span class="word">广告</span>
         <span class="btn" @click="handleClose('second-ad')"><i class="el-icon-close"/></span>
       </div>
     </div>
 
-    <div id="ad">
+    <div id="ad" @click="handleBotClick">
       <div class="operate">
         <span class="word">广告</span>
         <span class="btn" @click="handleClose('ad')"><i class="el-icon-close"/></span>
@@ -100,12 +100,24 @@ export default {
       }
       const ad = document.getElementById(id)
       ad.style.display = 'none'
-    }
+    },
+    handleFirstClick() {
+      window.open(config.leftTopADLink)
+    },
+    handleSecondClick() {
+      window.open(config.rightTopADLink)
+    },
+    handleBotClick() {
+      window.open(config.botADLink)
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  div {
+    cursor: pointer;
+  }
   .ad-container {
     display: flex;
     display: -webkit-flex; /* Safari */
