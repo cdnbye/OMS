@@ -111,6 +111,7 @@ export default {
     trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.',
     onlinesTip: 'Merely show the number of online devices that support P2P',
     viewsTip: 'Total view times today',
+    goApp: 'App Management'
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',

@@ -111,6 +111,7 @@ export default {
     trafficUseOut: '您的可用流量已用完，请前往购买流量包',
     onlinesTip: '只显示支持P2P的在线设备数量',
     viewsTip: '总的观看量，每观看一个视频计数一次',
+    goApp: '应用管理'
   },
   domainTable: {
     bindDomain: '绑定域名',

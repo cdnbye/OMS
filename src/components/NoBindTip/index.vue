@@ -5,6 +5,7 @@
     <span>{{ $t('dashboard.tip') }}</span>
     <span slot="footer" class="dialog-footer">
       <el-button @click="tipVisible = false">{{ $t('common.cancel') }}</el-button>
+      <el-button type="info" @click="handleGoApp">{{ $t('dashboard.goApp') }}</el-button>
       <el-button type="primary" @click="handlePush">{{ $t('dashboard.goBind') }}</el-button>
     </span>
   </el-dialog>
@@ -43,6 +44,10 @@ export default {
     handlePush() {
       this.tipVisible = false
       this.$router.push('/user/domain')
+    },
+    handleGoApp() {
+      this.tipVisible = false
+      this.$router.push('/app/app')
     }
   }
 }

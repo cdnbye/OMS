@@ -6,23 +6,25 @@
     type="info"
     show-icon>
   </el-alert>
-  <el-row style="margin: 15px">
+  <el-row style="margin: 15px 0">
     <template v-if="hasToken">
       <el-col :xs="20" :sm="12" :lg="12">
         <el-input v-model="inputToken" :disabled="true">
-              <template slot="prepend">Token: </template>
+          <template slot="prepend">Token: </template>
         </el-input>
       </el-col>
       <el-col :xs="3" :sm="2" :lg="1">
         <el-tooltip placement="top">
           <div slot="content">{{ $t('app.copy') }}</div>
-          <el-button icon="el-icon-tickets" @click="handleCopy"></el-button>
+          <el-button @click="handleCopy" type="info" plain style="padding: 6px 10px">
+            <img v-bind:src="copyImg" alt="" min-width="24" height="24">
+          </el-button>
         </el-tooltip>
       </el-col>
     </template>
   </el-row>
 
-  <el-row>
+  <el-row style="float: left">
     <template v-if="!hasToken">
       <el-col :xs="10" :sm="4" :lg="2" style="margin: 10px 0">
           <el-popover placement="top" width="160" v-model="popoverVisible">
@@ -138,6 +140,8 @@
   import iosImg from '@/assets/platform/ios.png'
   import androidImg from '@/assets/platform/android.png'
 
+  import copyImg from '@/assets/copy.png'
+
   export default {
     name: 'app',
     data() {
@@ -156,6 +160,7 @@
           app_id: '',
           platform : '',
         },
+        copyImg
       }
     },
     components: {
@@ -267,8 +272,7 @@
           name: 'UserLiveData',
           params: {
             uid: getID(),
-            // id: val.id,
-            hostId: item.domain_id,
+            id: item.domain_id,
           }
         })
       },
@@ -281,19 +285,3 @@
     }
   }
   </script>
-
-<style lang="scss">
-$dark_gray:#889aa4;
-$light_gray:#eee;
-
-.show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
-    cursor: pointer;
-    user-select: none;
-  }
-</style>
-
