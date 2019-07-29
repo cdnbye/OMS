@@ -26,7 +26,7 @@ export default {
     dataAnalysis: '高级数据分析',
     p2pTraffic: 'P2P流量趋势图',
     onlineNum: '在线人数趋势图',
-    domainInfo: '域名信息',
+    domainInfo: '域名管理',
     domainList: '域名列表',
     package: '购买流量包',
     monthlyPackage: '包年包月套餐',
@@ -86,9 +86,9 @@ export default {
   },
   dashboard: {
     currentDomain: '当前域名：',
-    goBind: '去绑定',
+    goBind: '绑定域名',
     switchDomain: '切换域名/AppID',
-    tip: '您还未绑定域名，是否现在绑定？',
+    tip: '您还未绑定域名或注册应用，是否现在就去？',
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
     serveNum: '今日观看次数',
@@ -111,7 +111,7 @@ export default {
     trafficUseOut: '您的可用流量已用完，请前往购买流量包',
     onlinesTip: '只显示支持P2P的在线设备数量',
     viewsTip: '总的观看量，每观看一个视频计数一次',
-    goApp: '应用管理'
+    goApp: '管理应用'
   },
   domainTable: {
     bindDomain: '绑定域名',
@@ -252,24 +252,24 @@ export default {
     switchErr: '至少一个域名需要保持开启状态。'
   },
   app: {
-    createToken: '获取Token',
-    createTokenSuccess: '获取token成功',
+    createToken: '生成Token',
+    createTokenSuccess: '生成token成功',
     createFormItem: '+ 创建应用',
     createItemSuccess: '创建成功',
     createTitle: '输入应用信息',
     createTip: '每个用户最多创建20个应用',
-    appName: 'app名称',
-    appID: 'app Id',
+    appName: 'APP显示的名称',
+    appID: 'APP ID的获取方式可参考<a style="color: #337ab7" target="view_window" href="https://docs.cdnbye.com/#/bindings?id=%e7%bb%91%e5%ae%9a-app-id-%e5%b9%b6%e8%8e%b7%e5%8f%96token">这里</a>',
     platform: '平台',
-    sureCreateToken: '确定要获取token吗？',
+    sureCreateToken: '确定要生成token吗？',
     sureDelete: '确定要删除吗？',
     deleteItemSuccess: '删除成功',
     createTime: '创建时间',
     name: '应用名称',
-    platform: '平台',
     copy: '点击复制',
     watch: '监控',
-    title: 'Title',
-    desc: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。'
+    title: '说明：',
+    desc: '本页面用于配置移动端 SDK 和 Electron。每个用户最多创建20个应用。',
+    appIdTip: 'com.company.example',
   }
 }

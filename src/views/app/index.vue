@@ -91,19 +91,19 @@
   <el-dialog  :visible.sync="dialogFormVisible" :width="device==='mobile'?'85%':''">
     <div slot="title">
       <p>{{ $t('app.createTitle') }}</p>
-      <p style="font-size: 12px">{{ $t('app.createTip') }}</p>
+      <!--<p style="font-size: 12px">{{ $t('app.createTip') }}</p>-->
     </div>
     <el-form :model="form" label-position="left" label-width="120px" ref="createForm">
-      <el-form-item prop="app_name" label="name" label-width="100px" required>
+      <el-form-item prop="app_name" label="APP Name" label-width="100px" required>
         <el-input v-model="form.app_name" :placeholder="$t('app.appName')"></el-input>
       </el-form-item>
 
       <el-form-item prop="app_id" label-width="100px" required>
         <template slot="label">
-          <span>app id</span>
+          <span>APP ID</span>
           <PointTip style="margin-left: 4px" :content="$t('app.appID')" />
         </template>
-        <el-input v-model="form.app_id" :placeholder="$t('app.appID')"></el-input>
+        <el-input v-model="form.app_id" :placeholder="$t('app.appIdTip')"></el-input>
       </el-form-item>
 
       <!-- <el-form-item prop="app_id" label="app id" label-width="100px" required>
@@ -111,11 +111,11 @@
         <PointTip :content="$t('app.appID')" />
       </el-form-item> -->
 
-      <el-form-item prop="platform" label="platform" label-width="100px" required style="float: left">
-        <el-select v-model="form.platform" placeholder="请选择平台">
-          <el-option label="PC" value="pc"></el-option>
+      <el-form-item prop="platform" label="Platform" label-width="100px" required style="float: left">
+        <el-select v-model="form.platform" placeholder="Select Platform">
           <el-option label="Android" value="android"></el-option>
           <el-option label="iOS" value="ios"></el-option>
+          <el-option label="PC (Electron)" value="pc"></el-option>
         </el-select>
       </el-form-item>
     </el-form>

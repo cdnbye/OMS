@@ -26,7 +26,7 @@ export default {
     dataAnalysis: 'Advanced Analysis',
     p2pTraffic: 'P2P Traffic Trend',
     onlineNum: 'Online Viewers Trend',
-    domainInfo: 'Domain Info',
+    domainInfo: 'Domain Management',
     domainList: 'Domain List',
     package: 'Traffic Package',
     monthlyPackage: 'Monthly/Annual Package',
@@ -86,9 +86,9 @@ export default {
   },
   dashboard : {
     currentDomain: 'Current Domain: ',
-    goBind: 'Go bind',
+    goBind: 'Bind your domain',
     switchDomain: 'Switch Domain/AppID',
-    tip: 'You have not bound a domain name, are you binding now?',
+    tip: 'You have not bound domain name or register app, are you going now?',
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'Total Views Today',
@@ -111,7 +111,7 @@ export default {
     trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.',
     onlinesTip: 'Merely show the number of online devices that support P2P',
     viewsTip: 'Total view times today',
-    goApp: 'App Management'
+    goApp: 'Manage App'
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
@@ -254,22 +254,22 @@ export default {
   app: {
     createToken: 'Create Token',
     createTokenSuccess: 'Create token successfully',
-    createFormItem: '+ Create',
+    createFormItem: '+ Create APP',
     createItemSuccess: 'Create successfully',
-    createTitle: 'Input info',
-    createTip: 'Create up to 20 apps per user',
-    appName: 'App Name',
-    appID: 'App Id',
+    createTitle: 'Input APP Information',
+    createTip: 'Each user can create up to 20 apps',
+    appName: 'The display name of APP',
+    appID: 'You can refer to <a style="color: #337ab7" target="view_window" href="https://docs.cdnbye.com/#/en/bindings?id=app-id-and-token">here</a> to obtain APP ID',
     platform: 'Platform',
-    sureCreateToken: 'Sure to get token?',
+    sureCreateToken: 'Sure to create token?',
     sureDelete: 'Sure to delete?',
     deleteItemSuccess: 'Delete successfully',
     createTime: 'Create Time',
     name: 'Name',
-    platform: 'Platform',
     copy: 'Click to copy',
-    watch: 'Watch',
-    title: 'Title',
-    desc: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。'
+    watch: 'Monitor',
+    title: 'Notice:',
+    desc: 'Each user can create up to 20 apps.',
+    appIdTip: 'com.company.example',
   }
 }
