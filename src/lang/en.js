@@ -88,7 +88,7 @@ export default {
     currentDomain: 'Current Domain: ',
     goBind: 'Bind your domain',
     switchDomain: 'Switch Domain/AppID',
-    tip: 'You have not bound domain name or register app, are you going now?',
+    tip: 'You have not bound domain name or created app, are you going now?',
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'Total Views Today',
@@ -111,7 +111,7 @@ export default {
     trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.',
     onlinesTip: 'Merely show the number of online devices that support P2P',
     viewsTip: 'Total view times today',
-    goApp: 'Manage App'
+    goApp: 'Create App'
   },
   domainTable: {
     bindDomain: 'Bind Your Domain',
@@ -269,7 +269,7 @@ export default {
     copy: 'Click to copy',
     watch: 'Monitor',
     title: 'Notice:',
-    desc: 'Each user can create up to 20 apps.',
+    desc: 'Each user can create up to 20 apps. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
   }
 }

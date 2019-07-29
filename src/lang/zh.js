@@ -88,7 +88,7 @@ export default {
     currentDomain: '当前域名：',
     goBind: '绑定域名',
     switchDomain: '切换域名/AppID',
-    tip: '您还未绑定域名或注册应用，是否现在就去？',
+    tip: '您还未绑定域名或创建应用，是否现在就去？',
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
     serveNum: '今日观看次数',
@@ -111,7 +111,7 @@ export default {
     trafficUseOut: '您的可用流量已用完，请前往购买流量包',
     onlinesTip: '只显示支持P2P的在线设备数量',
     viewsTip: '总的观看量，每观看一个视频计数一次',
-    goApp: '管理应用'
+    goApp: '创建应用'
   },
   domainTable: {
     bindDomain: '绑定域名',
@@ -269,7 +269,7 @@ export default {
     copy: '点击复制',
     watch: '监控',
     title: '说明：',
-    desc: '本页面用于配置移动端 SDK 和 Electron。每个用户最多创建20个应用。',
+    desc: '本页面用于配置移动端 SDK 和 Electron。每个用户最多创建20个应用。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
   }
 }
