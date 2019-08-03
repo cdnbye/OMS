@@ -1,9 +1,13 @@
 <template>
   <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
     <el-row style="text-align: left; margin: 20px 0">
-      <el-col :xs="20" :sm="12" :lg="8">
-        <SwitchDomain :finishSelect="handleSwitchDomain" />
-      </el-col>
+
+      <template v-if="showDomain">
+        <el-col :xs="20" :sm="12" :lg="8">
+          <SwitchDomain :finishSelect="handleSwitchDomain" />
+        </el-col>
+      </template>
+      
       <el-col :xs="7" :sm="4" :lg="2">
         <el-button type="success" @click="handleCheckin" v-loading="checkinLoading">{{ $t('dashboard.checkin') }}</el-button>
       </el-col>
@@ -143,6 +147,8 @@ export default {
       checkResultLoading: false,
       remainTrafficFlag: true,
 
+      showDomain: false,
+
       statis: {
         whiteList: false,
         type: {
@@ -186,9 +192,13 @@ export default {
     if(this.$route.params.id !== undefined && this.$route.params.uid !== undefined) {
       this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
       this.getDisData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
+
+      this.showDomain = false
     } else {
       this.getUserDomain()
       this.checkPayResult()
+
+      this.showDomain = true
     }
   },
   beforeDestroy() {
@@ -323,6 +333,7 @@ export default {
     },
     handleSwitchDomain(uid, id) {
       clearInterval(int)
+      this.getDisData(uid, id)
       this.loopGetData(uid, id)
     },
     checkPayResult() {
