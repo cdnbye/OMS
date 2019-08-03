@@ -277,7 +277,7 @@
         })
       },
       handleCopy() {
-        copy(this.inputToken, () => {this.$message.success('success')})
+        copy(this.inputToken, () => {this.$message.success('Copied(已复制)')})
       }
     },
     mounted() {

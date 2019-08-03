@@ -68,6 +68,13 @@
         </el-popover>
       </template>
     </el-table-column>
+
+    <el-table-column label="action" align="center" class-name="small-padding fixed-width">
+      <template slot-scope="scope">
+        <el-button type="primary" size="mini" @click="copyPassword(scope.row.raw_pass)">Copy</el-button>
+      </template>
+    </el-table-column>
+
   </el-table>
 
   <div class="pagination-container">
@@ -86,6 +93,7 @@
   <script>
   import { fetchUserList, fetchAdminUser } from '@/api/userDomain'
   import { frozenUser, adminUser, searchUser } from '@/api/user'
+  import { copy } from '@/utils'
   import moment from 'moment'
 
   export default {
@@ -253,6 +261,9 @@
       },
       selectChange() {
         this.fetchTableData()
+      },
+      copyPassword(pw) {
+        copy(pw, () => {this.$message.success('Copied(已复制)')})
       }
     }
   }
