@@ -5,7 +5,7 @@
     <span>{{ $t('dashboard.tip') }}</span>
     <span slot="footer" class="dialog-footer">
       <el-button @click="tipVisible = false">{{ $t('common.cancel') }}</el-button>
-      <el-button type="info" @click="handleGoApp">{{ $t('dashboard.goApp') }}</el-button>
+      <el-button type="primary" @click="handleGoApp">{{ $t('dashboard.goApp') }}</el-button>
       <el-button type="primary" @click="handlePush">{{ $t('dashboard.goBind') }}</el-button>
     </span>
   </el-dialog>
@@ -29,9 +29,11 @@ export default {
     }
   },
   mounted() {
-    if(this.roles.indexOf('user') > -1 && this.currentDomain.id === undefined) {
-      this.tipVisible = true
-    }
+    setTimeout(() => {
+        if(this.roles.indexOf('user') > -1 && this.currentDomain.id === undefined) {
+            this.tipVisible = true
+        }
+    }, 1000)
   },
   computed: {
     ...mapGetters([

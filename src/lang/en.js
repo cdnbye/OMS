@@ -102,7 +102,7 @@ export default {
     liveDis: 'Live/VOD Distribution',
     natDis: 'Network Type Distribution',
     p2pTip: 'UTC+8 adopted.<br/>Want to increase p2p traffic? See <a style="color: #337ab7" href="https://docs.cdnbye.com/#/en/m3u8" target="_blank">here</a>',
-    freeTip: '10GB of traffic will be given after the domain name is bound with an additional 40 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. <br/>If there is no available traffic, P2P service will be stopped.',
+    freeTip: '5GB of traffic will be given after the domain name is bound with an additional 10 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. <br/>If there is no available traffic, P2P service will be stopped.',
     remainTip: 'Please buy <a style="color: #337ab7" href="#/user/package">traffic package</a> or <a style="color: #337ab7" href="#/user/monthly_package">monthly/annual package</a> in time to avoid service interruption.',
     checkin: 'Sign in for free traffic',
     checkinSuccess: 'Sign in successfully!',
