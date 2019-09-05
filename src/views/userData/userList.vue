@@ -34,6 +34,7 @@
     <el-table-column align="center" prop="reg_date" label="注册时间"></el-table-column>
     <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>
     <el-table-column align="center" prop="domain" label="域名"></el-table-column>
+    <el-table-column align="center" prop="agent" label="代理商"></el-table-column>
     <el-table-column align="center" label="禁用状态">
       <template slot-scope="scope">
         <el-popover

@@ -78,3 +78,4 @@ export function copy(value, callback) {
   callback();
   return res;// 返回操作结果
 }
+

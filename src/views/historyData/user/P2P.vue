@@ -3,8 +3,8 @@
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
-          <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
-          <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
+          <!--<el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>-->
+          <!--<el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>-->
           <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
           <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
         </el-radio-group>

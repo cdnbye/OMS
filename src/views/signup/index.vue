@@ -121,7 +121,7 @@ export default {
         email: '',
         vcode: '',
         passwd: '',
-        confirm_passwd: ''
+        confirm_passwd: '',
       },
       signupRules: {
         email: [{ required: true, trigger: 'blur', validator: formValidateEmail }],
@@ -157,6 +157,13 @@ export default {
       this.$refs.signupForm.validate(valid => {
         if (valid) {
           this.signupLoading = true
+
+          // 获取代理商
+          const agent = this.$route.query.agent;
+          if (agent) {
+              this.signupForm.agent = agent;
+          }
+
           this.$store.dispatch('signup', this.signupForm).then(() => {
             this.signupLoading = false
             this.$router.push({ path: this.redirect || '/' })

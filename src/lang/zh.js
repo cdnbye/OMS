@@ -102,7 +102,7 @@ export default {
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
     p2pTip: '采用北京时间计时。<br/>如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置。',
-    freeTip: '绑定后的域名每日赠送5GB流量，签到后再额外赠送10GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用付费流量抵扣。<br/>如果可用流量为零，则停止P2P服务。',
+    freeTip: '绑定后的域名每日赠送5GB流量，签到后再额外赠送20GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用付费流量抵扣。<br/>如果可用流量为零，则停止P2P服务。',
     remainTip: '请及时购买<a style="color: #337ab7" href="#/user/package">流量包</a>或者<a style="color: #337ab7" href="#/user/monthly_package">包年包月套餐</a>，以避免服务中断。',
     checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
@@ -202,7 +202,7 @@ export default {
     noBuyTip: '请先选择你要购买的流量包',
     payMethod: '付款方式',
     packageSubTitle: '流量包说明：',
-    packageSub: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。',
+    packageSub: '流量包用于提高可消耗的P2P流量额度，属于消耗品。购买后当日生效（可能会有几分钟延迟）。不支持退款。支付遇到问题请联系 service@cdnbye.com。同时在线人数1万人以上可按峰值人数计费，详情请咨询客服。',
     monthlyPackageSub: '包年包月套餐可提供每天对应额度的流量，有效期分为一个月或一年。不支持退款。支付遇到问题请联系 service@cdnbye.com。\nTips:如果包月套餐每日额度不够用，可以额外购买流量包作为补充，系统会优先扣除包月套餐流量，再扣除流量包流量。',
 
     packageInfo: '套餐信息',
@@ -257,7 +257,7 @@ export default {
     createFormItem: '+ 创建应用',
     createItemSuccess: '创建成功',
     createTitle: '输入应用信息',
-    createTip: '每个用户最多创建20个应用',
+    createTip: '每个用户最多创建200个应用',
     appName: 'APP显示的名称',
     appID: 'APP ID的获取方式可参考<a style="color: #337ab7" target="view_window" href="https://docs.cdnbye.com/#/bindings?id=%e7%bb%91%e5%ae%9a-app-id-%e5%b9%b6%e8%8e%b7%e5%8f%96token">这里</a>',
     platform: '平台',
@@ -269,7 +269,7 @@ export default {
     copy: '点击复制',
     watch: '监控',
     title: '说明：',
-    desc: '本页面用于配置移动端 SDK 和 Electron。每个用户最多创建20个应用。创建成功后需要等待1分钟以上才生效。',
+    desc: '本页面用于配置移动端 SDK 和 Electron。每个用户最多创建200个应用。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
   }
 }

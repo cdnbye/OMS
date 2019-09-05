@@ -257,7 +257,7 @@ export default {
     createFormItem: '+ Create APP',
     createItemSuccess: 'Create successfully',
     createTitle: 'Input APP Information',
-    createTip: 'Each user can create up to 20 apps',
+    createTip: 'Each user can create up to 200 apps',
     appName: 'The display name of APP',
     appID: 'You can refer to <a style="color: #337ab7" target="view_window" href="https://docs.cdnbye.com/#/en/bindings?id=app-id-and-token">here</a> to obtain APP ID',
     platform: 'Platform',
@@ -269,7 +269,7 @@ export default {
     copy: 'Click to copy',
     watch: 'Monitor',
     title: 'Notice:',
-    desc: 'Each user can create up to 20 apps. It takes more than a minute to take effect after the creation is successful.',
+    desc: 'This page is used to configure mobile SDK and Electron. Each user can create up to 200 apps. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
   }
 }
