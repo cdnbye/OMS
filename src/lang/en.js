@@ -149,7 +149,9 @@ export default {
       navVisitHead: 'Access ',
       navVisitEnd: ' to confirm that the upload was successful',
     },
-    verifySuccess: 'verify successfully'
+    verifySuccess: 'verify successfully',
+    title: 'Notice:',
+    desc: 'This page is used to bind domain name, mobile native App and Electron App do not require to bind domain name.',
   },
   documentation: {
     documentation: 'Documentation',
@@ -216,7 +218,7 @@ export default {
     systemError: 'Sorry, the system is maintaining',
     payLoadingTip: 'Jumping to payment page...',
     checkResultLoadingTip: 'Checking payment status...',
-
+    comfirmCreate: 'Are you sure you want to create an order?',
     buyFlow: 'Buy traffic package',
     buyMonthly: 'Buy monthly/annual package',
     monthly: 'Valid Until '
@@ -269,7 +271,7 @@ export default {
     copy: 'Click to copy',
     watch: 'Monitor',
     title: 'Notice:',
-    desc: 'This page is used to configure mobile SDK and Electron. Each user can create up to 200 apps. It takes more than a minute to take effect after the creation is successful.',
+    desc: 'This page is used to configure mobile native App and Electron App. Each user can create up to 200 apps. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
   }
 }

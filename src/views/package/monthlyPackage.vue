@@ -145,14 +145,21 @@ export default {
         })
     },
     handleBuy(subject) {
-      const data = {
-        price: Number(subject.price),
-        payment: this.paySelect,
-        goods: [subject],
-        goods_type: this.paySelect === 'alipay' ? 'monthly_packet_cn' : 'monthly_packet_en'
-      }
-      this.handleCreateOrder(data)
-      console.log(subject)
+      this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
+          distinguishCancelAndClose: true,
+          confirmButtonText: this.$t('common.ok'),
+          cancelButtonText: this.$t('common.cancel')
+      })
+          .then(() => {
+              const data = {
+                  price: Number(subject.price),
+                  payment: this.paySelect,
+                  goods: [subject],
+                  goods_type: this.paySelect === 'alipay' ? 'monthly_packet_cn' : 'monthly_packet_en'
+              }
+              this.handleCreateOrder(data)
+              // console.log(subject)
+          })
     }
   }
 }

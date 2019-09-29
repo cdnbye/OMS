@@ -33,7 +33,7 @@ export default {
     order: '历史订单',
     p2pConfig: 'P2P配置',
     edit: '编辑信息',
-    appInfo: '应用管理',
+    appInfo: 'APP管理',
   },
   navbar: {
     logOut: '退出登录',
@@ -88,7 +88,7 @@ export default {
     currentDomain: '当前域名：',
     goBind: '绑定域名',
     switchDomain: '切换域名/AppID',
-    tip: '您还未绑定域名或创建应用，是否现在就去？',
+    tip: '您还未绑定域名或创建APP，是否现在就去？',
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
     serveNum: '今日观看次数',
@@ -111,7 +111,7 @@ export default {
     trafficUseOut: '您的可用流量已用完，请前往购买流量包',
     onlinesTip: '只显示支持P2P的在线设备数量',
     viewsTip: '总的观看量，每观看一个视频计数一次',
-    goApp: '创建应用'
+    goApp: '创建APP'
   },
   domainTable: {
     bindDomain: '绑定域名',
@@ -122,7 +122,7 @@ export default {
     status: '状态',
     available: '可用',
     unavailable: '不可用',
-    illegal: '非法网站',
+    illegal: '未通过审核',
     operation: '操作',
     verifyDomain: '验证域名',
     certification: '认证',
@@ -149,7 +149,9 @@ export default {
       navVisitHead: '用浏览器访问',
       navVisitEnd: '，确认是否上传成功',
     },
-    verifySuccess: '验证成功'
+    verifySuccess: '验证成功',
+    title: '说明：',
+    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。',
   },
   documentation: {
     documentation: '使用文档',
@@ -216,7 +218,7 @@ export default {
     systemError: '抱歉，系统正在维护中',
     payLoadingTip: '正在跳转至支付页面',
     checkResultLoadingTip: '正在查询支付状态...',
-
+    comfirmCreate: '确认创建订单吗？',
     buyFlow: '购买流量包',
     buyMonthly: '购买包年包月服务',
     monthly: '有效期至 '
@@ -245,7 +247,7 @@ export default {
     status: '状态',
     open: '开启',
     close: '关闭',
-    illegal: '非法网站',
+    illegal: '未通过审核',
     configSuccess: '配置成功',
     configFail: '只有付费用户才能开启/关闭P2P',
     desc: '如果您在同一个账号同时绑定了多个域名，则开启P2P的所有域名会共享流量包。您可以在这里关闭某个域名的P2P服务从而节省流量包消耗。',
@@ -254,10 +256,10 @@ export default {
   app: {
     createToken: '生成Token',
     createTokenSuccess: '生成token成功',
-    createFormItem: '+ 创建应用',
+    createFormItem: '+ 创建APP',
     createItemSuccess: '创建成功',
-    createTitle: '输入应用信息',
-    createTip: '每个用户最多创建200个应用',
+    createTitle: '输入APP信息',
+    createTip: '每个用户最多创建200个APP',
     appName: 'APP显示的名称',
     appID: 'APP ID的获取方式可参考<a style="color: #337ab7" target="view_window" href="https://docs.cdnbye.com/#/bindings?id=%e7%bb%91%e5%ae%9a-app-id-%e5%b9%b6%e8%8e%b7%e5%8f%96token">这里</a>',
     platform: '平台',
@@ -265,11 +267,11 @@ export default {
     sureDelete: '确定要删除吗？',
     deleteItemSuccess: '删除成功',
     createTime: '创建时间',
-    name: '应用名称',
+    name: 'APP名称',
     copy: '点击复制',
     watch: '监控',
     title: '说明：',
-    desc: '本页面用于配置移动端 SDK 和 Electron。每个用户最多创建200个应用。创建成功后需要等待1分钟以上才生效。',
+    desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"域名管理"页面绑定域名。每个用户最多创建200个APP。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
   }
 }

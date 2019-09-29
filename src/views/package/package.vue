@@ -23,7 +23,7 @@
       :visible.sync="noSelectVisible">
       {{$t('package.noBuyTip')}}
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="noSelectVisible = false">{{ $t('common.cancel') }}</el-button>
+        <!--<el-button type="primary" @click="noSelectVisible = false">{{ $t('common.cancel') }}</el-button>-->
         <el-button type="primary" @click="noSelectVisible = false">{{ $t('common.ok') }}</el-button>
       </span>
     </el-dialog>
@@ -219,8 +219,16 @@ export default {
     },
     handleBuyClick() {
       this.totalPrice <= 0
-        ? this.noSelectVisible = true
-        : this.handleCreateOrder()
+          ? this.noSelectVisible = true
+          :
+        this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
+            distinguishCancelAndClose: true,
+            confirmButtonText: this.$t('common.ok'),
+            cancelButtonText: this.$t('common.cancel')
+        })
+            .then(() => {
+                this.handleCreateOrder()
+            })
     }
   }
 }

@@ -4,9 +4,36 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
-            <span>版本分布</span>
+            <span>Web版本分布</span>
           </div>
-          <Piechart :chart-data="this.versionData" />
+          <Piechart :chart-data="this.webVerData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>Android版本分布</span>
+          </div>
+          <Piechart :chart-data="this.androidVerData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>iOS版本分布</span>
+          </div>
+          <Piechart :chart-data="this.iosVerData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>Electron版本分布</span>
+          </div>
+          <Piechart :chart-data="this.pcVerData" />
         </el-card>
       </el-col>
 
@@ -73,7 +100,10 @@ export default {
   },
   data() {
     return {
-      versionData: [],
+      pcVerData: [],
+      androidVerData: [],
+      iosVerData: [],
+      webVerData: [],
       tagData: [],
       deviceData: [],
       liveData: [],
@@ -112,10 +142,25 @@ export default {
             })
         }
       })
-      fetchLiveData('version').then(res => {
+      fetchLiveData('version:web').then(res => {
         if(res.data) {
-          this.versionData = formatPieData(res.data)
+          this.webVerData = formatPieData(res.data)
         }
+      })
+      fetchLiveData('version:android').then(res => {
+          if(res.data) {
+              this.androidVerData = formatPieData(res.data)
+          }
+      })
+      fetchLiveData('version:ios').then(res => {
+          if(res.data) {
+              this.iosVerData = formatPieData(res.data)
+          }
+      })
+      fetchLiveData('version:pc').then(res => {
+          if(res.data) {
+              this.pcVerData = formatPieData(res.data)
+          }
       })
       fetchLiveData('tag').then(res => {
         if(res.data) {

@@ -1,5 +1,11 @@
 <template>
 <div class="app-container">
+  <el-alert
+    :title="$t('domainTable.title')"
+    :description="$t('domainTable.desc')"
+    type="info"
+    show-icon>
+  </el-alert>
   <el-row style="text-align: left">
     <el-col :xs="24" :sm="12" :lg="8" style="margin: 10px 0">
       <el-button type="primary" @click="dialogVisible = true">{{ $t('domainTable.bindDomain') }}</el-button>
