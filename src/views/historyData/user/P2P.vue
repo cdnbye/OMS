@@ -29,7 +29,7 @@
 import moment from 'moment'
 import NoBindTip from '@/components/NoBindTip'
 import LineChart from '@/components/LineChart'
-import { fetchP2PTraffic } from '@/api/user/historyData'
+import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/user/historyData'
 import { mapGetters } from 'vuex'
 import { formatTraffic, getTrafficNum } from '@/utils/format'
 
@@ -42,15 +42,16 @@ export default {
   data() {
     return {
       lineChartData: {
-        P2P: []
+        P2P: [],
+        HTTP: [],
       },
       date: [moment().startOf('day').subtract(1, 'week'), moment().startOf('day')],
       radio: 'week',
-      p2pData: [],
+      // p2pData: [],
       option: {
         xData: [],
         unit: '%',
-        yName: 'P2P'
+        yName: 'Traffic'
       }
     }
   },
@@ -73,27 +74,34 @@ export default {
       this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
     },
     getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
-      this.p2pData = []
+      // this.p2pData = []
       this.option.xData = []
       this.lineChartData.P2P = []
+      this.lineChartData.HTTP = []
       let gran = 5    // 显示粒度5分钟
       if (this.displayDay) {
           gran = 1440     // 显示粒度一天
       }
-      fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
-        const trafficValue = [...res.data.list]
-        trafficValue.sort(function(a, b) {
-            return b.value - a.value > 0
-        })
-        this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
-        res.data.list.forEach((item, index) => {
-            if (this.displayDay) {
-                this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
-            } else {
-                this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-            }
-          this.lineChartData.P2P.push(getTrafficNum(item.value, this.option.unit))
-        })
+      fetchHttpTraffic(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
+          const trafficValue = [...res.data.list]
+          trafficValue.sort(function(a, b) {
+              return b.value - a.value > 0
+          })
+          this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
+          fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
+              res.data.list.forEach((item, index) => {
+                  this.lineChartData.P2P.push(getTrafficNum(item.value, this.option.unit))
+              })
+
+          })
+          res.data.list.forEach((item, index) => {
+              if (this.displayDay) {
+                  this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
+              } else {
+                  this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
+              }
+              this.lineChartData.HTTP.push(getTrafficNum(item.value, this.option.unit))
+          })
 
       })
     },

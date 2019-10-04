@@ -24,7 +24,7 @@ export default {
     userConfig: 'user',
 
     dataAnalysis: 'Advanced Analysis',
-    p2pTraffic: 'P2P Traffic Trend',
+    p2pTraffic: 'Traffic Trend',
     onlineNum: 'Online Viewers Trend',
     domainInfo: 'Domain Management',
     domainList: 'Domain List',
