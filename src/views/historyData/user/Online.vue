@@ -26,8 +26,8 @@
       <json-excel
               :fetch = "dataForExcel"
               type    = "csv"
-              name    = "日峰月均.xls">
-        导出上个月日峰月均Excel
+              name    = "日峰月均.csv">
+        导出Excel
       </json-excel>
     </el-button>
   </div>
