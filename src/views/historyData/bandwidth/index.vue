@@ -104,7 +104,7 @@ export default {
       const data = res.data.list
       const trafficValue = [...res.data.list]
       trafficValue.sort(function(a, b) {
-        return b.value - a.value > 0
+          return a.value - b.value
       })
       this.option.unit = this.option.unit ? this.option.unit : formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
       this.option.xData = []

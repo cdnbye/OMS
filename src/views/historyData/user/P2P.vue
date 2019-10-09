@@ -83,9 +83,8 @@ export default {
           gran = 1440     // 显示粒度一天
       }
       fetchHttpTraffic(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
-          const trafficValue = [...res.data.list]
-          trafficValue.sort(function(a, b) {
-              return b.value - a.value > 0
+          let trafficValue = [...res.data.list].sort((a, b) => {
+              return a.value - b.value
           })
           this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
           fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
