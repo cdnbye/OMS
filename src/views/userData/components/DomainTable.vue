@@ -12,14 +12,17 @@
         </el-option>
       </el-select>
     </el-col>
-    <el-col :xs="8" :sm="12" :lg="4">
+    <el-col :xs="8" :sm="12" :lg="2">
       <el-checkbox v-model="showValid" @change="showValidChange">显示已绑定</el-checkbox>
     </el-col>
-    <el-col :xs="8" :sm="12" :lg="4">
+    <el-col :xs="8" :sm="12" :lg="2">
       <el-checkbox v-model="showWhite" @change="showWhitelistChange" :disabled="filters[1].value">显示白名单</el-checkbox>
     </el-col>
-    <el-col :xs="8" :sm="12" :lg="4">
+    <el-col :xs="8" :sm="12" :lg="2">
       <el-checkbox v-model="showBlack" @change="showBlacklistChange" :disabled="filters[2].value">显示黑名单</el-checkbox>
+    </el-col>
+    <el-col :xs="8" :sm="12" :lg="4">
+      <el-checkbox v-model="showNative" @change="showNativeChange">显示Native SDK</el-checkbox>
     </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
       <el-input 
@@ -119,6 +122,7 @@
         showValid: true,
         showWhite: false,
         showBlack: false,
+        showNative: false,
         tableData: [],
         tableParam: {
           page: 1,
@@ -136,6 +140,10 @@
           },
           {
             name: 'whitelist',
+            value: false
+          },
+          {
+            name: 'native',
             value: false
           },
           {
@@ -284,6 +292,13 @@
             item.value = value
         })
         this.fetchTableData()
+      },
+      showNativeChange(value) {
+          this.filters.forEach(item => {
+              if(item.name === 'native')
+                  item.value = value
+          })
+          this.fetchTableData()
       },
       formatData(data) {
         data.forEach(item => {

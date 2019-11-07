@@ -151,7 +151,7 @@ export default {
     },
     verifySuccess: '验证成功',
     title: '说明：',
-    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。',
+    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定200个域名。',
   },
   documentation: {
     documentation: '使用文档',

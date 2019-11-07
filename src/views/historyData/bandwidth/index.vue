@@ -3,8 +3,8 @@
     <el-form :inline="true">
       <el-form-item :xs="10" :sm="6" :lg="4">
         <el-radio-group v-model="radio" @change="selectChange">
-          <!--<el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>-->
-          <!--<el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>-->
+          <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
+          <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
           <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
           <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
         </el-radio-group>
@@ -65,10 +65,10 @@ export default {
     dataChange(date) {
       this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
     },
-    getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
-      fetchHttpTraffic(start, end).then(res => {
-        this.formatHttpData(res)
-        fetchP2PTraffic(start, end).then(res => {
+    getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1]), gran) {
+      fetchHttpTraffic(start, end, gran).then(res => {
+        this.formatHttpData(res, gran)
+        fetchP2PTraffic(start, end, gran).then(res => {
             this.formatData(res)
         })
       })
@@ -76,16 +76,16 @@ export default {
     selectChange(val) {
       switch (val) {
         case 'hour':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'hour')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().subtract(1, 'hour')), this.getTimeStamp(moment()), 5)
           break;
         case 'day':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()), 5)
           break;
         case 'week':
-          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'week')), this.getTimeStamp(moment().startOf('day')))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'week')), this.getTimeStamp(moment().startOf('day')), 1440)
           break;
         case 'month':
-          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'month')), this.getTimeStamp(moment().startOf('day')))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'month')), this.getTimeStamp(moment().startOf('day')), 1440)
           break;
         default:
           break;
@@ -93,14 +93,12 @@ export default {
     },
     formatData(res) {
       const data = res.data.list
-      this.option.xData = []
       this.bandwidthData.p2p = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
         this.bandwidthData.p2p.push(getTrafficNum(item.value, this.option.unit))
       })
     },
-    formatHttpData(res) {
+    formatHttpData(res, gran) {
       const data = res.data.list
       const trafficValue = [...res.data.list]
       trafficValue.sort(function(a, b) {
@@ -110,7 +108,8 @@ export default {
       this.option.xData = []
       this.bandwidthData.http = []
       data.forEach(item => {
-        this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
+        let format = gran === 5 ? 'HH:mm' : 'MM-DD'
+        this.option.xData.push(moment(item.ts * 1000).format(format))
         this.bandwidthData.http.push(getTrafficNum(item.value, this.option.unit))
       })
     },

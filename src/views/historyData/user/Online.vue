@@ -26,7 +26,7 @@
       <json-excel
               :fetch = "dataForExcel"
               type    = "csv"
-              name    = "日峰月均.csv">
+              :name    = "excelName">
         导出Excel
       </json-excel>
     </el-button>
@@ -59,7 +59,7 @@ export default {
         xData: [],
         yName: '在线人数',
       },
-      // dataForExcel: [],
+      excelName: '',
     }
   },
   computed: {
@@ -118,7 +118,7 @@ export default {
         let month = nowdays.getMonth();
         let lastMonth, lastYear;
         if(month === 0){
-            lastMonth = 12
+            lastMonth = 11
             lastYear = year-1;
         } else {
             lastMonth = month-1
@@ -143,12 +143,13 @@ export default {
         let peakArr = []
         let sum = 0;
         for (let [day, peak] of peakMap.entries()) {
-            peakArr.push({"日期":day, "日峰值":peak})
+            peakArr.push({"日期":day, "峰值":peak})
             sum += peak
         }
         // console.warn(peakArr)
         let average = Math.round(sum/peakArr.length)
-        peakArr.push({"日期":"平均值", "日峰值":average})
+        peakArr.push({"日期":"平均值", "峰值":average})
+        this.excelName = `${lastMonth+1}月份日峰月均.csv`
         return peakArr
     }
   }

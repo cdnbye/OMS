@@ -7,9 +7,12 @@ export function fetchNum(start, end) {
   })
 }
 
-export function fetchP2PTraffic(start, end) {
+export function fetchP2PTraffic(start, end, gran) {
+    if (!gran) {
+        gran = 1440
+    }
   return request({
-    url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=1440`,
+    url: `global/p2p?start_ts=${start}&end_ts=${end}&gran=${gran}`,
     method: 'get'
   })
 }
@@ -21,9 +24,12 @@ export function fetchP2PBandwidth(year, month) {
   })
 }
 
-export function fetchHttpTraffic(start, end) {
+export function fetchHttpTraffic(start, end, gran) {
+  if (!gran) {
+    gran = 1440
+  }
   return request({
-    url: `global/http?start_ts=${start}&end_ts=${end}&gran=1440`,
+    url: `global/http?start_ts=${start}&end_ts=${end}&gran=${gran}`,
     method: 'get'
   })
 }

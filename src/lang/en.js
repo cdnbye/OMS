@@ -116,7 +116,8 @@ export default {
   domainTable: {
     bindDomain: 'Bind Your Domain',
     bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com\nNotice: Verify the domain of the web site that host the player, or the domain of src while using iframe.',
-    bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
+    // bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
+    bindWarning: '',
     bindDomainTError: 'PLease input the correct domain!',
     domain: 'Domain',
     status: 'State',
@@ -151,7 +152,7 @@ export default {
     },
     verifySuccess: 'verify successfully',
     title: 'Notice:',
-    desc: 'This page is used to bind domain name, mobile native App and Electron App do not require to bind domain name.',
+    desc: 'This page is used to bind domain name, mobile native App and Electron App do not require to bind domain name. Each user can bind up to 200 domain names',
   },
   documentation: {
     documentation: 'Documentation',

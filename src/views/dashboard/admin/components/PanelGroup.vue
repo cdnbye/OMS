@@ -49,7 +49,7 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.frequency_day }}</span>
-          <div class="card-panel-text">今日服务人数</div>
+          <div class="card-panel-text">今日服务次数</div>
         </div>
       </div>
     </el-col>

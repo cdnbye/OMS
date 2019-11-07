@@ -25,7 +25,7 @@ export default {
       list: [
         { url: 'signalcloud.cdnbye.com', value: 0 },
         { url: 'signal.cdnbye.com', value: 0 },
-        { url: 'signalhub.cdnbye.com', value: 0 },
+        { url: 'opensignal.320072.top', value: 0 },
         { url: 'opensignal.cdnbye.com', value: 0 },
       ]
     }
