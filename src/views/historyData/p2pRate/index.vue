@@ -93,10 +93,10 @@ export default {
           this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
           break;
         case 'week':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'week')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'week')), this.getTimeStamp(moment().startOf('day')))
           break;
         case 'month':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'month')), this.getTimeStamp(moment()))
+          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'month')), this.getTimeStamp(moment().startOf('day')))
           break;
         default:
           break;

@@ -43,7 +43,7 @@ export default {
     return {
       lineChartData: {
         P2P: [],
-        HTTP: [],                // TODO 打开
+        HTTP: [],
       },
       date: [moment().startOf('day').subtract(1, 'week'), moment().startOf('day')],
       radio: 'week',
@@ -77,7 +77,7 @@ export default {
       // this.p2pData = []
       this.option.xData = []
       this.lineChartData.P2P = []
-      this.lineChartData.HTTP = []                 // TODO 打开
+      this.lineChartData.HTTP = []
       let gran = 5    // 显示粒度5分钟
       if (this.displayDay) {
           gran = 1440     // 显示粒度一天
@@ -100,7 +100,6 @@ export default {
               } else {
                   this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
               }
-              // TODO 打开
               this.lineChartData.HTTP.push(getTrafficNum(item.value, this.option.unit))
           })
 
