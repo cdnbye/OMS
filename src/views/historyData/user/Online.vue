@@ -149,7 +149,7 @@ export default {
         // console.warn(peakArr)
         let average = Math.round(sum/peakArr.length)
         peakArr.push({"日期":"平均值", "峰值":average})
-        this.excelName = `${lastMonth+1}月份日峰月均.csv`
+        this.excelName = `${this.currentDomain.domain} ${lastMonth+1}月份日峰月均.csv`
         return peakArr
     }
   }

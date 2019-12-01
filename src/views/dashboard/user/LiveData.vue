@@ -402,7 +402,7 @@ export default {
       }
     },
     getUserDomain() {
-      fetchUserDomain(1, 10).then(res => {
+      fetchUserDomain(1, 200).then(res => {
         if(res.data) {
           let hasValidDomain = false
           if(!this.currentDomain.id) {
