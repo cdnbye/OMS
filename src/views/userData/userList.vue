@@ -70,6 +70,32 @@
       </template>
     </el-table-column>
 
+    <el-table-column align="center" label="流量更新(GB)">
+      <template slot-scope="scope">
+        <el-popover
+          trigger="manual"
+          placement="top"
+          width="160"
+          :ref="'popover-' + scope.row.uid + 'traffic'"
+          >
+          <p>{{`更新流量至${scope.row.flow.remain}GB吗？`}}</p>
+          <div style="text-align: right; margin: 0">
+            <el-button type="text" size="mini" @click="pClose(scope.row.uid + 'traffic')">{{ $t('common.cancel') }}</el-button>
+            <el-button type="primary" size="mini" @click="flowSubmit(scope.row)">{{ $t('common.ok') }}</el-button>
+          </div>
+        </el-popover>
+        <el-row :gutter="4">
+          <el-col :span="20">
+            <el-input v-model="scope.row.flow.remain" />
+          </el-col>
+          <el-col :span="4">
+            <el-button type="text" size="small" @click="pShow(scope.row.uid + 'traffic')">修改</el-button>
+            <!-- <el-button type="text" size="small" @click="flowSubmit(scope.row)">修改</el-button> -->
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+
     <el-table-column label="passwd" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
         <el-button type="primary" size="mini" @click="copyPassword(scope.row.raw_pass)">Copy</el-button>
@@ -93,7 +119,7 @@
 
   <script>
   import { fetchUserList, fetchAdminUser } from '@/api/userDomain'
-  import { frozenUser, adminUser, searchUser } from '@/api/user'
+  import { frozenUser, adminUser, searchUser, userTrafficChange } from '@/api/user'
   import { copy } from '@/utils'
   import moment from 'moment'
 
@@ -151,6 +177,22 @@
       pClose(id) {
         this.$refs[`popover-` + id].doClose()
       },
+      flowSubmit(item) {
+        const data = {
+          uid: item.uid,
+          remain_traffic: item.flow.remain * 1024 * 1024
+        }
+        userTrafficChange(data).then(res => {
+          if(res.ret === 0) {
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            })
+            this.pClose(item.uid + 'traffic')
+            this.fetchTableData()
+          }
+        })
+      },
       showAdminUser(value) {
         this.loading = true
         if(value) {
@@ -175,6 +217,7 @@
         temp.forEach(item => {
           item.reg_date = moment(item.reg_date * 1000).format('YYYY-MM-DD HH:mm')
           item.checkin = moment(item.checkin).format('YYYY-MM-DD HH:mm')
+          item.flow.remain = (item.flow.remain / 1024 / 1024).toFixed(3)
         })
         return temp
       },

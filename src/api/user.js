@@ -52,3 +52,12 @@ export function searchUser(mail) {
     method: 'get'
   })
 }
+
+// 用户剩余付费流量变动
+export function userTrafficChange(data) {
+  return request({
+    url: `user/remain_traffic`,
+    method: 'post',
+    data
+  })
+}
