@@ -2,13 +2,16 @@
   <el-card :body-style="device === 'mobile' ? {padding: '0'} : {padding: '50px'}">
     <el-form ref="configForm" :model="configForm" label-width="120px">
       <el-form-item label="返回节点数量">
-        <el-slider v-model="configForm.max_peer_num" :max="30" @change="numChange" show-input></el-slider>
+        <el-slider v-model="configForm.max_peer_num" :max="50" @change="numChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="节点最大连接数">
-        <el-slider v-model="configForm.max_peer_conn" :max="30" @change="connChange" show-input></el-slider>
+        <el-slider v-model="configForm.max_peer_conn" :max="50" @change="maxConnChange" show-input></el-slider>
+      </el-form-item>
+      <el-form-item label="节点最小连接数">
+        <el-slider v-model="configForm.min_peer_conn" :max="15" @change="minConnChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="上报时间间隔">
-        <el-slider v-model="configForm.report_interval" :min="10" :max="60" @change="intervalChange" show-input></el-slider>
+        <el-slider v-model="configForm.report_interval" :min="10" :max="90" @change="intervalChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="同时在线节点数">
         <el-slider v-model="configForm.max_nodes" :min="0" :max="1000000" @change="maxNodesChange" show-input></el-slider>
@@ -38,6 +41,7 @@ export default {
       configForm: {
         max_peer_num: 0,
         max_peer_conn: 0,
+        min_peer_conn: 0,
         report_interval: 0,
         tracker_open: false,
         max_nodes: 0,
@@ -78,7 +82,10 @@ export default {
     numChange() {
       this.isChanged = true
     },
-    connChange() {
+    maxConnChange() {
+      this.isChanged = true
+    },
+    minConnChange() {
       this.isChanged = true
     },
     intervalChange() {

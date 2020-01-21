@@ -21,6 +21,7 @@ export default {
     config: 'Config management',
     trackerConfig: 'Tracker',
     SignalConfig: 'Signal',
+    AnnounceConfig: 'Announce',
     userConfig: 'user',
 
     dataAnalysis: 'Advanced Analysis',
@@ -91,7 +92,7 @@ export default {
     tip: 'You have not bound domain name or created app, are you going now?',
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
-    serveNum: 'Total Views Today',
+    serveNum: 'People Served Today',
     maxOnlineNum: 'Peak Concurrent Viewers',
     remain: 'Remaining Purchased Traffic',
     monthlyRemain: 'Remaining Traffic Today',
@@ -252,7 +253,8 @@ export default {
     configSuccess: 'Successful configuration',
     configFail: 'Only paid users can turn P2P on / off',
     desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
-    switchErr: 'At least one domain name needs to remain open.'
+    switchErr: 'At least one domain name needs to remain open.',
+    name: 'Domain/AppId',
   },
   app: {
     createToken: 'Create Token',

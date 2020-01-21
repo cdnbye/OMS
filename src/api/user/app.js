@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function fetchList(uid) {
+export function fetchList(uid, page, pageSize) {
   return request({
-    url: `sdk/user_id/${uid}/info`,
+    url: `sdk/user_id/${uid}/info?page=${page}&page_size=${pageSize}`,
     method: 'get'
   })
 }

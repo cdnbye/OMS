@@ -585,6 +585,16 @@ export const asyncRouterMap = [
           roles: ['admin'],
           noCache: true
         }
+      },
+      {
+        path: 'announce',
+        component: () => import('@/views/trackerConfig/announce'),
+        name: 'Announce',
+        meta: {
+            title: 'AnnounceConfig',
+            roles: ['admin'],
+            noCache: true
+        }
       }
     ]
   },

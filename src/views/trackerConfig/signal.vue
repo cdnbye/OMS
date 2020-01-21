@@ -25,8 +25,9 @@ export default {
       list: [
         { url: 'signalcloud.cdnbye.com', value: 0 },
         { url: 'signal.cdnbye.com', value: 0 },
-        { url: 'opensignal.320072.top', value: 0 },
+        { url: 'opensignal.gcvow.top', value: 0 },
         { url: 'opensignal.cdnbye.com', value: 0 },
+        { url: 'signal.p2pengine.net:8089', value: 0 },
       ]
     }
   },

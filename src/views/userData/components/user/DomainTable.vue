@@ -213,9 +213,9 @@
       },
       fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
         this.loading = true
-        fetchUserDomain(page, pageSize).then(res => {
+        fetchUserDomain(page, pageSize, {web: true}).then(res => {
           if(res.data) {
-            this.tableData = [...res.data].filter((item) => item.native === false)
+            this.tableData = [...res.data]
             const validDomain = res.data.filter(item => item.isValid === 1)
             store.dispatch('setValidDomain', validDomain)
           }

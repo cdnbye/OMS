@@ -16,3 +16,30 @@ export function configTracker(data) {
     data
   })
 }
+
+// 获取announce
+export function fetchAnnounces() {
+    return request({
+        url: '/tracker/announces',
+        method: 'get',
+    })
+}
+
+// 增加announce
+export function addAnnounce(data) {
+    return request({
+        url: '/tracker/announces',
+        method: 'post',
+        data
+    })
+}
+
+// 删除announce
+export function removeAnnounce(data) {
+    return request({
+        url: '/tracker/announces',
+        method: 'delete',
+        data
+    })
+}
+

@@ -2,7 +2,7 @@
   <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
     <el-alert :title="$t('p2pConfig.desc')" style="margin-bottom: 20px" />
     <el-table border :data="tableData" v-loading="loading">
-      <el-table-column align="center" prop="domain" :label="$t('domainTable.domain')"></el-table-column>
+      <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
       <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.status')">
         <template slot-scope="scope">
           <span :style="scope.row.blocked?'color: red':''">
@@ -16,6 +16,18 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <div class="pagination-container">
+      <el-pagination
+              layout="sizes, prev, pager, next"
+              :page-sizes="[10, 20, 50, 100]"
+              :page-size="tableParam.pageSize"
+              :current-page="tableParam.page"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange">
+      </el-pagination>
+    </div>
+
   </div>
 </template>
 
@@ -30,7 +42,11 @@ export default {
     return {
       loading: false,
       tableData: [],
-      switchValue: true
+      switchValue: true,
+      tableParam: {
+          page: 1,
+          pageSize: 10
+      },
     }
   },
   computed: {
@@ -39,7 +55,7 @@ export default {
     ])
   },
   mounted() {
-    this.fetchTableData(1, 20)
+    this.fetchTableData()
   },
   methods: {
     formatterStatus(row) {
@@ -48,11 +64,11 @@ export default {
       }
       return row.disable_p2p ? this.$t('p2pConfig.close') : this.$t('p2pConfig.open')
     },
-    fetchTableData(page, pageSize) {
+    fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
       this.loading = true
-      fetchUserDomain(page, pageSize).then(res => {
+      fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
         if(res.data) {
-          this.tableData = res.data.filter(item => item.isValid === 1 )
+          this.tableData = res.data
         }
         this.loading = false
       }).catch(err => {
@@ -107,7 +123,15 @@ export default {
       //     })
       //   }
       // }
-    }
+    },
+    handleSizeChange(pageSize) {
+        this.tableParam.pageSize = pageSize
+        this.fetchTableData()
+    },
+    handleCurrentChange(page) {
+        this.tableParam.page = page
+        this.fetchTableData()
+    },
   },
 }
 </script>

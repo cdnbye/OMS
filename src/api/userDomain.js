@@ -57,9 +57,16 @@ export function fetchUserList(page, pageSize, order) {
 }
 
 // 获取某用户的域名列表
-export function fetchUserDomain(page, pageSize) {
+export function fetchUserDomain(page, pageSize, queryMap) {
+  let url = `user/user_id/${getID()}/domain?page=${page}&page_size=${pageSize}`;
+
+  for (let query in queryMap) {
+      if (queryMap[query]) {
+          url = `${url}&${query}=1`
+      }
+  }
   return request({
-    url: `user/user_id/${getID()}/domain?page=${page}&page_size=${pageSize}`,
+    url,
     method: 'get'
   })
 }

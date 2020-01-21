@@ -21,6 +21,7 @@ export default {
     config: '配置管理',
     trackerConfig: 'tracker配置',
     SignalConfig: '信令管理',
+    AnnounceConfig: 'Announce管理',
     userConfig: '客户管理',
 
     dataAnalysis: '高级数据分析',
@@ -91,7 +92,7 @@ export default {
     tip: '您还未绑定域名或创建APP，是否现在就去？',
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
-    serveNum: '今日观看次数',
+    serveNum: '今日服务人次',
     maxOnlineNum: '最高在线人数',
     remain: '剩余流量包流量',
     monthlyRemain: '今日剩余流量',
@@ -102,7 +103,7 @@ export default {
     liveDis: '直播点播分布',
     natDis: '网络类型分布',
     p2pTip: '采用北京时间计时。<br/>如果节省的流量未达到期望，请参考<a style="color: #337ab7" href="https://docs.cdnbye.com/#/m3u8" target="_blank">文档</a>进行配置。',
-    freeTip: '绑定后的域名每日赠送5GB流量，签到后再额外赠送20GB流量，次日清零。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用付费流量抵扣。<br/>如果可用流量为零，则停止P2P服务。',
+    freeTip: '绑定后的域名每日赠送5GB流量，签到后再额外赠送20GB流量，次日重置。<br/>消耗的P2P流量先用免费流量抵扣，超出部分用付费流量抵扣。<br/>如果可用流量为零，则停止P2P服务。',
     remainTip: '请及时购买<a style="color: #337ab7" href="#/user/package">流量包</a>或者<a style="color: #337ab7" href="#/user/monthly_package">包年包月套餐</a>，以避免服务中断。',
     checkin: '签到免费领流量',
     checkinSuccess: '签到成功！',
@@ -251,7 +252,8 @@ export default {
     configSuccess: '配置成功',
     configFail: '只有付费用户才能开启/关闭P2P',
     desc: '如果您在同一个账号同时绑定了多个域名，则开启P2P的所有域名会共享流量包。您可以在这里关闭某个域名的P2P服务从而节省流量包消耗。',
-    switchErr: '至少一个域名需要保持开启状态。'
+    switchErr: '至少一个域名需要保持开启状态。',
+    name: '域名/AppId'
   },
   app: {
     createToken: '生成Token',

@@ -86,6 +86,18 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <div class="pagination-container">
+      <el-pagination
+              layout="sizes, prev, pager, next"
+              :page-sizes="[10, 20, 50, 100]"
+              :page-size="tableParam.pageSize"
+              :current-page="tableParam.page"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange">
+      </el-pagination>
+    </div>
+
   </template>
 
   <el-dialog  :visible.sync="dialogFormVisible" :width="device==='mobile'?'85%':''">
@@ -160,7 +172,11 @@
           app_id: '',
           platform : '',
         },
-        copyImg
+        copyImg,
+        tableParam: {
+            page: 1,
+            pageSize: 10
+        },
       }
     },
     components: {
@@ -192,9 +208,9 @@
             this.tokenLoading = false
           })
       },
-      fetchData() {
+      fetchData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
         this.tableLoading = true
-        fetchList(getID()).then(res => {
+        fetchList(getID(), page, pageSize).then(res => {
           if(res.data) {
             if(res.data.token) {
               this.inputToken = res.data.token
@@ -278,7 +294,15 @@
       },
       handleCopy() {
         copy(this.inputToken, () => {this.$message.success('Copied(已复制)')})
-      }
+      },
+      handleSizeChange(pageSize) {
+          this.tableParam.pageSize = pageSize
+          this.fetchData()
+      },
+      handleCurrentChange(page) {
+          this.tableParam.page = page
+          this.fetchData()
+      },
     },
     mounted() {
       this.fetchData()

@@ -70,7 +70,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column label="action" align="center" class-name="small-padding fixed-width">
+    <el-table-column label="passwd" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
         <el-button type="primary" size="mini" @click="copyPassword(scope.row.raw_pass)">Copy</el-button>
       </template>

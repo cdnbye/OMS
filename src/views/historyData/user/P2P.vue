@@ -22,6 +22,14 @@
     </el-form>
     <LineChart :chart-data="lineChartData" :option="option" />
     <NoBindTip />
+    <el-button type="primary" style="float: left">
+      <json-excel
+              :fetch = "dataForExcel"
+              type    = "csv"
+              :name    = "excelName">
+        导出Excel
+      </json-excel>
+    </el-button>
   </div>
 </template>
 
@@ -32,12 +40,14 @@ import LineChart from '@/components/LineChart'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/user/historyData'
 import { mapGetters } from 'vuex'
 import { formatTraffic, getTrafficNum } from '@/utils/format'
+import JsonExcel from 'vue-json-excel'
 
 export default {
   name: 'Bandwidth',
   components: {
     LineChart,
-    NoBindTip
+    NoBindTip,
+    JsonExcel
   },
   data() {
     return {
@@ -52,7 +62,8 @@ export default {
         xData: [],
         unit: '%',
         yName: 'Traffic'
-      }
+      },
+      excelName: '',
     }
   },
   computed: {
@@ -125,6 +136,40 @@ export default {
     },
     getTimeStamp(date) {
       return moment(date).format('X')
+    },
+
+    async dataForExcel() {
+        let nowdays = new Date();
+        let year = nowdays.getFullYear();
+        let month = nowdays.getMonth();
+        let lastMonth, lastYear;
+        if(month === 0){
+            lastMonth = 11
+            lastYear = year-1;
+        } else {
+            lastMonth = month-1
+            lastYear = year;
+        }
+        // 获取上个月第一天
+        var firstdate = new Date(lastYear, lastMonth, 1);
+        // 获取本月第一天
+        var enddate = new Date(year, month, 1);
+        let res = await fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(firstdate), this.getTimeStamp(enddate), 1440)
+        const data = res.data.list
+        let peakArr = []
+        let sum = 0;
+        let column = "流量("+this.option.unit+")"
+        data.forEach((item, index) => {
+            let day = moment(item.ts * 1000).format('MM-DD')
+            let peak = getTrafficNum(item.value, this.option.unit)
+            sum += parseFloat(peak)
+            peakArr.push({"日期":day, [column]:peak})
+        })
+        console.warn(peakArr)
+        let average = (sum/peakArr.length).toFixed(2)
+        peakArr.push({"日期":"平均值", [column]:average})
+        this.excelName = `${this.currentDomain.domain} ${lastMonth+1}月份P2P流量.csv`
+        return peakArr
     }
   }
 }
