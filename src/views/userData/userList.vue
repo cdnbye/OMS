@@ -72,7 +72,7 @@
 
     <el-table-column align="center" label="流量更新(GB)">
       <template slot-scope="scope">
-        <el-popover
+        <!-- <el-popover
           trigger="manual"
           placement="top"
           width="160"
@@ -83,14 +83,13 @@
             <el-button type="text" size="mini" @click="pClose(scope.row.uid + 'traffic')">{{ $t('common.cancel') }}</el-button>
             <el-button type="primary" size="mini" @click="flowSubmit(scope.row)">{{ $t('common.ok') }}</el-button>
           </div>
-        </el-popover>
+        </el-popover> -->
         <el-row :gutter="4">
           <el-col :span="20">
             <el-input v-model="scope.row.flow.remain" />
           </el-col>
           <el-col :span="4">
-            <el-button type="text" size="small" @click="pShow(scope.row.uid + 'traffic')">修改</el-button>
-            <!-- <el-button type="text" size="small" @click="flowSubmit(scope.row)">修改</el-button> -->
+            <el-button type="text" size="small" @click="handleEditRemain(scope.row)">修改</el-button>
           </el-col>
         </el-row>
       </template>
@@ -122,6 +121,7 @@
   import { frozenUser, adminUser, searchUser, userTrafficChange } from '@/api/user'
   import { copy } from '@/utils'
   import moment from 'moment'
+  import { MessageBox } from 'element-ui'
 
   export default {
     data() {
@@ -177,6 +177,16 @@
       pClose(id) {
         this.$refs[`popover-` + id].doClose()
       },
+      handleEditRemain(item) {
+         MessageBox.confirm(`更新流量至${item.flow.remain}GB吗？`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.flowSubmit(item)
+        })
+      },
       flowSubmit(item) {
         const data = {
           uid: item.uid,
@@ -188,7 +198,6 @@
               type: 'success',
               message: '操作成功'
             })
-            this.pClose(item.uid + 'traffic')
             this.fetchTableData()
           }
         })
