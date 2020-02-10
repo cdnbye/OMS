@@ -93,7 +93,7 @@ export default {
     online: '当前在线人数',
     p2pTraffic: '今日P2P流量',
     serveNum: '今日服务人次',
-    maxOnlineNum: '最高在线人数',
+    maxOnlineNum: '历史最高在线人数',
     remain: '剩余流量包流量',
     monthlyRemain: '今日剩余流量',
     free: '剩余免费流量',

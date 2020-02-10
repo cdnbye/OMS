@@ -142,12 +142,18 @@ export default {
 
         let peakArr = []
         let sum = 0;
+        let realDays = 0;          // 有人数在线的天数
         for (let [day, peak] of peakMap.entries()) {
             peakArr.push({"日期":day, "峰值":peak})
             sum += peak
+            if (peak !== 0) {
+                realDays ++;
+            }
         }
-        // console.warn(peakArr)
-        let average = Math.round(sum/peakArr.length)
+        let average = 0
+        if (realDays > 0) {
+            average = Math.round(sum/realDays)
+        }
         peakArr.push({"日期":"平均值", "峰值":average})
         this.excelName = `${this.currentDomain.domain} ${lastMonth+1}月份日峰月均.csv`
         return peakArr

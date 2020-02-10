@@ -28,6 +28,7 @@ export default {
         { url: 'opensignal.gcvow.top', value: 0 },
         { url: 'opensignal.cdnbye.com', value: 0 },
         { url: 'signal.p2pengine.net:8089', value: 0 },
+        { url: 'p2p.bjxkhc.com:8089', value: 0 },
       ]
     }
   },

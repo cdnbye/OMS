@@ -11,10 +11,10 @@
         <el-slider v-model="configForm.min_peer_conn" :max="15" @change="minConnChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="上报时间间隔">
-        <el-slider v-model="configForm.report_interval" :min="10" :max="90" @change="intervalChange" show-input></el-slider>
+        <el-slider v-model="configForm.report_interval" :min="10" :max="120" @change="intervalChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="同时在线节点数">
-        <el-slider v-model="configForm.max_nodes" :min="0" :max="1000000" @change="maxNodesChange" show-input></el-slider>
+        <el-slider v-model="configForm.max_nodes" :min="0" :max="2000000" @change="maxNodesChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="服务状态">
         <el-switch v-model="configForm.tracker_open" active-color="green" inactive-color="red" :disabled="true"></el-switch>

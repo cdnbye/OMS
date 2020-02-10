@@ -92,14 +92,14 @@
         </div>
       </el-col>
 
-      <!--<el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">-->
-        <!--<div class="card-panel">-->
-          <!--<div class="card-panel-description">-->
-            <!--<span class="card-panel-num">{{ statis.num_max }}</span>-->
-            <!--<div class="card-panel-text">{{ $t('dashboard.maxOnlineNum') }}</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</el-col>-->
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.num_max }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.maxOnlineNum') }}</div>
+          </div>
+        </div>
+      </el-col>
     </el-row>
     <Dis :data="disData"/>
     <NoBindTip />
