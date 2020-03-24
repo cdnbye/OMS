@@ -5,14 +5,14 @@
       <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
       <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.status')">
         <template slot-scope="scope">
-          <span :style="scope.row.blocked?'color: red':''">
+          <span :style="scope.row.blocked || scope.row.reviewing?'color: red':''">
             {{ formatterStatus(scope.row) }}
           </span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('domainTable.operation')" align="center">
         <template slot-scope="scope">
-          <el-switch v-if="!scope.row.blocked" :value="!scope.row.disable_p2p" active-color="#13ce66" inactive-color="#ff4949" @change="value => handleSwitchChange(scope.row, value)"> </el-switch>
+          <el-switch v-if="!scope.row.blocked && !scope.row.reviewing" :value="!scope.row.disable_p2p" active-color="#13ce66" inactive-color="#ff4949" @change="value => blacklistChange(scope.row, value)"> </el-switch>
         </template>
       </el-table-column>
     </el-table>
@@ -60,7 +60,10 @@ export default {
   methods: {
     formatterStatus(row) {
       if(row.blocked) {
-        return this.$t('p2pConfig.illegal')
+          return this.$t('p2pConfig.illegal')
+      }
+      if(row.reviewing) {
+        return this.$t('p2pConfig.reviewing')
       }
       return row.disable_p2p ? this.$t('p2pConfig.close') : this.$t('p2pConfig.open')
     },
@@ -109,7 +112,7 @@ export default {
           console.log(err)
         })
     },
-    handleSwitchChange(domain, value) {
+    blacklistChange(domain, value) {
       const data = { disable: !value }
       this.handleP2PConfig(domain.uid, domain.id, data)
       // if(value) {

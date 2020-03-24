@@ -22,6 +22,15 @@ export function fetchDomain(page, pageSize, order, filters) {
   })
 }
 
+// 获取正在审核域名列表
+export function fetchDomainUnderReview(page, pageSize) {
+    let url = `host/review?page=${page}&page_size=${pageSize}`
+    return request({
+        url,
+        method: 'get'
+    })
+}
+
 // 将域名拉黑或从黑名单移除
 export function blockDomain(data) {
   return request({
@@ -38,6 +47,15 @@ export function whiteDomain(data) {
     method: 'post',
     data
   })
+}
+
+// 将域名加入或从白名单移除
+export function reviewDomain(data) {
+    return request({
+        url: `/host/review`,
+        method: 'post',
+        data
+    })
 }
 
 // 查找域名

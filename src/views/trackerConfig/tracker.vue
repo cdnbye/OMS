@@ -13,6 +13,9 @@
       <el-form-item label="上报时间间隔">
         <el-slider v-model="configForm.report_interval" :min="10" :max="120" @change="intervalChange" show-input></el-slider>
       </el-form-item>
+      <el-form-item label="ShareOnly模式">
+        <el-switch v-model="configForm.share_only" active-color="green" inactive-color="red" @change="shareOnlyChange"></el-switch>
+      </el-form-item>
       <el-form-item label="同时在线节点数">
         <el-slider v-model="configForm.max_nodes" :min="0" :max="2000000" @change="maxNodesChange" show-input></el-slider>
       </el-form-item>
@@ -45,6 +48,7 @@ export default {
         report_interval: 0,
         tracker_open: false,
         max_nodes: 0,
+        share_only: false,
       }
     }
   },
@@ -94,6 +98,9 @@ export default {
     maxNodesChange() {
       this.isChanged = true
     },
+    shareOnlyChange() {
+      this.isChanged = true
+    }
   }
 }
 </script>

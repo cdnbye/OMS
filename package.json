@@ -5,10 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --mode production",
+    "build-p2": "vue-cli-service build --mode production2",
     "build-prerelease": "vue-cli-service build --mode test",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
     "deploy": "sh deploy.sh",
+    "deploy-github": "sh deploy_github.sh",
+    "deploy-p2": "sh deploy-p2.sh",
     "deploy-local": "sh deploy-local.sh",
     "deploy-prerelease": "sh deploy-prerelease.sh"
   },

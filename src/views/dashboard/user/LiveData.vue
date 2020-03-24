@@ -68,7 +68,7 @@
             <PointTip :content="$t('dashboard.remainTip')" />
           </div>
           <div class="card-panel-description">
-            <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.totalRemain).unit==='TB' && formatTraffic(statis.flow.totalRemain).num>=999?'+∞':formatTraffic(statis.flow.totalRemain).num }}</span>
+            <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.totalRemain).unit==='TB' && formatTraffic(statis.flow.totalRemain).num>=99999?'+∞':formatTraffic(statis.flow.totalRemain).num }}</span>
 
             <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.totalRemain).unit }})
               <div>{{ formatType() }}</div>

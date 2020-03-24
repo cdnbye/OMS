@@ -19,7 +19,7 @@
     <el-table-column align="center" prop="domain" :label="$t('domainTable.domain')"></el-table-column>
     <el-table-column align="center" :label="$t('domainTable.status')">
       <template slot-scope="scope">
-        <span :style="scope.row.blocked?'color: red':''">
+        <span :style="scope.row.blocked || scope.row.reviewing?'color: red':''">
           {{ formatterStatus(scope.row) }}
         </span>
       </template>
@@ -27,7 +27,7 @@
     <el-table-column align="center" prop="text" label="text"></el-table-column>
     <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
-        <template v-if="!scope.row.blocked">
+        <template>
           <el-button v-if="scope.row.isValid !== 1" type="primary" size="mini" @click="handleCheck(scope.row)">{{ $t('domainTable.certification') }}</el-button>
           <el-popover
             :style="device==='mobile'?'':'margin-left: 10px'"
@@ -139,9 +139,17 @@
           :rows="3"
           v-model="domainFormData.domain"
           :placeholder="$t('domainTable.bindDomainTip')"/>
+        <br>
+      </el-form-item>
+      <el-form-item prop="playUrl">
+        <el-input
+          type="textarea"
+          :rows="3"
+          v-model="domainFormData.playUrl"
+          :placeholder="$t('domainTable.playUrlTip')"/>
       </el-form-item>
     </el-form>
-    <div class="bind-warning" :style="device==='mobile'?'padding: 10px 8px 5px;':'padding: 10px 20px 20px;'">{{ $t('domainTable.bindWarning') }}</div>
+    <div class="bind-warning" :style="device==='mobile'?'padding: 0px 8px 5px;':'padding: 0px 20px 20px;'">{{ $t('domainTable.bindWarning') }}</div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
       <el-button type="primary" @click="addDomainSubmit">{{ $t('common.ok') }}</el-button>
@@ -192,10 +200,12 @@
         },
 
         domainFormData: {
-          domain: ''
+          domain: '',
+          playUrl: '',
         },
         domainRules: {
           domain: [{ required: true, trigger: 'blur', validator: formValidateURL }],
+          playUrl: [{ required: true, trigger: 'blur'}],
         }
       }
     },
@@ -281,7 +291,10 @@
       addDomainSubmit() {
         this.$refs.domainForm.validate(valid => {
           if(valid) {
-            bindDomain(this.domainFormData).then(res => {
+            bindDomain({
+                domain: this.domainFormData.domain,
+                play_url: this.domainFormData.playUrl,
+            }).then(res => {
               this.dialogVisible = false
               this.tableData.push(res.data)
             }).catch(error => {
@@ -295,6 +308,9 @@
       formatterStatus(row) {
         if(row.blocked) {
           return this.$t('domainTable.illegal')
+        }
+        if(row.reviewing) {
+          return this.$t('domainTable.reviewing')
         }
         return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('domainTable.available')
       },

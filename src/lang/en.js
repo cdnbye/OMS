@@ -117,6 +117,7 @@ export default {
   domainTable: {
     bindDomain: 'Bind Your Domain',
     bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com\nNotice: Verify the domain of the web site that host the player, or the domain of src while using iframe.',
+    playUrlTip: 'Enter the play link of your website or the guide page link to the play page\nhttps://example.com/playpage.html',
     // bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
     bindWarning: '',
     bindDomainTError: 'PLease input the correct domain!',
@@ -125,6 +126,7 @@ export default {
     available: 'Verified',
     unavailable: 'Unverified',
     illegal: 'Illegal website',
+    reviewing: 'Under review',
     operation: 'Operation',
     verifyDomain: 'Verify domain',
     certification: 'Verify',
@@ -250,6 +252,7 @@ export default {
     open: 'Open',
     close: 'Close',
     illegal: 'Illegal website',
+    reviewing: 'Under review',
     configSuccess: 'Successful configuration',
     configFail: 'Only paid users can turn P2P on / off',
     desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',

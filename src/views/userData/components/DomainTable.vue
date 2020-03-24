@@ -64,7 +64,7 @@
           <p>{{ scope.row.blocked ? '确认从黑名单中移除吗？' : '确定加入黑名单吗？' }}</p>
           <div style="text-align: right; margin: 0">
             <el-button type="text" size="mini" @click="pClose(scope.row.host_id)">{{ $t('common.cancel') }}</el-button>
-            <el-button type="primary" size="mini" @click="handleSwitchChange(scope.row)">{{ $t('common.ok') }}</el-button>
+            <el-button type="primary" size="mini" @click="blacklistChange(scope.row)">{{ $t('common.ok') }}</el-button>
           </div>
           <el-switch slot="reference" :value="scope.row.blocked" active-color="red" @change="pShow(scope.row.host_id)"></el-switch>
         </el-popover>
@@ -196,7 +196,7 @@
         window.open(`http://${value}`)
         window.open(`https://${value}`)
       },
-      handleSwitchChange(domain) {
+      blacklistChange(domain) {
         if(domain.whitelist && !domain.blocked) {
           this.pClose(domain.host_id)
           this.$message({

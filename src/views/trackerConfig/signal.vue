@@ -29,6 +29,9 @@ export default {
         { url: 'opensignal.cdnbye.com', value: 0 },
         { url: 'signal.p2pengine.net:8089', value: 0 },
         { url: 'p2p.bjxkhc.com:8089', value: 0 },
+        { url: 'signal.dianzhenkeji.com', value: 0 },
+        { url: 'signal.hdtvcdn.com:7078', value: 0 },
+        { url: 'sigyy.dianzhenkeji.com', value: 0 },
       ]
     }
   },

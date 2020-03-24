@@ -505,6 +505,15 @@ export const asyncRouterMap = [
         }
       },
       {
+          path: 'review',
+          component: () => import('@/views/userData/reviewDomainList'),
+          name: 'Review',
+          meta: {
+              title: '待审核域名',
+              roles: ['admin']
+          }
+      },
+      {
         path: 'list',
         component: () => import('@/views/userData/userList'),
         name: 'List',
