@@ -37,12 +37,11 @@ import { p2pConfig } from '@/api/user/p2pConfig'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'P2PConfig',
+  name: 'p2pSwitch',
   data() {
     return {
       loading: false,
       tableData: [],
-      switchValue: true,
       tableParam: {
           page: 1,
           pageSize: 10

@@ -62,18 +62,32 @@
         </div>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <!--流量包-->
+      <el-col v-if="statis.flow.remain > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="tip">
             <PointTip :content="$t('dashboard.remainTip')" />
           </div>
           <div class="card-panel-description">
-            <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.totalRemain).unit==='TB' && formatTraffic(statis.flow.totalRemain).num>=99999?'+∞':formatTraffic(statis.flow.totalRemain).num }}</span>
+            <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=99999?'+∞':formatTraffic(statis.flow.remain).num }}</span>
 
-            <div v-if="statis.type.product_type === 0" class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.totalRemain).unit }})
-              <div>{{ formatType() }}</div>
+            <div class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})
+              <!--<div>{{ formatType() }}</div>-->
             </div>
-            <div v-if="statis.type.product_type > 0" class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.totalRemain).unit }})
+          </div>
+        </div>
+      </el-col>
+
+      <!--包月套餐-->
+      <el-col v-if="statis.type.product_type > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.remainTip')" />
+          </div>
+          <div class="card-panel-description">
+            <span class="card-panel-num" :style="statis.flow.daily_remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.daily_remain).num }}</span>
+
+            <div class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.daily_remain).unit }})
               <div>{{ formatType() }}</div>
             </div>
           </div>

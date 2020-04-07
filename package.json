@@ -13,7 +13,7 @@
     "deploy-github": "sh deploy_github.sh",
     "deploy-p2": "sh deploy-p2.sh",
     "deploy-local": "sh deploy-local.sh",
-    "deploy-prerelease": "sh deploy-prerelease.sh"
+    "deploy-test": "sh deploy-prerelease.sh"
   },
   "dependencies": {
     "axios": "^0.18.0",

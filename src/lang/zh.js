@@ -35,6 +35,9 @@ export default {
     p2pConfig: 'P2P配置',
     edit: '编辑信息',
     appInfo: 'APP管理',
+    p2pSwitch: '开启/关闭P2P',
+    uploadRule: 'P2P分享策略',
+    activationRatio: '激活比率',
   },
   navbar: {
     logOut: '退出登录',
@@ -95,7 +98,7 @@ export default {
     serveNum: '今日服务人次',
     maxOnlineNum: '历史最高在线人数',
     remain: '剩余流量包流量',
-    monthlyRemain: '今日剩余流量',
+    monthlyRemain: '套餐今日剩余',
     free: '剩余免费流量',
     versionDis: '版本分布',
     tagDis: 'Tag分布',
@@ -117,7 +120,7 @@ export default {
   domainTable: {
     bindDomain: '绑定域名',
     bindDomainTip: '输入你的网站域名(请勿输入IP地址)，例如：www.example.com\n注意：域名是指播放器所在的域名（如果嵌入iframe则是src的域名），不是流地址(m3u8)的域名。\n端口不需要填写。',
-    playUrlTip: '输入你的网站播放链接或者可以进入播放页面的引导页链接\nhttps://example.com/playpage.html',
+    playUrlTip: '输入你的网站首页链接或者可以进入播放页面的引导页链接。网站不得包含非法内容，也不得包含跳转到非法内容的链接。\nhttps://example.com/index.html',
     bindWarning: 'CDNBye不对色情等非法内容提供P2P服务，请确保您的网站符合法律规范。',
     bindDomainTError: '请输入正确的域名！',
     domain: '域名',
@@ -194,7 +197,9 @@ export default {
     ok: '确定',
     cancel: '取消',
     deleteSuccess: '删除成功',
-    closeSuccess: '关闭成功'
+    closeSuccess: '关闭成功',
+    yes: 'YES',
+    no: 'NO',
   },
   historyData: {
     hour: '1小时内',
@@ -253,10 +258,19 @@ export default {
     illegal: '未通过审核',
     reviewing: '正在审核中',
     configSuccess: '配置成功',
-    configFail: '只有付费用户才能开启/关闭P2P',
+    // configFail: '只有付费用户才能开启/关闭P2P',
+    configFail: '操作失败',
     desc: '如果您在同一个账号同时绑定了多个域名，则开启P2P的所有域名会共享流量包。您可以在这里关闭某个域名的P2P服务从而节省流量包消耗。',
     switchErr: '至少一个域名需要保持开启状态。',
-    name: '域名/AppId'
+    name: '域名/AppId',
+    uploadRule: {
+      status: '只在wifi/有线网络上传数据',
+      desc: '这里可以配置在不同网络环境下的P2P分享策略，默认情况下允许在蜂窝网络上传数据。\n版本要求：web: 1.3+, android: 1.5+, iOS: 1.4+',
+    },
+    activationRatio: {
+      desc: '本页面用于配置P2P的激活比率，即连接p2p网络的设备占总设备的百分比。建议先设置一个较小的比例，然后观察P2P效果以及用户反馈，在确认正常的情况下逐步提高激活比率至100%。',
+      status: '激活比率(%)',
+    },
   },
   app: {
     createToken: '生成Token',

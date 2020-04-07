@@ -443,7 +443,7 @@ export const asyncRouterMap = [
   {
     path: '/user',
     component: Layout,
-    redirect: '/user/config',
+    redirect: '/user/p2pSwitch',
     meta: {
       title: 'p2pConfig',
       icon: 'link',
@@ -451,14 +451,34 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: '/user/config',
-        component: () => import('@/views/p2pConfig/user'),
-        name: 'P2PConfig',
+        path: 'p2pSwitch',
+        component: () => import('@/views/p2pConfig/user/p2pSwitch'),
+        name: 'p2pSwitch',
         meta: { 
-          title: 'p2pConfig',
+          title: 'p2pSwitch',
           roles: ['user'],
           noCache: true
         }
+      },
+      {
+          path: 'uploadRule',
+          component: () => import('@/views/p2pConfig/user/uploadRule'),
+          name: 'uploadRule',
+          meta: {
+              title: 'uploadRule',
+              roles: ['user'],
+              noCache: true
+          }
+      },
+      {
+          path: 'activationRatio',
+          component: () => import('@/views/p2pConfig/user/activationRatio'),
+          name: 'activationRatio',
+          meta: {
+              title: 'activationRatio',
+              roles: ['user'],
+              noCache: true
+          }
       }
     ]
   },

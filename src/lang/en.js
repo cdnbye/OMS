@@ -23,7 +23,6 @@ export default {
     SignalConfig: 'Signal',
     AnnounceConfig: 'Announce',
     userConfig: 'user',
-
     dataAnalysis: 'Advanced Analysis',
     p2pTraffic: 'Traffic Trend',
     onlineNum: 'Online Viewers Trend',
@@ -34,7 +33,10 @@ export default {
     order: 'Order History',
     p2pConfig: 'P2P Config',
     edit: 'edit',
-    appInfo: 'App Management'
+    appInfo: 'App Management',
+    p2pSwitch: 'Enable/Disable P2P',
+    uploadRule: 'Uploading rules',
+    activationRatio: 'Activation Ratio',
   },
   navbar: {
     logOut: 'Log Out',
@@ -94,8 +96,8 @@ export default {
     p2pTraffic: 'P2P Traffic Today',
     serveNum: 'People Served Today',
     maxOnlineNum: 'Peak Concurrent Viewers',
-    remain: 'Remaining Purchased Traffic',
-    monthlyRemain: 'Remaining Traffic Today',
+    remain: 'Remaining Package Traffic',
+    monthlyRemain: 'Remaining Daily Traffic',
     free: 'Remaining Free Traffic',
     versionDis: 'Version Distribution',
     tagDis: 'Tag Distribution',
@@ -117,7 +119,7 @@ export default {
   domainTable: {
     bindDomain: 'Bind Your Domain',
     bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com\nNotice: Verify the domain of the web site that host the player, or the domain of src while using iframe.',
-    playUrlTip: 'Enter the play link of your website or the guide page link to the play page\nhttps://example.com/playpage.html',
+    playUrlTip: 'Enter the link of your website homepage or the guide page link to the play page\nhttps://example.com/index.html',
     // bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
     bindWarning: '',
     bindDomainTError: 'PLease input the correct domain!',
@@ -192,10 +194,12 @@ export default {
     },
   },
   common: {
-    ok: 'OK',
+    ok: 'Confirm',
     cancel: 'Cancel',
     deleteSuccess: 'delete successfully',
-    closeSuccess: 'close successfully'
+    closeSuccess: 'close successfully',
+    yes: 'YES',
+    no: 'NO',
   },
   historyData: {
     hour: '1 Hour',
@@ -225,7 +229,7 @@ export default {
     comfirmCreate: 'Are you sure you want to create an order?',
     buyFlow: 'Buy traffic package',
     buyMonthly: 'Buy monthly/annual package',
-    monthly: 'Valid Until '
+    monthly: 'Until '
   },
   order: {
     createTime: 'Date',
@@ -254,10 +258,19 @@ export default {
     illegal: 'Illegal website',
     reviewing: 'Under review',
     configSuccess: 'Successful configuration',
-    configFail: 'Only paid users can turn P2P on / off',
+    // configFail: 'Only paid users can turn P2P on / off',
+    configFail: 'Operation failed',
     desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
     switchErr: 'At least one domain name needs to remain open.',
     name: 'Domain/AppId',
+    uploadRule: {
+      status: 'Only allow uploading on Wi-Fi and Ethernet',
+      desc: 'This configuration allows you to define your own uploading logic with regards to the network condition. By default, uploading on cellular is enabled.\nCompatibility: web: 1.3+, android: 1.5+, iOS: 1.4+',
+    },
+    activationRatio: {
+      desc: 'This config enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results.',
+      status: 'Activation Ratio(%)',
+    },
   },
   app: {
     createToken: 'Create Token',

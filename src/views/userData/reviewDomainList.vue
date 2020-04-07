@@ -86,6 +86,10 @@
                 window.open(`https://${value}`)
             },
             reviewClick(value) {
+                // console.warn(`reviewClick ${value}`)
+                if (!value.startsWith('http')) {
+                    value = 'http://' + value
+                }
                 window.open(`${value}`)
             },
             beianClick(value) {
