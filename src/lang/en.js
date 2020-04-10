@@ -35,7 +35,7 @@ export default {
     edit: 'edit',
     appInfo: 'App Management',
     p2pSwitch: 'Enable/Disable P2P',
-    uploadRule: 'Uploading rules',
+    uploadRule: 'Uploading Rules',
     activationRatio: 'Activation Ratio',
   },
   navbar: {
@@ -253,8 +253,8 @@ export default {
   },
   p2pConfig: {
     status: 'Status',
-    open: 'Open',
-    close: 'Close',
+    open: 'Opened',
+    close: 'Closed',
     illegal: 'Illegal website',
     reviewing: 'Under review',
     configSuccess: 'Successful configuration',
@@ -268,7 +268,7 @@ export default {
       desc: 'This configuration allows you to define your own uploading logic with regards to the network condition. By default, uploading on cellular is enabled.\nCompatibility: web: 1.3+, android: 1.5+, iOS: 1.4+',
     },
     activationRatio: {
-      desc: 'This config enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results.',
+      desc: 'This config enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.',
       status: 'Activation Ratio(%)',
     },
   },
