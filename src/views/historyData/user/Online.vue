@@ -14,9 +14,9 @@
           v-model="date"
           @change="dataChange"
           type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          range-separator="To"
+          start-placeholder="Start date"
+          end-placeholder="End date">
         </el-date-picker>
       </el-form-item>
     </el-form>
@@ -27,7 +27,7 @@
               :fetch = "dataForExcel"
               type    = "csv"
               :name    = "excelName">
-        导出Excel
+        Export Excel
       </json-excel>
     </el-button>
   </div>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       date: [moment().subtract(1, 'hour'), moment()],
-      radio: 'hour',      
+      radio: 'hour',
       onlineData: {
         online: []
       },
@@ -75,21 +75,30 @@ export default {
   },
   methods: {
     dataChange(date) {
-      this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
+        // console.warn(`date[0] ${date[0]} date[1] ${date[1]}`)
+        if (!date) return
+        this.date[0] = date[0]
+        this.date[1] = date[1]
+      this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
     },
     selectChange(val) {
+      this.date[1] = moment()
       switch (val) {
         case 'hour':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'hour')), this.getTimeStamp(moment()))
+            this.date[0] = moment().subtract(1, 'hour')
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         case 'day':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
+            this.date[0] = moment().subtract(1, 'day')
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         case 'week':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'week')), this.getTimeStamp(moment()))
+            this.date[0] = moment().subtract(1, 'week')
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         case 'month':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'month')), this.getTimeStamp(moment()))
+            this.date[0] = moment().subtract(1, 'month')
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         default:
           break;
@@ -108,27 +117,14 @@ export default {
       return moment(date).format('X')
     },
     getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
+
       fetchNum(this.currentDomain.uid, this.currentDomain.id, start, end).then(res => {
         this.formatData(res)
       })
     },
     async dataForExcel() {
-        let nowdays = new Date();
-        let year = nowdays.getFullYear();
-        let month = nowdays.getMonth();
-        let lastMonth, lastYear;
-        if(month === 0){
-            lastMonth = 11
-            lastYear = year-1;
-        } else {
-            lastMonth = month-1
-            lastYear = year;
-        }
-        // 获取上个月第一天
-        var firstdate = new Date(lastYear, lastMonth, 1);
-        // 获取本月第一天
-        var enddate = new Date(year, month, 1);
-        let res = await fetchNum(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(firstdate), this.getTimeStamp(enddate)-1)
+        // console.warn(`date[0] ${this.date[0]} date[1] ${this.date[1]}`)
+        let res = await fetchNum(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
         const data = res.data.list
         let peakMap = new Map()
         data.forEach(item => {
@@ -144,7 +140,7 @@ export default {
         let sum = 0;
         let realDays = 0;          // 有人数在线的天数
         for (let [day, peak] of peakMap.entries()) {
-            peakArr.push({"日期":day, "峰值":peak})
+            peakArr.push({"Date":day, "Value":peak})
             sum += peak
             if (peak !== 0) {
                 realDays ++;
@@ -154,8 +150,8 @@ export default {
         if (realDays > 0) {
             average = Math.round(sum/realDays)
         }
-        peakArr.push({"日期":"平均值", "峰值":average})
-        this.excelName = `${this.currentDomain.domain} ${lastMonth+1}月份日峰月均.csv`
+        peakArr.push({"Date":"Avg", "Value":average})
+        this.excelName = `Online Viewers Statistics.csv`
         return peakArr
     }
   }

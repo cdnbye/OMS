@@ -14,9 +14,9 @@
           v-model="date"
           @change="dataChange"
           type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          range-separator="To"
+          start-placeholder="Start date"
+          end-placeholder="End date">
         </el-date-picker>
       </el-form-item>
     </el-form>
@@ -27,7 +27,7 @@
               :fetch = "dataForExcel"
               type    = "csv"
               :name    = "excelName">
-        导出Excel
+        Export Excel
       </json-excel>
     </el-button>
   </div>
@@ -82,7 +82,11 @@ export default {
   },
   methods: {
     dataChange(date) {
-      this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
+        if (!date) return
+        console.warn(`date[0] ${date[0]} date[1] ${date[1]}`)
+        this.date[0] = date[0]
+        this.date[1] = date[1]
+      this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
     },
     getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1])) {
       // this.p2pData = []
@@ -117,18 +121,27 @@ export default {
       })
     },
     selectChange(val) {
+        this.date[1] = moment()
       switch (val) {
         case 'hour':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'hour')), this.getTimeStamp(moment()))
+            this.date[0] = moment().subtract(1, 'hour')
+            // this.date[1] = moment()
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         case 'day':
-          this.getData(this.getTimeStamp(moment().subtract(1, 'day')), this.getTimeStamp(moment()))
+            this.date[0] = moment().subtract(1, 'day')
+            // this.date[1] = moment()
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         case 'week':
-          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'week')), this.getTimeStamp(moment().startOf('day')))
+            this.date[0] = moment().startOf('day').subtract(1, 'week')
+            // this.date[1] = moment().startOf('day')
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         case 'month':
-          this.getData(this.getTimeStamp(moment().startOf('day').subtract(1, 'month')), this.getTimeStamp(moment().startOf('day')))
+            this.date[0] = moment().startOf('day').subtract(1, 'month')
+            // this.date[1] = moment().startOf('day')
+          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
           break;
         default:
           break;
@@ -139,36 +152,21 @@ export default {
     },
 
     async dataForExcel() {
-        let nowdays = new Date();
-        let year = nowdays.getFullYear();
-        let month = nowdays.getMonth();
-        let lastMonth, lastYear;
-        if(month === 0){
-            lastMonth = 11
-            lastYear = year-1;
-        } else {
-            lastMonth = month-1
-            lastYear = year;
-        }
-        // 获取上个月第一天
-        var firstdate = new Date(lastYear, lastMonth, 1);
-        // 获取本月第一天
-        var enddate = new Date(year, month, 1);
-        let res = await fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(firstdate), this.getTimeStamp(enddate), 1440)
+        let res = await fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]), 1440)
         const data = res.data.list
         let peakArr = []
         let sum = 0;
-        let column = "流量("+this.option.unit+")"
+        let column = "Traffic("+this.option.unit+")"
         data.forEach((item, index) => {
             let day = moment(item.ts * 1000).format('MM-DD')
             let peak = getTrafficNum(item.value, this.option.unit)
             sum += parseFloat(peak)
-            peakArr.push({"日期":day, [column]:peak})
+            peakArr.push({"Date":day, [column]:peak})
         })
         console.warn(peakArr)
         let average = (sum/peakArr.length).toFixed(2)
-        peakArr.push({"日期":"平均值", [column]:average})
-        this.excelName = `${this.currentDomain.domain} ${lastMonth+1}月份P2P流量.csv`
+        peakArr.push({"Date":"Avg", [column]:average})
+        this.excelName = `${this.currentDomain.domain} Traffic Statistics.csv`
         return peakArr
     }
   }
