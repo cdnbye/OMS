@@ -307,10 +307,10 @@
       },
       formatterStatus(row) {
         if(row.blocked) {
-          return this.$t('domainTable.illegal')
+          return this.$t('common.illegal')
         }
         if(row.reviewing) {
-          return this.$t('domainTable.reviewing')
+          return this.$t('common.reviewing')
         }
         return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('domainTable.available')
       },

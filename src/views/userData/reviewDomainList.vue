@@ -10,6 +10,12 @@
                 </template>
             </el-table-column>
 
+            <el-table-column align="center" label="平台">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.native? 'native':'web' }}</span>
+                </template>
+            </el-table-column>
+
             <el-table-column align="center" label="未审核">
                 <template slot-scope="scope">
                     <el-switch slot="reference" :value="scope.row.reviewing" active-color="red" @change="reviewingChange(scope.row)"></el-switch>
@@ -25,6 +31,12 @@
             <el-table-column align="center" label="白名单">
                 <template slot-scope="scope">
                     <el-switch slot="reference" :value="scope.row.whitelist" active-color="green" @change="whiteListChange(scope.row)"></el-switch>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" label="联系方式">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.email }}</span>
                 </template>
             </el-table-column>
 

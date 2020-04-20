@@ -55,10 +55,10 @@
         methods: {
             formatterStatus(row) {
                 if(row.blocked) {
-                    return this.$t('p2pConfig.illegal')
+                    return this.$t('common.illegal')
                 }
                 if(row.reviewing) {
-                    return this.$t('p2pConfig.reviewing')
+                    return this.$t('common.reviewing')
                 }
                 return ""
             },

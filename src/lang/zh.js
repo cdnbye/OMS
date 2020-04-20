@@ -127,8 +127,6 @@ export default {
     status: '状态',
     available: '已绑定',
     unavailable: '未绑定',
-    illegal: '未通过审核',
-    reviewing: '正在审核中',
     operation: '操作',
     verifyDomain: '验证域名',
     certification: '认证',
@@ -200,6 +198,10 @@ export default {
     closeSuccess: '关闭成功',
     yes: 'YES',
     no: 'NO',
+    status: '状态',
+    available: '已审核',
+    reviewing: '正在审核中',
+    illegal: '未通过审核',
   },
   historyData: {
     hour: '1小时内',
@@ -255,8 +257,6 @@ export default {
     status: '状态',
     open: '已开启',
     close: '已关闭',
-    illegal: '未通过审核',
-    reviewing: '正在审核中',
     configSuccess: '配置成功',
     // configFail: '只有付费用户才能开启/关闭P2P',
     configFail: '操作失败',
@@ -292,5 +292,6 @@ export default {
     title: '说明：',
     desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"域名管理"页面绑定域名。每个用户最多创建200个APP。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
+    introTip: '输入你的APP下载链接或者APP介绍链接',
   }
 }

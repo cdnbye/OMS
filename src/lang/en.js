@@ -127,8 +127,6 @@ export default {
     status: 'State',
     available: 'Verified',
     unavailable: 'Unverified',
-    illegal: 'Illegal website',
-    reviewing: 'Under review',
     operation: 'Operation',
     verifyDomain: 'Verify domain',
     certification: 'Verify',
@@ -200,6 +198,10 @@ export default {
     closeSuccess: 'close successfully',
     yes: 'YES',
     no: 'NO',
+    status: 'status',
+    available: 'Available',
+    reviewing: 'Under Review',
+    illegal: 'Illegal',
   },
   historyData: {
     hour: '1 Hour',
@@ -255,8 +257,6 @@ export default {
     status: 'Status',
     open: 'Opened',
     close: 'Closed',
-    illegal: 'Illegal website',
-    reviewing: 'Under review',
     configSuccess: 'Successful configuration',
     // configFail: 'Only paid users can turn P2P on / off',
     configFail: 'Operation failed',
@@ -292,5 +292,6 @@ export default {
     title: 'Notice:',
     desc: 'This page is used to configure mobile native App and Electron App. Each user can create up to 200 apps. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
+    introTip: 'Enter the download link of your APP or the link of introduction page',
   }
 }

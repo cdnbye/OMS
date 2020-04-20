@@ -71,6 +71,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column :label="$t('common.status')" align="center">
+        <template slot-scope="scope">
+          <span :style="scope.row.blocked || scope.row.reviewing?'color: red':'color: green'">{{ formatterStatus(scope.row) }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column :label="$t('domainTable.operation')" align="center">
         <template slot-scope="scope">
           <el-button slot="reference" size="mini" type="primary" @click="handleWatch(scope.row)">{{ $t('app.watch') }}</el-button>
@@ -118,10 +124,13 @@
         <el-input v-model="form.app_id" :placeholder="$t('app.appIdTip')"></el-input>
       </el-form-item>
 
-      <!-- <el-form-item prop="app_id" label="app id" label-width="100px" required>
-        <el-input v-model="form.app_id" :placeholder="$t('app.appID')"></el-input>
-        <PointTip :content="$t('app.appID')" />
-      </el-form-item> -->
+      <el-form-item prop="play_url" label-width="160px" required>
+        <template slot="label">
+          <span>Introduction URL</span>
+          <PointTip style="margin-left: 4px" :content="$t('app.introTip')" />
+        </template>
+        <el-input v-model="form.play_url" placeholder="https://introduction_to_app/index.html"></el-input>
+      </el-form-item>
 
       <el-form-item prop="platform" label="Platform" label-width="100px" required style="float: left">
         <el-select v-model="form.platform" placeholder="Select Platform">
@@ -171,6 +180,7 @@
           app_name: '',
           app_id: '',
           platform : '',
+          play_url: '',
         },
         copyImg,
         tableParam: {
@@ -303,9 +313,18 @@
           this.tableParam.page = page
           this.fetchData()
       },
+      formatterStatus(row) {
+          if(row.blocked) {
+              return this.$t('common.illegal')
+          }
+          if(row.reviewing) {
+              return this.$t('common.reviewing')
+          }
+          return this.$t('common.available')
+      },
     },
     mounted() {
       this.fetchData()
-    }
+    },
   }
   </script>
