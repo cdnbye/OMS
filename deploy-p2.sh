@@ -21,6 +21,7 @@ git add -A
 git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f https://gitee.com/cdnbye/OMS2.git master
+# git push -f https://gitee.com/cdnbye/OMS2.git master
+git push -f https://github.com/cdnbye/OMS2.git master
 
 cd -
