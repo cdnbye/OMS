@@ -40,7 +40,7 @@ export const constantRouterMap = [
 // 动态路由
 // {
 //   path: '/',                对应浏览器路径
-//   component: Layout,        
+//   component: Layout,
 //   redirect: '/liveData',
 //   alwaysShow: true,         是否显示到sidebar中，如修改密码邮箱就不显示，值为false
 //   meta: {
@@ -82,6 +82,16 @@ export const asyncRouterMap = [
           roles: ['admin'],
           noCache: true
         }
+      },
+      {
+          path: '/overall',
+          component: () => import('@/views/dashboard/admin/OverallData'),
+          name: 'OverallData',
+          meta: {
+              title: 'overallData',
+              roles: ['admin'],
+              noCache: true
+          }
       },
       {
         path: '/pieChart',
@@ -126,7 +136,7 @@ export const asyncRouterMap = [
     redirect: 'user/domain',
     meta: {
       title: 'domainInfo',
-      icon: 'table',
+      icon: 'www',
       roles: ['user']
     },
     children: [
@@ -149,7 +159,7 @@ export const asyncRouterMap = [
     redirect: 'user/app',
     meta: {
       title: 'appInfo',
-      icon: 'list',
+      icon: 'app',
       roles: ['user']
     },
     children: [
@@ -180,8 +190,8 @@ export const asyncRouterMap = [
         path: '/user/liveData',
         component: () => import('@/views/dashboard/user/LiveData'),
         name: 'UserLiveData',
-        meta: { 
-          title: 'basicAnalysis', 
+        meta: {
+          title: 'basicAnalysis',
           roles: ['admin'],
           noCache: true
         }
@@ -204,9 +214,9 @@ export const asyncRouterMap = [
         path: '/user/liveData',
         component: () => import('@/views/dashboard/user/LiveData'),
         name: 'UserLiveData',
-        meta: { 
-          title: 'basicAnalysis', 
-          icon: 'dashboard', 
+        meta: {
+          title: 'basicAnalysis',
+          icon: 'dashboard',
           roles: ['user'],
           noCache: true
         }
@@ -321,7 +331,7 @@ export const asyncRouterMap = [
     alwaysShow: true,
     meta: {
       title: 'userDistribution',
-      icon: 'people',
+      icon: 'international',
       roles: ['user']
     },
     children: [
@@ -352,7 +362,7 @@ export const asyncRouterMap = [
     redirect: '/user/package',
     meta: {
       title: 'package',
-      icon: 'shoppingCard',
+      icon: 'money',
       roles: ['user']
     },
     children: [
@@ -360,9 +370,9 @@ export const asyncRouterMap = [
         path: '/user/package',
         component: () => import('@/views/package/package'),
         name: 'Package',
-        meta: { 
+        meta: {
           title: 'package',
-          icon: 'shoppingCard', 
+          // icon: 'shoppingCard',
           roles: ['user'],
           noCache: true
         }
@@ -376,7 +386,7 @@ export const asyncRouterMap = [
       redirect: '/user/monthly_package',
       meta: {
         title: 'monthlyPackage',
-        icon: 'shoppingCard',
+        icon: 'money',
         roles: ['user']
       },
       children: [
@@ -384,9 +394,9 @@ export const asyncRouterMap = [
           path: '/user/monthly_package',
           component: () => import('@/views/package/monthlyPackage'),
           name: 'MonthlyPackage',
-          meta: { 
+          meta: {
             title: 'monthlyPackage',
-            icon: 'shoppingCard', 
+            // icon: 'money',
             roles: ['user'],
             noCache: true
           }
@@ -408,7 +418,7 @@ export const asyncRouterMap = [
         path: '/user/package/detail',
         component: () => import('@/views/package/OrderDetail'),
         name: 'OrderDetail',
-        meta: { 
+        meta: {
           hide: true,
           roles: ['user'],
           noCache: true
@@ -423,7 +433,7 @@ export const asyncRouterMap = [
     redirect: '/user/order',
     meta: {
       title: 'order',
-      icon: 'documentation',
+      icon: 'shoppingCard',
       roles: ['user']
     },
     children: [
@@ -431,7 +441,7 @@ export const asyncRouterMap = [
         path: '/user/order',
         component: () => import('@/views/historyOrder/user/OrderTable'),
         name: 'HistoryOrder',
-        meta: { 
+        meta: {
           title: 'order',
           roles: ['user'],
           noCache: true
@@ -446,7 +456,7 @@ export const asyncRouterMap = [
     redirect: '/user/p2pSwitch',
     meta: {
       title: 'p2pConfig',
-      icon: 'link',
+      icon: 'form',
       roles: ['user']
     },
     children: [
@@ -454,7 +464,7 @@ export const asyncRouterMap = [
         path: 'p2pSwitch',
         component: () => import('@/views/p2pConfig/user/p2pSwitch'),
         name: 'p2pSwitch',
-        meta: { 
+        meta: {
           title: 'p2pSwitch',
           roles: ['user'],
           noCache: true

@@ -10,7 +10,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+    - name: remove .git
+      run: |
+        rm -rf .git
+        rm CNAME
     # 使用云开发 Github Action 部署
     - name: Deploy static to Tencent CloudBase
       id: deployStatic
@@ -22,4 +25,5 @@ jobs:
         # 云开发的环境id
         envId: ${{ secrets.ENV_ID }}
         # Github 项目静态文件的路径
-        staticSrcPath: /
+        staticSrcPath: ./
+        staticDestPath: oms

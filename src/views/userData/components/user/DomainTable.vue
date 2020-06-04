@@ -65,7 +65,7 @@
     <el-alert
       title=""
       style="text-align: left"
-      type="warning" 
+      type="warning"
       :description="$t('domainTable.certificationTip')"
       :closable="false">
     </el-alert>
@@ -87,9 +87,9 @@
             </div>
           </li>
           <li>
-            <div class="pv-content pv-content-last">                
+            <div class="pv-content pv-content-last">
               <h4>{{ $t('domainTable.doneTip') }}</h4>
-            </div>  
+            </div>
           </li>
         </ol>
       </div>
@@ -112,12 +112,12 @@
           <li>
             <div class="pv-content">
               <h4>{{ $t('domainTable.userVerifyDomain.navVisitHead') }}http(s)://{{checkDomainData.domain}}/auth.txt{{ $t('domainTable.userVerifyDomain.navVisitEnd') }}</h4>
-            </div>  
+            </div>
           </li>
           <li>
-            <div class="pv-content pv-content-last">                
+            <div class="pv-content pv-content-last">
               <h4>{{ $t('domainTable.doneTip') }}</h4>
-            </div>  
+            </div>
           </li>
         </ol>
       </div>
@@ -134,7 +134,7 @@
     :width="device === 'mobile' ? '90%' : '50%' ">
     <el-form ref="domainForm" :model="domainFormData" :rules="domainRules">
       <el-form-item prop="domain">
-        <el-input 
+        <el-input
           type="textarea"
           :rows="3"
           v-model="domainFormData.domain"
@@ -307,7 +307,7 @@
       },
       formatterStatus(row) {
         if(row.blocked) {
-          return this.$t('common.illegal')
+          return this.$t('domainTable.illegal')
         }
         if(row.reviewing) {
           return this.$t('common.reviewing')
@@ -382,7 +382,7 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    
+
     width: 50%;
   }
 </style>

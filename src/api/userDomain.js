@@ -31,6 +31,15 @@ export function fetchDomainUnderReview(page, pageSize) {
     })
 }
 
+// 检查备案情况
+export function checkBeian(domian) {
+    let url = `host/checkbeian?domain=${domian}`
+    return request({
+        url,
+        method: 'get'
+    })
+}
+
 // 将域名拉黑或从黑名单移除
 export function blockDomain(data) {
   return request({
@@ -120,4 +129,13 @@ export function fetchAdminUser() {
     url: `user/admin`,
     method: 'get'
   })
+}
+
+// 用户包月套餐变动
+export function updateUserPlan(data) {
+    return request({
+        url: `user/update_plan`,
+        method: 'post',
+        data
+    })
 }

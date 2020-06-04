@@ -39,9 +39,18 @@
     <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
       <el-card>
         <div slot="header">
-          <span>{{ $t('dashboard.natDis') }}</span>
+          <span>{{ $t('dashboard.netDis') }}</span>
         </div>
         <Piechart :chart-data="data.netTypeData" />
+      </el-card>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+      <el-card>
+        <div slot="header">
+          <span>{{ $t('dashboard.natDis') }}</span>
+        </div>
+        <Piechart :chart-data="data.natTypeData" />
       </el-card>
     </el-col>
 
@@ -65,7 +74,8 @@ export default {
         tagData: [],
         deviceData: [],
         liveData: [],
-        netTypeData: []
+        netTypeData: [],
+        natTypeData: [],
       }
     }
   }

@@ -9,11 +9,12 @@
     "build-prerelease": "vue-cli-service build --mode test",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
-    "deploy": "sh deploy.sh",
+    "deploy-gitee": "sh deploy.sh",
     "deploy-github": "sh deploy_github.sh",
     "deploy-p2": "sh deploy-p2.sh",
     "deploy-local": "sh deploy-local.sh",
-    "deploy-test": "sh deploy-prerelease.sh"
+    "deploy-test": "sh deploy-prerelease.sh",
+    "git-push": "git add . && git commit -m 'u' &&  git push"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -26,6 +27,7 @@
     "node-sass": "^4.9.3",
     "normalize.css": "^8.0.0",
     "sass-loader": "^7.1.0",
+    "screenfull": "^5.0.2",
     "svg-sprite-loader": "^3.9.2",
     "vue": "^2.5.17",
     "vue-count-to": "^1.0.13",

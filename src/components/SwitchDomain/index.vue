@@ -1,12 +1,19 @@
 <template>
   <div style="display: inline-block; text-align: left; width: 100%">
-    <el-input
-      style="width: 55%"
-      :placeholder="currentDomain.domain ? currentDomain.domain : $t('domainTable.none')"
-      :disabled="true"
-    >
-    </el-input>
-    <el-button type="primary" plain @click="selectDomainVisible = true">
+    <!--<el-input-->
+      <!--style="width: 55%"-->
+      <!--:value="currentDomain.domain ? currentDomain.domain : $t('domainTable.none')"-->
+      <!--:disabled="true"-->
+    <!--&gt;-->
+    <!--</el-input>-->
+
+    <el-tag style="font-weight: bold;; font-size: medium; margin: 0px 10px;"
+            effect="dark"
+            :type="currentDomain.domain ? 'success' : 'danger'">
+      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>{{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}
+    </el-tag>
+    <el-button size="medium" type="primary" plain @click="selectDomainVisible = true"
+               style="font-size: medium;">
       {{ $t('dashboard.switchDomain') }}
     </el-button>
 

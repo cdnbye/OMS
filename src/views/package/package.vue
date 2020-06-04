@@ -6,11 +6,14 @@
       :visible.sync="payVisible"
       :width="device === 'mobile' ? '80%' : '30%'"
       :before-close="dialogClose">
+      <el-radio v-if="language==='en'" v-model="paySelect" label="paypal">
+        <img :src="payImg.paypal" />
+      </el-radio>
+      <el-radio v-if="language==='en'" v-model="paySelect" label="btc">
+        <img style="width: 60px" :src="payImg.btc" />
+      </el-radio>
       <el-radio v-model="paySelect" label="alipay">
         <img :src="payImg.ali" />
-      </el-radio>
-      <el-radio v-model="paySelect" label="paypal">
-        <img :src="payImg.paypal" />
       </el-radio>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="handleSelect">{{ $t('common.ok') }}</el-button>
@@ -121,10 +124,11 @@ export default {
     return {
       payVisible: true,
       noSelectVisible: false,
-      paySelect: 'alipay',
+      paySelect: '',
       payImg: {
         ali: require('../../assets/ali_pay.png'),
-        paypal: require('../../assets/paypal.jpeg')
+        paypal: require('../../assets/paypal.jpeg'),
+        btc: require('../../assets/btc.png')
       },
       totalPrice: 0,
       packages: [],
@@ -136,7 +140,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'device'
+      'device',
+      'language',
     ])
   },
   methods: {
@@ -172,8 +177,14 @@ export default {
       this.getTotalPrice()
     },
     handleSelect() {
-      this.payVisible = false
-      this.getPackageData()
+        if (this.paySelect === '') return
+        if (this.paySelect === 'btc') {
+            window.open('https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet')
+        } else {
+            this.payVisible = false
+            this.getPackageData()
+        }
+
     },
     getTotalPrice() {
       let total = 0
@@ -218,9 +229,18 @@ export default {
         })
     },
     handleBuyClick() {
-      this.totalPrice <= 0
-          ? this.noSelectVisible = true
-          :
+        if ( this.totalPrice <= 0) {
+            this.noSelectVisible = true
+            return
+        }
+        // paypal支付并且大于50美元需要用加密货币
+        if (this.paySelect === 'paypal' && this.totalPrice >= 50) {
+            this.$messageBox.alert(this.$t('package.payAnotherWay'), {
+                distinguishCancelAndClose: true,
+                confirmButtonText: this.$t('common.ok'),
+            });
+            return
+        }
         this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
             distinguishCancelAndClose: true,
             confirmButtonText: this.$t('common.ok'),

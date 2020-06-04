@@ -43,7 +43,7 @@
             <el-table-column label="action" align="center" class-name="small-padding fixed-width">
                 <template slot-scope="scope">
                     <el-button type="primary" size="mini" @click="reviewClick(scope.row.play_url)">审核</el-button>
-                    <el-button type="primary" size="mini" @click="beianClick(scope.row.domain)">备案</el-button>
+                    <el-button type="primary" size="mini" @click="checkBeianClick(scope.row.domain)">备案</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -63,9 +63,9 @@
 </template>
 
 <script>
-    import { fetchDomainUnderReview, blockDomain, whiteDomain, searchHost, reviewDomain } from '@/api/userDomain'
+    import { fetchDomainUnderReview, blockDomain, whiteDomain, searchHost, reviewDomain, checkBeian } from '@/api/userDomain'
     import { mapGetters } from 'vuex'
-    import { getID } from '@/utils/auth'
+    // import { getID } from '@/utils/auth'
 
     export default {
         data() {
@@ -102,9 +102,6 @@
                 if (!value.startsWith('http')) {
                     value = 'http://' + value
                 }
-                window.open(`${value}`)
-            },
-            beianClick(value) {
                 window.open(`${value}`)
             },
             blacklistChange(domain) {
@@ -181,6 +178,35 @@
                             message: domain.reviewing ? '正在审核' : '已审核',
                             type: 'success'
                         })
+                        this.loading = false
+                    })
+                    .catch(err => {
+                        this.loading = false
+                    })
+            },
+            checkBeianClick(domain) {
+                this.loading = true
+                checkBeian(domain)
+                    .then(res => {
+                        if (res.ret === 0) {
+                            const beianed = res.data.beianed
+                            if (beianed) {
+                                this.$message({
+                                    message: '已备案',
+                                    type: 'success'
+                                })
+                            } else {
+                                this.$message({
+                                    message: '未备案',
+                                    type: 'error'
+                                })
+                            }
+                        } else {
+                            this.$message({
+                                message: res.data.msg,
+                                type: 'error'
+                            })
+                        }
                         this.loading = false
                     })
                     .catch(err => {

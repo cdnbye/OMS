@@ -3,13 +3,16 @@
     <el-row style="text-align: left; margin: 20px 0">
 
       <template v-if="showDomain">
-        <el-col :xs="20" :sm="12" :lg="8">
+        <el-col :xs="20" :sm="12" :lg="10">
           <SwitchDomain :finishSelect="handleSwitchDomain" />
         </el-col>
       </template>
-      
+
       <el-col :xs="7" :sm="4" :lg="2">
-        <el-button type="success" @click="handleCheckin" v-loading="checkinLoading">{{ $t('dashboard.checkin') }}</el-button>
+        <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
+                   style="font-size: medium;">
+          {{ $t('dashboard.checkin') }}
+        </el-button>
       </el-col>
     </el-row>
 
@@ -191,7 +194,8 @@ export default {
         tagData: [],
         deviceData: [],
         liveData: [],
-        netTypeData: []
+        netTypeData: [],
+        natTypeData:[],
       }
     }
   },
@@ -245,7 +249,7 @@ export default {
           this.statis.whiteList = data.whitelist
           this.statis.type.product_type = data.flow.product_type
           this.statis.type.time = data.flow.duetime
-          
+
           // 如果剩余流量为0，则提醒用户购买
           if(data.flow.free === 0 && data.flow.remain === 0 && data.flow.daily_remain === 0) {
             if(this.remainTrafficFlag && getQueryObj().payment === undefined && !data.whitelist) {
@@ -260,7 +264,7 @@ export default {
                 .catch(action => {
                    action === 'cancel'
                    ? this.$router.push('/user/monthly_package')
-                   : console.log('-') 
+                   : console.log('-')
                 })
               this.remainTrafficFlag = false
             }
@@ -274,29 +278,46 @@ export default {
       fetchDisData(uid, id, 'version', hostID).then(res => {
         if(res.data) {
           this.disData.versionData = formatPieData(res.data)
+        } else {
+            this.disData.versionData = [];
         }
       })
       fetchDisData(uid, id, 'tag', hostID).then(res => {
         if(res.data) {
           this.disData.tagData = formatPieData(res.data)
+        } else {
+            this.disData.tagData = [];
         }
       })
       fetchDisData(uid, id, 'device', hostID).then(res => {
         if(res.data) {
           this.disData.deviceData = formatPieData(res.data)
+        } else {
+            this.disData.deviceData = [];
         }
       })
       fetchDisData(uid, id, 'live', hostID).then(res => {
         if(res.data) {
           this.disData.liveData = formatPieData(res.data)
+        } else {
+            this.disData.liveData = [];
         }
       })
       fetchDisData(uid, id, 'netType', hostID).then(res => {
         if(res.data) {
           this.disData.netTypeData = formatPieData(res.data)
+        } else {
+            this.disData.netTypeData = [];
         }
       })
-    },
+      fetchDisData(uid, id, 'nat', hostID).then(res => {
+          if(res.data) {
+              this.disData.natTypeData = formatPieData(res.data)
+          } else {
+              this.disData.natTypeData = [];
+          }
+      })
+  },
     loopGetData(uid, id, hostId) {
       const _this = this
       _this.getData(uid, id, hostId)

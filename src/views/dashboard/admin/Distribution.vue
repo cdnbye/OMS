@@ -82,13 +82,22 @@
         </el-card>
       </el-col>
 
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
+            <span>NAT类型分布</span>
+          </div>
+          <Piechart :chart-data="natTypeData" />
+        </el-card>
+      </el-col>
+
     </el-row>
   </div>
 </template>
 
 <script>
 import Piechart from '@/components/PieChart'
-import { fetchGlobalData } from '@/api/liveData'
+import { fetchLiveTimeData } from '@/api/liveData'
 import { fetchLiveData } from '@/api/liveData'
 import { fetchDomain } from '@/api/userDomain'
 import { formatPieData } from '@/utils/format'
@@ -109,6 +118,7 @@ export default {
       liveData: [],
       topSiteData: [],
       netTypeData: [],
+      natTypeData: [],
       onlineNum: 0
     }
   },
@@ -117,7 +127,7 @@ export default {
   },
   methods: {
     getData() {
-      fetchGlobalData().then(res => {
+        fetchLiveTimeData().then(res => {
         if(res.data) {
           this.onlineNum = res.data.num_rt
           fetchDomain(1, 10, 'num', [])
@@ -181,6 +191,11 @@ export default {
         if(res.data) {
           this.netTypeData = formatPieData(res.data)
         }
+      })
+      fetchLiveData('nat').then(res => {
+          if(res.data) {
+              this.natTypeData = formatPieData(res.data)
+          }
       })
     }
   }

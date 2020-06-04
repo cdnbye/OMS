@@ -16,8 +16,8 @@
       <el-checkbox v-model="showAdmin" @change="showAdminUser">显示管理员</el-checkbox>
     </el-col>
     <el-col :span="12">
-      <el-input 
-        class="filter-item" 
+      <el-input
+        class="filter-item"
         prefix-icon="el-icon-search"
         placeholder="请输入邮箱"
         v-model="searchValue"
@@ -28,14 +28,14 @@
     :data="tableData"
     v-loading="loading"
     style="width: 100%">
-    <el-table-column align="center" prop="uid" label="ID"></el-table-column>
-    <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+    <el-table-column align="center" prop="uid" width="50" label="ID"></el-table-column>
+    <!--<el-table-column align="center" prop="username" label="用户名"></el-table-column>-->
     <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
     <el-table-column align="center" prop="reg_date" label="注册时间"></el-table-column>
     <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>
-    <el-table-column align="center" prop="domain" label="域名"></el-table-column>
-    <el-table-column align="center" prop="agent" label="代理商"></el-table-column>
-    <el-table-column align="center" label="禁用状态">
+    <el-table-column align="center" prop="domain" label="域名" width="60"></el-table-column>
+    <el-table-column align="center" prop="agent" width="90" label="代理商"></el-table-column>
+    <el-table-column align="center" label="禁用状态" width="60">
       <template slot-scope="scope">
         <el-popover
           trigger="manual"
@@ -52,7 +52,7 @@
         </el-popover>
       </template>
     </el-table-column>
-    <el-table-column align="center" label="管理员权限">
+    <el-table-column align="center" width="90" label="管理员权限">
       <template slot-scope="scope">
         <el-popover
           trigger="manual"
@@ -70,26 +70,36 @@
       </template>
     </el-table-column>
 
-    <el-table-column align="center" label="流量更新(GB)">
+    <el-table-column align="center" label="流量更新(TB)">
       <template slot-scope="scope">
-        <!-- <el-popover
-          trigger="manual"
-          placement="top"
-          width="160"
-          :ref="'popover-' + scope.row.uid + 'traffic'"
-          >
-          <p>{{`更新流量至${scope.row.flow.remain}GB吗？`}}</p>
-          <div style="text-align: right; margin: 0">
-            <el-button type="text" size="mini" @click="pClose(scope.row.uid + 'traffic')">{{ $t('common.cancel') }}</el-button>
-            <el-button type="primary" size="mini" @click="flowSubmit(scope.row)">{{ $t('common.ok') }}</el-button>
-          </div>
-        </el-popover> -->
         <el-row :gutter="4">
-          <el-col :span="20">
+          <el-col :span="50">
             <el-input v-model="scope.row.flow.remain" />
           </el-col>
-          <el-col :span="4">
-            <el-button type="text" size="small" @click="handleEditRemain(scope.row)">修改</el-button>
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="handleEditRemain(scope.row)">修改</el-button>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+
+    <el-table-column align="center" label="套餐更新">
+      <template slot-scope="scope">
+        <el-row :gutter="4">
+          <el-col :span="50">
+            <el-select v-model="scope.row.flow.product_type" class="filter-item" style="float: left">
+              <el-option
+                      v-for="item in planSelectOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                      <span style="float: left">{{ item.value }}</span>
+                      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.label }}</span>
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="handleEditPlan(scope.row)">修改</el-button>
           </el-col>
         </el-row>
       </template>
@@ -117,7 +127,7 @@
 </template>
 
   <script>
-  import { fetchUserList, fetchAdminUser } from '@/api/userDomain'
+  import { fetchUserList, fetchAdminUser, updateUserPlan } from '@/api/userDomain'
   import { frozenUser, adminUser, searchUser, userTrafficChange } from '@/api/user'
   import { copy } from '@/utils'
   import moment from 'moment'
@@ -164,6 +174,52 @@
             label: '禁用状态',
             value: 'enable'
           }
+        ],
+        planSelectOptions:[
+            {
+                value: '0',
+                label: "flow_packet",
+            },
+            {
+                value: '7',
+                label: "monthly_1TB",
+            },
+            {
+                value: '9',
+                label: "monthly_5TB",
+            },
+            {
+                value: '1',
+                label: "monthly_10TB",
+            },
+            {
+                value: '2',
+                label: "monthly_20TB",
+            },
+            {
+                value: '10',
+                label: "monthly_50TB",
+            },
+            {
+                value: '3',
+                label: "monthly_unlimited",
+            },
+            {
+                value: '8',
+                label: "annual_1TB",
+            },
+            {
+                value: '4',
+                label: "annual_10TB",
+            },
+            {
+                value: '5',
+                label: "annual_20TB",
+            },
+            {
+                value: '6',
+                label: "annual_unlimited",
+            },
         ]
       }
     },
@@ -178,7 +234,7 @@
         this.$refs[`popover-` + id].doClose()
       },
       handleEditRemain(item) {
-         MessageBox.confirm(`更新流量至${item.flow.remain}GB吗？`, '提示', {
+         MessageBox.confirm(`更新流量至${item.flow.remain}TB吗？`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
@@ -190,7 +246,7 @@
       flowSubmit(item) {
         const data = {
           uid: item.uid,
-          remain_traffic: item.flow.remain * 1024 * 1024
+          remain_traffic: Math.floor(item.flow.remain * 1024 * 1024 * 1024)
         }
         userTrafficChange(data).then(res => {
           if(res.ret === 0) {
@@ -226,7 +282,7 @@
         temp.forEach(item => {
           item.reg_date = moment(item.reg_date * 1000).format('YYYY-MM-DD HH:mm')
           item.checkin = moment(item.checkin).format('YYYY-MM-DD HH:mm')
-          item.flow.remain = (item.flow.remain / 1024 / 1024).toFixed(3)
+          item.flow.remain = (item.flow.remain / 1024 / 1024 / 1024).toFixed(3)
         })
         return temp
       },
@@ -317,6 +373,37 @@
       },
       copyPassword(pw) {
         copy(pw, () => {this.$message.success('Copied(已复制)')})
+      },
+      handleEditPlan(item) {
+          MessageBox.confirm(`更新套餐至${this.getPlanLabel(item.flow.product_type)}吗？`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+              center: true
+          }).then(() => {
+              const data = {
+                  uid: item.uid,
+                  product_type: Number(item.flow.product_type)
+              }
+              updateUserPlan(data).then(res => {
+                  if(res.ret === 0) {
+                      this.$message({
+                          type: 'success',
+                          message: '操作成功'
+                      })
+                      this.fetchTableData()
+                  }
+              })
+          })
+      },
+      getPlanLabel(type) {
+          for (let plan of this.planSelectOptions) {
+              if (type === plan.value) {
+
+                  return plan.label
+              }
+          }
+          return 'unknown'
       }
     }
   }

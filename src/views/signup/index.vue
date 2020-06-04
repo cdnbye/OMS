@@ -63,6 +63,11 @@
         </span>
       </el-form-item>
 
+      <!--用户服务协议-->
+      <el-row type="flex" justify="space-between" style="margin-bottom: 14px">
+        <el-checkbox style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
+      </el-row>
+
       <el-row type="flex" justify="space-between">
         <a @click="goLogin" style="color:#eee">{{ $t('auth.login') }}</a>
         <a @click="goFindPwd" style="color:#eee">{{ $t('auth.resetPasswd') }}</a>
@@ -134,7 +139,8 @@ export default {
       sendLoading: false,
       sendDisabled: false,
       redirect: undefined,
-      int: undefined
+      int: undefined,
+      contractChecked: false,
     }
   },
   watch: {
@@ -154,6 +160,13 @@ export default {
       }
     },
     handleSignup() {
+        if (!this.contractChecked) {
+            this.$messageBox.alert(this.$t('signup.confirmContract'), {
+                distinguishCancelAndClose: true,
+                confirmButtonText: this.$t('common.ok'),
+            });
+            return
+        }
       this.$refs.signupForm.validate(valid => {
         if (valid) {
           this.signupLoading = true
