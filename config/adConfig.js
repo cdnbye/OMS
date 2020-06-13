@@ -3,11 +3,11 @@ export default {
   showBot: false,                //是否显示底部广告
   afterShow: 15000,             //多久显示广告 单位：毫秒
   afterHide: 15000,             //显示后多久自动关闭 单位：毫秒
-  leftTopAD: 'lookfor.jpg',     //左上角广告的图片名称 广告图片必须放到 src/assets/ads 文件夹中
+  leftTopAD: 'moe.jpeg',     //左上角广告的图片名称 广告图片必须放到 src/assets/ads 文件夹中
   rightTopAD: 'ppvod.jpg',    //右上角广告的图片名称
   botAD: 'botAD.jpg',           //下方广告的图片名称
 
-  leftTopADLink: 'https://www.cdnbye.com',           //左上角广告的点击跳转地址
+  leftTopADLink: 'https://express-ffmpeg-vip.moejj.com',           //左上角广告的点击跳转地址
   rightTopADLink: 'http://www.ppvod.com',           //右上角广告的点击跳转地址
   botADLink: 'https://google.com',           //下方广告的点击跳转地址
 }

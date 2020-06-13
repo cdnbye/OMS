@@ -1,5 +1,5 @@
 <template>
-  <world-map :countryData="countryData" />
+  <world-map :countryData="countryData" :total="total"/>
 </template>
 
 <script>
@@ -10,7 +10,8 @@ export default {
   name: 'WorldDis',
   data() {
     return {
-      countryData: []
+      countryData: [],
+      total: 0,
     }
   },
   components: {
@@ -23,6 +24,9 @@ export default {
     fetchData() {
       fetchLiveData('country').then(res => {
         if(res.data) {
+          res.data.forEach(item => {
+              this.total += item.value
+          })
           this.countryData = res.data
         }
       }).catch(err => {

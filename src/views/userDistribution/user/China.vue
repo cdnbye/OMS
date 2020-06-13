@@ -36,27 +36,31 @@ export default {
   },
   methods: {
     fetchData() {
-      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'city').then(res => {
+      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'city', 'china').then(res => {
         if(res.data) {
-          this.cityData = res.data
+            // console.warn(res.data.filter(item => item.value > 0))
+          this.cityData = res.data.filter(item => item.value > 0)
         }
       }).catch(err => {
         console.log(err)
       })
 
-      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'province').then(res => {
+      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'province', 'china').then(res => {
         if(res.data) {
+          // res.data.forEach(item => {
+          //     this.total += item.value
+          // })
           this.provinceData = res.data
         }
       }).catch(err => {
         console.log(err)
       })
 
-      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'country').then(res => {
+      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'country', 'china').then(res => {
         if(res.data) {
           res.data.forEach(item => {
             if(item.name === 'China') {
-              this.total = item.value
+              this.total = item.value      // TODO 优化
             }
           })
         }

@@ -1,7 +1,7 @@
 <template>
 <div class="app-container">
   <el-alert
-    :title="$t('app.title')" 
+    :title="$t('app.title')"
     :description="$t('app.desc')"
     type="info"
     show-icon>
@@ -242,7 +242,7 @@
                   case 'android':
                     item.img = androidImg
                     break;
-                
+
                   default:
                     break;
                 }
@@ -294,11 +294,18 @@
           })
       },
       handleWatch(item) {
+          console.warn(JSON.stringify(item))
         this.$router.push({
           name: 'UserLiveData',
           params: {
             uid: getID(),
-            id: item.domain_id,
+            domainInfo: {
+                uid: getID(),
+                id: item.domain_id,
+                domain: item.app_id,
+                isValid: 1,
+                native: true,
+            },
           }
         })
       },

@@ -30,6 +30,10 @@ export default {
     countryData: {
       type: Array,
       required: true
+    },
+    total: {
+      type: Number,
+      required: false
     }
   },
   data() {
@@ -42,6 +46,7 @@ export default {
     countryData: {
       deep: true,
       handler(val) {
+          // console.warn(`countryData ${JSON.stringify(val)}`)
         this.world_data = val
         this.setOptions()
       }
@@ -83,6 +88,7 @@ export default {
       }
     },
     setOptions() {
+      const _this = this
       this.chart.setOption({
         visualMap: {
           min: 0,
@@ -106,9 +112,9 @@ export default {
           }],
           globalCoord: false // 缺省为 false
         },
-        tooltip: {
-          trigger: 'item'
-        },
+        // tooltip: {
+        //   trigger: 'item'
+        // },
         geo: {
           map: 'world',
           show: true,
@@ -139,8 +145,21 @@ export default {
             max: 10
           }
         },
+        tooltip: {
+            trigger: 'item',
+            formatter: function (params) {
+                const data = params.data
+                // console.warn(JSON.stringify(params))
+                // console.warn(params.data.value)
+                let desc = ''
+                if(data && data.value > 0) {
+                    desc = data.name + ' : ' + data.value + '<br />' + 'Percent: ' + (params.value / _this.total * 100).toFixed(2) + '%'
+                }
+                return desc
+            }
+        },
         series: {
-          name: '实时在线人数',
+          // name: 'Realtime Online',
           type: 'map',
           mapType: 'world',
           zoom: 5,

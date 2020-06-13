@@ -13,10 +13,13 @@ export function fetchGlobalData(uid, domainID, hostId) {
 }
 
 // 管理员查看用户的分布图数据
-export function fetchDisData(uid, domainID, type, hostId) {
+export function fetchDisData(uid, domainID, type, hostId, lang) {
   let url = `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`
   if (hostId) {
     url = `${url}&host_id=${hostId}`
+  }
+  if (lang) {
+      url = `${url}&lang=${lang}`
   }
   return request({
     url,
@@ -33,9 +36,13 @@ export function fetchNum(uid, domainID, start, end) {
 }
 
 // 用户分布图数据
-export function fetchChinaDis(uid, domainID, type) {
+export function fetchChinaDis(uid, domainID, type, country) {
+  let url = `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`;
+  if (country) {
+    url = `${url}&country=${country}`
+  }
   return request({
-    url: `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`,
+    url,
     method: 'get',
   })
 }

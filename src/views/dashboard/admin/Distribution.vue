@@ -85,6 +85,15 @@
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <el-card>
           <div slot="header">
+            <span>运营商分布</span>
+          </div>
+          <Piechart :chart-data="ispData" />
+        </el-card>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
+        <el-card>
+          <div slot="header">
             <span>NAT类型分布</span>
           </div>
           <Piechart :chart-data="natTypeData" />
@@ -118,6 +127,7 @@ export default {
       liveData: [],
       topSiteData: [],
       netTypeData: [],
+      ispData: [],
       natTypeData: [],
       onlineNum: 0
     }
@@ -191,6 +201,11 @@ export default {
         if(res.data) {
           this.netTypeData = formatPieData(res.data)
         }
+      })
+      fetchLiveData('isp').then(res => {
+          if(res.data) {
+              this.ispData = formatPieData(res.data)
+          }
       })
       fetchLiveData('nat').then(res => {
           if(res.data) {

@@ -371,11 +371,12 @@ export default {
         tooltip: {
           trigger: 'item',
           formatter: function (params) {
+              // console.warn(JSON.stringify(params))
             let desc = ''
             if(params.value[2]) {
-              desc += params.name + ' : ' + params.value[2] + '<br />' + '人数占比：' + (params.value[2] / _this._total * 100).toFixed(2) + '%'
-            } else {
-              desc += params.name + ' : ' + params.value + '<br />' + '人数占比：' + (params.value / _this._total * 100).toFixed(2) + '%'
+              desc = params.name + ' : ' + params.value[2] + '<br />' + '占比：' + (params.value[2] / _this._total * 100).toFixed(2) + '%'
+            } else if (params.value > 0) {
+              desc = params.name + ' : ' + params.value + '<br />' + '占比：' + (params.value / _this._total * 100).toFixed(2) + '%'
             }
             return desc
           }

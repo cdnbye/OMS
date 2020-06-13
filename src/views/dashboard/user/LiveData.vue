@@ -195,6 +195,7 @@ export default {
         deviceData: [],
         liveData: [],
         netTypeData: [],
+        ispData: [],
         natTypeData:[],
       }
     }
@@ -203,15 +204,18 @@ export default {
     ...mapGetters([
       'currentDomain',
       'device',
-      'userValidDomain'
+      'userValidDomain',
+      'language'
     ])
   },
   mounted() {
-    if(this.$route.params.id !== undefined && this.$route.params.uid !== undefined) {
-      this.loopGetData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
-      this.getDisData(this.$route.params.uid, this.$route.params.id, this.$route.params.hostId)
-
+    const domainInfo = this.$route.params.domainInfo;
+    if(domainInfo && domainInfo.id && domainInfo.uid) {
+      this.loopGetData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
+      this.getDisData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
       this.showDomain = false
+
+      store.dispatch('setCurrentDomain', domainInfo)
     } else {
       this.getUserDomain()
       this.checkPayResult()
@@ -309,6 +313,13 @@ export default {
         } else {
             this.disData.netTypeData = [];
         }
+      })
+      fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
+          if(res.data) {
+              this.disData.ispData = formatPieData(res.data)
+          } else {
+              this.disData.ispData = [];
+          }
       })
       fetchDisData(uid, id, 'nat', hostID).then(res => {
           if(res.data) {
@@ -444,6 +455,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               if(res.data[i].isValid === 1) {
                 store.dispatch('setDomain', res.data)
+                console.warn(JSON.stringify(res.data[i]))
                 store.dispatch('setCurrentDomain', res.data[i])
                 hasValidDomain = true
                 break

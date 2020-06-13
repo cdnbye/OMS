@@ -1,6 +1,6 @@
 <template>
   <div>
-    <world-map :countryData="countryData" />
+    <world-map :countryData="countryData" :total="total"/>
     <NoBindTip />
 </div>
 </template>
@@ -15,7 +15,8 @@ export default {
   name: 'WorldDis',
   data() {
     return {
-      countryData: []
+      countryData: [],
+      total: 0,
     }
   },
   components: {
@@ -36,6 +37,9 @@ export default {
     fetchData() {
       fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'country').then(res => {
         if(res.data) {
+          res.data.forEach(item => {
+              this.total += item.value
+          })
           this.countryData = res.data
         }
       }).catch(err => {
