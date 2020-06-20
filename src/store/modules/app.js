@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { navLang } from '@/utils/i18n'
 
 const app = {
   state: {
@@ -7,7 +8,7 @@ const app = {
       withoutAnimation: false
     },
     device: 'desktop',
-    language: Cookies.get('language') || 'zh',
+    language: Cookies.get('language') || navLang(),  // 如果cookie没有语言则用浏览器首选语言
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {

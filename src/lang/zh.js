@@ -210,6 +210,10 @@ export default {
     available: '已审核',
     reviewing: '正在审核中',
     illegal: '未通过审核',
+    success: '成功',
+    error: '错误',
+    warning: '警告',
+    message: '消息',
   },
   historyData: {
     hour: '1小时内',
@@ -240,7 +244,7 @@ export default {
     buyFlow: '购买流量包',
     buyMonthly: '购买包年包月服务',
     monthly: '有效期至 ',
-    payAnotherWay: 'Please pay with cryptocurrency such as USTD or BTC. Contact us for the details.',
+    payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
   },
   order: {
     createTime: '创建时间',
@@ -302,5 +306,6 @@ export default {
     desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"网站管理"页面绑定域名。每个用户最多创建200个APP。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
     introTip: '输入你的APP下载链接或者APP介绍链接',
+    copied: '已复制',
   }
 }

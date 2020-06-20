@@ -159,6 +159,11 @@ export default {
           this.$messageBox.alert(this.$t('package.payAnotherWay'), {
               distinguishCancelAndClose: true,
               confirmButtonText: this.$t('common.ok'),
+              callback: action => {
+                  if (action === 'confirm') {
+                      window.open(`https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
+                  }
+              }
           });
           return
       }

@@ -163,53 +163,63 @@ export default {
         }
       })
       fetchLiveData('version:web').then(res => {
-        if(res.data) {
-          this.webVerData = formatPieData(res.data)
+        const data = res.data
+        if(data) {
+          this.webVerData = formatPieData(data.data)
         }
       })
       fetchLiveData('version:android').then(res => {
-          if(res.data) {
-              this.androidVerData = formatPieData(res.data)
+          const data = res.data
+          if(data) {
+              this.androidVerData = formatPieData(data.data)
           }
       })
       fetchLiveData('version:ios').then(res => {
-          if(res.data) {
-              this.iosVerData = formatPieData(res.data)
+          const data = res.data
+          if(data) {
+              this.iosVerData = formatPieData(data.data)
           }
       })
       fetchLiveData('version:pc').then(res => {
-          if(res.data) {
-              this.pcVerData = formatPieData(res.data)
+          const data = res.data
+          if(data) {
+              this.pcVerData = formatPieData(data.data)
           }
       })
       fetchLiveData('tag').then(res => {
-        if(res.data) {
-          this.tagData = formatPieData(res.data)
+        const data = res.data
+        if(data) {
+          this.tagData = formatPieData(data.data)
         }
       })
       fetchLiveData('device').then(res => {
-        if(res.data) {
-          this.deviceData = formatPieData(res.data)
+        const data = res.data
+        if(data) {
+          this.deviceData = formatPieData(data.data)
         }
       })
       fetchLiveData('live').then(res => {
-        if(res.data) {
-          this.liveData = formatPieData(res.data)
+        const data = res.data
+        if(data) {
+          this.liveData = formatPieData(data.data)
         }
       })
       fetchLiveData('netType').then(res => {
-        if(res.data) {
-          this.netTypeData = formatPieData(res.data)
+        const data = res.data
+        if(data) {
+          this.netTypeData = formatPieData(data.data)
         }
       })
       fetchLiveData('isp').then(res => {
-          if(res.data) {
-              this.ispData = formatPieData(res.data)
+          const data = res.data
+          if(data) {
+              this.ispData = formatPieData(data.data)
           }
       })
       fetchLiveData('nat').then(res => {
-          if(res.data) {
-              this.natTypeData = formatPieData(res.data)
+          const data = res.data
+          if(data) {
+              this.natTypeData = formatPieData(data.data)
           }
       })
     }

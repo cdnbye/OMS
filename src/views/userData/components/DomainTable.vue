@@ -25,8 +25,8 @@
       <el-checkbox v-model="showNative" @change="showNativeChange">显示Native SDK</el-checkbox>
     </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
-      <el-input 
-        class="filter-item" 
+      <el-input
+        class="filter-item"
         prefix-icon="el-icon-search"
         placeholder="请输入域名"
         v-model="searchValue"
@@ -356,12 +356,17 @@
         }
       },
       handleCheckDetail(val) {
+          // console.warn(JSON.stringify(val))
         this.$router.push({
           name: 'UserLiveData',
           params: {
-            uid: getID(),
-            id: val.id,
+            // uid: getID(),
             hostId: val.host_id,
+            domainInfo: {
+                uid: getID(),
+                id: val.id,
+                native: val.native,
+            },
           }
         })
       }

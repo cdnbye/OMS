@@ -97,10 +97,15 @@ export default {
     handleCloseOrder(order) {
       closeOrder(getID(), order.order_id)
         .then(res => {
-          this.$message({
-            message: this.$t('common.closeSuccess'),
-            type: 'success'
-          })
+          // this.$message({
+          //   message: this.$t('common.closeSuccess'),
+          //   type: 'success'
+          // })
+          this.$notify({
+              title: this.$t('common.success'),
+              message: this.$t('common.closeSuccess'),
+              type: 'success'
+          });
           this.handleGetOrder()
           this.pClose(order.order_id)
         })

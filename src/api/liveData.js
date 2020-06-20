@@ -24,9 +24,13 @@ export function fetchOverallData() {
     })
 }
 
-export function fetchLiveData(type) {
-  return request({
-    url: `global/num?type=${type}`,
+export function fetchLiveData(type, opts) {
+    let url =`global/num?type=${type}`
+    if (opts && opts.country) {
+        url = `${url}&country=${opts.country}`
+    }
+    return request({
+    url,
     method: 'get'
   })
 }

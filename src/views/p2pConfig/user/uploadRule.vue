@@ -79,17 +79,21 @@
                 p2pConfigWifiOnly(uid, id, data)
                     .then(res => {
                         if(res.data.succeed) {
-                            this.$message({
+                            this.$notify({
+                                title: this.$t('common.success'),
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
-                            })
+                            });
                             this.tableData.forEach(item => {
                                 if(item.id === id) {
                                     item.wifi_only = data.wifi_only
                                 }
                             })
                         } else {
-                            this.$message.error(this.$t('p2pConfig.configFail'))
+                            this.$notify.error({
+                                title: this.$t('common.error'),
+                                message: this.$t('p2pConfig.configFail'),
+                            });
                         }
                         this.loading = false
                     })

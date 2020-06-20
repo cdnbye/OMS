@@ -210,7 +210,12 @@
         this.tokenLoading = true
         createToken(getID())
           .then(res => {
-            this.$message.success(this.$t('app.createTokenSuccess'))
+            // this.$message.success(this.$t('app.createTokenSuccess'))
+            this.$notify({
+                title: this.$t('common.success'),
+                message: this.$t('app.createTokenSuccess'),
+                type: 'success'
+            });
             this.tokenLoading = false
             this.fetchData()
           })
@@ -264,7 +269,12 @@
                 if(res.data.success) {
                   this.dialogFormVisible = false
                   this.createItemLoading = false
-                  this.$message.success(this.$t('app.createItemSuccess'))
+                  // this.$message.success(this.$t('app.createItemSuccess'))
+                  this.$notify({
+                      title: this.$t('common.success'),
+                      message: this.$t('app.createItemSuccess'),
+                      type: 'success'
+                  });
                   this.fetchData()
                 }
               })
@@ -285,7 +295,12 @@
         deleteItem(getID(), data)
           .then(res => {
             this.fetchData()
-            this.$message.success(this.$t('app.deleteItemSuccess'))
+            // this.$message.success(this.$t('app.deleteItemSuccess'))
+            this.$notify({
+                title: this.$t('common.success'),
+                message: this.$t('app.deleteItemSuccess'),
+                type: 'success'
+            });
             this.pClose(item.id)
           })
           .catch(err => {
@@ -298,7 +313,7 @@
         this.$router.push({
           name: 'UserLiveData',
           params: {
-            uid: getID(),
+            // uid: getID(),
             domainInfo: {
                 uid: getID(),
                 id: item.domain_id,
@@ -310,7 +325,14 @@
         })
       },
       handleCopy() {
-        copy(this.inputToken, () => {this.$message.success('Copied(已复制)')})
+        copy(this.inputToken, () => {
+            // this.$message.success('Copied(已复制)')
+            this.$notify({
+                title: this.$t('common.success'),
+                message: this.$t('app.copied'),
+                type: 'success'
+            });
+        })
       },
       handleSizeChange(pageSize) {
           this.tableParam.pageSize = pageSize

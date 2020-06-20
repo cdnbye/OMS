@@ -45,7 +45,7 @@ export default {
     screenfull: 'Screenfull',
     theme: 'Theme',
     size: 'Global Size',
-    myInfo: 'My Info',
+    myInfo: 'Profile',
   },
   auth: {
     login: 'Login',
@@ -209,6 +209,10 @@ export default {
     available: 'Available',
     reviewing: 'Under Review',
     illegal: 'Not Approved',
+    success: 'Success',
+    error: 'Error',
+    warning: 'Warning',
+    message: 'Message',
   },
   historyData: {
     hour: '1 Hour',
@@ -239,7 +243,7 @@ export default {
     buyFlow: 'Buy traffic package',
     buyMonthly: 'Buy monthly/annual plan',
     monthly: 'Until ',
-    payAnotherWay: 'Please pay with cryptocurrency such as USTD or BTC. Contact us for the details.',
+    payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
   },
   order: {
     createTime: 'Date',
@@ -265,7 +269,7 @@ export default {
     status: 'Status',
     open: 'Opened',
     close: 'Closed',
-    configSuccess: 'Successful configuration',
+    configSuccess: 'Successfully configured',
     // configFail: 'Only paid users can turn P2P on / off',
     configFail: 'Operation failed',
     desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
@@ -301,5 +305,6 @@ export default {
     desc: 'This page is used to configure mobile native App and Electron App. Each user can create up to 200 apps. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
     introTip: 'Enter the download link of your APP or the link of introduction page',
+    copied: 'Copied',
   }
 }

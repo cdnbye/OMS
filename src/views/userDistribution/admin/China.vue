@@ -23,31 +23,34 @@ export default {
   },
   methods: {
     fetchData() {
-      fetchLiveData('city').then(res => {
-        if(res.data) {
-          this.cityData = res.data
+      fetchLiveData('city', {country: 'china'}).then(res => {
+        const data = res.data
+        if(data) {
+          this.cityData = data.data
         }
       }).catch(err => {
         console.log(err)
       })
 
-      fetchLiveData('province').then(res => {
-        if(res.data) {
-          this.provinceData = res.data
+      fetchLiveData('province', {country: 'china'}).then(res => {
+        const data = res.data
+        if(data) {
+          this.provinceData = data.data
+          this.total = data.total
         }
       }).catch(err => {
         console.log(err)
       })
 
-      fetchLiveData('country').then(res => {
-        if(res.data) {
-          res.data.forEach(item => {
-            if(item.name === 'China') {
-              this.total = item.value
-            }
-          })
-        }
-      })
+      // fetchLiveData('country').then(res => {
+      //   if(res.data) {
+      //     res.data.forEach(item => {
+      //       if(item.name === 'China') {
+      //         this.total = item.value
+      //       }
+      //     })
+      //   }
+      // })
     }
   }
 }

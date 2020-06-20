@@ -36,11 +36,10 @@ export default {
   methods: {
     fetchData() {
       fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'country').then(res => {
-        if(res.data) {
-          res.data.forEach(item => {
-              this.total += item.value
-          })
-          this.countryData = res.data
+        const data = res.data
+        if(data) {
+          this.total = data.total
+          this.countryData = data.data
         }
       }).catch(err => {
         console.log(err)

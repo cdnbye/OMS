@@ -251,10 +251,15 @@
         this.checkDomainLoading = true
         checkDomain(this.checkDomainData.id).then(res => {
           this.fetchTableData()
-          this.$message({
-            message: this.$t('domainTable.verifySuccess'),
-            type: 'success'
-          })
+          // this.$message({
+          //   message: this.$t('domainTable.verifySuccess'),
+          //   type: 'success'
+          // })
+          this.$notify({
+              title: this.$t('common.success'),
+              message: this.$t('domainTable.verifySuccess'),
+              type: 'success'
+          });
           this.checkDomainLoading = false
           this.checkDialogVisible = false
         }).catch(err => {
@@ -275,10 +280,15 @@
       // },
       handleDeleteDomain(domainData) {
         deleteDomain(domainData.id).then(res => {
-          this.$message({
-            message: this.$t('common.deleteSuccess'),
-            type: 'success'
-          })
+          // this.$message({
+          //   message: this.$t('common.deleteSuccess'),
+          //   type: 'success'
+          // })
+          this.$notify({
+              title: this.$t('common.success'),
+              message: this.$t('common.deleteSuccess'),
+              type: 'success'
+          });
           this.tableData = this.tableData.filter(item => {
             return item.id !== domainData.id
           })

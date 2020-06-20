@@ -85,12 +85,16 @@
                 p2pConfigRatio(uid, id, data)
                     .then(res => {
                         if (res.data.succeed) {
-                            this.$message({
+                            this.$notify({
+                                title: this.$t('common.success'),
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
-                            })
+                            });
                         } else {
-                            this.$message.error(this.$t('p2pConfig.configFail'))
+                            this.$notify.error({
+                                title: this.$t('common.error'),
+                                message: this.$t('p2pConfig.configFail'),
+                            });
                         }
                         this.loading = false
                     })

@@ -279,51 +279,59 @@ export default {
         })
     },
     getDisData(uid, id, hostID) {
+        if (id < 0) return
       fetchDisData(uid, id, 'version', hostID).then(res => {
-        if(res.data) {
-          this.disData.versionData = formatPieData(res.data)
+        const data = res.data.data
+        if(data) {
+          this.disData.versionData = formatPieData(data)
         } else {
             this.disData.versionData = [];
         }
       })
       fetchDisData(uid, id, 'tag', hostID).then(res => {
-        if(res.data) {
-          this.disData.tagData = formatPieData(res.data)
+        const data = res.data.data
+        if(data) {
+          this.disData.tagData = formatPieData(data)
         } else {
             this.disData.tagData = [];
         }
       })
       fetchDisData(uid, id, 'device', hostID).then(res => {
-        if(res.data) {
-          this.disData.deviceData = formatPieData(res.data)
+        const data = res.data.data
+        if(data) {
+          this.disData.deviceData = formatPieData(data)
         } else {
             this.disData.deviceData = [];
         }
       })
       fetchDisData(uid, id, 'live', hostID).then(res => {
-        if(res.data) {
-          this.disData.liveData = formatPieData(res.data)
+        const data = res.data.data
+        if(data) {
+          this.disData.liveData = formatPieData(data)
         } else {
             this.disData.liveData = [];
         }
       })
       fetchDisData(uid, id, 'netType', hostID).then(res => {
-        if(res.data) {
-          this.disData.netTypeData = formatPieData(res.data)
+        const data = res.data.data
+        if(data) {
+          this.disData.netTypeData = formatPieData(data)
         } else {
             this.disData.netTypeData = [];
         }
       })
       fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
-          if(res.data) {
-              this.disData.ispData = formatPieData(res.data)
+          const data = res.data.data
+          if(data) {
+              this.disData.ispData = formatPieData(data)
           } else {
               this.disData.ispData = [];
           }
       })
       fetchDisData(uid, id, 'nat', hostID).then(res => {
-          if(res.data) {
-              this.disData.natTypeData = formatPieData(res.data)
+          const data = res.data.data
+          if(data) {
+              this.disData.natTypeData = formatPieData(data)
           } else {
               this.disData.natTypeData = [];
           }

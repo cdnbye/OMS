@@ -92,17 +92,21 @@ export default {
       p2pConfig(uid, id, data)
         .then(res => {
           if(res.data.succeed) {
-            this.$message({
-              message: this.$t('p2pConfig.configSuccess'),
-              type: 'success'
-            })
+            this.$notify({
+                title: this.$t('common.success'),
+                message: this.$t('p2pConfig.configSuccess'),
+                type: 'success'
+            });
             this.tableData.forEach(item => {
               if(item.id === id) {
                 item.disable_p2p = data.disable
               }
             })
           } else {
-            this.$message.error(this.$t('p2pConfig.configFail'))
+            this.$notify.error({
+                title: this.$t('common.error'),
+                message: this.$t('p2pConfig.configFail'),
+            });
           }
           this.loading = false
         })
