@@ -364,7 +364,7 @@
             hostId: val.host_id,
             domainInfo: {
                 uid: getID(),
-                id: val.id,
+                id: -1,
                 native: val.native,
             },
           }

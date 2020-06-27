@@ -25,13 +25,12 @@ export default {
       list: [
         { url: 'signalcloud.cdnbye.com', value: 0 },
         { url: 'signal.cdnbye.com', value: 0 },
-        { url: 'opensignal.gcvow.top', value: 0 },
         { url: 'opensignal.cdnbye.com', value: 0 },
         { url: 'signal.p2pengine.net:8089', value: 0 },
         { url: 'p2p.bjxkhc.com:8089', value: 0 },
         { url: 'signal.dianzhenkeji.com', value: 0 },
         { url: 'signal.hdtvcdn.com:7078', value: 0 },
-        { url: 'sigyy.dianzhenkeji.com', value: 0 },
+        { url: 'signalhk.cdnbye.com', value: 0 },
       ]
     }
   },
