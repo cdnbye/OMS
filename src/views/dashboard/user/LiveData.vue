@@ -29,6 +29,7 @@
         </div>
       </el-col>
 
+      <!--每日p2p流量-->
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="tip">
@@ -37,6 +38,16 @@
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
             <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }} ({{ statis.traffic_p2p.unit }})</div>
+          </div>
+        </div>
+      </el-col>
+
+      <!--每日http流量-->
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ statis.traffic_http.num }}</span>
+            <div class="card-panel-text">{{ $t('dashboard.httpTraffic') }} ({{ statis.traffic_http.unit }})</div>
           </div>
         </div>
       </el-col>
@@ -177,6 +188,10 @@ export default {
           num: 0,
           unit: 'KB'
         },
+        traffic_http: {
+          num: 0,
+          unit: 'KB'
+        },
         frequency_day: 0,
         num_max: 0,
         flow: {
@@ -243,6 +258,7 @@ export default {
           const { data } = res
           this.statis.online = data.num_rt
           this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+          this.statis.traffic_http = formatTraffic(data.traffic_http_day)
           this.statis.frequency_day = data.api_frequency_day
           this.statis.num_max = data.num_max
           this.statis.flow.remain = data.flow.remain

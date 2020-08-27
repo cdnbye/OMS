@@ -155,18 +155,18 @@ export default {
         })
     },
     handleBuy(subject) {
-      if (this.paySelect === 'paypal' && Number(subject.price) >= 50) {
-          this.$messageBox.alert(this.$t('package.payAnotherWay'), {
-              distinguishCancelAndClose: true,
-              confirmButtonText: this.$t('common.ok'),
-              callback: action => {
-                  if (action === 'confirm') {
-                      window.open(`https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
-                  }
-              }
-          });
-          return
-      }
+      // if (this.paySelect === 'paypal' && Number(subject.price) >= 50) {
+      //     this.$messageBox.alert(this.$t('package.payAnotherWay'), {
+      //         distinguishCancelAndClose: true,
+      //         confirmButtonText: this.$t('common.ok'),
+      //         callback: action => {
+      //             if (action === 'confirm') {
+      //                 window.open(`https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
+      //             }
+      //         }
+      //     });
+      //     return
+      // }
       this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
           distinguishCancelAndClose: true,
           confirmButtonText: this.$t('common.ok'),

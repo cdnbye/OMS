@@ -634,6 +634,36 @@ export const asyncRouterMap = [
             roles: ['admin'],
             noCache: true
         }
+      },
+      {
+          path: 'blockOrigins',
+          component: () => import('@/views/trackerConfig/blockOrigins'),
+          name: 'blockOrigins',
+          meta: {
+              title: 'BlockOriginsConfig',
+              roles: ['admin'],
+              noCache: true
+          }
+      },
+      {
+          path: 'blockIps',
+          component: () => import('@/views/trackerConfig/blockIps'),
+          name: 'blockIps',
+          meta: {
+              title: 'BlockIpsConfig',
+              roles: ['admin'],
+              noCache: true
+          }
+      },
+      {
+          path: 'allowIps',
+          component: () => import('@/views/trackerConfig/allowIps'),
+          name: 'allowIps',
+          meta: {
+              title: 'AllowIpsConfig',
+              roles: ['admin'],
+              noCache: true
+          }
       }
     ]
   },

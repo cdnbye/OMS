@@ -234,18 +234,18 @@ export default {
             return
         }
         // paypal支付并且大于50美元需要用加密货币
-        if (this.paySelect === 'paypal' && this.totalPrice >= 50) {
-            this.$messageBox.alert(this.$t('package.payAnotherWay'), {
-                distinguishCancelAndClose: true,
-                confirmButtonText: this.$t('common.ok'),
-                callback: action => {
-                    if (action === 'confirm') {
-                        window.open(`https://p2p.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
-                    }
-                }
-            });
-            return
-        }
+        // if (this.paySelect === 'paypal' && this.totalPrice >= 50) {
+        //     this.$messageBox.alert(this.$t('package.payAnotherWay'), {
+        //         distinguishCancelAndClose: true,
+        //         confirmButtonText: this.$t('common.ok'),
+        //         callback: action => {
+        //             if (action === 'confirm') {
+        //                 window.open(`https://p2p.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
+        //             }
+        //         }
+        //     });
+        //     return
+        // }
         this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
             distinguishCancelAndClose: true,
             confirmButtonText: this.$t('common.ok'),

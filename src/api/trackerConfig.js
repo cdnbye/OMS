@@ -43,3 +43,81 @@ export function removeAnnounce(data) {
     })
 }
 
+// 获取BlockIp
+export function fetchBlockIps() {
+    return request({
+        url: '/tracker/block_ips',
+        method: 'get',
+    })
+}
+
+// 增加BlockIp
+export function addBlockIp(data) {
+    return request({
+        url: '/tracker/block_ips',
+        method: 'post',
+        data
+    })
+}
+
+// 删除BlockIp
+export function removeBlockIp(data) {
+    return request({
+        url: '/tracker/block_ips',
+        method: 'delete',
+        data
+    })
+}
+
+// 获取AllowIp
+export function fetchAllowIps() {
+    return request({
+        url: '/tracker/allow_ips',
+        method: 'get',
+    })
+}
+
+// 增加AllowIp
+export function addAllowIp(data) {
+    return request({
+        url: '/tracker/allow_ips',
+        method: 'post',
+        data
+    })
+}
+
+// 删除AllowIp
+export function removeAllowIp(data) {
+    return request({
+        url: '/tracker/allow_ips',
+        method: 'delete',
+        data
+    })
+}
+
+// 获取BlockOrigin
+export function fetchBlockOrigins() {
+    return request({
+        url: '/tracker/block_origins',
+        method: 'get',
+    })
+}
+
+// 增加BlockOrigin
+export function addBlockOrigin(data) {
+    return request({
+        url: '/tracker/block_origins',
+        method: 'post',
+        data
+    })
+}
+
+// 删除BlockOrigin
+export function removeBlockOrigin(data) {
+    return request({
+        url: '/tracker/block_origins',
+        method: 'delete',
+        data
+    })
+}
+
