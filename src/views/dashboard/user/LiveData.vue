@@ -45,6 +45,9 @@
       <!--每日http流量-->
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
+          <div class="tip">
+            <PointTip :content="$t('dashboard.httpTip')" />
+          </div>
           <div class="card-panel-description">
             <span class="card-panel-num">{{ statis.traffic_http.num }}</span>
             <div class="card-panel-text">{{ $t('dashboard.httpTraffic') }} ({{ statis.traffic_http.unit }})</div>
