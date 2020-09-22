@@ -230,8 +230,8 @@ export default {
     noBuyTip: 'Please select the traffic package you want to purchase first.',
     payMethod: 'Payment method',
     packageSubTitle: 'Notice: ',
-    packageSub: 'Each user can consume a certain amount of P2P traffic. You can increase quota of traffic by buying the listed traffic packages below.  It takes effect immediately after purchase. Refunds are not supported. Contact service@cdnbye.com if you have problems. Notice: The traffic purchased by PayPal can only be used outside China.',
-    monthlyPackageSub: 'The annual and monthly plan can provide the corresponding amount of traffic per day. It is valid for one month or one year. It takes effect immediately after purchase. Refunds are not supported. Contact service@cdnbye.com if you have problems. Notice: The traffic purchased by PayPal can only be used outside China.',
+    packageSub: 'Each user can consume a certain amount of P2P traffic. You can increase quota of traffic by buying the listed traffic packages below. Contact service@cdnbye.com if you have problems. Notice: Refunds are not supported. The traffic purchased by PayPal can only be used outside China.',
+    monthlyPackageSub: 'Each of our plans comes with a defined event quota. If you exceed that quota, don’t worry, you can buy traffic package as supplement. Since the additional events cost more than pre-paid events, we recommend picking a plan that pre-pays for a little more than you think you\'ll need to avoid paying on-demand rates. It\'s a classic volume discount: when you use more, you pay less. Contact service@cdnbye.com if you have problems. Notice: Refunds are not supported. The traffic purchased by PayPal can only be used outside China.',
 
     packageInfo: 'Package info',
     unitPrice: 'Unit price',
