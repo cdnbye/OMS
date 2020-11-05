@@ -95,9 +95,9 @@ export default {
   },
   dashboard : {
     currentDomain: 'Current Domain: ',
-    goBind: 'Bind your domain',
+    goBind: 'Register your domain',
     switchDomain: 'Switch Domain/AppID',
-    tip: 'You have not bound domain name or created app, are you going now?',
+    tip: 'Register domain name or create app now?',
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
     httpTraffic: 'HTTP Traffic Today',
@@ -115,7 +115,7 @@ export default {
     natDis: 'NAT Type',
     p2pTip: 'UTC+8 adopted.<br/>Want to increase p2p traffic? See <a style="color: #337ab7" href="https://p2p.cdnbye.com/en/views/optimization.html" target="_blank">here</a>',
     httpTip: 'The stream traffic downloaded through HTTP (origin server or CDNs), the sum of HTTP traffic and P2P traffic is equal to the total traffic',
-    freeTip: '5GB of traffic will be given after the domain name is bound with an additional 10 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. <br/>If there is no available traffic, P2P service will be stopped.',
+    freeTip: '5GB of traffic will be given after the domain name is registered, and additional 20 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. <br/>If there is no available traffic, P2P service will be stopped.',
     remainTip: 'Please buy <a style="color: #337ab7" href="#/user/package">traffic package</a> or <a style="color: #337ab7" href="#/user/monthly_package">monthly/annual plan</a> in time to avoid service interruption.',
     checkin: 'Sign in for free traffic',
     checkinSuccess: 'Sign in successfully!',
@@ -127,7 +127,7 @@ export default {
     goApp: 'Create App'
   },
   domainTable: {
-    bindDomain: 'Bind Your Domain',
+    bindDomain: 'Register Your Domain',
     bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com\nNotice: for iframed or embedded players, the domain name taken into account will be the source website.',
     playUrlTip: 'Enter the link of your website homepage or the guide page link to the play page\nhttps://example.com/index.html',
     // bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',
@@ -135,8 +135,8 @@ export default {
     bindDomainTError: 'PLease input the correct domain!',
     domain: 'Domain',
     status: 'State',
-    available: 'Verified',
-    unavailable: 'Unverified',
+    available: 'Approved',
+    unavailable: 'Unauthorized',
     operation: 'Operation',
     verifyDomain: 'Verify domain',
     certification: 'Verify',
@@ -166,7 +166,7 @@ export default {
     },
     verifySuccess: 'verify successfully',
     title: 'Notice:',
-    desc: 'This page is used to bind domain name, mobile native App and Electron App do not require to bind domain name. Each user can bind up to 200 domain names. Domain records that have not been used within 60 days will be automatically deleted',
+    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 200 domain names. Domain records that have not been used within 60 days will be automatically deleted',
     illegal: 'Not Approved',
   },
   documentation: {
@@ -277,7 +277,7 @@ export default {
     configSuccess: 'Successfully configured',
     // configFail: 'Only paid users can turn P2P on / off',
     configFail: 'Operation failed',
-    desc: 'If you bind multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
+    desc: 'If you register multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
     switchErr: 'At least one domain name needs to remain open.',
     name: 'Domain/AppId',
     uploadRule: {

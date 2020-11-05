@@ -140,7 +140,7 @@ export default {
       sendDisabled: false,
       redirect: undefined,
       int: undefined,
-      contractChecked: false,
+      contractChecked: true,
     }
   },
   watch: {

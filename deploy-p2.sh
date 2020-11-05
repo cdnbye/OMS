@@ -14,7 +14,7 @@ cp -r dist release
 cd release
 
 # if you are deploying to a custom domain
-echo 'oms2.cdnbye.com' > CNAME
+echo 'console.hdtvcloud.com' > CNAME
 
 git init
 git add -A

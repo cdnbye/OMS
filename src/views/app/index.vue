@@ -266,7 +266,7 @@
             this.createItemLoading = true
             createItem(getID(), this.form)
               .then(res => {
-                if(res.data.success) {
+                if(res.ret === 0) {
                   this.dialogFormVisible = false
                   this.createItemLoading = false
                   // this.$message.success(this.$t('app.createItemSuccess'))

@@ -482,7 +482,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               if(res.data[i].isValid === 1) {
                 store.dispatch('setDomain', res.data)
-                console.warn(JSON.stringify(res.data[i]))
+                // console.warn(JSON.stringify(res.data[i]))
                 store.dispatch('setCurrentDomain', res.data[i])
                 hasValidDomain = true
                 break

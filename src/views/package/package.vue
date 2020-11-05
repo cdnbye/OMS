@@ -9,9 +9,9 @@
       <el-radio v-if="language==='en'" v-model="paySelect" label="paypal">
         <img :src="payImg.paypal" />
       </el-radio>
-      <el-radio v-if="language==='en'" v-model="paySelect" label="btc">
-        <img style="width: 60px" :src="payImg.btc" />
-      </el-radio>
+      <!--<el-radio v-if="language==='en'" v-model="paySelect" label="btc">-->
+        <!--<img style="width: 60px" :src="payImg.btc" />-->
+      <!--</el-radio>-->
       <el-radio v-model="paySelect" label="alipay">
         <img :src="payImg.ali" />
       </el-radio>
