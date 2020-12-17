@@ -40,6 +40,7 @@ export default {
     p2pSwitch: 'Enable/Disable P2P',
     uploadRule: 'Uploading Rules',
     activationRatio: 'Activation Ratio',
+    signalManage: 'Signal Management',
   },
   navbar: {
     logOut: 'Log Out',
@@ -166,7 +167,7 @@ export default {
     },
     verifySuccess: 'verify successfully',
     title: 'Notice:',
-    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 200 domain names. Domain records that have not been used within 60 days will be automatically deleted',
+    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 200 domain names. Domain records that have not been used within 60 days will be automatically deleted. Please note that domain name wildcard is not supported, please add all used sub domains.',
     illegal: 'Not Approved',
   },
   documentation: {
@@ -288,6 +289,11 @@ export default {
       desc: 'This config enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.',
       status: 'Activation Ratio(%)',
     },
+    signalManage: {
+      desc: 'This config is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. If Auto Switch is enabled, the system will automatically switch to other available signaling when the current signaling server is overloaded.',
+      signalAddr: 'Signal Address',
+      autoSignal: "Auto Switch",
+    }
   },
   app: {
     createToken: 'Create Token',
@@ -311,5 +317,6 @@ export default {
     appIdTip: 'com.company.example',
     introTip: 'Enter the download link of your APP or the link of introduction page',
     copied: 'Copied',
+    illegal: 'Not Approved',
   }
 }

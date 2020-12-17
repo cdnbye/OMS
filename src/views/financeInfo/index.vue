@@ -122,6 +122,15 @@
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.income_usd_month }}</span>
+            <div class="card-panel-text">近30天美元收入</div>
+          </div>
+        </div>
+      </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
             <span class="card-panel-num">{{ financeData.income_usd }}</span>
             <div class="card-panel-text">总的美元收入</div>
           </div>
@@ -191,12 +200,13 @@ export default {
         .then(res => {
           if(res.data) {
             this.financeData = {
-              ...res.data, 
+              ...res.data,
               income_rmb: res.data.income_rmb.toFixed(2),
               income_usd: res.data.income_usd.toFixed(2),
               income_rmb_today: res.data.income_rmb_today.toFixed(2),
               income_usd_today: res.data.income_usd_today.toFixed(2),
               income_rmb_month: res.data.income_rmb_month.toFixed(2),
+              income_usd_month: res.data.income_usd_month.toFixed(2),
             }
             this.loading = false
           }

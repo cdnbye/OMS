@@ -344,7 +344,7 @@
       },
       formatterStatus(row) {
           if(row.blocked) {
-              return this.$t('common.illegal')
+              return this.$t('app.illegal')
           }
           if(row.reviewing) {
               return this.$t('common.reviewing')

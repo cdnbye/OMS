@@ -42,6 +42,7 @@ export default {
     p2pSwitch: '开启/关闭P2P',
     uploadRule: 'P2P分享策略',
     activationRatio: '激活比率',
+    signalManage: '信令管理',
   },
   navbar: {
     logOut: '退出登录',
@@ -167,7 +168,7 @@ export default {
     },
     verifySuccess: '验证成功',
     title: '说明：',
-    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定200个域名，60天内未使用的域名记录将被自动删除。服务于国内的域名必须已备案。',
+    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定200个域名，60天内未使用的域名记录将被自动删除。服务于国内的域名必须已备案。暂不支持域名通配符，请添加所有用到的子域名。',
     illegal: '未通过审核(需要备案)',
   },
   documentation: {
@@ -289,6 +290,11 @@ export default {
       desc: '本页面用于配置P2P的激活比率，即连接P2P网络的设备占总设备的百分比。建议先设置一个较小的比例，然后观察P2P效果以及用户反馈，在确认正常的情况下逐步提高激活比率至100%。未激活的节点可以正常播放，但不会连接到P2P网络，只能从CDN或源服务器下载数据。',
       status: '激活比率(%)',
     },
+    signalManage: {
+      desc: '本页面用于云端配置信令地址，信令用于节点之间交换信息以建立P2P连接。如果在此页面配置了信令地址则会覆盖SDK侧配置的信令地址。开启自动切换后，在当前信令服务器负载不够时系统会自动切换到其他可用信令。',
+      signalAddr: '信令地址',
+      autoSignal: "自动切换",
+    }
   },
   app: {
     createToken: '生成Token',
@@ -312,5 +318,6 @@ export default {
     appIdTip: 'com.company.example',
     introTip: '输入你的APP下载链接或者APP介绍链接',
     copied: '已复制',
+    illegal: '未通过审核(请联系客服)',
   }
 }

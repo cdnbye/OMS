@@ -12,7 +12,6 @@
     "deploy-gitee": "sh deploy.sh",
     "deploy-github": "sh deploy_github.sh",
     "deploy-p2": "sh deploy-p2.sh",
-    "deploy-local": "sh deploy-local.sh",
     "deploy-test": "sh deploy-prerelease.sh",
     "git-push": "git add . && git commit -m 'u' &&  git push"
   },

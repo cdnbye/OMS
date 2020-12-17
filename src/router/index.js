@@ -481,6 +481,16 @@ export const asyncRouterMap = [
           }
       },
       {
+          path: 'signalManage',
+          component: () => import('@/views/p2pConfig/user/signalManage'),
+          name: 'signalManage',
+          meta: {
+              title: 'signalManage',
+              roles: ['user'],
+              noCache: true
+          }
+      },
+      {
           path: 'activationRatio',
           component: () => import('@/views/p2pConfig/user/activationRatio'),
           name: 'activationRatio',

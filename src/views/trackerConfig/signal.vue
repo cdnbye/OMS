@@ -27,8 +27,8 @@ export default {
         { url: 'signal.cdnbye.com', value: 0 },
         { url: 'opensignal.cdnbye.com', value: 0 },
         { url: 'signal.p2pengine.net:8089', value: 0 },
-        { url: 'p2p.bjxkhc.com:8089', value: 0 },
-        { url: 'signal.dianzhenkeji.com', value: 0 },
+        { url: 'siglive.hdtvcdn.com:8078', value: 0 },
+        { url: 'signal.hdtvcloud.com', value: 0 },
         { url: 'signal.hdtvcdn.com:7078', value: 0 },
         { url: 'signalhk.cdnbye.com', value: 0 },
       ]
