@@ -317,7 +317,9 @@ export default {
     desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"网站管理"页面绑定域名。每个用户最多创建200个APP，60天内未使用的App记录将被自动删除。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
     introTip: '输入你的APP下载链接或者APP介绍链接',
+    signatureTip: '输入你的APK签名SHA1值，用于对当前应用进行二次身份校验(选填)，签名获取方法可以参考<a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/cn/views/FAQ.html#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D">这里</a>',
     copied: '已复制',
     illegal: '未通过审核(请联系客服)',
+    signature: '应用签名(SHA1)',
   }
 }

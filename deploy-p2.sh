@@ -10,6 +10,8 @@ rm -rf release
 
 cp -r dist release
 
+cp -r .github release
+
 # navigate into the build output directory
 cd release
 

@@ -118,7 +118,7 @@ export default {
     httpTip: 'The stream traffic downloaded through HTTP (origin server or CDNs), the sum of HTTP traffic and P2P traffic is equal to the total traffic',
     freeTip: '5GB of traffic will be given after the domain name is registered, and additional 20 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. <br/>If there is no available traffic, P2P service will be stopped.',
     remainTip: 'Please buy <a style="color: #337ab7" href="#/user/package">traffic package</a> or <a style="color: #337ab7" href="#/user/monthly_package">monthly/annual plan</a> in time to avoid service interruption.',
-    checkin: 'Sign in for free traffic',
+    checkin: 'Get Free Traffic',
     checkinSuccess: 'Sign in successfully!',
     haveChecked: 'You have signed in today',
     checkinFail: 'Sign in failed, please try again!',
@@ -316,7 +316,9 @@ export default {
     desc: 'This page is used to configure mobile native App and Electron App. Each user can create up to 200 apps. App records that have not been used within 60 days will be automatically deleted. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
     introTip: 'Enter the download link of your APP or the link of introduction page',
+    signatureTip: 'Enter the SHA1 value of your APK signature, see <a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/en/views/FAQ.html#how-to-get-android-app-signature">here</a>',
     copied: 'Copied',
     illegal: 'Not Approved',
+    signature: 'Signature(SHA1)',
   }
 }

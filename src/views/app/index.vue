@@ -65,6 +65,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column :label="$t('app.signature')" align="center">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.signature }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column :label="$t('app.createTime')" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.created_at }}</span>
@@ -132,6 +138,14 @@
         <el-input v-model="form.play_url" placeholder="https://introduction_to_app/index.html"></el-input>
       </el-form-item>
 
+      <el-form-item v-show="form.platform==='android'" prop="play_url" label-width="160px">
+        <template slot="label">
+          <span>App Signature</span>
+          <PointTip style="margin-left: 4px" :content="$t('app.signatureTip')" />
+        </template>
+        <el-input v-model="form.signature" placeholder="Optional"></el-input>
+      </el-form-item>
+
       <el-form-item prop="platform" label="Platform" label-width="100px" required style="float: left">
         <el-select v-model="form.platform" placeholder="Select Platform">
           <el-option label="Android" value="android"></el-option>
@@ -139,6 +153,7 @@
           <el-option label="PC (Electron)" value="pc"></el-option>
         </el-select>
       </el-form-item>
+
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('common.cancel') }}</el-button>
@@ -181,6 +196,7 @@
           app_id: '',
           platform : '',
           play_url: '',
+          signature: '',
         },
         copyImg,
         tableParam: {
