@@ -43,7 +43,7 @@ import { formatTraffic, getTrafficNum } from '@/utils/format'
 import JsonExcel from 'vue-json-excel'
 
 export default {
-  name: 'Bandwidth',
+  name: 'Traffic',
   components: {
     LineChart,
     NoBindTip,
@@ -152,20 +152,37 @@ export default {
     },
 
     async dataForExcel() {
-        let res = await fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]), 1440)
-        const data = res.data.list
-        let peakArr = []
-        let sum = 0;
-        let column = "Traffic("+this.option.unit+")"
-        data.forEach((item, index) => {
-            let day = moment(item.ts * 1000).format('MM-DD')
-            let peak = getTrafficNum(item.value, this.option.unit)
-            sum += parseFloat(peak)
-            peakArr.push({"Date":day, [column]:peak})
+        const resP2p = await fetchP2PTraffic(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]), 1440)
+        const resHttp = await fetchHttpTraffic(this.currentDomain.uid, this.currentDomain.id, this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]), 1440)
+        const dataP2p = resP2p.data.list
+        const dataHttp = resHttp.data.list
+        const dataAll = [];
+        dataP2p.forEach((item, index) => {
+            dataAll.push({
+                ts: item.ts,
+                p2p: item.value,
+                http: dataHttp[index].value,
+            })
         })
-        console.warn(peakArr)
-        let average = (sum/peakArr.length).toFixed(2)
-        peakArr.push({"Date":"Avg", [column]:average})
+
+        let peakArr = []
+        let sumP2p = 0;
+        let sumHttp = 0;
+        const columnP2p = "P2P("+this.option.unit+")"
+        const columnHttp = "HTTP("+this.option.unit+")"
+        dataAll.forEach((item, index) => {
+            let day = moment(item.ts * 1000).format('MM-DD')
+            let peakP2p = getTrafficNum(item.p2p, this.option.unit)
+            let peakHttp = getTrafficNum(item.http, this.option.unit)
+            sumP2p += parseFloat(peakP2p)
+            sumHttp += parseFloat(peakHttp)
+            peakArr.push({"Date":day, [columnP2p]:peakP2p, [columnHttp]:peakHttp})
+        })
+
+        // console.warn(peakArr)
+        const averageP2p = (sumP2p/peakArr.length).toFixed(2)
+        const averageHttp = (sumHttp/peakArr.length).toFixed(2)
+        peakArr.push({"Date":"Avg", [columnP2p]:averageP2p, [columnHttp]:averageHttp})
         this.excelName = `${this.currentDomain.domain} Traffic Statistics.csv`
         return peakArr
     }

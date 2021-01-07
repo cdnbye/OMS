@@ -66,8 +66,12 @@
       </el-table-column>
 
       <el-table-column :label="$t('app.signature')" align="center">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.signature }}</span>
+        <template slot-scope="scope" v-if="scope.row.platform==='android'">
+          <!--<span style="margin-left: 10px">{{ scope.row.signature }}</span>-->
+          <el-input
+                  type="textarea"
+                  v-model="scope.row.signature">
+          </el-input>
         </template>
       </el-table-column>
 
@@ -83,18 +87,28 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('domainTable.operation')" align="center">
+      <el-table-column :label="$t('domainTable.operation')" align="center" width="300">
         <template slot-scope="scope">
           <el-button slot="reference" size="mini" type="primary" @click="handleWatch(scope.row)">{{ $t('app.watch') }}</el-button>
 
+          <el-popover v-if="scope.row.platform==='android'" placement="top" width="160" :ref="'popover-update-' + scope.row.id" trigger="manual">
+            <p>{{ $t('common.sureUpdate') }}</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="updateClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
+              <el-button type="primary" size="mini" @click="handleUpdateSign(scope.row)">{{ $t('common.ok') }}</el-button>
+            </div>
+            <el-button slot="reference" size="mini" type="warning" @click="updateShow(scope.row.id)" :style="device==='mobile'?'':'margin-left: 10px'">{{ $t('app.updateSign') }}</el-button>
+          </el-popover>
+
           <el-popover placement="top" width="160" :ref="'popover-' + scope.row.id" trigger="manual">
-            <p>{{ $t('app.sureDelete') }}</p>
+            <p>{{ $t('common.sureDelete') }}</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
               <el-button type="primary" size="mini" @click="handleDelete(scope.row)">{{ $t('common.ok') }}</el-button>
             </div>
             <el-button slot="reference" size="mini" type="danger" @click="pShow(scope.row.id)" :style="device==='mobile'?'':'margin-left: 10px'">{{ $t('domainTable.delete') }}</el-button>
           </el-popover>
+
         </template>
       </el-table-column>
     </el-table>
@@ -138,7 +152,7 @@
         <el-input v-model="form.play_url" placeholder="https://introduction_to_app/index.html"></el-input>
       </el-form-item>
 
-      <el-form-item v-show="form.platform==='android'" prop="play_url" label-width="160px">
+      <el-form-item v-show="form.platform==='android'" prop="signature" label-width="160px">
         <template slot="label">
           <span>App Signature</span>
           <PointTip style="margin-left: 4px" :content="$t('app.signatureTip')" />
@@ -160,13 +174,14 @@
       <el-button type="primary" @click="handleCreateItem" :loading="createItemLoading">{{ $t('common.ok') }}</el-button>
     </div>
   </el-dialog>
+
+
 </div>
 </template>
 
   <script>
-  import { fetchList, createToken, createItem, deleteItem } from '@/api/user/app'
+  import { fetchList, createToken, createItem, deleteItem, updateSign } from '@/api/user/app'
   import { mapGetters } from 'vuex'
-  import store from '@/store'
   import { getID } from '@/utils/auth'
   import moment from 'moment'
   import { copy } from '@/utils'
@@ -219,7 +234,13 @@
         this.$refs[`popover-` + id].doShow()
       },
       pClose(id) {
-        this.$refs[`popover-` + id].doClose()
+          this.$refs[`popover-` + id].doClose()
+      },
+      updateShow(id) {
+          this.$refs[`popover-update-` + id].doShow()
+      },
+      updateClose(id) {
+          this.$refs[`popover-update-` + id].doClose()
       },
       handleCreateToken() {
         this.popoverVisible = true
@@ -275,6 +296,27 @@
         }).catch(err => {
           this.tableLoading = false
         })
+      },
+      handleUpdateSign(item) {
+          const data = {
+              id: item.id,
+              signature: item.signature,
+          }
+          updateSign(getID(), data)
+              .then(res => {
+                  this.fetchData()
+                  // this.$message.success(this.$t('app.deleteItemSuccess'))
+                  this.$notify({
+                      title: this.$t('common.success'),
+                      message: this.$t('app.updateItemSuccess'),
+                      type: 'success'
+                  });
+                  this.updateClose(item.id)
+              })
+              .catch(err => {
+                  this.updateClose(item.id)
+                  // console.log(err)
+              })
       },
       handleCreateItem() {
         this.$refs.createForm.validate(valid => {

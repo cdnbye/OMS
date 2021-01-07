@@ -29,3 +29,11 @@ export function deleteItem(uid, data) {
     data
   })
 }
+
+export function updateSign(uid, data) {
+    return request({
+        url: `sdk/user_id/${uid}/signature`,
+        method: 'post',
+        data
+    })
+}

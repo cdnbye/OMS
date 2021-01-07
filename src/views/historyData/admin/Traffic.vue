@@ -30,7 +30,7 @@ import LineChart from '@/components/LineChart'
 import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
 
 export default {
-  name: 'Bandwidth',
+  name: 'Traffic',
   components: {
     LineChart
   },

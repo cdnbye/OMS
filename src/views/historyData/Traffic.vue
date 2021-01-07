@@ -4,15 +4,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import adminP2P from './admin/P2P'
-import userP2P from './user/P2P'
+import adminTraffic from './admin/Traffic'
+import userTraffic from './user/Traffic'
 
 export default {
-  name: 'P2P',
-  components: { adminP2P, userP2P },
+  name: 'Traffic',
+  components: { adminTraffic, userTraffic },
   data() {
     return {
-      currentRole: 'adminP2P'
+      currentRole: 'adminTraffic'
     }
   },
   computed: {
@@ -22,7 +22,7 @@ export default {
   },
   created() {
     if (!this.roles.includes('admin')) {
-      this.currentRole = 'userP2P'
+      this.currentRole = 'userTraffic'
     }
   }
 }

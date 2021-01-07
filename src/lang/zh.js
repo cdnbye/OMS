@@ -27,7 +27,6 @@ export default {
     BlockIpsConfig: 'IP黑名单',
     AllowIpsConfig: 'IP白名单',
     userConfig: '客户管理',
-
     dataAnalysis: '历史数据',
     p2pTraffic: '流量趋势图',
     onlineNum: '在线人数趋势图',
@@ -43,6 +42,7 @@ export default {
     uploadRule: 'P2P分享策略',
     activationRatio: '激活比率',
     signalManage: '信令管理',
+    stunManage: 'Stun管理',
   },
   navbar: {
     logOut: '退出登录',
@@ -208,6 +208,8 @@ export default {
   common: {
     ok: '确定',
     cancel: '取消',
+    delete: '删除',
+    update: '更新',
     deleteSuccess: '删除成功',
     closeSuccess: '关闭成功',
     yes: 'YES',
@@ -220,6 +222,8 @@ export default {
     error: '错误',
     warning: '警告',
     message: '消息',
+    sureDelete: '确定要删除吗？',
+    sureUpdate: '确定要更新吗？',
   },
   historyData: {
     hour: '1小时内',
@@ -294,6 +298,10 @@ export default {
       desc: '本页面用于云端配置信令地址，信令用于节点之间交换信息以建立P2P连接。如果在此页面配置了信令地址则会覆盖SDK侧配置的信令地址。开启自动切换后，在当前信令服务器负载不够时系统会自动切换到其他可用信令。',
       signalAddr: '信令地址',
       autoSignal: "自动切换",
+    },
+    stunManage: {
+        addr: 'Stun地址',
+        desc: '本页面用于云端配置stun地址，stun用于处于NAT后面的节点获取公网ip和端口。每行输入一个地址，最多输入3个地址',
     }
   },
   app: {
@@ -307,8 +315,8 @@ export default {
     appID: 'APP ID的获取方式可参考<a style="color: #337ab7" target="view_window" href="https://www.cdnbye.com/cn/views/bindings.html#%E7%BB%91%E5%AE%9A-app-id-%E5%B9%B6%E8%8E%B7%E5%8F%96token">这里</a>',
     platform: '平台',
     sureCreateToken: '确定要生成token吗？',
-    sureDelete: '确定要删除吗？',
     deleteItemSuccess: '删除成功',
+    updateItemSuccess: '更新成功',
     createTime: '创建时间',
     name: 'APP名称',
     copy: '点击复制',
@@ -317,9 +325,10 @@ export default {
     desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"网站管理"页面绑定域名。每个用户最多创建200个APP，60天内未使用的App记录将被自动删除。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
     introTip: '输入你的APP下载链接或者APP介绍链接',
-    signatureTip: '输入你的APK签名SHA1值，用于对当前应用进行二次身份校验(选填)，签名获取方法可以参考<a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/cn/views/FAQ.html#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D">这里</a>',
+    signatureTip: '输入你的APK签名SHA1值，用于对当前应用进行二次身份校验(选填, 需要安卓SDK版本大于2.2.0)，签名获取方法可以参考<a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/cn/views/FAQ.html#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D">这里</a>',
     copied: '已复制',
     illegal: '未通过审核(请联系客服)',
     signature: '应用签名(SHA1)',
+    updateSign: '更新SHA1',
   }
 }

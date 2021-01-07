@@ -1,32 +1,26 @@
 <template>
     <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
-        <el-alert :title="$t('p2pConfig.signalManage.desc')" style="margin-bottom: 20px"/>
+        <el-alert :title="$t('p2pConfig.stunManage.desc')" style="margin-bottom: 20px"/>
         <el-table border :data="tableData" v-loading="loading">
             <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
-            <el-table-column align="center" :formatter="formatterStatus"
-                             :label="$t('p2pConfig.signalManage.signalAddr')">
+
+            <el-table-column align="center"
+                             :label="$t('p2pConfig.stunManage.addr')">
                 <template slot-scope="scope">
                     <el-input
-                            placeholder="wss://"
-                            v-model="scope.row.signal_addr"
-                            maxlength="50"
-                            show-word-limit
+                            type="textarea"
+                            :autosize="{ minRows: 1, maxRows: 3}"
+                            placeholder="stun:"
+                            v-model="scope.row.stuns"
                             clearable
-                            >
-                        <template slot="append">
-                            <el-button style="color: #006eff" v-if="!scope.row.blocked && !scope.row.reviewing" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
-                            <span v-else :style="'color: red'">
-                                {{ formatterStatus(scope.row) }}
-                            </span>
-                        </template>
+                    >
                     </el-input>
-
                 </template>
             </el-table-column>
-            <el-table-column align="center" :formatter="formatterStatus"
-                             :label="$t('p2pConfig.signalManage.autoSignal')">
+
+            <el-table-column :label="$t('domainTable.operation')" align="center">
                 <template slot-scope="scope">
-                    <el-switch v-if="!scope.row.blocked && !scope.row.reviewing" v-model="scope.row.auto_signal" active-color="#13ce66" inactive-color="#ff4949" @change="value => handleSubmit(scope.row)"> </el-switch>
+                    <el-button v-if="!scope.row.blocked && !scope.row.reviewing" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -47,11 +41,12 @@
 
 <script>
     import {fetchUserDomain} from '@/api/userDomain'
-    import { updateSignalAddr } from '@/api/user/p2pConfig'
+    import { updateStuns } from '@/api/user/p2pConfig'
     import {mapGetters} from 'vuex'
+    import { trim } from '@/utils'
 
     export default {
-        name: 'signalManage',
+        name: 'stunManage',
         data() {
             return {
                 loading: false,
@@ -71,20 +66,20 @@
             this.fetchTableData()
         },
         methods: {
-            formatterStatus(row) {
-                if (row.blocked) {
-                    return this.$t('common.illegal')
-                }
-                if (row.reviewing) {
-                    return this.$t('common.reviewing')
-                }
-                return ""
-            },
             fetchTableData(page = this.tableParam.page, pageSize = this.tableParam.pageSize) {
                 this.loading = true
                 fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
                     if (res.data) {
-                        this.tableData = res.data
+                        this.tableData = res.data.filter(row => {
+                            // console.warn(row)
+                            return !row.blocked && !row.reviewing
+                        })
+                        this.tableData.forEach(row => {
+                            // console.warn(row)
+                            if (row.stuns && row.stuns.length > 0) {
+                                row.stuns = row.stuns.join('\n')
+                            }
+                        })
                     }
                     this.loading = false
                 }).catch(err => {
@@ -92,9 +87,17 @@
                     console.log(err)
                 })
             },
-            handleSignalAddr(uid, id, data) {
+            handleSubmit(domain) {
                 this.loading = true
-                updateSignalAddr(uid, id, data)
+                let stuns;
+                if (!domain.stuns) {
+                    stuns = []
+                } else {
+                    stuns = domain.stuns.split('\n').map(stun => trim(stun)).filter(stun => {
+                        return stun !== ""
+                    })
+                }
+                updateStuns(domain.uid, domain.id, {stuns})
                     .then(res => {
                         if (res.data.succeed) {
                             this.$notify({
@@ -105,7 +108,7 @@
                         } else {
                             this.$notify.error({
                                 title: this.$t('common.error'),
-                                message: this.$t('p2pConfig.configFail'),
+                                message: res.data.msg,
                             });
                         }
                         this.loading = false
@@ -114,10 +117,7 @@
                         this.loading = false
                         console.log(err)
                     })
-            },
-            handleSubmit(domain) {
-                const data = {signal_addr: domain.signal_addr, auto_signal: domain.auto_signal}
-                this.handleSignalAddr(domain.uid, domain.id, data)
+
             },
             handleSizeChange(pageSize) {
                 this.tableParam.pageSize = pageSize

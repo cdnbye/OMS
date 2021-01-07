@@ -41,6 +41,7 @@ export default {
     uploadRule: 'Uploading Rules',
     activationRatio: 'Activation Ratio',
     signalManage: 'Signal Management',
+    stunManage: 'Stun Management',
   },
   navbar: {
     logOut: 'Log Out',
@@ -207,6 +208,8 @@ export default {
   common: {
     ok: 'Confirm',
     cancel: 'Cancel',
+    delete: 'Delete',
+    update: 'Update',
     deleteSuccess: 'delete successfully',
     closeSuccess: 'close successfully',
     yes: 'YES',
@@ -219,6 +222,8 @@ export default {
     error: 'Error',
     warning: 'Warning',
     message: 'Message',
+    sureDelete: 'Sure to delete?',
+    sureUpdate: 'Sure to update?',
   },
   historyData: {
     hour: '1 Hour',
@@ -293,6 +298,10 @@ export default {
       desc: 'This config is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. If Auto Switch is enabled, the system will automatically switch to other available signaling when the current signaling server is overloaded.',
       signalAddr: 'Signal Address',
       autoSignal: "Auto Switch",
+    },
+    stunManage: {
+        addr: 'Stun Address',
+        desc: 'This page is used to configure the stun address. Stun is used for peers behind NAT to discover their public IP and port. Enter one address per line, up to 3 addresses',
     }
   },
   app: {
@@ -306,8 +315,8 @@ export default {
     appID: 'You can refer to <a style="color: #337ab7" target="view_window" href="https://p2p.cdnbye.com/en/views/bindings.html#app-id-and-token">here</a> to obtain APP ID',
     platform: 'Platform',
     sureCreateToken: 'Sure to create token?',
-    sureDelete: 'Sure to delete?',
     deleteItemSuccess: 'Delete successfully',
+    updateItemSuccess: 'Update successfully',
     createTime: 'Create Time',
     name: 'Name',
     copy: 'Click to copy',
@@ -316,9 +325,10 @@ export default {
     desc: 'This page is used to configure mobile native App and Electron App. Each user can create up to 200 apps. App records that have not been used within 60 days will be automatically deleted. It takes more than a minute to take effect after the creation is successful.',
     appIdTip: 'com.company.example',
     introTip: 'Enter the download link of your APP or the link of introduction page',
-    signatureTip: 'Enter the SHA1 value of your APK signature, see <a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/en/views/FAQ.html#how-to-get-android-app-signature">here</a>',
+    signatureTip: 'Enter the SHA1 value of your APK signature, need Android SDK version >= 2.2.0, see <a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/en/views/FAQ.html#how-to-get-android-app-signature">here</a>',
     copied: 'Copied',
     illegal: 'Not Approved',
     signature: 'Signature(SHA1)',
+    updateSign: 'Update SHA1',
   }
 }

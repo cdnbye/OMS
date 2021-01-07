@@ -268,7 +268,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'p2p_rate',
-        component: () => import('@/views/historyData/P2P'),
+        component: () => import('@/views/historyData/Traffic'),
         name: 'P2PRate',
         meta: {
           title: 'p2pRate',
@@ -302,7 +302,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'p2p_rate',
-        component: () => import('@/views/historyData/P2P'),
+        component: () => import('@/views/historyData/Traffic'),
         name: 'P2PRate',
         meta: {
           title: 'p2pTraffic',
@@ -499,7 +499,17 @@ export const asyncRouterMap = [
               roles: ['user'],
               noCache: true
           }
-      }
+      },
+      {
+          path: 'stunManage',
+          component: () => import('@/views/p2pConfig/user/stunManage'),
+          name: 'stunManage',
+          meta: {
+              title: 'stunManage',
+              roles: ['user'],
+              noCache: true
+          }
+      },
     ]
   },
   //修改邮箱密码
