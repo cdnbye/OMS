@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["ef3c"],{ef3c:function(e,n,r){"use strict";r.r(n);r("a481");var t,o,u={beforeCreate:function(){var e=this.$route.params.path;this.$router.replace("/"+e)},render:function(e){return e()}},a=u,i=r("2877"),c=Object(i["a"])(a,t,o,!1,null,null,null);c.options.__file="index.vue";n["default"]=c.exports}}]);
+//# sourceMappingURL=ef3c.9a8680a5.js.map
