@@ -197,6 +197,10 @@
                 label: "monthly_20TB",
             },
             {
+                value: '12',
+                label: "monthly_25TB",
+            },
+            {
                 value: '10',
                 label: "monthly_50TB",
             },

@@ -207,6 +207,7 @@
         }
         const data = {
           domain: domain.host,
+          uid: domain.uid,
           blocked: !domain.blocked
         }
         this.loading = true
@@ -238,6 +239,7 @@
         }
         const data = {
           domain: domain.host,
+          uid: domain.uid,
           whitelist: !domain.whitelist
         }
         this.loading = true

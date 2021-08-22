@@ -13,11 +13,20 @@
       <el-form-item label="上报时间间隔">
         <el-slider v-model="configForm.report_interval" :min="10" :max="120" @change="intervalChange" show-input></el-slider>
       </el-form-item>
+      <el-form-item label="PING时间间隔">
+        <el-slider v-model="configForm.ping_interval" :min="0" :max="500" @change="piChange" show-input></el-slider>
+      </el-form-item>
       <el-form-item label="ShareOnly模式">
         <el-switch v-model="configForm.share_only" active-color="green" inactive-color="red" @change="shareOnlyChange"></el-switch>
       </el-form-item>
+      <el-form-item label="在线调试模式">
+        <el-switch v-model="configForm.online_debug" active-color="green" inactive-color="red" @change="debugChange"></el-switch>
+      </el-form-item>
+      <el-form-item label="启动信令熔断">
+        <el-switch v-model="configForm.enable_fusing" active-color="green" inactive-color="red" @change="fusingChange"></el-switch>
+      </el-form-item>
       <el-form-item label="同时在线节点数">
-        <el-slider v-model="configForm.max_nodes" :min="0" :max="2000000" @change="maxNodesChange" show-input></el-slider>
+        <el-slider v-model="configForm.max_nodes" :min="0" :max="5000000" @change="maxNodesChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="服务状态">
         <el-switch v-model="configForm.tracker_open" active-color="green" inactive-color="red" :disabled="true"></el-switch>
@@ -27,7 +36,7 @@
         <el-button type="primary" @click.native.prevent="reset">取消</el-button>
       </el-form-item>
     </el-form>
-  </el-card> 
+  </el-card>
 </template>
 
 <script>
@@ -49,6 +58,9 @@ export default {
         tracker_open: false,
         max_nodes: 0,
         share_only: false,
+        ping_interval: 0,
+        online_debug: false,
+        enable_fusing: false,
       }
     }
   },
@@ -95,12 +107,21 @@ export default {
     intervalChange() {
       this.isChanged = true
     },
+    piChange() {
+        this.isChanged = true
+    },
     maxNodesChange() {
       this.isChanged = true
     },
     shareOnlyChange() {
       this.isChanged = true
-    }
+    },
+    debugChange() {
+      this.isChanged = true
+    },
+    fusingChange() {
+      this.isChanged = true
+    },
   }
 }
 </script>

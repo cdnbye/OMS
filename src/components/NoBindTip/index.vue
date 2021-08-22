@@ -33,7 +33,7 @@ export default {
         if(this.roles.indexOf('user') > -1 && this.currentDomain.id === undefined) {
             this.tipVisible = true
         }
-    }, 1000)
+    }, 5000)
   },
   computed: {
     ...mapGetters([

@@ -32,7 +32,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(res)
+    // console.log(res)
     if (res.ret !== 0) {
       Message({
         message: res.data.msg,

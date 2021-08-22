@@ -15,7 +15,7 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <a target="_blank" :href="language==='en'?'https://p2p.cdnbye.com/en/views/':'https://www.cdnbye.com/cn/views/'">
+          <a target="_blank" :href="language==='en'?'https://swarmcloud.net/en/views/':'https://www.cdnbye.com/cn/views/'">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
             </el-dropdown-item>

@@ -19,12 +19,12 @@
     <el-table-column align="center" prop="domain" :label="$t('domainTable.domain')"></el-table-column>
     <el-table-column align="center" :label="$t('domainTable.status')">
       <template slot-scope="scope">
-        <span :style="scope.row.blocked || scope.row.reviewing?'color: red':''">
+        <span :style="scope.row.blocked || !scope.row.isValid ?'color: red':'color: green'">
           {{ formatterStatus(scope.row) }}
         </span>
       </template>
     </el-table-column>
-    <el-table-column align="center" prop="text" label="text"></el-table-column>
+    <!--<el-table-column align="center" prop="text" label="text"></el-table-column>-->
     <el-table-column :label="$t('domainTable.operation')" align="center" fixed="right">
       <template slot-scope="scope">
         <template>
@@ -40,7 +40,7 @@
               <el-button type="text" size="mini" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
               <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
             </div>
-            <el-button slot="reference" type="danger" size="mini" @click="pShow(scope.row.id)">{{ $t('domainTable.delete') }}</el-button>
+            <el-button v-show="!scope.row.blocked" slot="reference" type="danger" size="mini" @click="pShow(scope.row.id)">{{ $t('domainTable.delete') }}</el-button>
           </el-popover>
         </template>
       </template>
@@ -319,10 +319,10 @@
         if(row.blocked) {
           return this.$t('domainTable.illegal')
         }
-        if(row.reviewing) {
-          return this.$t('common.reviewing')
-        }
-        return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('domainTable.available')
+        // if(row.reviewing) {
+        //   return this.$t('common.reviewing')
+        // }
+        return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('common.available')
       },
       saveFile() {
         downloadFile(this.checkDomainData.text, 'auth.txt')

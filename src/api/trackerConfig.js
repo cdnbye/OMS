@@ -121,3 +121,29 @@ export function removeBlockOrigin(data) {
     })
 }
 
+// 获取signal token
+export function fetchSignalToken() {
+    return request({
+        url: '/tracker/signal_token',
+        method: 'get',
+    })
+}
+
+// 增加signal token
+export function addSignalToken(data) {
+    return request({
+        url: '/tracker/signal_token',
+        method: 'post',
+        data
+    })
+}
+
+// 删除signal token
+export function removeSignalToken(data) {
+    return request({
+        url: '/tracker/signal_token',
+        method: 'delete',
+        data
+    })
+}
+

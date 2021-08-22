@@ -14,7 +14,7 @@
                             clearable
                             >
                         <template slot="append">
-                            <el-button style="color: #006eff" v-if="!scope.row.blocked && !scope.row.reviewing" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
+                            <el-button style="color: #006eff" v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                             <span v-else :style="'color: red'">
                                 {{ formatterStatus(scope.row) }}
                             </span>
@@ -26,7 +26,7 @@
             <el-table-column align="center" :formatter="formatterStatus"
                              :label="$t('p2pConfig.signalManage.autoSignal')">
                 <template slot-scope="scope">
-                    <el-switch v-if="!scope.row.blocked && !scope.row.reviewing" v-model="scope.row.auto_signal" active-color="#13ce66" inactive-color="#ff4949" @change="value => handleSubmit(scope.row)"> </el-switch>
+                    <el-switch v-if="!scope.row.blocked" v-model="scope.row.auto_signal" active-color="#13ce66" inactive-color="#ff4949" @change="value => handleSubmit(scope.row)"> </el-switch>
                 </template>
             </el-table-column>
         </el-table>
@@ -75,9 +75,9 @@
                 if (row.blocked) {
                     return this.$t('common.illegal')
                 }
-                if (row.reviewing) {
-                    return this.$t('common.reviewing')
-                }
+                // if (row.reviewing) {
+                //     return this.$t('common.reviewing')
+                // }
                 return ""
             },
             fetchTableData(page = this.tableParam.page, pageSize = this.tableParam.pageSize) {

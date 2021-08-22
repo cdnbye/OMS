@@ -5,7 +5,7 @@
             <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
             <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.uploadRule.status')">
                 <template  slot-scope="scope">
-                    <el-switch v-if="!scope.row.blocked && !scope.row.reviewing" :value="scope.row.wifi_only" active-color="#13ce66" inactive-color="#ff4949" @change="value => valueChange(scope.row, value)"> </el-switch>
+                    <el-switch v-if="!scope.row.blocked" :value="scope.row.wifi_only" active-color="#13ce66" inactive-color="#ff4949" @change="value => valueChange(scope.row, value)"> </el-switch>
                     <span v-else :style="'color: red'">
                         {{ formatterStatus(scope.row) }}
                      </span>
@@ -57,9 +57,9 @@
                 if(row.blocked) {
                     return this.$t('common.illegal')
                 }
-                if(row.reviewing) {
-                    return this.$t('common.reviewing')
-                }
+                // if(row.reviewing) {
+                //     return this.$t('common.reviewing')
+                // }
                 return ""
             },
             fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {

@@ -65,7 +65,8 @@
 
       <!--用户服务协议-->
       <el-row type="flex" justify="space-between" style="margin-bottom: 14px">
-        <el-checkbox style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/cn/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
+        <el-checkbox v-if="language==='en'" style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/en/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
+        <el-checkbox v-else style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/cn/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
       </el-row>
 
       <el-row type="flex" justify="space-between">
@@ -83,6 +84,7 @@
 import LangSelect from '@/components/LangSelect'
 import { validatePhone, validateEmail } from '@/utils/validate'
 import { sendCode } from '@/api/auth'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Signup',
@@ -246,7 +248,12 @@ export default {
         }
       }, 1000)
     }
-  }
+  },
+  computed: {
+      ...mapGetters([
+          'language',
+      ])
+  },
 }
 </script>
 

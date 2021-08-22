@@ -114,6 +114,7 @@
                 }
                 const data = {
                     domain: domain.domain,
+                    uid: domain.uid,
                     blocked: !domain.blocked
                 }
                 this.loading = true
@@ -143,6 +144,7 @@
                 }
                 const data = {
                     domain: domain.domain,
+                    uid: domain.uid,
                     whitelist: !domain.whitelist
                 }
                 this.loading = true
@@ -165,6 +167,7 @@
             reviewingChange(domain) {
                 const data = {
                     domain: domain.domain,
+                    uid: domain.uid,
                     reviewing: !domain.reviewing
                 }
                 this.loading = true

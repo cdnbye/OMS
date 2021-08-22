@@ -41,8 +41,8 @@ export default {
     p2pSwitch: '开启/关闭P2P',
     uploadRule: 'P2P分享策略',
     activationRatio: '激活比率',
-    signalManage: '信令管理',
-    stunManage: 'Stun管理',
+    signalManage: '信令配置',
+    stunManage: 'Stun配置',
   },
   navbar: {
     logOut: '退出登录',
@@ -137,12 +137,11 @@ export default {
     bindDomainTError: '请输入正确的域名！',
     domain: '域名',
     status: '状态',
-    available: '已绑定',
-    unavailable: '未绑定',
+    unavailable: '待验证',
     operation: '操作',
     verifyDomain: '验证域名',
-    certification: '认证',
-    certificationTip: '您需要对添加的网站进行域名所有权认证，可以选择以下任意一种方式进行验证。',
+    certification: '验证',
+    certificationTip: '您需要对添加的网站进行域名所有权验证，可以选择以下任意一种方式进行验证。',
     doneTip: '完成操作后请点击"立即验证"按钮',
     verifyLater: '稍后验证',
     verifyNow: '立即验证',
@@ -168,7 +167,7 @@ export default {
     },
     verifySuccess: '验证成功',
     title: '说明：',
-    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定200个域名，60天内未使用的域名记录将被自动删除。服务于国内的域名必须已备案。暂不支持域名通配符，请添加所有用到的子域名。',
+    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定500个域名，60天内未使用的域名记录将被自动删除。服务于国内的域名必须已备案。暂不支持域名通配符，请添加所有用到的子域名。',
     illegal: '未通过审核(需要备案)',
   },
   documentation: {
@@ -215,7 +214,7 @@ export default {
     yes: 'YES',
     no: 'NO',
     status: '状态',
-    available: '已审核',
+    available: '可用',
     reviewing: '正在审核中',
     illegal: '未通过审核',
     success: '成功',
@@ -301,7 +300,7 @@ export default {
     },
     stunManage: {
         addr: 'Stun地址',
-        desc: '本页面用于云端配置stun地址，stun用于处于NAT后面的节点获取公网ip和端口。每行输入一个地址，最多输入3个地址',
+        desc: '本页面用于云端配置stun地址，stun用于处于NAT后面的节点获取公网ip和端口。每行输入一个地址，最多输入3个地址。一旦配置，将覆盖SDK默认stun地址，请谨慎操作。',
     }
   },
   app: {

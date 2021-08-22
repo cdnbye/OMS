@@ -240,7 +240,7 @@ export default {
         //         confirmButtonText: this.$t('common.ok'),
         //         callback: action => {
         //             if (action === 'confirm') {
-        //                 window.open(`https://p2p.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
+        //                 window.open(`https://swarmcloud.net/en/views/prices.html#cryptocurrency-wallet`)
         //             }
         //         }
         //     });

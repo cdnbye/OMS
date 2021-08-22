@@ -10,7 +10,7 @@
                     <el-input
                             type="textarea"
                             :autosize="{ minRows: 1, maxRows: 3}"
-                            placeholder="stun:"
+                            placeholder="stun://"
                             v-model="scope.row.stuns"
                             clearable
                     >
@@ -20,7 +20,7 @@
 
             <el-table-column :label="$t('domainTable.operation')" align="center">
                 <template slot-scope="scope">
-                    <el-button v-if="!scope.row.blocked && !scope.row.reviewing" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
+                    <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -72,7 +72,7 @@
                     if (res.data) {
                         this.tableData = res.data.filter(row => {
                             // console.warn(row)
-                            return !row.blocked && !row.reviewing
+                            return !row.blocked
                         })
                         this.tableData.forEach(row => {
                             // console.warn(row)

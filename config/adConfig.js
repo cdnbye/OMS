@@ -1,5 +1,5 @@
 export default {
-  showTop: true,                //是否显示顶部广告
+  showTop: false,                //是否显示顶部广告
   showBot: false,                //是否显示底部广告
   afterShow: 15000,             //多久显示广告 单位：毫秒
   afterHide: 15000,             //显示后多久自动关闭 单位：毫秒

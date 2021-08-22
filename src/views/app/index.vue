@@ -83,7 +83,7 @@
 
       <el-table-column :label="$t('common.status')" align="center">
         <template slot-scope="scope">
-          <span :style="scope.row.blocked || scope.row.reviewing?'color: red':'color: green'">{{ formatterStatus(scope.row) }}</span>
+          <span :style="scope.row.blocked?'color: red':'color: green'">{{ formatterStatus(scope.row) }}</span>
         </template>
       </el-table-column>
 
@@ -298,9 +298,12 @@
         })
       },
       handleUpdateSign(item) {
+          let signature = item.signature
+          //去掉空格回车换行
+          signature = signature.replace(/\ +/g,"").replace(/[\r\n]/g,"");
           const data = {
               id: item.id,
-              signature: item.signature,
+              signature,
           }
           updateSign(getID(), data)
               .then(res => {
@@ -404,9 +407,9 @@
           if(row.blocked) {
               return this.$t('app.illegal')
           }
-          if(row.reviewing) {
-              return this.$t('common.reviewing')
-          }
+          // if(row.reviewing) {
+          //     return this.$t('common.reviewing')
+          // }
           return this.$t('common.available')
       },
     },

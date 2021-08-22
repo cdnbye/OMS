@@ -684,6 +684,16 @@ export const asyncRouterMap = [
               roles: ['admin'],
               noCache: true
           }
+      },
+      {
+          path: 'signalToken',
+          component: () => import('@/views/trackerConfig/signalToken'),
+          name: 'signalToken',
+          meta: {
+              title: '信令Token',
+              roles: ['admin'],
+              noCache: true
+          }
       }
     ]
   },

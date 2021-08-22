@@ -11,7 +11,7 @@
             </el-table-column>
             <el-table-column :label="$t('domainTable.operation')" align="center">
                 <template slot-scope="scope">
-                    <el-button v-if="!scope.row.blocked && !scope.row.reviewing" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
+                    <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                     <span v-else :style="'color: red'">
                         {{ formatterStatus(scope.row) }}
                      </span>
@@ -63,9 +63,9 @@
                 if (row.blocked) {
                     return this.$t('common.illegal')
                 }
-                if (row.reviewing) {
-                    return this.$t('common.reviewing')
-                }
+                // if (row.reviewing) {
+                //     return this.$t('common.reviewing')
+                // }
                 return ""
             },
             fetchTableData(page = this.tableParam.page, pageSize = this.tableParam.pageSize) {
