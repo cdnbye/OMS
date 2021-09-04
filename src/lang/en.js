@@ -167,7 +167,7 @@ export default {
     },
     verifySuccess: 'verify successfully',
     title: 'Notice:',
-    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 500 domain names. Domain records that have not been used within 60 days will be automatically deleted. Please note that domain name wildcard is not supported, please add all used sub domains.',
+    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 500 domain names. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains.',
     illegal: 'Not Approved',
   },
   documentation: {

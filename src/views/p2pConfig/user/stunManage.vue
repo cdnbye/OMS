@@ -10,7 +10,7 @@
                     <el-input
                             type="textarea"
                             :autosize="{ minRows: 1, maxRows: 3}"
-                            placeholder="stun://"
+                            placeholder="stun:"
                             v-model="scope.row.stuns"
                             clearable
                     >

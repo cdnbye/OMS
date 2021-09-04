@@ -23,13 +23,12 @@ export default {
   data() {
     return {
       list: [
-        { url: 'signalcloud.cdnbye.com', value: 0 },
-        { url: 'signal.cdnbye.com', value: 0 },
-        { url: 'opensignal.cdnbye.com', value: 0 },
-        { url: 'signal.p2pengine.net:8089', value: 0 },
-        // { url: 'siglive.hdtvcdn.com:8078', value: 0 },
-        { url: 'signal.hdtvcdn.com:7078', value: 0 },
-        { url: 'signal.swarmcloud.net', value: 0 },
+        { url: 'https://signalcloud.cdnbye.com', value: 0 },
+        { url: 'https://signal.cdnbye.com', value: 0 },
+        { url: 'https://opensignal.cdnbye.com', value: 0 },
+        { url: 'https://signal.p2pengine.net:8089', value: 0 },
+        { url: 'http://signal.ubtvmarket.com:8077', value: 0 },
+        { url: 'https://signal.swarmcloud.net', value: 0 },
       ]
     }
   },
@@ -42,7 +41,7 @@ export default {
   methods: {
     fetchData() {
       this.list.forEach(item => {
-        const url = `https://${item.url}/count`
+        const url = `${item.url}/count`
         axios.get(url)
           .then(res => {
             if(typeof res.data === 'number')

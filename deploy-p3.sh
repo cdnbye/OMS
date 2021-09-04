@@ -4,7 +4,7 @@
 set -e
 
 # build
-npm run build-p2
+npm run build-p3
 
 rm -rf release
 
@@ -16,10 +16,10 @@ cp -r .github release
 cd release
 
 rm .github/workflows/main.yml
-rm .github/workflows/hk-console.yml
+rm .github/workflows/us-console.yml
 
 # if you are deploying to a custom domain
-echo 'console.hdtvcloud.com' > CNAME
+echo 'console.swarmcloud.net' > CNAME
 
 git init
 git add -A
@@ -28,7 +28,7 @@ git commit -m 'deploy'
 export https_proxy=http://127.0.0.1:54719 http_proxy=http://127.0.0.1:54719 all_proxy=socks5://127.0.0.1:54720
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-# git push -f https://gitee.com/cdnbye/OMS2.git master
-git push -f https://snowinszu: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@github.com/cdnbye/OMS2.git master
+# git push -f https://gitee.com/cdnbye/OMS_hk.git master
+git push -f https://snowinszu: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@github.com/cdnbye/OMS_hk.git master
 
 cd -

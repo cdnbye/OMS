@@ -49,6 +49,7 @@
     import {fetchUserDomain} from '@/api/userDomain'
     import { updateSignalAddr } from '@/api/user/p2pConfig'
     import {mapGetters} from 'vuex'
+    import { trim } from '@/utils'
 
     export default {
         name: 'signalManage',
@@ -116,7 +117,7 @@
                     })
             },
             handleSubmit(domain) {
-                const data = {signal_addr: domain.signal_addr, auto_signal: domain.auto_signal}
+                const data = {signal_addr: trim(domain.signal_addr), auto_signal: domain.auto_signal};
                 this.handleSignalAddr(domain.uid, domain.id, data)
             },
             handleSizeChange(pageSize) {

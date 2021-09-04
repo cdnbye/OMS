@@ -16,6 +16,7 @@ cp -r .github release
 cd release
 
 rm .github/workflows/us-console.yml
+rm .github/workflows/hk-console.yml
 
 # if you are deploying to a custom domain
 echo 'oms.cdnbye.com' > CNAME

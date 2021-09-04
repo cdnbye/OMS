@@ -166,6 +166,7 @@
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
   import store from '@/store'
+  import { trim } from '@/utils'
 
   export default {
     name: 'UserDomain',
