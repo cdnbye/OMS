@@ -186,7 +186,7 @@
   import moment from 'moment'
   import { copy } from '@/utils'
   import PointTip from '@/components/PointTip'
-
+  import { trim } from '@/utils'
   import pcImg from '@/assets/platform/electron.png'
   import iosImg from '@/assets/platform/ios.png'
   import androidImg from '@/assets/platform/android.png'
@@ -322,6 +322,10 @@
               })
       },
       handleCreateItem() {
+        this.form.app_name = trim(this.form.app_name)
+        this.form.app_id = trim(this.form.app_id)
+        this.form.play_url = trim(this.form.play_url)
+        this.form.signature = trim(this.form.signature)
         this.$refs.createForm.validate(valid => {
           if(valid) {
             this.createItemLoading = true

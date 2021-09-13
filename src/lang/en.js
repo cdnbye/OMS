@@ -129,7 +129,7 @@ export default {
     goApp: 'Create App'
   },
   domainTable: {
-    bindDomain: 'Register Your Domain',
+    bindDomain: 'Register Your Domain/Root Domain',
     bindDomainTip: 'Enter your domain name，such as: (Do not input IP address)\nwww.example.com\nNotice: for iframed or embedded players, the domain name taken into account will be the source website.',
     playUrlTip: 'Enter the link of your website homepage or the guide page link to the play page\nhttps://example.com/index.html',
     // bindWarning: 'CDNBye does not provide P2P services for illegal content such as pornography.Please ensure that your website complies with legal norms. ',

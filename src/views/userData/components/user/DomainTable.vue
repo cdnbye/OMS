@@ -300,6 +300,8 @@
         })
       },
       addDomainSubmit() {
+        this.domainFormData.domain = trim(this.domainFormData.domain)
+        this.domainFormData.playUrl = trim(this.domainFormData.playUrl)
         this.$refs.domainForm.validate(valid => {
           if(valid) {
             bindDomain({

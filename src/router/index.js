@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Layout from '@/views/layout/Layout'
+import { navLang } from '@/utils/i18n'
 
 export const constantRouterMap = [
   {
@@ -699,6 +700,31 @@ export const asyncRouterMap = [
   },
 
 ]
+
+// if (navLang() === 'zh') {
+//     asyncRouterMap.splice(13, 0, {
+//         path: '/invoice',
+//         component: Layout,
+//         redirect: '/user/invoice',
+//         meta: {
+//             title: 'invoice',
+//             icon: 'invoice',
+//             roles: ['user']
+//         },
+//         children: [
+//             {
+//                 path: '/user/invoice',
+//                 component: () => import('@/views/historyOrder/user/Invoice'),
+//                 name: 'Invoices',
+//                 meta: {
+//                     title: '发票管理',
+//                     roles: ['user'],
+//                     noCache: true
+//                 }
+//             }
+//         ]
+//     })
+// }
 
 export default new Router({
   // mode: 'history',

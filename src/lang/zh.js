@@ -130,8 +130,8 @@ export default {
     goApp: '创建APP'
   },
   domainTable: {
-    bindDomain: '绑定域名',
-    bindDomainTip: '输入你的网站域名(请勿输入IP地址)，例如：www.example.com\n注意：域名是指播放器所在的域名（如果嵌入iframe则是src的域名），不是流地址(m3u8)的域名。\n端口不需要填写。',
+    bindDomain: '绑定域名/根域名',
+    bindDomainTip: '输入你的网站域名(请勿输入IP地址)，例如：www.example.com\n注意：域名是指播放器所在的域名（如果嵌入iframe则是src的域名），不是流地址(m3u8)的域名。\n端口不需要填写，支持根域名通配。',
     playUrlTip: '输入你的网站首页链接或者可以进入播放页面的引导页链接。网站不得包含非法内容，也不得包含跳转到非法内容的链接。\nhttps://example.com/index.html',
     bindWarning: 'CDNBye不对色情等非法内容提供P2P服务，请确保您的网站符合法律规范，服务于国内的域名必须已备案。',
     bindDomainTError: '请输入正确的域名！',

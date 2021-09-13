@@ -29,6 +29,7 @@ export default {
         { url: 'https://signal.p2pengine.net:8089', value: 0 },
         { url: 'http://signal.ubtvmarket.com:8077', value: 0 },
         { url: 'https://signal.swarmcloud.net', value: 0 },
+        { url: 'https://hk.p2pengine.net:8089', value: 0 },
       ]
     }
   },
