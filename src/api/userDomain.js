@@ -131,6 +131,14 @@ export function fetchAdminUser() {
   })
 }
 
+// 白名单用户列表
+export function fetchWhitelistUser() {
+    return request({
+        url: `user/whitelist`,
+        method: 'get'
+    })
+}
+
 // 用户包月套餐变动
 export function updateUserPlan(data) {
     return request({

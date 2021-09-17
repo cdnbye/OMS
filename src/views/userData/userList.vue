@@ -16,6 +16,9 @@
       <el-checkbox v-model="showAdmin" @change="showAdminUser">显示管理员</el-checkbox>
     </el-col>
     <el-col :span="12">
+      <el-checkbox v-model="showAdmin" @change="showWhitelistUser">白名单用户</el-checkbox>
+    </el-col>
+    <el-col :span="12">
       <el-input
         class="filter-item"
         prefix-icon="el-icon-search"
@@ -132,7 +135,7 @@
 </template>
 
   <script>
-  import { fetchUserList, fetchAdminUser, updateUserPlan } from '@/api/userDomain'
+  import { fetchUserList, fetchAdminUser, fetchWhitelistUser, updateUserPlan } from '@/api/userDomain'
   import { frozenUser, adminUser, whitelistUser, searchUser, userTrafficChange } from '@/api/user'
   import { copy } from '@/utils'
   import moment from 'moment'
@@ -289,6 +292,25 @@
         } else {
           this.fetchTableData()
         }
+      },
+      showWhitelistUser(value) {
+          this.loading = true
+          if(value) {
+              fetchWhitelistUser()
+                  .then(res => {
+                      if(res.data) {
+                          this.loading = false
+                          this.tableData = this.formatData(res.data)
+                      }
+                  })
+                  .catch(err => {
+                      this.loading = false
+                      this.tableData = []
+                      console.log(err)
+                  })
+          } else {
+              this.fetchTableData()
+          }
       },
       formatData(data) {
         const temp = [...data]
