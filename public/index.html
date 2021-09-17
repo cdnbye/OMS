@@ -7,7 +7,7 @@
     <link rel="icon" href="<%= BASE_URL %>logo.png">
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="9ef4a604-fe60-4864-b365-85891ed5fbf6";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
     <title>CDNBye Console</title>
-    <script src="https://cdn.jsdelivr.net/npm/swarmcloud-sw@latest"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/swarmcloud-sw@latest"></script>-->
   </head>
   <!--Start of SwarmCloud Script-->
   <script type="text/javascript">
@@ -16,24 +16,24 @@
           location.href = location.href + '/'
       }
 
-      if (typeof window !== 'undefined' && window.P2PEngineSW) {
-
-          const engine = new P2PEngineSW({
-              // swEnabled: false,
-              logLevel: 'debug',
-              // p2pEnabled: false,
-          });
-
-          engine.registerServiceWorker().then(function (registration) {
-              console.info('ServiceWorker registration successful with scope: ', registration.scope);
-              if (P2PEngineSW.isSupported()) {
-                  engine.start();
-              }
-          }).catch((err) => {
-              console.info('ServiceWorker registration failed ', err)
-          })
-
-      }
+      // if (typeof window !== 'undefined' && window.P2PEngineSW) {
+      //
+      //     const engine = new P2PEngineSW({
+      //         // swEnabled: false,
+      //         logLevel: 'debug',
+      //         // p2pEnabled: false,
+      //     });
+      //
+      //     engine.registerServiceWorker().then(function (registration) {
+      //         console.info('ServiceWorker registration successful with scope: ', registration.scope);
+      //         if (P2PEngineSW.isSupported()) {
+      //             engine.start();
+      //         }
+      //     }).catch((err) => {
+      //         console.info('ServiceWorker registration failed ', err)
+      //     })
+      //
+      // }
   </script>
   <!--End of SwarmCloud Script-->
   <body>

@@ -34,7 +34,12 @@
     <el-table-column align="center" prop="reg_date" label="注册时间"></el-table-column>
     <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>
     <el-table-column align="center" prop="domain" label="域名" width="60"></el-table-column>
-    <el-table-column align="center" prop="agent" width="90" label="代理商"></el-table-column>
+    <!--<el-table-column align="center" prop="agent" width="90" label="代理商"></el-table-column>-->
+    <el-table-column align="center" prop="whitelist" width="90" label="白名单">
+      <template slot-scope="scope">
+        <el-switch slot="reference" :value="scope.row.whitelist" active-color="#42b983" @change="handleWhitelistUser(scope.row)"></el-switch>
+      </template>
+    </el-table-column>
     <el-table-column align="center" label="禁用状态" width="60">
       <template slot-scope="scope">
         <el-popover
@@ -128,7 +133,7 @@
 
   <script>
   import { fetchUserList, fetchAdminUser, updateUserPlan } from '@/api/userDomain'
-  import { frozenUser, adminUser, searchUser, userTrafficChange } from '@/api/user'
+  import { frozenUser, adminUser, whitelistUser, searchUser, userTrafficChange } from '@/api/user'
   import { copy } from '@/utils'
   import moment from 'moment'
   import { MessageBox } from 'element-ui'
@@ -223,6 +228,10 @@
             {
                 value: '6',
                 label: "annual_unlimited",
+            },
+            {
+                value: '13',
+                label: "monthly_200TB",
             },
         ]
       }
@@ -349,6 +358,29 @@
             this.loading = false
             console.log(err)
           })
+      },
+      handleWhitelistUser(user) {
+          this.loading = true
+          whitelistUser({
+              uid: user.uid,
+              whitelist: !user.whitelist
+          })
+              .then(res => {
+                  this.pClose(user.uid)
+                  this.loading = false
+                  this.$message({
+                      type: 'success',
+                      message: '操作成功'
+                  })
+                  this.tableData.forEach(item => {
+                      if(item.uid === user.uid)
+                          item.whitelist = !item.whitelist
+                  })
+              })
+              .catch(err => {
+                  this.loading = false
+                  console.log(err)
+              })
       },
       handleSearch() {
         if(this.searchValue) {

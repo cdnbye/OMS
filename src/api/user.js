@@ -45,6 +45,15 @@ export function adminUser(data) {
   })
 }
 
+// 修改用户白名单
+export function whitelistUser(data) {
+    return request({
+        url: `user/whitelist`,
+        method: 'post',
+        data
+    })
+}
+
 // 查找用户
 export function searchUser(mail) {
   return request({

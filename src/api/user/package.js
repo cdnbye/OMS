@@ -58,3 +58,20 @@ export function checkIn(userID, data) {
     data
   })
 }
+
+// 获取开票信息
+export function getInvoiceInfo(userID) {
+    return request({
+        url: `user/user_id/${userID}/invoice`,
+        method: 'get',
+    })
+}
+
+// 开具发票
+export function createInvoice(userID, data) {
+    return request({
+        url: `user/user_id/${userID}/invoice`,
+        method: 'post',
+        data
+    })
+}

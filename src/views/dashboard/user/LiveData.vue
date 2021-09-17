@@ -154,15 +154,15 @@ import PointTip from '@/components/PointTip'
 import Dis from './Distribution'
 
 let int = undefined
-const types = {
-  0: 'flow_package',
-  1: 'monthly_10TB',
-  2: 'monthly_20TB',
-  3: 'monthly_unlimited',
-  4: 'annual_10TB',
-  5: 'annual_20TB',
-  6: 'unlimited',
-}
+// const types = {
+//   0: 'flow_package',
+//   1: 'monthly_10TB',
+//   2: 'monthly_20TB',
+//   3: 'monthly_unlimited',
+//   4: 'annual_10TB',
+//   5: 'annual_20TB',
+//   6: 'unlimited',
+// }
 
 export default {
   name: 'LiveData',

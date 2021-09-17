@@ -224,6 +224,29 @@ export const asyncRouterMap = [
       }
     ]
   },
+    {
+        path: '/global',
+        component: Layout,
+        redirect: '/user/liveDataGlobal',
+        meta: {
+            title: 'dashboard',
+            icon: 'dashboard',
+            roles: ['user']
+        },
+        children: [
+            {
+                path: '/user/liveDataGlobal',
+                component: () => import('@/views/dashboard/user/LiveDataGlobal'),
+                name: 'UserLiveDataGlobal',
+                meta: {
+                    title: 'basicAnalysisGlobal',
+                    icon: 'dashboard',
+                    roles: ['user'],
+                    noCache: true
+                }
+            }
+        ]
+    },
   // {
   //   path: '/permission',
   //   component: Layout,
@@ -311,6 +334,16 @@ export const asyncRouterMap = [
           noCache: true
         }
       },
+        {
+            path: 'p2p_rate_global',
+            component: () => import('@/views/historyData/user/TrafficGlobal'),
+            name: 'P2PRateGlobal',
+            meta: {
+                title: 'p2pTrafficGlobal',
+                roles: ['user'],
+                noCache: true
+            }
+        },
       {
         path: 'online',
         component: () => import('@/views/historyData/OnlineNum'),
@@ -320,7 +353,17 @@ export const asyncRouterMap = [
           roles: ['user'],
           noCache: true
         }
-      }
+      },
+        {
+            path: 'online_global',
+            component: () => import('@/views/historyData/user/OnlineGlobal'),
+            name: 'OnlineGlobal',
+            meta: {
+                title: 'onlineNumGlobal',
+                roles: ['user'],
+                noCache: true
+            }
+        }
     ]
   },
 
@@ -573,15 +616,15 @@ export const asyncRouterMap = [
           roles: ['admin']
         }
       },
-      // {
-      //   path: 'user_domain',
-      //   component: () => import('@/views/userData/bindDomain'),
-      //   name: 'UserDomain',
-      //   meta: {
-      //     title: 'userDomain',
-      //     roles: ['admin']
-      //   }
-      // }
+      {
+        path: 'invoices',
+        component: () => import('@/views/userData/invoiceList'),
+        name: 'invoices',
+        meta: {
+          title: '待开发票',
+          roles: ['admin']
+        }
+      }
     ]
   },
   {
@@ -701,30 +744,30 @@ export const asyncRouterMap = [
 
 ]
 
-// if (navLang() === 'zh') {
-//     asyncRouterMap.splice(13, 0, {
-//         path: '/invoice',
-//         component: Layout,
-//         redirect: '/user/invoice',
-//         meta: {
-//             title: 'invoice',
-//             icon: 'invoice',
-//             roles: ['user']
-//         },
-//         children: [
-//             {
-//                 path: '/user/invoice',
-//                 component: () => import('@/views/historyOrder/user/Invoice'),
-//                 name: 'Invoices',
-//                 meta: {
-//                     title: '发票管理',
-//                     roles: ['user'],
-//                     noCache: true
-//                 }
-//             }
-//         ]
-//     })
-// }
+if (navLang() === 'zh') {
+    asyncRouterMap.splice(14, 0, {
+        path: '/invoice',
+        component: Layout,
+        redirect: '/user/invoice',
+        meta: {
+            title: 'invoice',
+            icon: 'invoice',
+            roles: ['user']
+        },
+        children: [
+            {
+                path: '/user/invoice',
+                component: () => import('@/views/package/Invoice'),
+                name: 'Invoices',
+                meta: {
+                    title: '发票管理',
+                    roles: ['user'],
+                    noCache: true
+                }
+            }
+        ]
+    })
+}
 
 export default new Router({
   // mode: 'history',
