@@ -41,16 +41,6 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-
-      // fetchLiveData('country').then(res => {
-      //   if(res.data) {
-      //     res.data.forEach(item => {
-      //       if(item.name === 'China') {
-      //         this.total = item.value
-      //       }
-      //     })
-      //   }
-      // })
     }
   }
 }

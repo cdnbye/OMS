@@ -25,7 +25,7 @@ git init
 git add -A
 git commit -m 'deploy'
 
-export https_proxy=http://127.0.0.1:54719 http_proxy=http://127.0.0.1:54719 all_proxy=socks5://127.0.0.1:54720
+# export https_proxy=http://127.0.0.1:54719 http_proxy=http://127.0.0.1:54719 all_proxy=socks5://127.0.0.1:54720
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 # git push -f https://gitee.com/cdnbye/OMS2.git master

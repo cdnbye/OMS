@@ -45,6 +45,7 @@ export default {
       chart: null,
       geoCoordMap: {
         '香港': [114.15,22.15],
+        '澳门': [113.55,22.20],
         '台湾':[121.31,25.03],
         '海门':[121.15,31.89],
         '鄂尔多斯':[109.781327,39.608266],
@@ -247,20 +248,20 @@ export default {
       deep: true,
       handler(val) {
         this.data = val
-        this.setOptions()
+        this.setMapOptions()
       }
     },
     provinceData: {
       deep: true,
       handler(val) {
         this.province_data = val
-        this.setOptions()
+        this.setMapOptions()
       }
     },
     total: {
       handler(val) {
         this._total = val
-        this.setOptions()
+        this.setMapOptions()
       }
     }
   },
@@ -292,6 +293,7 @@ export default {
 
     this.chart.dispose()
     this.chart = null
+    clearTimeout(this.barId)
   },
   methods: {
     convertData(data) {
@@ -312,20 +314,9 @@ export default {
         this.__resizeHandler()
       }
     },
-    setOptions() {
+    setMapOptions() {
       const _this = this
       this.chart.setOption({
-        // visualMap: {
-        //   type: 'piecewise',
-        //   pieces: [
-        //     {gt: 1500},            // (1500, Infinity]
-        //     {gt: 1000, lte: 1500},  // (900, 1500]
-        //     {gt: 300, lte: 1000},  // (310, 1000]
-        //     {gt: 200, lte: 300},   // (200, 300]
-        //     {gt: 50, lte: 200, label: '50 到 200（自定义label）'},       // (10, 200]
-        //     {lt: 50}                 // (-Infinity, 5)
-        //   ]
-        // },
         backgroundColor: {
           type: 'linear',
           x: 0,
@@ -419,7 +410,7 @@ export default {
           {
             type: 'map',
             mapType: 'china',
-		        geoIndex : 0,
+            geoIndex : 0,
             label: {
               normal: {
                 show: true
@@ -432,10 +423,44 @@ export default {
           }
         ]
       })
+
+    },
+    setBarOptions() {
+        if (!this._total) return
+        const data = this.province_data.sort(function (a, b) {
+            return a.value - b.value;
+        });
+        this.chart.setOption({
+            xAxis: {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+                axisLabel: {
+                    rotate: 30
+                },
+                data: data.map(function (item) {
+                    return item.name;
+                })
+            },
+            animationDurationUpdate: 1000,
+            series: {
+                type: 'bar',
+                id: 'population',
+                data: data.map(function (item) {
+                    return item.value;
+                }),
+                universalTransition: true
+            }
+        })
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions()
+      this.setMapOptions()
+
+      this.barId = setTimeout(() => {
+          this.setBarOptions();
+      }, 5000);
     }
   }
 }

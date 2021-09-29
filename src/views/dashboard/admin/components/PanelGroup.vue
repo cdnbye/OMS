@@ -8,7 +8,7 @@
         </div>
       </div>
     </el-col>
-    
+
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
@@ -58,7 +58,16 @@
       <div class="card-panel">
         <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.hostNum }}</span>
-          <div class="card-panel-text">活跃网站总数</div>
+          <div class="card-panel-text">活跃网站/APP总数</div>
+        </div>
+      </div>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.max_online }}</span>
+          <div class="card-panel-text">历史最高在线人数</div>
         </div>
       </div>
     </el-col>
@@ -79,7 +88,7 @@ export default {
     return {
       statis: {
         online: 0,
-
+        max_online: 0,
         p2p_rate: 0,
 
         hostNum: 0,
@@ -117,7 +126,7 @@ export default {
         fetchLiveTimeData().then(res => {
         const { data } = res
         this.statis.online = data.num_rt
-
+        this.statis.max_online = data.max_num
         this.statis.bandwidth_p2p = formatBandwidth(data.rt_bw_p2p)
 
         this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)

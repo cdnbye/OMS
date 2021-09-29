@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "deploy-github": "sh deploy_github.sh",
+    "deploy-cn-github": "sh deploy_github.sh",
     "deploy-us": "sh deploy-p2.sh",
     "deploy-hk": "sh deploy-p3.sh",
-    "deploy-gitee": "sh deploy.sh",
+    "deploy-cn-gitee": "sh deploy.sh",
     "deploy-test": "sh deploy-prerelease.sh",
     "git-push": "git add . && git commit -m 'u' &&  git push",
     "build": "vue-cli-service build --mode production",

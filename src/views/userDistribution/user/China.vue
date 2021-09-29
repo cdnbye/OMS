@@ -60,16 +60,6 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-
-      // fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'country', 'china').then(res => {
-      //   if(res.data) {
-      //     res.data.forEach(item => {
-      //       if(item.name === 'China') {
-      //         this.total = item.value      // TODO 优化
-      //       }
-      //     })
-      //   }
-      // })
     }
   }
 }

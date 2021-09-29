@@ -371,7 +371,7 @@ export const asyncRouterMap = [
   {
     path: '/distribution',
     component: Layout,
-    redirect: 'distribution/china',
+    redirect: 'distribution/world',
     alwaysShow: true,
     meta: {
       title: 'userDistribution',
@@ -380,15 +380,6 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: 'china',
-        component: () => import('@/views/userDistribution/China'),
-        name: 'ChinaDistribution',
-        meta: {
-          title: 'chinaDistribution',
-          roles: ['user']
-        }
-      },
-      {
         path: 'world',
         component: () => import('@/views/userDistribution/World'),
         name: 'WorldDistribution',
@@ -396,7 +387,25 @@ export const asyncRouterMap = [
           title: 'worldDistribution',
           roles: ['user']
         }
-      }
+      },
+      {
+          path: 'usa',
+          component: () => import('@/views/userDistribution/USA'),
+          name: 'USADistribution',
+          meta: {
+              title: 'USADistribution',
+              roles: ['user']
+          }
+      },
+      {
+          path: 'china',
+          component: () => import('@/views/userDistribution/China'),
+          name: 'ChinaDistribution',
+          meta: {
+              title: 'chinaDistribution',
+              roles: ['user']
+          }
+      },
     ]
   },
   // user router 套餐列表
@@ -646,6 +655,15 @@ export const asyncRouterMap = [
           title: 'chinaDistribution',
           roles: ['admin']
         }
+      },
+      {
+          path: 'usa',
+          component: () => import('@/views/userDistribution/USA'),
+          name: 'USADistribution',
+          meta: {
+              title: 'USADistribution',
+              roles: ['admin']
+          }
       },
       {
         path: 'world',

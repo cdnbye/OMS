@@ -23,13 +23,19 @@ export default {
   data() {
     return {
       list: [
-        { url: 'https://signalcloud.cdnbye.com', value: 0 },
-        { url: 'https://signal.cdnbye.com', value: 0 },
-        { url: 'https://opensignal.cdnbye.com', value: 0 },
-        { url: 'https://signal.p2pengine.net:8089', value: 0 },
-        { url: 'http://signal.ubtvmarket.com:8077', value: 0 },
-        { url: 'https://signal.swarmcloud.net', value: 0 },
-        { url: 'https://hk.p2pengine.net:8089', value: 0 },
+        { url: 'https://signalcloud.cdnbye.com/count', value: 0 },
+        { url: 'https://signal.cdnbye.com/count', value: 0 },
+        { url: 'https://opensignal.cdnbye.com/count', value: 0 },
+        { url: 'https://signal.p2pengine.net:8089/count', value: 0 },
+        { url: 'http://signal.ubtvmarket.com:8077/total_count', value: 0 },
+        { url: 'https://signal.swarmcloud.net/count', value: 0 },
+        { url: 'https://hk.p2pengine.net:8089/total_count', value: 0 },
+        { url: 'http://43.129.211.18:8088/count', value: 0 },
+        { url: 'http://43.129.228.44:8088/count', value: 0 },
+        { url: 'http://119.28.136.195:8088/count', value: 0 },
+        { url: 'http://124.156.158.249:8088/count', value: 0 },
+        { url: 'http://119.28.74.92:8088/count', value: 0 },
+        { url: 'http://124.156.138.240:8088/count', value: 0 },
       ]
     }
   },
@@ -42,7 +48,7 @@ export default {
   methods: {
     fetchData() {
       this.list.forEach(item => {
-        const url = `${item.url}/count`
+        const url = `${item.url}`
         axios.get(url)
           .then(res => {
             if(typeof res.data === 'number')

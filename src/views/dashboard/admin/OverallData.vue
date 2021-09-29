@@ -82,15 +82,6 @@
         </div>
         </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.max_online }}</span>
-        <div class="card-panel-text">历史最高在线人数</div>
-        </div>
-        </div>
-        </el-col>
-
     </el-row>
 </template>
 
@@ -106,7 +97,6 @@
         data() {
             return {
                 statis: {
-                    max_online: 0,
                     max_online_week: 0,
                     max_online_month: 0,
 
@@ -142,7 +132,6 @@
             getData() {
                 fetchOverallData().then(res => {
                     const { data } = res
-                    this.statis.max_online = data.max_num
                     this.statis.max_online_week = data.max_num_7
                     this.statis.max_online_month = data.max_num_month
                     this.statis.bandwidth_p2p_week = formatBandwidth(data.bwp_p2p_7)
