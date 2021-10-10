@@ -67,6 +67,15 @@ export function reviewDomain(data) {
     })
 }
 
+// 将域名debug
+export function debugDomain(data) {
+    return request({
+        url: `/host/debug`,
+        method: 'post',
+        data
+    })
+}
+
 // 查找域名
 export function searchHost(host) {
   return request({

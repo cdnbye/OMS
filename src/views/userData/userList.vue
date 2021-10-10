@@ -140,6 +140,7 @@
   import { copy } from '@/utils'
   import moment from 'moment'
   import { MessageBox } from 'element-ui'
+  import { trim } from '@/utils'
 
   export default {
     data() {
@@ -405,6 +406,7 @@
               })
       },
       handleSearch() {
+        this.searchValue = trim(this.searchValue)
         if(this.searchValue) {
           searchUser(this.searchValue)
             .then(res => {

@@ -34,3 +34,12 @@ export function fetchLiveData(type, opts) {
     method: 'get'
   })
 }
+
+// 全局热门频道
+export function fetchHotChannels(page, pageSize) {
+    let url = `global/channel?page=${page}&page_size=${pageSize}`
+    return request({
+        url,
+        method: 'get'
+    })
+}

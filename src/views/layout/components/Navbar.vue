@@ -119,11 +119,11 @@ export default {
       margin-right: 30px;
       .avatar-wrapper {
         cursor: pointer;
-        margin-top: 5px;
+        margin-top: 8px;
         position: relative;
         .user-avatar {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           border-radius: 10px;
         }
         .el-icon-caret-bottom {

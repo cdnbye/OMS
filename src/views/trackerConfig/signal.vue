@@ -5,7 +5,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{item.value}}</span>
-            <div class="card-panel-text">{{item.url}}连接数</div>
+            <div class="card-panel-text">{{item.url}}</div>
           </div>
         </div>
       </el-col>
@@ -36,6 +36,9 @@ export default {
         { url: 'http://124.156.158.249:8088/count', value: 0 },
         { url: 'http://119.28.74.92:8088/count', value: 0 },
         { url: 'http://124.156.138.240:8088/count', value: 0 },
+        { url: 'http://124.156.158.249:8077/count', value: 0 },
+        { url: 'http://119.28.74.92:8077/count', value: 0 },
+        { url: 'http://124.156.138.240:8077/count', value: 0 },
       ]
     }
   },

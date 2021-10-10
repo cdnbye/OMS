@@ -85,6 +85,25 @@ export const asyncRouterMap = [
         }
       },
       {
+          path: '/pieChart',
+          component: () => import('@/views/dashboard/Distribution'),
+          name: 'PieChart',
+          meta: {
+              title: 'disChart',
+              roles: ['admin'],
+              noCache: true
+          }
+      },
+      {
+          path: '/hotChannel',
+          component: () => import('@/views/dashboard/admin/hotChannel'),
+          name: 'hotChannel',
+          meta: {
+              title: 'hotChannel',
+              roles: ['admin'],
+          }
+      },
+      {
           path: '/overall',
           component: () => import('@/views/dashboard/admin/OverallData'),
           name: 'OverallData',
@@ -94,16 +113,6 @@ export const asyncRouterMap = [
               noCache: true
           }
       },
-      {
-        path: '/pieChart',
-        component: () => import('@/views/dashboard/Distribution'),
-        name: 'PieChart',
-        meta: {
-          title: 'disChart',
-          roles: ['admin'],
-          noCache: true
-        }
-      }
     ]
   },
 
@@ -224,29 +233,52 @@ export const asyncRouterMap = [
       }
     ]
   },
-    {
-        path: '/global',
-        component: Layout,
-        redirect: '/user/liveDataGlobal',
-        meta: {
-            title: 'dashboard',
-            icon: 'dashboard',
-            roles: ['user']
-        },
-        children: [
-            {
-                path: '/user/liveDataGlobal',
-                component: () => import('@/views/dashboard/user/LiveDataGlobal'),
-                name: 'UserLiveDataGlobal',
-                meta: {
-                    title: 'basicAnalysisGlobal',
-                    icon: 'dashboard',
-                    roles: ['user'],
-                    noCache: true
-                }
-            }
-        ]
-    },
+  {
+      path: '/global',
+      component: Layout,
+      redirect: '/user/liveDataGlobal',
+      meta: {
+          title: 'dashboard',
+          icon: 'dashboard',
+          roles: ['user']
+      },
+      children: [
+          {
+              path: '/user/liveDataGlobal',
+              component: () => import('@/views/dashboard/user/LiveDataGlobal'),
+              name: 'UserLiveDataGlobal',
+              meta: {
+                  title: 'basicAnalysisGlobal',
+                  icon: 'dashboard',
+                  roles: ['user'],
+                  noCache: true
+              }
+          }
+      ]
+  },
+  {
+      path: '/channels',
+      component: Layout,
+      redirect: '/user/hotChannel',
+      meta: {
+          title: 'dashboard',
+          icon: 'dashboard',
+          roles: ['user']
+      },
+      children: [
+          {
+              path: '/user/hotChannel',
+              component: () => import('@/views/dashboard/user/hotChannel'),
+              name: 'hotChannel',
+              meta: {
+                  title: 'hotChannel',
+                  icon: 'dashboard',
+                  roles: ['user'],
+                  noCache: true
+              }
+          }
+      ]
+  },
   // {
   //   path: '/permission',
   //   component: Layout,
@@ -633,7 +665,7 @@ export const asyncRouterMap = [
           title: '待开发票',
           roles: ['admin']
         }
-      }
+      },
     ]
   },
   {

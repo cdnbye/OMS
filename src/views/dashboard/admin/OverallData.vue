@@ -90,8 +90,6 @@
     import { fetchHostNum } from '@/api/userDomain'
     import { formatBandwidth, formatTraffic } from '@/utils/format'
 
-    // let int = undefined
-
     export default {
         name: 'OverallData',
         data() {

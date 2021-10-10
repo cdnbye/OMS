@@ -46,3 +46,12 @@ export function fetchChinaDis(uid, domainID, type, country) {
     method: 'get',
   })
 }
+
+// 用户热门频道
+export function fetchHotChannels(uid, page, pageSize) {
+    let url = `user/user_id/${uid}/channel?page=${page}&page_size=${pageSize}`
+    return request({
+        url,
+        method: 'get'
+    })
+}

@@ -4,6 +4,7 @@ export default {
     liveData: 'Live data',
     basicAnalysis: 'Realtime Data',
     basicAnalysisGlobal: 'Global Realtime Data',
+    hotChannel: 'Content Popularity',
     financial: 'Finance Info',
     disChart: 'Distribution',
     Operational: 'Operational data',
@@ -335,5 +336,10 @@ export default {
     illegal: 'Not Approved',
     signature: 'Signature(SHA1)',
     updateSign: 'Update SHA1',
+  },
+  hotChannels: {
+    content: 'Content',
+    num: 'Viewers',
+    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 100 is not shown.',
   }
 }

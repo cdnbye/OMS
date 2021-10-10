@@ -63,7 +63,7 @@
 </template>
 
 <script>
-    import { fetchDomainUnderReview, blockDomain, whiteDomain, searchHost, reviewDomain, checkBeian } from '@/api/userDomain'
+    import { fetchDomainUnderReview, blockDomain, whiteDomain, reviewDomain, checkBeian } from '@/api/userDomain'
     import { mapGetters } from 'vuex'
     // import { getID } from '@/utils/auth'
 

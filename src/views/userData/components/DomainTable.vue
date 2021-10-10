@@ -13,16 +13,19 @@
       </el-select>
     </el-col>
     <el-col :xs="8" :sm="12" :lg="2">
-      <el-checkbox v-model="showValid" @change="showValidChange">显示已绑定</el-checkbox>
+      <el-checkbox v-model="showValid" @change="showValidChange">已绑定</el-checkbox>
     </el-col>
     <el-col :xs="8" :sm="12" :lg="2">
-      <el-checkbox v-model="showWhite" @change="showWhitelistChange" :disabled="filters[1].value">显示白名单</el-checkbox>
+      <el-checkbox v-model="showWhite" @change="showWhitelistChange">白名单</el-checkbox>
     </el-col>
     <el-col :xs="8" :sm="12" :lg="2">
-      <el-checkbox v-model="showBlack" @change="showBlacklistChange" :disabled="filters[2].value">显示黑名单</el-checkbox>
+      <el-checkbox v-model="showBlack" @change="showBlacklistChange">黑名单</el-checkbox>
+    </el-col>
+    <el-col :xs="8" :sm="12" :lg="2">
+      <el-checkbox v-model="showDebug" @change="showDebugChange">Debug</el-checkbox>
     </el-col>
     <el-col :xs="8" :sm="12" :lg="4">
-      <el-checkbox v-model="showNative" @change="showNativeChange">显示Native SDK</el-checkbox>
+      <el-checkbox v-model="showNative" @change="showNativeChange">Native</el-checkbox>
     </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
       <el-input
@@ -51,7 +54,6 @@
         <span>{{ scope.row.isvalid ? '已绑定' : '未绑定' }}</span>
       </template>
     </el-table-column>
-    <!-- <el-table-column align="center" prop="agent" label="代理商" column-key="agent" :filter-multiple="false" :filters="[{ text: 'btjson', value: 'btjson' }]"></el-table-column> -->
 
     <el-table-column align="center" label="黑名单">
       <template slot-scope="scope">
@@ -89,6 +91,12 @@
       </template>
     </el-table-column>
 
+    <el-table-column align="center" label="Debug">
+      <template slot-scope="scope">
+        <el-switch slot="reference" :value="scope.row.debug" active-color="green" @change="debugChange(scope.row)"></el-switch>
+      </template>
+    </el-table-column>
+
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
         <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">详情</el-button>
@@ -111,7 +119,7 @@
 </template>
 
   <script>
-  import { fetchDomain, blockDomain, whiteDomain, searchHost } from '@/api/userDomain'
+  import { fetchDomain, blockDomain, whiteDomain, debugDomain, searchHost } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
   import { getID } from '@/utils/auth'
 
@@ -122,6 +130,7 @@
         showValid: true,
         showWhite: false,
         showBlack: false,
+        showDebug: false,
         showNative: false,
         tableData: [],
         tableParam: {
@@ -147,8 +156,9 @@
             value: false
           },
           {
-            name: 'agent'
-          }
+              name: 'debug',
+              value: false
+          },
         ],
 
         searchValue: '',
@@ -260,18 +270,30 @@
             this.loading = false
           })
       },
+      debugChange(domain) {
+          const data = {
+              domain: domain.host,
+              uid: domain.uid,
+              debug: !domain.debug
+          }
+          this.loading = true
+          debugDomain(data)
+              .then(res => {
+                  this.tableData.forEach(item => {
+                      if(item.host_id === domain.host_id)
+                          item.debug = !item.debug
+                  })
+                  this.$message({
+                      message: domain.debug ? '开启debug' : '关闭debug',
+                      type: 'success'
+                  })
+                  this.loading = false
+              })
+              .catch(err => {
+                  this.loading = false
+              })
+      },
       tableFilter(filter) {
-        if(filter.agent.length > 0) {
-          this.filters.forEach(item => {
-            if(item.name === 'agent')
-              item.value = filter.agent[0]
-          })
-        } else {
-          this.filters.forEach(item => {
-            if(item.name === 'agent')
-              delete item.value
-          })
-        }
         this.fetchTableData()
       },
       showValidChange(value) {
@@ -295,6 +317,13 @@
         })
         this.fetchTableData()
       },
+      showDebugChange(value) {
+          this.filters.forEach(item => {
+              if(item.name === 'debug')
+                  item.value = value
+          })
+          this.fetchTableData()
+      },
       showNativeChange(value) {
           this.filters.forEach(item => {
               if(item.name === 'native')
@@ -315,9 +344,6 @@
           }
           if(item.http_rt) {
             item.http_rt = (item.http_rt / 1024).toFixed(2)
-          }
-          if(!item.agent) {
-            item.agent = '无'
           }
         })
         return data
