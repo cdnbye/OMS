@@ -55,7 +55,7 @@
                   <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
                     {{((item.original_price - item.price)/item.original_price * 100).toFixed(1)}}% off
                   </span>
-                  <span class="shop-card-txt">{{ item.type.indexOf('month') > -1 ? 'Valid for 30 days' : 'Valid for 365 days' }}</span>
+                  <span class="shop-card-txt">{{ item.type.indexOf('month') > -1 ? '30 days period' : '365 days period' }}</span>
                 </div>
                 <div class="item-price">
                   <span class="price">

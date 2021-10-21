@@ -39,7 +39,8 @@ export default {
   data() {
     return {
       chart: null,
-      world_data: []
+      world_data: [],
+      max: 0,
     }
   },
   watch: {
@@ -47,6 +48,9 @@ export default {
       deep: true,
       handler(val) {
           // console.warn(`countryData ${JSON.stringify(val)}`)
+        val.forEach(item => {
+            if (this.max < item.value) this.max = item.value
+        })
         this.world_data = val
         this.setOptions()
       }
@@ -88,14 +92,15 @@ export default {
       }
     },
     setOptions() {
+      let max = this.max ? this.max : 0
       const _this = this
       this.chart.setOption({
         visualMap: {
           min: 0,
-          max: 2500,
+          max: max,
           left: 'left',
           top: 'bottom',
-          text:['高','低'],           // 文本，默认为数值文本
+          text: ['High', 'Low'],
           calculable : true,
           color: ['red', '#E2E2E2']
         },

@@ -244,7 +244,6 @@ export default {
     packageSubTitle: 'Notice: ',
     packageSub: 'Each user can consume a certain amount of P2P traffic. You can increase quota of traffic by buying the listed traffic packages below. Contact service@cdnbye.com if you have problems. Notice: Refunds are not supported. The traffic purchased by PayPal can only be used outside China.',
     monthlyPackageSub: 'Each of our plans comes with a defined event quota. If you exceed that quota, don’t worry, you can buy traffic package as supplement. Since the additional events cost more than pre-paid events, we recommend picking a plan that pre-pays for a little more than you think you\'ll need to avoid paying on-demand rates. It\'s a classic volume discount: when you use more, you pay less. Contact service@cdnbye.com if you have problems. Notice: Refunds are not supported. The traffic purchased by PayPal can only be used outside China.',
-
     packageInfo: 'Package info',
     unitPrice: 'Unit price',
     quantity: 'Quantity',
@@ -260,6 +259,7 @@ export default {
     buyFlow: 'Buy traffic package',
     buyMonthly: 'Buy monthly/annual plan',
     monthly: 'Until ',
+    resetAfter: 'Reset After',
     payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
   },
   order: {
@@ -287,10 +287,7 @@ export default {
     open: 'Opened',
     close: 'Closed',
     configSuccess: 'Successfully configured',
-    // configFail: 'Only paid users can turn P2P on / off',
     configFail: 'Operation failed',
-    desc: 'If you register multiple domain names in one account, those which open P2P services share traffic packets together. You can save on packet consumption by shutting down P2P services of one or several domain names.',
-    switchErr: 'At least one domain name needs to remain open.',
     name: 'Domain/AppId',
     uploadRule: {
       status: 'Only allow uploading on Wi-Fi and Ethernet',

@@ -48,6 +48,15 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-description">
+          <span class="card-panel-num">{{ statis.traffic_http.num }}</span>
+          <div class="card-panel-text">今日HTTP流量({{statis.traffic_http.unit}})</div>
+        </div>
+      </div>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-description">
           <span class="card-panel-num">{{ statis.frequency_day }}</span>
           <div class="card-panel-text">今日服务次数</div>
         </div>
@@ -107,6 +116,11 @@ export default {
           unit: 'KB'
         },
 
+        traffic_http: {
+          num: 0,
+          unit: 'KB'
+        },
+
         frequency_day: 0,
       }
     }
@@ -133,6 +147,7 @@ export default {
         this.statis.p2p_rate = (data.p2p_rate_rt * 100).toFixed(2)
 
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
+        this.statis.traffic_http = formatTraffic(data.traffic_http_day)
 
         this.statis.frequency_day = data.api_frequency_day
         this.$emit('numChange', data.num_rt)

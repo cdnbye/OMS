@@ -1,19 +1,4 @@
 <template>
-    <div>
-        <el-alert
-                :title="$t('domainTable.title')"
-                :description="$t('dashboard.descGlobal')"
-                type="info"
-                show-icon>
-        </el-alert>
-        <el-row style="text-align: left; margin: 20px 0">
-            <el-col :xs="7" :sm="4" :lg="2">
-                <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
-                           style="font-size: medium;">
-                    {{ $t('dashboard.checkin') }}
-                </el-button>
-            </el-col>
-        </el-row>
 
         <el-row :gutter="20" class="panel-group">
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
@@ -85,8 +70,11 @@
             <!--包月套餐-->
             <el-col v-if="statis.type.product_type > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.remainTip')" />
+                    <!--<div class="tip">-->
+                        <!--<PointTip :content="$t('dashboard.remainTip')" />-->
+                    <!--</div>-->
+                    <div class="resetTip">
+                        <span>{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
                     </div>
                     <div class="card-panel-description">
                         <span class="card-panel-num" :style="statis.flow.daily_remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.daily_remain).num }}</span>
@@ -119,79 +107,77 @@
                 </div>
             </el-col>
         </el-row>
-        <NoBindTip />
-    </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
     import moment from 'moment'
-    import { getID } from '@/utils/auth'
-    import { fetchGlobalData } from '@/api/user/liveData'
-    import { checkIn } from '@/api/user/package'
 
-    import { formatTraffic, getQueryObj } from '@/utils/format'
+    import { formatTraffic } from '@/utils/format'
 
-    import SwitchDomain from '@/components/SwitchDomain'
-    import NoBindTip from '@/components/NoBindTip'
     import PointTip from '@/components/PointTip'
 
-    let int = undefined
-
     export default {
-        name: 'LiveDataGlobal',
+        name: 'LiveTime',
         components: {
-            NoBindTip,
-            SwitchDomain,
             PointTip
+        },
+        props: {
+            statis: {
+                type: Object,
+                required: true,
+                default() {
+                    return {
+                        whiteList: false,
+                            type: {
+                        product_type: 0,
+                            time: ''
+                    },
+                        online: 0,
+                            traffic_p2p: {
+                        num: 0,
+                            unit: 'KB'
+                    },
+                        traffic_http: {
+                            num: 0,
+                                unit: 'KB'
+                        },
+                        frequency_day: 0,
+                            num_max: 0,
+                        flow: {
+                        remain: 0,
+                            daily_remain: 0,
+                            totalRemain: 0,
+                            free: {
+                            num: 0,
+                                unit: 'KB'
+                        }
+                    },
+                        clock: new Date(),
+                    }
+                },
+            },
         },
         data() {
             return {
-                checkinLoading: false,
-                remainTrafficFlag: true,
-
-                statis: {
-                    whiteList: false,
-                    type: {
-                        product_type: 0,
-                        time: ''
-                    },
-                    online: 0,
-                    traffic_p2p: {
-                        num: 0,
-                        unit: 'KB'
-                    },
-                    traffic_http: {
-                        num: 0,
-                        unit: 'KB'
-                    },
-                    frequency_day: 0,
-                    num_max: 0,
-                    flow: {
-                        remain: 0,
-                        daily_remain: 0,
-                        totalRemain: 0,
-                        free: {
-                            num: 0,
-                            unit: 'KB'
-                        }
-                    }
-                },
+                leftMinutes: 0,
+                leftHours: 0,
             }
         },
-        computed: {
-            ...mapGetters([
-                'currentDomain',
-                'device',
-                'userValidDomain',
-                'language'
-            ])
+        watch: {
+            statis: {
+                deep: true,
+                handler(val) {
+                  const serverClock = moment(val.clock)
+                  this.leftMinutes = 60 - serverClock.minutes()
+                  this.leftHours = 23 - serverClock.hours()
+              }
+          }
         },
         mounted() {
-            this.loopGetData(getID(), 0)
+
         },
         beforeDestroy() {
-            clearInterval(int)
+
         },
         methods: {
             formatTraffic,
@@ -200,100 +186,10 @@
                 if(this.statis.type.product_type === 0) {
                     return ''
                 } else {
-                    const time = this.statis.type.time ? moment(this.statis.type.time).format('YYYY-MM-DD') : ''
+                    const time = this.statis.type.time ? moment(this.statis.type.time).format('MM-DD') : ''
                     return this.$t('package.monthly') + `${time}`
                 }
             },
-            getData(uid, id) {
-                fetchGlobalData(uid, id)
-                    .then(res => {
-                        const { data } = res
-                        this.statis.online = data.num_rt
-                        this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
-                        this.statis.traffic_http = formatTraffic(data.traffic_http_day)
-                        this.statis.frequency_day = data.api_frequency_day
-                        this.statis.num_max = data.num_max
-                        this.statis.flow.remain = data.flow.remain
-                        this.statis.flow.daily_remain = data.flow.daily_remain
-                        this.statis.flow.totalRemain = data.flow.daily_remain + data.flow.remain
-                        this.statis.flow.free = formatTraffic(data.flow.free)
-
-                        this.statis.whiteList = data.whitelist
-                        this.statis.type.product_type = data.flow.product_type
-                        this.statis.type.time = data.flow.duetime
-
-                        // 如果剩余流量为0，则提醒用户购买
-                        if(data.flow.free === 0 && data.flow.remain === 0 && data.flow.daily_remain === 0) {
-                            if(this.remainTrafficFlag && getQueryObj().payment === undefined && !data.whitelist) {
-                                this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
-                                    distinguishCancelAndClose: true,
-                                    confirmButtonText: this.$t('package.buyFlow'),
-                                    cancelButtonText: this.$t('package.buyMonthly')
-                                })
-                                    .then(() => {
-                                        this.$router.push('/user/package')
-                                    })
-                                    .catch(action => {
-                                        action === 'cancel'
-                                            ? this.$router.push('/user/monthly_package')
-                                            : console.log('-')
-                                    })
-                                this.remainTrafficFlag = false
-                            }
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-            },
-            loopGetData(uid, id) {
-                const _this = this
-                _this.getData(uid, id)
-                int = setInterval(function() {
-                    _this.getData(uid, id)
-                }, 20000)
-            },
-            handleCheckin() {
-                if(this.currentDomain.id !== undefined) {
-                    this.checkinLoading = true
-                    checkIn(this.currentDomain.uid, {user_id: this.currentDomain.uid})
-                        .then(res => {
-                            if(res.data.repeat) {
-                                this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
-                                    confirmButtonText: this.$t('common.ok')
-                                })
-                            } else {
-                                this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {
-                                    type: 'success',
-                                    confirmButtonText: this.$t('common.ok'),
-                                    showCancelButton: false
-                                })
-                                this.getData(this.currentDomain.uid, this.currentDomain.id)
-                            }
-                            this.checkinLoading = false
-                        })
-                        .catch(err => {
-                            this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {
-                                type: 'error',
-                                confirmButtonText: this.$t('common.ok'),
-                                showCancelButton: false
-                            })
-                            this.checkinLoading = false
-                            console.log(err)
-                        })
-                } else {
-                    this.$messageBox.confirm(this.$t('dashboard.tip'), {
-                        confirmButtonText: this.$t('common.ok'),
-                        cancelButtonText: this.$t('common.cancel')
-                    })
-                        .then(() => {
-                            this.$router.push('/user/domain')
-                        })
-                        .catch(() => {
-                            return
-                        })
-                }
-            }
         }
     }
 </script>
@@ -346,5 +242,13 @@
         top: 0;
         right: 0;
         padding: 10px;
+    }
+    .resetTip {
+        position: absolute;
+        font-size: 12px;
+        top: 0;
+        right: 0;
+        padding: 5px;
+        color: #006eff;
     }
 </style>

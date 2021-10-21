@@ -1,6 +1,5 @@
 <template>
   <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
-    <el-alert :title="$t('p2pConfig.desc')" style="margin-bottom: 20px" />
     <el-table border :data="tableData" v-loading="loading">
       <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
       <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.status')">
@@ -12,7 +11,7 @@
       </el-table-column>
       <el-table-column :label="$t('domainTable.operation')" align="center">
         <template slot-scope="scope">
-          <el-switch v-if="!scope.row.blocked " :value="!scope.row.disable_p2p" active-color="#13ce66" inactive-color="#ff4949" @change="value => blacklistChange(scope.row, value)"> </el-switch>
+          <el-switch v-if="!scope.row.blocked " :value="!scope.row.disable_p2p" active-color="#13ce66" inactive-color="#ff4949" @change="value => switchChange(scope.row, value)"> </el-switch>
         </template>
       </el-table-column>
     </el-table>
@@ -115,20 +114,9 @@ export default {
           console.log(err)
         })
     },
-    blacklistChange(domain, value) {
+    switchChange(domain, value) {
       const data = { disable: !value }
       this.handleP2PConfig(domain.uid, domain.id, data)
-      // if(value) {
-      //   this.handleP2PConfig(domain.uid, domain.id, data)
-      // } else {
-      //   if(this.checkCanCloseP2P()) {
-      //     this.handleP2PConfig(domain.uid, domain.id, data)
-      //   } else {
-      //     this.$messageBox.alert(this.$t('p2pConfig.switchErr'), {
-      //       confirmButtonText: this.$t('common.ok')
-      //     })
-      //   }
-      // }
     },
     handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize

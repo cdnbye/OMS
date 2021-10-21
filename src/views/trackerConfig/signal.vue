@@ -6,6 +6,7 @@
           <div class="card-panel-description">
             <span class="card-panel-num">{{item.value}}</span>
             <div class="card-panel-text">{{item.url}}</div>
+            <div class="card-panel-name">{{item.name}}</div>
           </div>
         </div>
       </el-col>
@@ -23,22 +24,25 @@ export default {
   data() {
     return {
       list: [
-        { url: 'https://signalcloud.cdnbye.com/count', value: 0 },
-        { url: 'https://signal.cdnbye.com/count', value: 0 },
-        { url: 'https://opensignal.cdnbye.com/count', value: 0 },
-        { url: 'https://signal.p2pengine.net:8089/count', value: 0 },
+        { url: 'https://signalcloud.cdnbye.com/count', value: 0, name: '俄罗斯' },
+        { url: 'https://signal.cdnbye.com/total_count', value: 0 },
+        { url: 'https://opensignal.cdnbye.com/count', value: 0, name: '美国' },
+        { url: 'https://signal.p2pengine.net:8089/total_count', value: 0 },
         { url: 'http://signal.ubtvmarket.com:8077/total_count', value: 0 },
         { url: 'https://signal.swarmcloud.net/count', value: 0 },
         { url: 'https://hk.p2pengine.net:8089/total_count', value: 0 },
-        { url: 'http://43.129.211.18:8088/count', value: 0 },
-        { url: 'http://43.129.228.44:8088/count', value: 0 },
-        { url: 'http://119.28.136.195:8088/count', value: 0 },
-        { url: 'http://124.156.158.249:8088/count', value: 0 },
-        { url: 'http://119.28.74.92:8088/count', value: 0 },
-        { url: 'http://124.156.138.240:8088/count', value: 0 },
-        { url: 'http://124.156.158.249:8077/count', value: 0 },
-        { url: 'http://119.28.74.92:8077/count', value: 0 },
-        { url: 'http://124.156.138.240:8077/count', value: 0 },
+        { url: 'http://43.129.211.18:8088/count', value: 0, name: 'cdnbye-2' },
+        { url: 'http://43.129.228.44:8088/count', value: 0, name: 'cdnbye-3' },
+        { url: 'http://119.28.136.195:8088/count', value: 0, name: 'cdnbye' },
+        { url: 'http://124.156.158.249:8077/count', value: 0, name: 'master-vod' },
+        { url: 'http://119.28.74.92:8077/count', value: 0, name: 'master-live' },
+        { url: 'http://124.156.138.240:8077/count', value: 0, name: 'slave-live' },
+        { url: 'http://124.156.158.249/count', value: 0, name: 'master-vod' },
+        { url: 'http://119.28.74.92/count', value: 0, name: 'master-live' },
+        { url: 'http://124.156.138.240/count', value: 0, name: 'slave-live' },
+        { url: 'http://43.129.211.18/count', value: 0, name: 'cdnbye-2' },
+        { url: 'http://43.129.228.44/count', value: 0, name: 'cdnbye-3' },
+        { url: 'http://119.28.136.195/count', value: 0, name: 'cdnbye' },
       ]
     }
   },
@@ -91,7 +95,7 @@ export default {
         text-align: right;
         line-height: 42px;
         font-weight: bold;
-        margin: 26px;
+        margin: 20px;
         margin-left: 0;
         .card-panel-text {
           line-height: 18px;
@@ -100,6 +104,12 @@ export default {
         }
         .card-panel-num {
           font-size: 24px;
+        }
+        .card-panel-name {
+          margin-top: 3px;
+          line-height: 18px;
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 16px;
         }
       }
     }

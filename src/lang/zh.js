@@ -260,6 +260,7 @@ export default {
     buyFlow: '购买流量包',
     buyMonthly: '购买包年包月服务',
     monthly: '有效期至 ',
+    resetAfter: '距离重置',
     payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
   },
   order: {
@@ -287,10 +288,7 @@ export default {
     open: '已开启',
     close: '已关闭',
     configSuccess: '配置成功',
-    // configFail: '只有付费用户才能开启/关闭P2P',
     configFail: '操作失败',
-    desc: '如果您在同一个账号同时绑定了多个域名，则开启P2P的所有域名会共享流量包。您可以在这里关闭某个域名的P2P服务从而节省流量包消耗。',
-    switchErr: '至少一个域名需要保持开启状态。',
     name: '域名/AppId',
     uploadRule: {
       status: '只在wifi/有线网络上传数据',
