@@ -4,6 +4,16 @@
       <div class="title-container">
         <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language"/>
+        <el-dropdown @command="handleConsoleSelect" class="console">
+          <span class="el-dropdown-link">
+            {{ $t('auth.console') }}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="hk" :disabled="!showHK">{{ $t('auth.consoleHK') }}</el-dropdown-item>
+            <el-dropdown-item command="cn" :disabled="!showCN">{{ $t('auth.consoleCN') }}</el-dropdown-item>
+            <el-dropdown-item command="us" :disabled="!showUSA">{{ $t('auth.consoleUSA') }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
 
       <el-form-item prop="username">
@@ -84,7 +94,11 @@ export default {
       },
       passwordType: 'password',
       loading: false,
-      redirect: undefined
+      redirect: undefined,
+      showCN: true,
+      showHK: true,
+      showUSA: true,
+        consoleSelect: ''
     }
   },
   watch: {
@@ -95,7 +109,20 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    const env = process.env.VUE_APP_ENV
+    if (env === 'p1') {
+        this.showCN = false
+    } else if (env === 'p3') {
+        this.showHK = false
+    } else if (env === 'p2') {
+        this.showUSA = false
+    }
+  },
   methods: {
+    handleConsoleSelect(command) {
+        location.href = this.$t('consoleAddr.' + command)
+    },
     formatData(data) {
       const temp = {...data}
       delete temp.username
@@ -232,6 +259,12 @@ $light_gray:#eee;
       top: 5px;
       right: 0px;
     }
+    .console {
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      left: 0px;
+    }
   }
   .show-pwd {
     position: absolute;
@@ -241,6 +274,13 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .el-dropdown-link {
+    cursor: pointer;
+    /*color: #409EFF;*/
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
   }
 }
 </style>

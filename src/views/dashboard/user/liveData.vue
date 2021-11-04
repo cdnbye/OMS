@@ -24,7 +24,6 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 
 import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
 import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'

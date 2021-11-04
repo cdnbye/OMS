@@ -156,3 +156,12 @@ export function updateUserPlan(data) {
         data
     })
 }
+
+// 用户套餐定制
+export function customizeUserPlan(data) {
+    return request({
+        url: `user/custom_plan`,
+        method: 'post',
+        data
+    })
+}

@@ -54,9 +54,9 @@
             <!--流量包-->
             <el-col v-if="statis.flow.remain > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.remainTip')" />
-                    </div>
+                    <!--<div class="tip">-->
+                        <!--<PointTip :content="$t('dashboard.remainTip')" />-->
+                    <!--</div>-->
                     <div class="card-panel-description">
                         <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=99999?'+∞':formatTraffic(statis.flow.remain).num }}</span>
 

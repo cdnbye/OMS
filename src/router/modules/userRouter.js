@@ -6,7 +6,7 @@ const userRouter = [
         path: '/user',            // 对应浏览器路径
         component: Layout,
         redirect: 'user/domain',
-        alwaysShow: true,         //  是否显示到sidebar中，如修改密码邮箱就不显示，值为false
+        alwaysShow: false,         //  是否显示到sidebar中，如修改密码邮箱就不显示，值为false
         meta: {
             title: 'domainInfo',     // sidebar中的名称，对应多语言中的字段  /src/lang
             icon: 'www',             // sidebar中的图标，对应icons中的字段  /src/icons

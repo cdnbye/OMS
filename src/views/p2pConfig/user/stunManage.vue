@@ -106,9 +106,10 @@
                                 type: 'success'
                             });
                         } else {
+                            const msg = res.data.msg || this.$t('p2pConfig.configFail')
                             this.$notify.error({
                                 title: this.$t('common.error'),
-                                message: res.data.msg,
+                                message: msg,
                             });
                         }
                         this.loading = false

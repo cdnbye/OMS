@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     getPackageData() {
-      fetchMonthlyPackage()
+      fetchMonthlyPackage(getID())
         .then(res => {
           if(this.paySelect === 'alipay') {
             this.packages = [...res.data.list_cn]
@@ -177,7 +177,8 @@ export default {
                   price: Number(subject.price),
                   payment: this.paySelect,
                   goods: [subject],
-                  goods_type: this.paySelect === 'alipay' ? 'monthly_packet_cn' : 'monthly_packet_en'
+                  goods_type: this.paySelect === 'alipay' ? 'monthly_packet_cn' : 'monthly_packet_en',
+                  customized: subject.customized,
               }
               this.handleCreateOrder(data)
               // console.log(subject)

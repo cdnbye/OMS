@@ -48,6 +48,7 @@ export const asyncRouterMap = [
   //user router
   ...userRouter,
 
+
   //修改邮箱密码
   {
     path: '/user/edit',

@@ -1,17 +1,25 @@
 import request from '@/utils/request'
 
 // 获取套餐信息
-export function fetchPackage() {
+export function fetchPackage(uid) {
+    let url = `goods/flow_packet`
+    if (uid) {
+        url = `${url}?uid=${uid}`
+    }
   return request({
-    url: `goods/flow_packet`,
+    url,
     method: 'get'
   })
 }
 
 // 获取包年包月套餐信息
-export function fetchMonthlyPackage() {
+export function fetchMonthlyPackage(uid) {
+    let url = `goods/monthly_packet`
+    if (uid) {
+        url = `${url}?uid=${uid}`
+    }
   return request({
-    url: `goods/monthly_packet`,
+    url,
     method: 'get'
   })
 }

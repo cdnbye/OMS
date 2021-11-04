@@ -1,4 +1,9 @@
 export default {
+  consoleAddr: {
+    cn: 'https://oms.cdnbye.com',
+    hk: 'https://console.swarmcloud.net',
+    us: 'https://console.hdtvcloud.com',
+  },
   route: {
     dashboard: 'Realtime data',
     liveData: 'Live data',
@@ -69,6 +74,10 @@ export default {
     phoneError: 'Please enter the correct phone number',
     passwdError: 'The password must be between 6 and 18 digits',
     vcodeError: 'The verification code can not be less than 4 digits',
+    console: 'Select Zone',
+    consoleHK: 'HongKong',
+    consoleCN: 'China Mainland',
+    consoleUSA: 'USA',
   },
   login: {
     title: 'Login',
@@ -120,9 +129,9 @@ export default {
     netDis: 'Network Type',
     ispDis: 'ISP',
     natDis: 'NAT Type',
-    p2pTip: 'UTC+8 adopted.<br/>Want to increase p2p traffic? See <a style="color: #337ab7" href="https://swarmcloud.net/en/views/optimization.html" target="_blank">here</a>',
+    p2pTip: 'UTC+8 adopted.\nWant to increase p2p traffic? See <a style="color: #337ab7" href="https://swarmcloud.net/en/views/optimization.html" target="_blank">here</a>',
     httpTip: 'The stream traffic downloaded through HTTP (origin server or CDNs), the sum of HTTP traffic and P2P traffic is equal to the total traffic',
-    freeTip: '5GB traffic will be given after the domain name is registered, and additional 20 GB after signing in every day. <br/>Note that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. <br/>If there is no available traffic, P2P service will be stopped.',
+    freeTip: '5GB traffic will be given after the domain name is registered, and additional 20 GB after signing in every day. \nNote that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. \nIf there is no available traffic, P2P service will be stopped.',
     remainTip: 'Please buy <a style="color: #337ab7" href="#/user/package">traffic package</a> or <a style="color: #337ab7" href="#/user/monthly_package">monthly/annual plan</a> in time to avoid service interruption.',
     checkin: 'Get Free Traffic',
     checkinSuccess: 'Get free traffic successfully!',
@@ -269,7 +278,7 @@ export default {
     flowPackage: 'Traffic Package',
     price: 'Price',
     currency:'Currency',
-    status: 'Order status',
+    status: 'Order Status',
     action: 'Action',
     pay: 'Pay',
     close: 'Close',
@@ -294,13 +303,13 @@ export default {
       desc: 'This page allows you to define your own uploading logic with regards to the network condition. By default, uploading on cellular is enabled.\nCompatibility: web: 1.3+, android: 1.5+, iOS: 1.4+',
     },
     activationRatio: {
-      desc: 'This page enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.',
+      desc: 'This page enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.\n0% - No users are P2P enabled.\n100% - All users are P2P enabled(the default setting).',
       status: 'Activation Ratio(%)',
     },
     signalManage: {
-      desc: 'This page is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. If Auto Switch is enabled, the system will automatically switch to other available signaling when the current signaling server is overloaded.',
+      desc: 'This page is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. Enter one address per line, up to 10 addresses.',
       signalAddr: 'Signal Address',
-      autoSignal: "Auto Switch",
+      switch: "Disable/Enable",
     },
     stunManage: {
         addr: 'Stun Address',

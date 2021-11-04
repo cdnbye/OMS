@@ -25,6 +25,9 @@
       <el-form-item label="启动信令熔断">
         <el-switch v-model="configForm.enable_fusing" active-color="green" inactive-color="red" @change="fusingChange"></el-switch>
       </el-form-item>
+      <el-form-item label="启动信令压缩">
+        <el-switch v-model="configForm.signal_compressed" active-color="green" inactive-color="red" @change="fusingChange"></el-switch>
+      </el-form-item>
       <el-form-item label="同时在线节点数">
         <el-slider v-model="configForm.max_nodes" :min="0" :max="5000000" @change="maxNodesChange" show-input></el-slider>
       </el-form-item>
@@ -61,6 +64,7 @@ export default {
         ping_interval: 0,
         online_debug: false,
         enable_fusing: false,
+        signal_compressed: false,
       }
     }
   },

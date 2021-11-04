@@ -1,4 +1,9 @@
 export default {
+  consoleAddr: {
+    cn: 'https://www.cdnbye.com/oms/',
+    hk: 'https://www.cdnbye.com/hk-console/',
+    us: 'https://www.cdnbye.com/us-console/',
+  },
   route: {
     dashboard: '实时数据',
     liveData: '实时数据',
@@ -70,6 +75,11 @@ export default {
     phoneError: '请输入正确的手机号码',
     passwdError: '密码必须在6到18位之间',
     vcodeError: '验证码不能小于4位',
+    console: '选择地区',
+    consoleHK: '香港',
+    consoleCN: '大陆',
+    consoleUSA: '美国',
+
   },
   login: {
     title: '登录',
@@ -173,7 +183,7 @@ export default {
     },
     verifySuccess: '验证成功',
     title: '说明：',
-    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定500个域名，60天内未使用的域名记录将被自动删除。服务于国内的域名必须已备案。\nTips:支持根域名通配所有子域名。',
+    desc: '本页面用于绑定网站域名，移动端原生 App 和 Electron 应用无需绑定域名。每个账号最多可以绑定100个域名，60天内未使用的域名记录将被自动删除。服务于国内的域名必须已备案。\nTips:支持根域名通配所有子域名。',
     illegal: '未通过审核(需要备案)',
   },
   documentation: {
@@ -299,9 +309,9 @@ export default {
       status: '激活比率(%)',
     },
     signalManage: {
-      desc: '本页面用于云端配置信令地址，信令用于节点之间交换信息以建立P2P连接。如果在此页面配置了信令地址则会覆盖SDK侧配置的信令地址。开启自动切换后，在当前信令服务器负载不够时系统会自动切换到其他可用信令。',
+      desc: '本页面用于云端配置信令地址，信令用于节点之间交换信息以建立P2P连接。如果在此页面配置了信令地址则会覆盖SDK侧配置的信令地址。每行输入一个地址，最多输入10个地址。',
       signalAddr: '信令地址',
-      autoSignal: "自动切换",
+      switch: "关闭/开启",
     },
     stunManage: {
         addr: 'Stun地址',
@@ -326,7 +336,7 @@ export default {
     copy: '点击复制',
     watch: '监控',
     title: '说明：',
-    desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"网站管理"页面绑定域名。每个用户最多创建200个APP，60天内未使用的App记录将被自动删除。创建成功后需要等待1分钟以上才生效。',
+    desc: '本页面用于配置移动端原生 App 和 Electron，视频网站请移步"网站管理"页面绑定域名。每个用户最多创建100个APP，60天内未使用的App记录将被自动删除。创建成功后需要等待1分钟以上才生效。',
     appIdTip: 'com.company.example',
     introTip: '输入你的APP下载链接或者APP介绍链接',
     signatureTip: '输入你的APK签名SHA1值，用于对当前应用进行二次身份校验(选填, 需要安卓SDK版本大于2.2.0)，签名获取方法可以参考<a style="color: #337ab7" target="view_window" href="http://www.cdnbye.com/cn/views/FAQ.html#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D">这里</a>',

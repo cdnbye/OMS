@@ -16,7 +16,7 @@
       <el-col :xs="3" :sm="2" :lg="1">
         <el-tooltip placement="top">
           <div slot="content">{{ $t('app.copy') }}</div>
-          <el-button @click="handleCopy" type="info" plain style="padding: 6px 10px">
+          <el-button @click="handleCopy($event)" type="info" plain style="padding: 6px 10px">
             <img v-bind:src="copyImg" alt="" min-width="24" height="24">
           </el-button>
         </el-tooltip>
@@ -184,13 +184,12 @@
   import { mapGetters } from 'vuex'
   import { getID } from '@/utils/auth'
   import moment from 'moment'
-  import { copy } from '@/utils'
   import PointTip from '@/components/PointTip'
   import { trim } from '@/utils'
   import pcImg from '@/assets/platform/electron.png'
   import iosImg from '@/assets/platform/ios.png'
   import androidImg from '@/assets/platform/android.png'
-
+  import clip from '@/utils/clipboard'
   import copyImg from '@/assets/copy.png'
 
   export default {
@@ -229,7 +228,6 @@
       ])
     },
     methods: {
-      copy,
       pShow(id) {
         this.$refs[`popover-` + id].doShow()
       },
@@ -390,14 +388,7 @@
         })
       },
       handleCopy() {
-        copy(this.inputToken, () => {
-            // this.$message.success('Copied(已复制)')
-            this.$notify({
-                title: this.$t('common.success'),
-                message: this.$t('app.copied'),
-                type: 'success'
-            });
-        })
+        clip(this.inputToken, event)
       },
       handleSizeChange(pageSize) {
           this.tableParam.pageSize = pageSize

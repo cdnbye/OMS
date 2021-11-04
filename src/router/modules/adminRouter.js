@@ -58,7 +58,7 @@ export default [
     {
         path: '/user',
         component: Layout,
-        redirect: 'user/domain',
+        redirect: 'user/domain_list',
         alwaysShow: true,
         meta: {
             title: 'userData',
@@ -67,7 +67,7 @@ export default [
         },
         children: [
             {
-                path: 'domain',
+                path: 'domain_list',
                 component: () => import('@/views/userData/index'),
                 name: 'Domain',
                 meta: {
@@ -289,6 +289,30 @@ export default [
                 name: 'signalToken',
                 meta: {
                     title: '信令Token',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            }
+        ]
+    },
+
+    {
+        path: '/',
+        component: Layout,
+        redirect: '/user/liveData',
+        hidden: true,
+        meta: {
+            title: 'dashboard',
+            icon: 'dashboard',
+            roles: ['admin']
+        },
+        children: [
+            {
+                path: '/user/liveData',
+                component: () => import('@/views/dashboard/user/liveData'),
+                name: 'UserLiveData',
+                meta: {
+                    title: 'basicAnalysis',
                     roles: ['admin'],
                     noCache: true
                 }

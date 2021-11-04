@@ -113,13 +113,67 @@
       </template>
     </el-table-column>
 
+    <el-table-column align="center" label="套餐定制">
+      <template slot-scope="scope">
+        <el-row :gutter="4">
+          <el-col :span="50" v-if="scope.row.custom_plan">
+            {{ formatCustomPlan(scope.row.custom_plan) }}
+          </el-col>
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="handleCustomPlan(scope.row)">修改</el-button>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+
     <el-table-column label="passwd" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="copyPassword(scope.row.raw_pass)">Copy</el-button>
+        <el-button type="primary" size="mini" @click="copyPassword(scope.row.raw_pass, $event)">Copy</el-button>
       </template>
     </el-table-column>
 
   </el-table>
+
+  <el-dialog title="定制套餐" :visible.sync="dialogVisible" :width="device === 'mobile' ? '90%' : '30%' ">
+    <el-form :model="selectedCustomPlan" size="small">
+      <el-form-item label="Subject">
+        <el-input v-model="selectedCustomPlan.subject" ></el-input>
+      </el-form-item>
+      <el-form-item label="Type">
+        <el-select v-model="selectedCustomPlan.type" class="filter-item" style="float: left">
+          <el-option
+                  v-for="item in planSelectOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+            <span style="float: left">{{ item.value }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.label }}</span>
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Traffic">
+        <el-input-number v-model.number="selectedCustomPlan.traffic" min="1" ></el-input-number>   TB
+      </el-form-item>
+      <el-form-item label="Price">
+        <el-input-number v-model.number="selectedCustomPlan.price" min="1"></el-input-number>
+      </el-form-item>
+      <el-form-item label="Currency">
+        <el-select v-model="selectedCustomPlan.currency" class="filter-item" style="float: left">
+          <el-option
+                  v-for="item in currencyOptions"
+                  :key="item"
+                  :value="item">
+            <span style="float: left; color: #8492a6; font-size: 13px">{{ item }}</span>
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="submitResetPlan">重置</el-button>
+      <el-button type="primary" @click="submitCustomPlan">确 定</el-button>
+    </div>
+  </el-dialog>
 
   <div class="pagination-container">
     <el-pagination
@@ -135,17 +189,27 @@
 </template>
 
   <script>
-  import { fetchUserList, fetchAdminUser, fetchWhitelistUser, updateUserPlan } from '@/api/userDomain'
+  import { fetchUserList, fetchAdminUser, fetchWhitelistUser, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
   import { frozenUser, adminUser, whitelistUser, searchUser, userTrafficChange } from '@/api/user'
-  import { copy } from '@/utils'
+  import clip from '@/utils/clipboard'
   import moment from 'moment'
   import { MessageBox } from 'element-ui'
   import { trim } from '@/utils'
+  import { mapGetters } from 'vuex'
 
   export default {
     data() {
       return {
         loading: false,
+        dialogVisible: false,
+        selectedCustomPlan: {
+            uid: 0,
+            subject: 'VIP Plan',
+            type: 0,
+            traffic: 0,
+            price: 0,
+            currency: 'USD',
+        },
         tableData: [],
         tableParam: {
           page: 1,
@@ -237,11 +301,20 @@
                 value: '13',
                 label: "monthly_200TB",
             },
-        ]
+        ],
+        currencyOptions:[
+            "USD",
+            "CNY",
+        ],
       }
     },
     mounted() {
       this.fetchTableData()
+    },
+    computed: {
+        ...mapGetters([
+            'device'
+        ])
     },
     methods: {
       pShow(id) {
@@ -431,11 +504,13 @@
       selectChange() {
         this.fetchTableData()
       },
-      copyPassword(pw) {
-        copy(pw, () => {this.$message.success('Copied(已复制)')})
+      copyPassword(pw, event) {
+          clip(pw, event)
       },
       handleEditPlan(item) {
-          MessageBox.confirm(`更新套餐至${this.getPlanLabel(item.flow.product_type)}吗？`, '提示', {
+          const type = this.getPlanLabel(item.flow.product_type)
+          if (!type) return
+          MessageBox.confirm(`更新套餐至${type}吗？`, '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning',
@@ -456,6 +531,53 @@
               })
           })
       },
+      handleCustomPlan(item) {
+          if (item.custom_plan) {
+              this.selectedCustomPlan = JSON.parse(item.custom_plan)
+          }
+          this.selectedCustomPlan.uid = item.uid
+          this.dialogVisible = true
+      },
+      submitCustomPlan() {
+          MessageBox.confirm(`确定更新吗？`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+              center: true
+          }).then(() => {
+              this.selectedCustomPlan.type = Number(this.selectedCustomPlan.type)
+              customizeUserPlan(this.selectedCustomPlan).then(res => {
+                  if(res.ret === 0) {
+                      this.$message({
+                          type: 'success',
+                          message: '操作成功'
+                      })
+                      this.fetchTableData()
+                  }
+                  this.dialogVisible = false
+              })
+          })
+      },
+      submitResetPlan() {
+          MessageBox.confirm(`确定重置吗？`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+              center: true
+          }).then(() => {
+              this.selectedCustomPlan.type = -1
+              customizeUserPlan(this.selectedCustomPlan).then(res => {
+                  if(res.ret === 0) {
+                      this.$message({
+                          type: 'success',
+                          message: '操作成功'
+                      })
+                      this.fetchTableData()
+                  }
+                  this.dialogVisible = false
+              })
+          })
+      },
       getPlanLabel(type) {
           for (let plan of this.planSelectOptions) {
               if (type === plan.value) {
@@ -463,7 +585,13 @@
                   return plan.label
               }
           }
-          return 'unknown'
+          return undefined
+      },
+      formatCustomPlan(plan) {
+          const json = JSON.parse(plan)
+          return `
+          ${json.subject}  类型: ${json.type}  流量: ${json.traffic}TB  价格: ${json.price}  币种: ${json.currency}
+          `
       }
     }
   }

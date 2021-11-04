@@ -4,7 +4,7 @@
     <!-- <breadcrumb class="breadcrumb-container"/> -->
     <div class="right-menu">
 
-      <!--<screenfull id="screenfull" class="right-menu-item hover-effect" />-->
+      <!--<screenfull id="screenfull" class="right-menu-item hover-effect screenfull"/>-->
 
       <lang-select class="international right-menu-item"/>
 

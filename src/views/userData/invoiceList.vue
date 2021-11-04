@@ -12,7 +12,7 @@
 
             <el-table-column label="开票信息" align="center" class-name="small-padding fixed-width">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="mini" @click="copyInvoiceInfo(scope.row.info)">Copy</el-button>
+                    <el-button type="primary" size="mini" @click="copyInvoiceInfo(scope.row.info, $event)">Copy</el-button>
                 </template>
             </el-table-column>
 
@@ -31,7 +31,7 @@
 
 <script>
     import { fetchInvoices, updateInvoice } from '@/api/finance'
-    import { copy } from '@/utils'
+    import clip from '@/utils/clipboard'
 
     export default {
         data() {
@@ -97,13 +97,13 @@
                     console.log(err)
                 })
             },
-            copyInvoiceInfo(info) {
+            copyInvoiceInfo(info, event) {
                 info = info.split('|');
                 info = `${info[0]}
                 ${info[1]}
                 ${info[2]}
                 ${info[3]}`
-                copy(info, () => {this.$message.success('Copied(已复制)')})
+                clip(info, event)
             },
         }
     }

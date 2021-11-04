@@ -8,27 +8,27 @@
                 <template slot-scope="scope">
                     <el-input
                             placeholder="wss://"
-                            v-model="scope.row.signal_addr"
-                            maxlength="50"
-                            show-word-limit
+                            type="textarea"
+                            v-model="scope.row.signals"
+                            :autosize="{ minRows: 1, maxRows: 10}"
                             clearable
                             >
-                        <template slot="append">
-                            <el-button style="color: #006eff" v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
-                            <span v-else :style="'color: red'">
-                                {{ formatterStatus(scope.row) }}
-                            </span>
-                        </template>
                     </el-input>
-
                 </template>
             </el-table-column>
             <el-table-column align="center" :formatter="formatterStatus"
-                             :label="$t('p2pConfig.signalManage.autoSignal')">
+                             :label="$t('p2pConfig.signalManage.switch')">
                 <template slot-scope="scope">
-                    <el-switch v-if="!scope.row.blocked" v-model="scope.row.auto_signal" active-color="#13ce66" inactive-color="#ff4949" @change="value => handleSubmit(scope.row)"> </el-switch>
+                    <el-switch v-if="!scope.row.blocked" v-model="scope.row.signal_enabled" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
                 </template>
             </el-table-column>
+
+            <el-table-column :label="$t('domainTable.operation')" align="center">
+                <template slot-scope="scope">
+                    <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
+                </template>
+            </el-table-column>
+
         </el-table>
 
         <div class="pagination-container">
@@ -87,6 +87,12 @@
                     if (res.data) {
                         this.tableData = res.data
                     }
+                    this.tableData.forEach(row => {
+                        // console.warn(row)
+                        if (row.signals && row.signals.length >= 0) {
+                            row.signals = row.signals.join('\n')
+                        }
+                    })
                     this.loading = false
                 }).catch(err => {
                     this.loading = false
@@ -104,9 +110,10 @@
                                 type: 'success'
                             });
                         } else {
+                            const msg = res.data.msg || this.$t('p2pConfig.configFail')
                             this.$notify.error({
                                 title: this.$t('common.error'),
-                                message: this.$t('p2pConfig.configFail'),
+                                message: msg,
                             });
                         }
                         this.loading = false
@@ -117,7 +124,15 @@
                     })
             },
             handleSubmit(domain) {
-                const data = {signal_addr: trim(domain.signal_addr), auto_signal: domain.auto_signal};
+                let signals;
+                if (!domain.signals) {
+                    signals = []
+                } else {
+                    signals = domain.signals.split('\n').map(signal => trim(signal)).filter(signal => {
+                        return signal !== ""
+                    })
+                }
+                const data = {signals, enabled: domain.signal_enabled};
                 this.handleSignalAddr(domain.uid, domain.id, data)
             },
             handleSizeChange(pageSize) {

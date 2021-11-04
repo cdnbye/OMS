@@ -44,7 +44,7 @@
                   <span class="shop-card-tips" :style="item.original_price - item.price > 0 ? {display: 'inline-block'} : {display: 'none'}">
                     立减 ￥ {{ (item.original_price - item.price).toFixed(2) }}
                   </span>
-                  <span class="shop-card-txt">永久有效</span>
+                  <span class="shop-card-txt">{{ item.customized ? item.subject : "永久有效" }}</span>
                 </div>
                 <div class="item-price">
                   <span class="price">
@@ -146,7 +146,7 @@ export default {
   },
   methods: {
     getPackageData() {
-      fetchPackage()
+      fetchPackage(getID())
         .then(res => {
           if(this.paySelect === 'alipay') {
             this.packages = [...res.data.list_cn]
@@ -208,10 +208,12 @@ export default {
         price: Number(this.totalPrice),
         payment: this.paySelect,
         goods: [],
-        goods_type: this.paySelect === 'alipay' ? 'flow_packet_cn' : 'flow_packet_en'
+        goods_type: this.paySelect === 'alipay' ? 'flow_packet_cn' : 'flow_packet_en',
+        customized: false,
       }
       const selected = this.paySelect === 'alipay' ? this.selectPackage.cn : this.selectPackage.en
       data.goods = selected.filter(item => item.amount > 0)
+      data.customized = data.goods.every(item => item.customized)
       createOrder(getID(), data)
         .then(res => {
           this.$router.push({
