@@ -138,7 +138,7 @@ export default {
     haveChecked: 'You have signed in today',
     checkinFail: 'Sign in failed, please try again!',
     trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.',
-    onlinesTip: 'Merely show the number of online devices that support P2P',
+    onlinesTip: 'P2P only works on browsers that support WebRTC Data Channels. On browsers that don’t have such support, P2P will be automatically disabled and fallback to native playback. Those unsupported devices will not have any analytics collected from them, which can cause some discrepancy between the numbers that you see on your own analytics systems and here. This discrepancy is expected and will vary based on the % of unsupported devices your end-users use.',
     viewsTip: 'Total view times today',
     goApp: 'Create App',
     descGlobal: 'This Page is used to show the summarized real-time data of all domains/APPs. The web SDK needs to configure a token to be included in the statistics.',
@@ -301,6 +301,8 @@ export default {
     uploadRule: {
       status: 'Only allow uploading on Wi-Fi and Ethernet',
       desc: 'This page allows you to define your own uploading logic with regards to the network condition. By default, uploading on cellular is enabled.\nCompatibility: web: 1.3+, android: 1.5+, iOS: 1.4+',
+      on: 'Enabled',
+      off: 'Disabled',
     },
     activationRatio: {
       desc: 'This page enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.\n0% - No users are P2P enabled.\n100% - All users are P2P enabled(the default setting).',
@@ -346,6 +348,6 @@ export default {
   hotChannels: {
     content: 'Content',
     num: 'Viewers',
-    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 100 is not shown.',
+    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 200 is not shown.',
   }
 }

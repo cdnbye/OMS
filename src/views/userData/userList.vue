@@ -1,8 +1,8 @@
 <template>
 <div class="app-container">
-  <el-row type="flex" justify="space-between" :gutter="20" style="margin: 20px 0">
-    <el-col :span="12">
-      <el-select v-model="selectValue" @change="selectChange" class="filter-item" style="float: left">
+  <el-row :gutter="20" style="margin-bottom: 20px">
+    <el-col :xs="24" :sm="12" :lg="6">
+      <el-select v-model="selectValue" @change="selectChange" class="filter-item">
         <el-option
           v-for="item in selectOptions"
           :key="item.value"
@@ -12,13 +12,13 @@
         </el-option>
       </el-select>
     </el-col>
-    <el-col :span="12">
+    <el-col :xs="8" :sm="12" :lg="4">
       <el-checkbox v-model="showAdmin" @change="showAdminUser">显示管理员</el-checkbox>
     </el-col>
-    <el-col :span="12">
+    <el-col :xs="8" :sm="12" :lg="4">
       <el-checkbox v-model="showAdmin" @change="showWhitelistUser">白名单用户</el-checkbox>
     </el-col>
-    <el-col :span="12">
+    <el-col :xs="24" :sm="12" :lg="6">
       <el-input
         class="filter-item"
         prefix-icon="el-icon-search"
@@ -593,6 +593,6 @@
           ${json.subject}  类型: ${json.type}  流量: ${json.traffic}TB  价格: ${json.price}  币种: ${json.currency}
           `
       }
-    }
+    },
   }
   </script>

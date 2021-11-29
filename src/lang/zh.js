@@ -140,7 +140,7 @@ export default {
     haveChecked: '你今天已经签到了哦~',
     checkinFail: '签到失败，请重试！',
     trafficUseOut: '您的可用流量已用完，请前往购买流量包',
-    onlinesTip: '只显示支持P2P的在线设备数量',
+    onlinesTip: 'P2P依赖于WebRTC Data Channel的支持，在不支持的设备上将自动回退到原生播放并且不会上报统计信息，因此这里统计的在线人数可能会比实际的偏低，差异的大小取决于有多少比例的设备不支持P2P。',
     viewsTip: '总的观看量，每观看一个视频计数一次',
     goApp: '创建APP',
     descGlobal: '此界面用于展示汇总所有域名/APP的实时数据，Web端SDK需要配置 token 才能在此界面统计。',
@@ -303,6 +303,8 @@ export default {
     uploadRule: {
       status: '只在wifi/有线网络上传数据',
       desc: '这里可以配置在不同网络环境下的P2P分享策略，默认情况下允许在蜂窝网络上传数据。\n版本要求：web: 1.3+, android: 1.5+, iOS: 1.4+',
+      on: '开启',
+      off: '关闭',
     },
     activationRatio: {
       desc: '本页面用于配置P2P的激活比率，即连接P2P网络的设备占总设备的百分比。建议先设置一个较小的比例，然后观察P2P效果以及用户反馈，在确认正常的情况下逐步提高激活比率至100%。未激活的节点可以正常播放，但不会连接到P2P网络，只能从CDN或源服务器下载数据。',
@@ -348,6 +350,6 @@ export default {
   hotChannels: {
       content: '资源',
       num: '热度',
-      desc: '本页面用于展示参与P2P加速的资源的热度（从大到小排序，不展示在线人数低于100的资源）。',
+      desc: '本页面用于展示参与P2P加速的资源的热度（从大到小排序，不展示在线人数低于200的资源）。',
   }
 }

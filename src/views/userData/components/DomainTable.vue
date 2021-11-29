@@ -194,6 +194,9 @@
     },
     mounted() {
       this.fetchTableData()
+      this.timmer = setInterval(() => {
+          this.fetchTableData()
+      }, 30000)
     },
     methods: {
       pShow(id) {
@@ -398,6 +401,9 @@
           }
         })
       }
+    },
+    beforeDestroy() {
+        clearInterval(this.timmer)
     }
   }
   </script>
