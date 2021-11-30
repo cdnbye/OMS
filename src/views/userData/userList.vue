@@ -16,7 +16,7 @@
       <el-checkbox v-model="showAdmin" @change="showAdminUser">显示管理员</el-checkbox>
     </el-col>
     <el-col :xs="8" :sm="12" :lg="4">
-      <el-checkbox v-model="showAdmin" @change="showWhitelistUser">白名单用户</el-checkbox>
+      <el-checkbox v-model="showWhitelist" @change="showWhitelistUser">白名单用户</el-checkbox>
     </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
       <el-input
@@ -216,6 +216,7 @@
           pageSize: 10
         },
         showAdmin: false,
+        showWhitelist: false,
         searchValue: '',
         selectValue: 'uid',
         selectOptions: [
