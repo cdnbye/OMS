@@ -336,21 +336,21 @@ const userRouter = [
                 }
             },
             {
-                path: 'uploadRule',
-                component: () => import('@/views/p2pConfig/user/uploadRule'),
-                name: 'uploadRule',
-                meta: {
-                    title: 'uploadRule',
-                    roles: ['user'],
-                    noCache: true
-                }
-            },
-            {
                 path: 'signalManage',
                 component: () => import('@/views/p2pConfig/user/signalManage'),
                 name: 'signalManage',
                 meta: {
                     title: 'signalManage',
+                    roles: ['user'],
+                    noCache: true
+                }
+            },
+            {
+                path: 'uploadRule',
+                component: () => import('@/views/p2pConfig/user/uploadRule'),
+                name: 'uploadRule',
+                meta: {
+                    title: 'uploadRule',
                     roles: ['user'],
                     noCache: true
                 }
@@ -395,7 +395,7 @@ if (navLang() === 'zh') {
                 component: () => import('@/views/package/Invoice'),
                 name: 'Invoices',
                 meta: {
-                    title: '发票管理',
+                    title: 'invoices',
                     roles: ['user'],
                     noCache: true
                 }

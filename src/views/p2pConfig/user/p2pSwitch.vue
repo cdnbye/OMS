@@ -1,15 +1,15 @@
 <template>
   <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
     <el-table border :data="tableData" v-loading="loading">
-      <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
-      <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.status')">
+      <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')" min-width="150" ></el-table-column>
+      <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.status')" width="100">
         <template slot-scope="scope">
           <span :style="scope.row.blocked ? 'color: red':''">
             {{ formatterStatus(scope.row) }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('domainTable.operation')" align="center">
+      <el-table-column :label="$t('domainTable.operation')" align="center"  min-width="50" width="150">
         <template slot-scope="scope">
           <el-switch v-if="!scope.row.blocked " :value="!scope.row.disable_p2p" active-color="#13ce66" inactive-color="#ff4949" @change="value => switchChange(scope.row, value)"> </el-switch>
         </template>
@@ -72,9 +72,8 @@ export default {
           this.tableData = res.data
         }
         this.loading = false
-      }).catch(err => {
+      }).catch(() => {
         this.loading = false
-        console.log(err)
       })
     },
     // 检查是否可以关闭P2P
@@ -109,9 +108,8 @@ export default {
           }
           this.loading = false
         })
-        .catch(err => {
+        .catch(() => {
           this.loading = false
-          console.log(err)
         })
     },
     switchChange(domain, value) {

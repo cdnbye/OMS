@@ -52,6 +52,7 @@ export default {
     activationRatio: 'Activation Ratio',
     signalManage: 'Signal Configuration',
     stunManage: 'Stun Configuration',
+    invoices: 'Invoices',
   },
   navbar: {
     logOut: 'Log Out',
@@ -310,7 +311,8 @@ export default {
     },
     signalManage: {
       desc: 'This page is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. Enter one address per line, up to 10 addresses.',
-      signalAddr: 'Signal Address',
+      signalAddr: 'Main Signal Address',
+      signalAddr2: 'Backup Signal Address',
       switch: "Disable/Enable",
     },
     stunManage: {

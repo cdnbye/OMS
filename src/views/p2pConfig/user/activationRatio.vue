@@ -2,14 +2,15 @@
     <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
         <el-alert :title="$t('p2pConfig.activationRatio.desc')" style="margin-bottom: 20px"/>
         <el-table border :data="tableData" v-loading="loading">
-            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
+            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')" min-width="200"></el-table-column>
             <el-table-column align="center" :formatter="formatterStatus"
-                             :label="$t('p2pConfig.activationRatio.status')">
+                             :label="$t('p2pConfig.activationRatio.status')"
+                             min-width="200">
                 <template slot-scope="scope">
             <el-slider v-model="scope.row.ratio" :min="0" :max="100" show-input></el-slider>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('domainTable.operation')" align="center">
+            <el-table-column :label="$t('domainTable.operation')" align="center" min-width="50" width="150">
                 <template slot-scope="scope">
                     <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                     <span v-else :style="'color: red'">
@@ -75,9 +76,8 @@
                         this.tableData = res.data
                     }
                     this.loading = false
-                }).catch(err => {
+                }).catch(() => {
                     this.loading = false
-                    console.log(err)
                 })
             },
             handleP2PConfig(uid, id, data) {
@@ -98,9 +98,8 @@
                         }
                         this.loading = false
                     })
-                    .catch(err => {
+                    .catch(() => {
                         this.loading = false
-                        console.log(err)
                     })
             },
             handleSubmit(domain) {

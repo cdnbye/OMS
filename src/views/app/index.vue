@@ -163,7 +163,7 @@
       <el-form-item prop="platform" label="Platform" label-width="100px" required style="float: left">
         <el-select v-model="form.platform" placeholder="Select Platform">
           <el-option label="Android" value="android"></el-option>
-          <el-option label="iOS" value="ios"></el-option>
+          <el-option label="iOS/tvOS/macOS" value="ios"></el-option>
           <el-option label="PC (Electron)" value="pc"></el-option>
         </el-select>
       </el-form-item>

@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       list: [
-        { url: 'https://signalcloud.cdnbye.com/count', value: 0, name: '俄罗斯' },
+        { url: 'https://signalcloud.cdnbye.com/count', value: 0, name: '德国' },
         { url: 'https://opensignal.cdnbye.com/count', value: 0, name: '美国' },
         { url: 'https://signal.swarmcloud.net/count', value: 0 },
         { url: 'https://signal.p2pengine.net:8089/total_count', value: 0 },

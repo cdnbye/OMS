@@ -8,11 +8,11 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token, { expires: 7 })
+  return Cookies.set(TokenKey, token, { expires: 7, path: location.pathname })
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  return Cookies.remove(TokenKey, {path: location.pathname})
 }
 
 export function getID() {
@@ -20,9 +20,9 @@ export function getID() {
 }
 
 export function setID(id) {
-  return Cookies.set(IDKey, id, { expires: 7 })
+  return Cookies.set(IDKey, id, { expires: 7, path: location.pathname })
 }
 
 export function removeID() {
-  return Cookies.remove(IDKey)
+  return Cookies.remove(IDKey, {path: location.pathname})
 }

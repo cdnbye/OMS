@@ -2,23 +2,24 @@
     <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
         <el-alert :title="$t('p2pConfig.stunManage.desc')" style="margin-bottom: 20px"/>
         <el-table border :data="tableData" v-loading="loading">
-            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
+            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')" min-width="200" ></el-table-column>
 
             <el-table-column align="center"
-                             :label="$t('p2pConfig.stunManage.addr')">
+                             :label="$t('p2pConfig.stunManage.addr')"
+                             min-width="200">
                 <template slot-scope="scope">
                     <el-input
                             type="textarea"
                             :autosize="{ minRows: 1, maxRows: 3}"
                             placeholder="stun:"
-                            v-model="scope.row.stuns"
+                            v-model="scope.row.stunsStr"
                             clearable
                     >
                     </el-input>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('domainTable.operation')" align="center">
+            <el-table-column :label="$t('domainTable.operation')" align="center" min-width="50" width="150">
                 <template slot-scope="scope">
                     <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                 </template>
@@ -77,23 +78,22 @@
                         this.tableData.forEach(row => {
                             // console.warn(row)
                             if (row.stuns && row.stuns.length > 0) {
-                                row.stuns = row.stuns.join('\n')
+                                row.stunsStr = row.stuns.join('\n')
                             }
                         })
                     }
                     this.loading = false
-                }).catch(err => {
+                }).catch(() => {
                     this.loading = false
-                    console.log(err)
                 })
             },
             handleSubmit(domain) {
                 this.loading = true
                 let stuns;
-                if (!domain.stuns) {
+                if (!domain.stunsStr) {
                     stuns = []
                 } else {
-                    stuns = domain.stuns.split('\n').map(stun => trim(stun)).filter(stun => {
+                    stuns = domain.stunsStr.split('\n').map(stun => trim(stun)).filter(stun => {
                         return stun !== ""
                     })
                 }
@@ -114,9 +114,8 @@
                         }
                         this.loading = false
                     })
-                    .catch(err => {
+                    .catch(() => {
                         this.loading = false
-                        console.log(err)
                     })
 
             },

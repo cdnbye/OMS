@@ -218,11 +218,11 @@
         showAdmin: false,
         showWhitelist: false,
         searchValue: '',
-        selectValue: 'uid',
+        selectValue: 'updated_at',
         selectOptions: [
           {
-            label: 'ID',
-            value: 'uid'
+            label: '更新时间',
+            value: 'updated_at'
           },
           {
             label: '邮箱',
@@ -277,6 +277,10 @@
             {
                 value: '10',
                 label: "monthly_50TB",
+            },
+            {
+                value: '11',
+                label: "monthly_100TB",
             },
             {
                 value: '3',

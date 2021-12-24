@@ -2,9 +2,10 @@
     <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
         <el-alert :title="$t('p2pConfig.signalManage.desc')" style="margin-bottom: 20px"/>
         <el-table border :data="tableData" v-loading="loading">
-            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
+            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"  min-width="150"></el-table-column>
             <el-table-column align="center" :formatter="formatterStatus"
-                             :label="$t('p2pConfig.signalManage.signalAddr')">
+                             :label="$t('p2pConfig.signalManage.signalAddr')"
+                             min-width="150">
                 <template slot-scope="scope">
                     <el-input
                             placeholder="wss://"
@@ -17,13 +18,27 @@
                 </template>
             </el-table-column>
             <el-table-column align="center" :formatter="formatterStatus"
+                             :label="$t('p2pConfig.signalManage.signalAddr2')"
+                             min-width="150">
+              <template slot-scope="scope">
+                <el-input
+                    placeholder="wss://"
+                    type="textarea"
+                    v-model="scope.row.signals2"
+                    :autosize="{ minRows: 1, maxRows: 10}"
+                    clearable
+                >
+                </el-input>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" :formatter="formatterStatus" min-width="50" width="70"
                              :label="$t('p2pConfig.signalManage.switch')">
                 <template slot-scope="scope">
                     <el-switch v-if="!scope.row.blocked" v-model="scope.row.signal_enabled" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('domainTable.operation')" align="center">
+            <el-table-column :label="$t('domainTable.operation')" align="center"  min-width="50" width="100">
                 <template slot-scope="scope">
                     <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                 </template>
@@ -92,11 +107,13 @@
                         if (row.signals && row.signals.length >= 0) {
                             row.signals = row.signals.join('\n')
                         }
+                        if (row.signals2 && row.signals2.length >= 0) {
+                            row.signals2 = row.signals2.join('\n')
+                        }
                     })
                     this.loading = false
-                }).catch(err => {
+                }).catch(() => {
                     this.loading = false
-                    console.log(err)
                 })
             },
             handleSignalAddr(uid, id, data) {
@@ -118,9 +135,8 @@
                         }
                         this.loading = false
                     })
-                    .catch(err => {
+                    .catch(() => {
                         this.loading = false
-                        console.log(err)
                     })
             },
             handleSubmit(domain) {
@@ -132,7 +148,15 @@
                         return signal !== ""
                     })
                 }
-                const data = {signals, enabled: domain.signal_enabled};
+              let signals2;
+                if (!domain.signals2) {
+                    signals2 = []
+                } else {
+                    signals2 = domain.signals2.split('\n').map(signal => trim(signal)).filter(signal => {
+                        return signal !== ""
+                    })
+                }
+                const data = {signals, signals2, enabled: domain.signal_enabled};
                 this.handleSignalAddr(domain.uid, domain.id, data)
             },
             handleSizeChange(pageSize) {

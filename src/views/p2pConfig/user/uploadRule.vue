@@ -3,7 +3,7 @@
         <el-alert :title="$t('p2pConfig.uploadRule.desc')" style="margin-bottom: 20px" />
         <el-table border :data="tableData" v-loading="loading">
             <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
-            <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.uploadRule.status')">
+            <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.uploadRule.status')" min-width="50" width="200">
                 <template  slot-scope="scope">
                     <el-switch v-if="!scope.row.blocked"
                                :value="scope.row.wifi_only"
@@ -75,9 +75,8 @@
                         this.tableData = res.data
                     }
                     this.loading = false
-                }).catch(err => {
+                }).catch(() => {
                     this.loading = false
-                    console.log(err)
                 })
             },
             handleP2PConfig(uid, id, data) {
@@ -103,9 +102,8 @@
                         }
                         this.loading = false
                     })
-                    .catch(err => {
+                    .catch(() => {
                         this.loading = false
-                        console.log(err)
                     })
             },
             valueChange(domain, value) {
