@@ -63,7 +63,7 @@
                 },
                 option: {
                     xData: [],
-                    yName: '在线人数',
+                    yName: 'online',
                 },
                 excelName: '',
             }

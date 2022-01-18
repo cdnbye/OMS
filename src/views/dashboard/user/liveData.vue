@@ -2,11 +2,11 @@
   <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
     <el-row style="text-align: left; margin: 20px 0">
 
-      <template v-if="showDomain">
-        <el-col :xs="20" :sm="12" :lg="10">
-          <SwitchDomain :finishSelect="handleSwitchDomain" />
-        </el-col>
-      </template>
+<!--      <template v-if="showDomain">-->
+<!--        <el-col :xs="20" :sm="12" :lg="10">-->
+<!--          <SwitchDomain :finishSelect="handleSwitchDomain" />-->
+<!--        </el-col>-->
+<!--      </template>-->
 
       <el-col :xs="7" :sm="4" :lg="2">
         <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
@@ -100,6 +100,12 @@ export default {
       'userValidDomain',
       'language'
     ])
+  },
+  watch: {
+    currentDomain: function () {
+      clearInterval(int)
+      this.getUserDomain()
+    }
   },
   mounted() {
     const domainInfo = this.$route.params.domainInfo;

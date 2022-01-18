@@ -113,7 +113,7 @@ export default {
   dashboard : {
     currentDomain: 'Current Domain: ',
     goBind: 'Register your domain',
-    switchDomain: 'Switch Domain/AppID',
+    switchDomain: 'Switch',
     tip: 'Register domain name or create app now?',
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
@@ -142,7 +142,7 @@ export default {
     onlinesTip: 'P2P only works on browsers that support WebRTC Data Channels. On browsers that don’t have such support, P2P will be automatically disabled and fallback to native playback. Those unsupported devices will not have any analytics collected from them, which can cause some discrepancy between the numbers that you see on your own analytics systems and here. This discrepancy is expected and will vary based on the % of unsupported devices your end-users use.',
     viewsTip: 'Total view times today',
     goApp: 'Create App',
-    descGlobal: 'This Page is used to show the summarized real-time data of all domains/APPs. The web SDK needs to configure a token to be included in the statistics.',
+    descGlobal: 'This Page is used to show the summarized real-time data of all domains/APPs.',
   },
   domainTable: {
     bindDomain: 'Register Your Domain/Root Domain',
@@ -245,7 +245,7 @@ export default {
     day: '24 Hours',
     week: '7 Days',
     month: '30 Days',
-    descGlobal: 'This Page is used to show the summarized historical data of all domains/APPs. The web SDK needs to configure a token to be included in the statistics.',
+    descGlobal: 'This Page is used to show the summarized historical data of all domains/APPs.',
   },
   package: {
     noBuyTitle: 'Tips',
@@ -310,8 +310,8 @@ export default {
       status: 'Activation Ratio(%)',
     },
     signalManage: {
-      desc: 'This page is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. Enter one address per line, up to 10 addresses.',
-      signalAddr: 'Main Signal Address',
+      desc: 'This page is used for configuration of signaling address. Signaling is used to exchange information between nodes to establish P2P connection. If the address is configured on this page, the one on the SDK side will be overridden. If the backup signaling address is set, the SDK will connect two signaling at the same time and automatically switch to the backup signaling when the primary signaling is unavailable. Enter one address per line, up to 10 addresses.',
+      signalAddr: 'Primary Signal Address',
       signalAddr2: 'Backup Signal Address',
       switch: "Disable/Enable",
     },

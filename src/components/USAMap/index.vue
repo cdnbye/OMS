@@ -120,6 +120,7 @@
             provinceData: {
                 deep: true,
                 handler(val) {
+                    this.resetProvinceData()
                     const names = this.province_data.map(x=>x.name)
                     val.forEach(item => {
                         const idx = names.indexOf(item.name)
@@ -131,6 +132,7 @@
                     })
                     // this.province_data = val
                     this.setMapOptions()
+                    this.setBarOptions()
                 }
             },
             total: {
@@ -171,6 +173,11 @@
             this.chart = null
         },
         methods: {
+          resetProvinceData() {
+            this.province_data.forEach(item => {
+                item.value = 0
+            })
+          },
             convertData(data) {
                 var res = [];
                 for (var i = 0; i < data.length; i++) {
@@ -284,7 +291,9 @@
 
             },
             setBarOptions() {
-                if (!this._total) return
+                if (!this._total) {
+                  this._total = 0
+                }
                 const data = this.province_data.sort(function (a, b) {
                     return a.value - b.value;
                 });
@@ -306,7 +315,7 @@
                         type: 'bar',
                         id: 'viewers',
                         data: data.map(function (item) {
-                            return item.value;
+                            return item.value >= 0 ? item.value : 0;
                         }),
                         universalTransition: true
                     }

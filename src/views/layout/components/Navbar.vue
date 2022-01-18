@@ -4,8 +4,8 @@
     <!-- <breadcrumb class="breadcrumb-container"/> -->
     <div class="right-menu">
 
-      <!--<screenfull id="screenfull" class="right-menu-item hover-effect screenfull"/>-->
-
+<!--      <screenfull class="right-menu-item hover-effect screenfull"/>-->
+      <switch-domain v-if="showDomain" class="switchdomain "/>
       <lang-select class="international right-menu-item"/>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
@@ -43,10 +43,12 @@ import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
 import Logo from '@/assets/logo.png'
 // import Screenfull from '@/components/Screenfull'
+import SwitchDomain from '@/components/SwitchDomain'
 
 export default {
   data() {
     return {
+      showDomain: true,
       Avatar: Logo
     }
   },
@@ -54,14 +56,19 @@ export default {
     // Breadcrumb,
     Hamburger,
     LangSelect,
+    SwitchDomain,
     // Screenfull,
+  },
+  created() {
+    this.showDomain = !this.roles.includes('admin');
   },
   computed: {
     ...mapGetters([
       'language',
       'sidebar',
       'name',
-      'device'
+      'device',
+      'roles'
     ])
   },
   methods: {
@@ -79,8 +86,9 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
+  position: relative;
   height: 50px;
-  line-height: 50px;
+  //line-height: 50px;
   border-radius: 0px !important;
   .hamburger-container {
     line-height: 58px;
@@ -95,36 +103,62 @@ export default {
     display: inline-block;
     vertical-align: top;
   }
+
   .right-menu {
+    line-height: 18px;
+    //height: auto;
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
     float: right;
-    height: 100%;
-    &:focus{
-     outline: none;
-    }
+    //padding-right: 16px;
+
     .right-menu-item {
       display: inline-block;
       margin: 0 8px;
+      //font-size: 24px;
+      //color: #5a5e66;
+      //vertical-align: text-bottom;
+
+      &.hover-effect {
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.025);
+        }
+      }
     }
-    .screenfull {
-      height: 20px;
-    }
+    //.screenfull {
+    //  height: 20px;
+    //  width: 20px;
+    //  background-color: #1f2d3d;
+    //
+    //}
     .international{
-      vertical-align: top;
+      vertical-align: center;
+      margin-top: 10px;
     }
-    .theme-switch {
-      vertical-align: 15px;
+    .switchdomain {
+      white-space: nowrap;
+      margin-right: 10px;
+      right: 50px;
+      height: 20px;
+      width: 20px;
+      margin-top: -8px;
     }
     .avatar-container {
       height: 50px;
       margin-right: 30px;
+      cursor: pointer;
       .avatar-wrapper {
-        cursor: pointer;
         margin-top: 8px;
         position: relative;
         .user-avatar {
-          width: 30px;
           height: 30px;
+          width: 30px;
           border-radius: 10px;
+          margin-top: 5px;
         }
         .el-icon-caret-bottom {
           position: absolute;

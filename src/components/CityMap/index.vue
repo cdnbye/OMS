@@ -262,6 +262,7 @@ export default {
       handler(val) {
         this._total = val
         this.setMapOptions()
+        this.setBarOptions()
       }
     }
   },
@@ -426,7 +427,7 @@ export default {
 
     },
     setBarOptions() {
-        if (!this._total) return
+        // if (!this._total) return
         const data = this.province_data.sort(function (a, b) {
             return a.value - b.value;
         });
@@ -448,7 +449,7 @@ export default {
                 type: 'bar',
                 id: 'population',
                 data: data.map(function (item) {
-                    return item.value;
+                    return item.value >= 0 ? item.value : 0;
                 }),
                 universalTransition: true
             }

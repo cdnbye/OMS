@@ -1,6 +1,6 @@
 <template>
     <div>
-        <svg-icon :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'" @click="click" />
+        <svg-icon :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'" @click="onToggle" />
     </div>
 </template>
 
@@ -20,7 +20,7 @@
             this.destroy()
         },
         methods: {
-            click() {
+          onToggle() {
                 if (!screenfull.enabled) {
                     this.$message({
                         message: 'you browser can not work',

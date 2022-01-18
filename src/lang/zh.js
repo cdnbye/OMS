@@ -115,7 +115,7 @@ export default {
   dashboard: {
     currentDomain: '當前域名：',
     goBind: '綁定域名',
-    switchDomain: '切換域名/AppID',
+    switchDomain: '切換',
     tip: '您還未綁定域名或創建APP，是否現在操作？',
     online: '當前在線人數',
     p2pTraffic: '今日P2P流量',
@@ -144,7 +144,7 @@ export default {
     onlinesTip: 'P2P依賴於WebRTC Data Channel的支持，在不支持的設備上將自動回退到原生播放並且不會上報統計信息，因此這裏統計的在線人數可能會比實際的偏低，差異的大小取決於有多少比例的設備不支持P2P。',
     viewsTip: '總的觀看量，每觀看一個視頻計數一次',
     goApp: '創建APP',
-    descGlobal: '此界面用於展示匯總所有域名/APP的實時數據，Web端SDK需要配置 token 才能在此界面統計。',
+    descGlobal: '此界面用於展示匯總所有域名/APP的實時數據。',
   },
   domainTable: {
     bindDomain: '綁定域名/根域名',
@@ -246,7 +246,7 @@ export default {
     day: '24小時內',
     week: '7天',
     month: '30天',
-    descGlobal: '此界面用於展示匯總所有域名/APP的歷史數據，Web端SDK需要配置 token 才能在此界面統計。',
+    descGlobal: '此界面用於展示匯總所有域名/APP的歷史數據。',
   },
   package: {
     noBuyTitle: '溫馨提示',
@@ -312,9 +312,9 @@ export default {
       status: '激活比率(%)',
     },
     signalManage: {
-      desc: '本頁面用於雲端配置信令地址，信令用於節點之間交換信息以建立P2P連接。如果在此頁面配置了信令地址則會覆蓋SDK側配置的信令地址。每行輸入一個地址，最多輸入10個地址。',
+      desc: '本頁面用於雲端配置信令地址，信令用於節點之間交換信息以建立P2P連接。如果在此頁面配置了信令地址則會覆蓋SDK側配置的信令地址。如果設置了備用信令地址，那麽SDK會同時連接兩個信令，並在主信令不可用時自動切換到備用信令。每行輸入一個地址，最多輸入10個地址。',
       signalAddr: '主信令地址',
-      signalAddr2: '备用信令地址',
+      signalAddr2: '備用信令地址',
       switch: "關閉/開啟",
     },
     stunManage: {

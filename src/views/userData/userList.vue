@@ -304,7 +304,7 @@
             },
             {
                 value: '13',
-                label: "monthly_200TB",
+                label: "monthly_250TB",
             },
         ],
         currencyOptions:[

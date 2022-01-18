@@ -29,6 +29,6 @@ git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 # git push -f https://gitee.com/cdnbye/OMS_hk.git master
-git push -f https://snowinszu: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@github.com/cdnbye/OMS_hk.git master
+git push -f https://snowinszu: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@github.com/cdnbye/OMS_hk.git master
 
 cd -

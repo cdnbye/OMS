@@ -51,10 +51,10 @@ const user = {
     SET_USERVALIDDOMAIN: (state, userValidDomain) => {
       const validDomain = JSON.stringify(userValidDomain)
       state.userValidDomain = validDomain
-      Cookies.set('validDomain', validDomain, { expires: 99999, path: location.pathname })
+      Cookies.set('validDomain', validDomain, { expires: 99999 })
     },
     SET_CURRENTDOMAIN: (state, currentDomain) => {
-      Cookies.set('userDomain', currentDomain, { expires: 99999, path: location.pathname })
+      Cookies.set('userDomain', currentDomain, { expires: 99999 })
       state.currentDomain = currentDomain
     },
   },
