@@ -2,11 +2,30 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import { getQueryObj } from '@/utils/format'
+import { setItem, getItem } from '@/utils/storage'
+import { LOCATION, BASE_URLS } from '@/constant'
+
+let { loc } = getQueryObj()
+if (!loc) {
+  // const cachedLoc = getItem(LOCATION)
+  loc = getItem(LOCATION) || process.env.VUE_APP_LOC
+  // 缓存
+  // if (!cachedLoc) {
+  //   setItem(LOCATION, loc)
+  // }
+} else {
+  loc = loc.substring(0, 2)
+}
+setItem(LOCATION, loc)
+
+// console.warn(`loc ${loc}`)
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API, // api 的 base_url
-  timeout: 15000
+  // baseURL: process.env.VUE_APP_API, // api 的 base_url
+  baseURL: BASE_URLS[loc], // api 的 base_url
+  timeout: 12000
 })
 
 // request interceptor
@@ -56,3 +75,5 @@ service.interceptors.response.use(
 )
 
 export default service
+
+// request.defaults.baseURL = 'xxxxxx';

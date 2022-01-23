@@ -25,7 +25,7 @@ git init
 git add -A
 git commit -m 'deploy'
 
-# export https_proxy=http://127.0.0.1:54719 http_proxy=http://127.0.0.1:54719 all_proxy=socks5://127.0.0.1:54720
+#export https_proxy=http://127.0.0.1:33210 http_proxy=http://127.0.0.1:33210 all_proxy=socks5://127.0.0.1:33211
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 git push -f https://snowinszu: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@github.com/cdnbye/OMS.git master

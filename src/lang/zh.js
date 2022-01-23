@@ -1,9 +1,4 @@
 export default {
-  consoleAddr: {
-    cn: 'https://www.cdnbye.com/oms/',
-    hk: 'https://www.cdnbye.com/hk-console/',
-    us: 'https://www.cdnbye.com/us-console/',
-  },
   route: {
     dashboard: '實時數據',
     liveData: '實時數據',
@@ -88,6 +83,9 @@ export default {
     logInSuccess: '登錄成功',
     username: '請輸入已驗證的郵箱',
     password: '請輸入密碼',
+    switchToHK: '已切換至香港地區',
+    switchToCN: '已切換至中國大陸地區',
+    switchToUS: '已切換至美國地區',
   },
   signup: {
     title: '註冊',
@@ -148,9 +146,9 @@ export default {
   },
   domainTable: {
     bindDomain: '綁定域名/根域名',
-    bindDomainTip: '輸入你的網站域名(請勿輸入IP地址)，例如：www.example.com\n註意：域名是指播放器所在的域名（如果嵌入iframe則是src的域名），不是流地址(m3u8)的域名。\n端口不需要填寫，支持根域名通配。',
+    bindDomainTip: '輸入你的網站域名(請勿輸入IP地址)，例如：www.example.com\n註意：域名是指播放器所在的域名（如果嵌入iframe則是src的域名），不是流地址(m3u8)的域名。\n端口不需要填寫，支持根域名通配。每行輸入一個域名，最多50個。',
     playUrlTip: '輸入你的網站首頁鏈接或者可以進入播放頁面的引導頁鏈接。網站不得包含非法內容，也不得包含跳轉到非法內容的鏈接。\nhttps://example.com/index.html',
-    bindWarning: 'CDNBye不對色情等非法內容提供P2P服務，請確保您的網站符合法律規範，服務於國內的域名必須已備案。',
+    bindWarning: 'CDNBye不對色情、博彩等非法內容提供服務，請確保您的網站符合法律規範，服務於國內的域名必須已備案。',
     bindDomainTError: '請輸入正確的域名！',
     domain: '域名',
     status: '狀態',
@@ -184,7 +182,7 @@ export default {
     },
     verifySuccess: '驗證成功',
     title: '說明：',
-    desc: '本頁面用於綁定網站域名，移動端原生 App 和 Electron 應用無需綁定域名。每個賬號最多可以綁定100個域名，60天內未使用的域名記錄將被自動刪除。服務於國內的域名必須已備案。\nTips:支持根域名通配所有子域名。',
+    desc: '本頁面用於綁定網站域名，移動端原生 App 和 Electron 應用無需綁定域名。每個賬號最多可以綁定300個域名，60天內未使用的域名記錄將被自動刪除。服務於國內的域名必須已備案。\nTips:支持根域名通配所有子域名，每行一個域名，支持同時輸入50個域名。',
     illegal: '未通過審核(需要備案)',
   },
   documentation: {

@@ -13,8 +13,8 @@
       <el-form-item label="上报时间间隔">
         <el-slider v-model="configForm.report_interval" :min="10" :max="120" @change="intervalChange" show-input></el-slider>
       </el-form-item>
-      <el-form-item label="PING时间间隔">
-        <el-slider v-model="configForm.ping_interval" :min="0" :max="500" @change="piChange" show-input></el-slider>
+      <el-form-item label="日志采样比率">
+        <el-slider v-model="configForm.log_rate" :min="0" :max="100" @change="piChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="ShareOnly模式">
         <el-switch v-model="configForm.share_only" active-color="green" inactive-color="red" @change="shareOnlyChange"></el-switch>
@@ -61,7 +61,7 @@ export default {
         tracker_open: false,
         max_nodes: 0,
         share_only: false,
-        ping_interval: 0,
+        log_rate: 0,
         online_debug: false,
         enable_fusing: false,
         signal_compressed: false,

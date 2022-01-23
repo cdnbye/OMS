@@ -1,9 +1,4 @@
 export default {
-  consoleAddr: {
-    cn: 'https://oms.cdnbye.com',
-    hk: 'https://console.swarmcloud.net',
-    us: 'https://console.hdtvcloud.com',
-  },
   route: {
     dashboard: 'Realtime data',
     liveData: 'Live data',
@@ -86,6 +81,9 @@ export default {
     logInSuccess: 'login successfully',
     username: 'Please enter your verified email',
     password: 'Please enter your password',
+    switchToHK: 'Switched to console on HongKong',
+    switchToCN: 'Switched to console on China Mainland',
+    switchToUS: 'Switched to console on USA',
   },
   signup: {
     title: 'Signup',
@@ -183,7 +181,7 @@ export default {
     },
     verifySuccess: 'verify successfully',
     title: 'Notice:',
-    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 500 domain names. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains.',
+    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. Each user can register up to 300 domain names. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains, one domain per line, up to 50 domains in one submit.',
     illegal: 'Not Approved',
   },
   documentation: {

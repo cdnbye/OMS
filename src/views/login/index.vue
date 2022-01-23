@@ -4,7 +4,7 @@
       <div class="title-container">
         <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language"/>
-        <el-dropdown @command="handleConsoleSelect" class="console">
+        <el-dropdown @command="handleConsoleSelect" class="console" :hide-on-click="false">
           <span class="el-dropdown-link">
             {{ $t('auth.console') }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -61,6 +61,10 @@ import { validateEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import { setSha256 } from '@/utils/format'
 import { trim } from '@/utils'
+import request from "@/utils/request";
+import { LOCATION, BASE_URLS } from '@/constant'
+import { setItem } from '@/utils/storage'
+import {getItem} from "../../utils/storage";
 
 export default {
   name: 'Login',
@@ -98,7 +102,6 @@ export default {
       showCN: true,
       showHK: true,
       showUSA: true,
-        consoleSelect: ''
     }
   },
   watch: {
@@ -110,18 +113,39 @@ export default {
     }
   },
   mounted() {
-    const env = process.env.VUE_APP_ENV
-    if (env === 'p1') {
-        this.showCN = false
-    } else if (env === 'p3') {
-        this.showHK = false
-    } else if (env === 'p2') {
-        this.showUSA = false
-    }
+    this.checkSelected()
   },
   methods: {
+    checkSelected(env) {
+      // const env = process.env.VUE_APP_ENV
+      this.showCN = this.showHK = this.showUSA = true
+      if (!env) {
+        env = getItem(LOCATION)
+      }
+      if (env === 'cn') {
+        this.showCN = false
+      } else if (env === 'hk') {
+        this.showHK = false
+      } else if (env === 'us') {
+        this.showUSA = false
+      }
+    },
     handleConsoleSelect(command) {
-        location.href = this.$t('consoleAddr.' + command)
+        let msg
+        if (command === 'hk') {
+          msg = this.$t('login.switchToHK')
+        } else if (command === 'cn') {
+          msg = this.$t('login.switchToCN')
+        } else if (command === 'us') {
+          msg = this.$t('login.switchToUS')
+        }
+        this.$message({
+          message: msg,
+          type: 'success'
+        });
+        request.defaults.baseURL = BASE_URLS[command]
+        setItem(LOCATION, command)
+        this.checkSelected(command)
     },
     formatData(data) {
       const temp = {...data}

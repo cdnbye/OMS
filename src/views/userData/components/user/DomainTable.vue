@@ -136,7 +136,7 @@
       <el-form-item prop="domain">
         <el-input
           type="textarea"
-          :rows="3"
+          :autosize="{ minRows: 3, maxRows: 10}"
           v-model="domainFormData.domain"
           :placeholder="$t('domainTable.bindDomainTip')"/>
         <br>
@@ -144,7 +144,7 @@
       <el-form-item prop="playUrl">
         <el-input
           type="textarea"
-          :rows="3"
+          rows="2"
           v-model="domainFormData.playUrl"
           :placeholder="$t('domainTable.playUrlTip')"/>
       </el-form-item>
@@ -175,12 +175,20 @@
     },
     data() {
       const formValidateURL = (rule, value, callback) => {
-        if(!validateURL(value)) {
-          const error = this.$t('domainTable.bindDomainTError')
-          callback(new Error(error))
-        } else {
-          callback()
+        const domains = value.split('\n').map(dm => trim(dm)).filter(dm => {
+          return dm !== ""
+        })
+        if (domains.length > 50) {
+          callback(new Error("too many domains"))
         }
+        domains.forEach(dm => {
+          if(!validateURL(dm)) {
+            const error = this.$t('domainTable.bindDomainTError')
+            callback(new Error(error))
+          } else {
+            callback()
+          }
+        })
       }
       return {
         loading: false,
@@ -290,10 +298,8 @@
               message: this.$t('common.deleteSuccess'),
               type: 'success'
           });
-          this.tableData = this.tableData.filter(item => {
-            return item.id !== domainData.id
-          })
           this.pClose(domainData.id)
+          this.fetchTableData()
         }).catch(err => {
           this.pClose(domainData.id)
           console.log(err)
@@ -304,12 +310,20 @@
         this.domainFormData.playUrl = trim(this.domainFormData.playUrl)
         this.$refs.domainForm.validate(valid => {
           if(valid) {
-            bindDomain({
-                domain: this.domainFormData.domain,
-                play_url: this.domainFormData.playUrl,
-            }).then(res => {
+            const domains = this.domainFormData.domain.split('\n').map(dm => trim(dm)).filter(dm => {
+              return dm !== ""
+            })
+            const data = {
+              play_url: this.domainFormData.playUrl,
+            }
+            if (domains.length === 1) {
+              data.domain = domains[0];
+            } else {
+              data.domains = domains;
+            }
+            bindDomain(data).then(res => {
               this.dialogVisible = false
-              this.tableData.push(res.data)
+              this.fetchTableData()
             }).catch(error => {
               console.log(error)
             })

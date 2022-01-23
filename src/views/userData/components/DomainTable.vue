@@ -194,9 +194,9 @@
     },
     mounted() {
       this.fetchTableData()
-      this.timmer = setInterval(() => {
-          this.fetchTableData()
-      }, 30000)
+      // this.timmer = setInterval(() => {
+      //     this.fetchTableData()
+      // }, 30000)
     },
     methods: {
       pShow(id) {
