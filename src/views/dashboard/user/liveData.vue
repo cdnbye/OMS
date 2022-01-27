@@ -36,7 +36,7 @@ import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
 import LiveTime from './LiveTime'
 
-let int = undefined
+let timer = undefined
 
 export default {
   name: 'liveData',
@@ -103,11 +103,14 @@ export default {
   },
   watch: {
     currentDomain: function () {
-      clearInterval(int)
+      if (!this.$route.params.hostId) {
+        clearInterval(timer)
+      }
       this.getUserDomain()
     }
   },
   mounted() {
+    // console.warn(`hostId ${this.$route.params.hostId}`)
     const domainInfo = this.$route.params.domainInfo;
     if(domainInfo && domainInfo.id && domainInfo.uid) {
       this.loopGetData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
@@ -123,7 +126,7 @@ export default {
     }
   },
   beforeDestroy() {
-    clearInterval(int)
+    clearInterval(timer)
   },
   methods: {
     formatTraffic,
@@ -231,7 +234,7 @@ export default {
     loopGetData(uid, id, hostId) {
       const _this = this
       _this.getData(uid, id, hostId)
-      int = setInterval(function() {
+      timer = setInterval(function() {
         _this.getData(uid, id, hostId)
       }, 20000)
     },
@@ -277,7 +280,7 @@ export default {
       }
     },
     handleSwitchDomain(uid, id) {
-      clearInterval(int)
+      clearInterval(timer)
       this.getDisData(uid, id)
       this.loopGetData(uid, id)
     },

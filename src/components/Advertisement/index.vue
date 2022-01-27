@@ -44,12 +44,12 @@ export default {
   },
   watch: {
     device(val) {
-      if(val === 'mobile') {
+      if(val === 'mobile' && this.config.showTop) {
         const _this = this
         _this.handleClose('second-ad')
         setTimeout(() => {
-          _this.handleShow('second-ad')          
-        }, config.afterShow);
+          _this.handleShow('second-ad')
+        }, this.config.afterShow);
       }
     },
     firstShow(val) {

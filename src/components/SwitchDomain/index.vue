@@ -7,15 +7,17 @@
     <!--&gt;-->
     <!--</el-input>-->
 
-    <el-tag style="font-weight: bold;; font-size: medium; margin: 0px 10px;"
+    <el-tag style="font-weight: bold;; font-size: medium; margin: 0px;"
             effect="dark"
             :type="currentDomain.domain ? 'success' : 'danger'">
-      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>{{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}
+<!--      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>-->
+      {{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}
+      <el-button size="mini" type="primary" plain @click="selectDomainVisible = true"
+                 style="font-size: medium; margin-right: -10px">
+        {{ $t('dashboard.switchDomain') }}
+      </el-button>
     </el-tag>
-    <el-button size="medium" type="primary" plain @click="selectDomainVisible = true"
-               style="font-size: medium;">
-      {{ $t('dashboard.switchDomain') }}
-    </el-button>
+
 
     <el-dialog
       :title="$t('dashboard.switchDomain')"

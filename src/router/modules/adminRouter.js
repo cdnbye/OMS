@@ -297,6 +297,30 @@ export default [
     },
 
     {
+        path: '/inspect',
+        component: Layout,
+        redirect: 'inspect/peer',
+        alwaysShow: true,
+        meta: {
+            title: 'Inspect',
+            icon: 'edit',
+            roles: ['admin']
+        },
+        children: [
+            {
+                path: 'peer',
+                component: () => import('@/views/inspect/PeerInfo'),
+                name: 'PeerInfo',
+                meta: {
+                    title: 'PeerInfo',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            }
+        ],
+    },
+
+    {
         path: '/',
         component: Layout,
         redirect: '/user/liveData',
