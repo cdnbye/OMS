@@ -5,7 +5,7 @@
     <div class="right-menu">
 
 <!--      <screenfull class="right-menu-item hover-effect screenfull"/>-->
-      <switch-domain v-if="showDomain" class="switchdomain "/>
+      <switch-domain v-if="showDomain && device!=='mobile'" class="switchdomain "/>
       <lang-select class="international right-menu-item"/>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
@@ -60,7 +60,7 @@ export default {
     // Screenfull,
   },
   created() {
-    this.showDomain = !this.roles.includes('admin');
+    this.showDomain = !this.roles.includes('admin')
   },
   computed: {
     ...mapGetters([

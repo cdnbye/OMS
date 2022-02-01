@@ -31,6 +31,7 @@ export default {
         { url: 'https://opensignal.cdnbye.com/count', value: 0, name: '美国' },
         { url: 'https://as.cdnbye.com/count', value: 0, name: '悉尼' },
         { url: 'https://korea.cdnbye.com/count', value: 0, name: '首尔' },
+        { url: 'https://jp.cdnbye.com/count', value: 0, name: '东京' },
         { url: 'https://id.cdnbye.com/count', value: 0, name: '孟买' },
         { url: 'https://signal.cdnbye.com/total_count', value: 0, name: '香港' },
         { url: 'https://signal.p2pengine.net:8089/total_count', value: 0, name: '香港' },

@@ -1,10 +1,13 @@
 <template>
-  <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
+  <div>
+    <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
+  </div>
 </template>
 
 <script>
+import { getID } from '@/utils/auth'
 import ChinaMap from '@/components/CityMap'
-import { fetchLiveData } from '@/api/liveData'
+import { fetchGeoDis } from '@/api/user/liveData'
 
 export default {
   name: 'ChinaDis',
@@ -16,23 +19,24 @@ export default {
     }
   },
   components: {
-    ChinaMap
+    ChinaMap,
   },
   mounted() {
     this.fetchData()
   },
   methods: {
     fetchData() {
-      fetchLiveData('city', {country: 'china'}).then(res => {
+      fetchGeoDis(getID(), 0, 'city', 'china').then(res => {
         const data = res.data
         if(data) {
-          this.cityData = data.data
+          // console.warn(res.data.filter(item => item.value > 0))
+          this.cityData = data.data.filter(item => item.value > 0)
         }
       }).catch(err => {
-          console.log(err)
+        console.log(err)
       })
 
-      fetchLiveData('province', {country: 'china'}).then(res => {
+      fetchGeoDis(getID(), 0, 'province', 'china').then(res => {
         const data = res.data
         if(data) {
           this.provinceData = data.data

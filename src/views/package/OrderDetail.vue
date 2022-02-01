@@ -54,13 +54,13 @@ export default {
     if(this.$route.query.payMethod) {
       this.formatData()
     } else {
-      this.$router.push('/user/package')
+      this.$router.push('/shopping/package')
     }
   },
   methods: {
     formatData() {
       this.tableData = [...JSON.parse(this.$route.query.buyData)]
-      console.log(this.tableData)
+      // console.log(this.tableData)
       this.tableData.forEach(item => {
         item.total = item.amount ? (item.amount * item.price).toFixed(2) : item.price.toFixed(2)
         if(!item.amount) {
@@ -118,6 +118,6 @@ export default {
         color: #ed711f;
       }
     }
-    
+
   }
 </style>

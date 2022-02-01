@@ -14,7 +14,7 @@
 import { mapGetters } from 'vuex'
 import ChinaMap from '@/components/CityMap'
 import NoBindTip from '@/components/NoBindTip'
-import { fetchChinaDis } from '@/api/user/liveData'
+import { fetchGeoDis } from '@/api/user/liveData'
 
 export default {
   name: 'ChinaDis',
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'city', 'china').then(res => {
+      fetchGeoDis(this.currentDomain.uid, this.currentDomain.id, 'city', 'china').then(res => {
         const data = res.data
         if(data) {
             // console.warn(res.data.filter(item => item.value > 0))
@@ -56,7 +56,7 @@ export default {
         console.log(err)
       })
 
-      fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'province', 'china').then(res => {
+      fetchGeoDis(this.currentDomain.uid, this.currentDomain.id, 'province', 'china').then(res => {
         const data = res.data
         if(data) {
           this.provinceData = data.data

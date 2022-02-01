@@ -28,9 +28,7 @@ import { mapGetters } from 'vuex'
 import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
 import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
 import { fetchUserDomain } from '@/api/userDomain'
-
 import { formatTraffic, formatPieData, getQueryObj } from '@/utils/format'
-
 import SwitchDomain from '@/components/SwitchDomain'
 import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
@@ -157,11 +155,11 @@ export default {
                 cancelButtonText: this.$t('package.buyMonthly')
               })
                 .then(() => {
-                  this.$router.push('/user/package')
+                  this.$router.push('/shopping/package')
                 })
                 .catch(action => {
                    action === 'cancel'
-                   ? this.$router.push('/user/monthly_package')
+                   ? this.$router.push('/shopping/monthly_package')
                    : console.log('-')
                 })
               this.remainTrafficFlag = false

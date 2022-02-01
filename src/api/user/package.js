@@ -35,9 +35,10 @@ export function createOrder(userID, data) {
 
 // 获取支付地址
 export function fetchPayUrl(payMethod, orderID, device) {
+  const origin = location.origin + location.pathname
   const param = device === 'mobile' ? '&mobile=true' : ''
   return request({
-    url: `charge/${payMethod}/pay?order_id=${orderID}${param}`,
+    url: `charge/${payMethod}/pay?origin=${origin}&order_id=${orderID}${param}`,
     method: 'get'
   })
 }

@@ -1,18 +1,16 @@
 <template>
   <div>
     <world-map :countryData="countryData" :total="total"/>
-    <NoBindTip />
-</div>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import WorldMap from '@/components/WorldMap'
-import NoBindTip from '@/components/NoBindTip'
 import { fetchGeoDis } from '@/api/user/liveData'
+import { getID } from '@/utils/auth'
 
 export default {
-  name: 'WorldDis',
+  name: 'WorldDisGlobal',
   data() {
     return {
       countryData: [],
@@ -21,26 +19,13 @@ export default {
   },
   components: {
     WorldMap,
-    NoBindTip
-  },
-  computed: {
-    ...mapGetters([
-      'currentDomain'
-    ])
-  },
-  watch: {
-    currentDomain: function () {
-      this.fetchData()
-    }
   },
   mounted() {
-    if(this.currentDomain.id) {
-      this.fetchData()
-    }
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      fetchGeoDis(this.currentDomain.uid, this.currentDomain.id, 'country').then(res => {
+      fetchGeoDis(getID(), 0, 'country').then(res => {
         const data = res.data
         if(data) {
           this.total = data.total

@@ -10,9 +10,9 @@
     <el-col :xs="24" :sm="12" :lg="8" style="margin: 10px 0">
       <el-button type="primary" @click="dialogVisible = true">{{ $t('domainTable.bindDomain') }}</el-button>
     </el-col>
-    <el-col :xs="24" :sm="12" :lg="12" style="margin: 10px 0">
-      <SwitchDomain mobileWidth="25%" />
-    </el-col>
+<!--    <el-col :xs="24" :sm="12" :lg="12" style="margin: 10px 0">-->
+<!--      <SwitchDomain mobileWidth="25%" />-->
+<!--    </el-col>-->
   </el-row>
 
   <el-table border :data="tableData" v-loading="loading" style="width: 100%">
@@ -161,7 +161,7 @@
 
   <script>
   import { fetchUserDomain, bindDomain, checkDomain, deleteDomain } from '@/api/userDomain'
-  import SwitchDomain from '@/components/SwitchDomain'
+  // import SwitchDomain from '@/components/SwitchDomain'
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
@@ -171,7 +171,7 @@
   export default {
     name: 'UserDomain',
     components: {
-      SwitchDomain
+      // SwitchDomain
     },
     data() {
       const formValidateURL = (rule, value, callback) => {

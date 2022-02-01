@@ -58,6 +58,18 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
+      // 处理 token 超时问题
+      if (
+          res.data &&
+          res.data.code === 4001
+      ) {
+        // token超时
+        setTimeout(() => {
+          store.dispatch('LogOut').then(() => {
+            location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+          })
+        }, 5000)
+      }
       return Promise.reject('error')
     } else {
       return response.data

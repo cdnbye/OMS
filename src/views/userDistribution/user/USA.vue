@@ -14,7 +14,7 @@
     import { mapGetters } from 'vuex'
     import NoBindTip from '@/components/NoBindTip'
     import USAMap from '@/components/USAMap'
-    import { fetchChinaDis } from '@/api/user/liveData'
+    import { fetchGeoDis } from '@/api/user/liveData'
 
     export default {
         name: 'USADis',
@@ -45,7 +45,7 @@
         },
         methods: {
             fetchData() {
-                fetchChinaDis(this.currentDomain.uid, this.currentDomain.id, 'province', 'usa').then(res => {
+              fetchGeoDis(this.currentDomain.uid, this.currentDomain.id, 'province', 'usa').then(res => {
                     const data = res.data
                     if(data) {
                         this.provinceData = data.data

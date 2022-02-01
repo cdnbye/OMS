@@ -1,5 +1,5 @@
 <template>
-  <div style="display: inline-block; text-align: left; width: 100%; ">
+  <div style="display: inline-block; text-align: center; width: 100%; ">
     <!--<el-input-->
       <!--style="width: 55%"-->
       <!--:value="currentDomain.domain ? currentDomain.domain : $t('domainTable.none')"-->

@@ -7,7 +7,7 @@ export default [
         redirect: '/liveData',
         alwaysShow: true,
         meta: {
-            title: 'dashboard',
+            title: 'liveDataAdmin',
             icon: 'dashboard',
             roles: ['admin']
         },
@@ -17,7 +17,7 @@ export default [
                 component: () => import('@/views/dashboard/liveData'),
                 name: 'LiveData',
                 meta: {
-                    title: 'liveData',
+                    title: 'liveDataAdmin',
                     roles: ['admin'],
                     noCache: true
                 }

@@ -15,21 +15,23 @@
             </el-col>
         </el-row>
         <LiveTime :statis="statis" ></LiveTime>
+        <DistributionGlobal :data="disData"/>
         <NoBindTip />
     </div>
 </template>
 
 <script>
-    import moment from 'moment'
     import { mapGetters } from 'vuex'
     import { getID } from '@/utils/auth'
-    import { fetchGlobalData } from '@/api/user/liveData'
+    import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
+    import { fetchGlobalDomains } from '@/api/user/global'
     import { checkIn } from '@/api/user/package'
 
-    import { formatTraffic, getQueryObj } from '@/utils/format'
+    import { formatTraffic, getQueryObj, formatPieData } from '@/utils/format'
 
     import NoBindTip from '@/components/NoBindTip'
     import LiveTime from './LiveTime'
+    import DistributionGlobal from './DistributionGlobal'
 
     let int = undefined
 
@@ -37,7 +39,8 @@
         name: 'liveDataGlobal',
         components: {
             NoBindTip,
-            LiveTime
+            LiveTime,
+            DistributionGlobal
         },
         data() {
             return {
@@ -72,6 +75,14 @@
                     },
                     clock: null,
                 },
+                disData: {
+                  domainData: [],
+                  versionData: [],
+                  tagData: [],
+                  liveData: [],
+                  netTypeData: [],
+                  ispData: [],
+                }
             }
         },
         computed: {
@@ -82,12 +93,64 @@
             ])
         },
         mounted() {
-            this.loopGetData(getID(), 0)
+            const uid = getID()
+            this.loopGetData(uid, 0)
+            this.getDisData(uid)
         },
         beforeDestroy() {
             clearInterval(int)
         },
         methods: {
+            getDisData(uid) {
+              fetchGlobalDomains(uid).then(res => {
+                const data = res.data
+                if(data) {
+                  this.disData.domainData = formatPieData(data)
+                } else {
+                  this.disData.domainData = [];
+                }
+              })
+              fetchDisData(uid, 0, 'version').then(res => {
+                const data = res.data.data
+                if(data) {
+                  this.disData.versionData = formatPieData(data)
+                } else {
+                  this.disData.versionData = [];
+                }
+              })
+              fetchDisData(uid, 0, 'tag').then(res => {
+                const data = res.data.data
+                if(data) {
+                  this.disData.tagData = formatPieData(data)
+                } else {
+                  this.disData.tagData = [];
+                }
+              })
+              fetchDisData(uid, 0, 'live').then(res => {
+                const data = res.data.data
+                if(data) {
+                  this.disData.liveData = formatPieData(data)
+                } else {
+                  this.disData.liveData = [];
+                }
+              })
+              fetchDisData(uid, 0, 'netType').then(res => {
+                const data = res.data.data
+                if(data) {
+                  this.disData.netTypeData = formatPieData(data)
+                } else {
+                  this.disData.netTypeData = [];
+                }
+              })
+              fetchDisData(uid, 0, 'isp', undefined, this.language === 'en'?'en':'').then(res => {
+                const data = res.data.data
+                if(data) {
+                  this.disData.ispData = formatPieData(data)
+                } else {
+                  this.disData.ispData = [];
+                }
+              })
+            },
             formatTraffic,
             getData(uid, id) {
                 fetchGlobalData(uid, id)
@@ -117,11 +180,11 @@
                                     cancelButtonText: this.$t('package.buyMonthly')
                                 })
                                     .then(() => {
-                                        this.$router.push('/user/package')
+                                        this.$router.push('/shopping/package')
                                     })
                                     .catch(action => {
                                         action === 'cancel'
-                                            ? this.$router.push('/user/monthly_package')
+                                            ? this.$router.push('/shopping/monthly_package')
                                             : console.log('-')
                                     })
                                 this.remainTrafficFlag = false

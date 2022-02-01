@@ -36,7 +36,7 @@ export function fetchNum(uid, domainID, start, end) {
 }
 
 // 用户分布图数据
-export function fetchChinaDis(uid, domainID, type, country) {
+export function fetchGeoDis(uid, domainID, type, country) {
   let url = `user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`;
   if (country) {
     url = `${url}&country=${country}`

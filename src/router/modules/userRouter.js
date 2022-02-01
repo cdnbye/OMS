@@ -53,7 +53,7 @@ const userRouter = [
         component: Layout,
         redirect: '/user/liveData',
         meta: {
-            title: 'dashboard',
+            title: 'liveData',
             icon: 'dashboard',
             roles: ['user']
         },
@@ -63,8 +63,7 @@ const userRouter = [
                 component: () => import('@/views/dashboard/user/liveData'),
                 name: 'UserLiveData',
                 meta: {
-                    title: 'basicAnalysis',
-                    icon: 'dashboard',
+                    title: 'liveData',
                     roles: ['user'],
                     noCache: true
                 }
@@ -77,8 +76,8 @@ const userRouter = [
         component: Layout,
         redirect: '/user/liveDataGlobal',
         meta: {
-            title: 'dashboard',
-            icon: 'dashboard',
+            title: 'liveData',
+            icon: 'example',
             roles: ['user']
         },
         children: [
@@ -87,8 +86,7 @@ const userRouter = [
                 component: () => import('@/views/dashboard/user/liveDataGlobal'),
                 name: 'UserLiveDataGlobal',
                 meta: {
-                    title: 'basicAnalysisGlobal',
-                    icon: 'dashboard',
+                    title: 'liveDataGlobal',
                     roles: ['user'],
                     noCache: true
                 }
@@ -102,7 +100,7 @@ const userRouter = [
         redirect: '/user/hotChannel',
         meta: {
             title: 'dashboard',
-            icon: 'dashboard',
+            icon: 'peoples',
             roles: ['user']
         },
         children: [
@@ -112,7 +110,6 @@ const userRouter = [
                 name: 'hotChannel',
                 meta: {
                     title: 'hotChannel',
-                    icon: 'dashboard',
                     roles: ['user'],
                     noCache: true
                 }
@@ -213,64 +210,75 @@ const userRouter = [
                     roles: ['user']
                 }
             },
+            {
+                path: 'worldGlobal',
+                component: () => import('@/views/userDistribution/user/WorldGlobal'),
+                name: 'WorldDisGlobal',
+                meta: {
+                    title: 'worldDisGlobal',
+                    roles: ['user']
+                }
+            },
+            {
+                path: 'usaGlobal',
+                component: () => import('@/views/userDistribution/user/USAGlobal'),
+                name: 'USADisGlobal',
+                meta: {
+                    title: 'USADisGlobal',
+                    roles: ['user']
+                }
+            },
+            {
+                path: 'chinaGlobal',
+                component: () => import('@/views/userDistribution/user/ChinaGlobal'),
+                name: 'ChinaDisGlobal',
+                meta: {
+                    title: 'chinaDisGlobal',
+                    roles: ['user']
+                }
+            },
         ]
     },
 
-    // user router 套餐列表
+    // 购物
     {
-        path: '/user',
+        path: '/shopping',
         component: Layout,
-        redirect: '/user/package',
+        redirect: '/shopping/package',
         meta: {
-            title: 'package',
-            icon: 'money',
+            title: 'shopping',
+            icon: 'shoppingCard',
             roles: ['user']
         },
         children: [
             {
-                path: '/user/package',
+                path: '/shopping/package',
                 component: () => import('@/views/package/package'),
                 name: 'Package',
                 meta: {
                     title: 'package',
-                    // icon: 'shoppingCard',
                     roles: ['user'],
                     noCache: true
                 }
-            }
-        ]
-    },
-
-    // user router 包年包月套餐列表
-    {
-        path: '/user',
-        component: Layout,
-        redirect: '/user/monthly_package',
-        meta: {
-            title: 'monthlyPackage',
-            icon: 'money',
-            roles: ['user']
-        },
-        children: [
+            },
             {
-                path: '/user/monthly_package',
+                path: '/shopping/monthly_package',
                 component: () => import('@/views/package/monthlyPackage'),
                 name: 'MonthlyPackage',
                 meta: {
                     title: 'monthlyPackage',
-                    // icon: 'money',
                     roles: ['user'],
                     noCache: true
                 }
             }
-        ]
+        ],
     },
 
     // user router 订单详情
     {
-        path: '/user',
+        path: '/shopping',
         component: Layout,
-        redirect: '/user/package/detail',
+        redirect: '/shopping/package/detail',
         hidden: true,
         meta: {
             title: 'package',
@@ -278,7 +286,7 @@ const userRouter = [
         },
         children: [
             {
-                path: '/user/package/detail',
+                path: '/shopping/package/detail',
                 component: () => import('@/views/package/OrderDetail'),
                 name: 'OrderDetail',
                 meta: {
@@ -297,7 +305,7 @@ const userRouter = [
         redirect: '/user/order',
         meta: {
             title: 'order',
-            icon: 'shoppingCard',
+            icon: 'list',
             roles: ['user']
         },
         children: [

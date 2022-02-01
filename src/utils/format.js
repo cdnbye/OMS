@@ -104,10 +104,9 @@ export function getTrafficNum(val, unit) {
 
 }
 
-// 饼图不显示iOS的数据
 export function formatPieData(data) {
   const temp = data.filter(a => {
-    return a.value > 0 && a.name !== 'iOS'
+    return a.value > 0
   })
   return temp
 }
@@ -120,7 +119,7 @@ export function getQueryObj(url) {
   const reg = /([^?&=]+)=([^?&=]*)/g
   search.replace(reg, function (rs, $1, $2) {
     const name = decodeURIComponent($1)
-    let val = decodeURIComponent($2)             
+    let val = decodeURIComponent($2)
     val = String(val)
     obj[name] = val
     return rs
