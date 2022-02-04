@@ -6,7 +6,7 @@
                 type="info"
                 show-icon>
         </el-alert>
-        <el-row style="text-align: left; margin: 20px 0">
+        <el-row style="text-align: left; margin: 20px 0" v-show="showCheckin">
             <el-col :xs="7" :sm="4" :lg="2">
                 <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
                            style="font-size: medium;">
@@ -26,12 +26,11 @@
     import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
     import { fetchGlobalDomains } from '@/api/user/global'
     import { checkIn } from '@/api/user/package'
-
     import { formatTraffic, getQueryObj, formatPieData } from '@/utils/format'
-
     import NoBindTip from '@/components/NoBindTip'
     import LiveTime from './LiveTime'
     import DistributionGlobal from './DistributionGlobal'
+    import { getItem, setItemWithExpiration } from '@/utils/storage'
 
     let int = undefined
 
@@ -46,7 +45,7 @@
             return {
                 checkinLoading: false,
                 remainTrafficFlag: true,
-
+                showCheckin: true,
                 statis: {
                     whiteList: false,
                     type: {
@@ -96,6 +95,9 @@
             const uid = getID()
             this.loopGetData(uid, 0)
             this.getDisData(uid)
+            if (!!getItem('checkin')) {
+              this.showCheckin = false
+            }
         },
         beforeDestroy() {
             clearInterval(int)
@@ -220,6 +222,8 @@
                                 this.getData(this.currentDomain.uid, this.currentDomain.id)
                             }
                             this.checkinLoading = false
+                            setItemWithExpiration('checkin', 1, 3600*12*1000)
+                            this.showCheckin = false
                         })
                         .catch(err => {
                             this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {

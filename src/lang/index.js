@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import Cookies from 'js-cookie'
 import elementEnLocale from 'element-ui/lib/locale/lang/en' // element-ui lang
 import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN'// element-ui lang
 import ElementLocale from 'element-ui/lib/locale'
 import enLocale from './en'
 import zhLocale from './zh'
 import { navLang } from '@/utils/i18n'
+import Cookies from 'js-cookie'
 
 Vue.use(VueI18n)
 

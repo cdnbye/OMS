@@ -61,6 +61,7 @@ export default {
     theme: 'Theme',
     size: 'Global Size',
     myInfo: 'Profile',
+    currZone: 'Zone: ',
   },
   auth: {
     login: 'Login',
@@ -76,7 +77,7 @@ export default {
     vcodeError: 'The verification code can not be less than 4 digits',
     console: 'Select Zone',
     consoleHK: 'HongKong',
-    consoleCN: 'China Mainland',
+    consoleCN: 'China',
     consoleUSA: 'USA',
   },
   login: {

@@ -1,19 +1,6 @@
 <template>
   <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
     <el-row style="text-align: left; margin: 20px 0">
-
-<!--      <template v-if="showDomain">-->
-<!--        <el-col :xs="20" :sm="12" :lg="10">-->
-<!--          <SwitchDomain :finishSelect="handleSwitchDomain" />-->
-<!--        </el-col>-->
-<!--      </template>-->
-
-      <el-col :xs="7" :sm="4" :lg="2">
-        <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
-                   style="font-size: medium;">
-          {{ $t('dashboard.checkin') }}
-        </el-button>
-      </el-col>
     </el-row>
     <LiveTime :statis="statis" ></LiveTime>
     <Dis :data="disData"/>
@@ -24,12 +11,10 @@
 <script>
 import store from '@/store'
 import { mapGetters } from 'vuex'
-
 import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
 import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
 import { fetchUserDomain } from '@/api/userDomain'
 import { formatTraffic, formatPieData, getQueryObj } from '@/utils/format'
-import SwitchDomain from '@/components/SwitchDomain'
 import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
 import LiveTime from './LiveTime'
@@ -41,7 +26,6 @@ export default {
   components: {
     Dis,
     NoBindTip,
-    SwitchDomain,
     LiveTime,
   },
   data() {
@@ -235,52 +219,6 @@ export default {
       timer = setInterval(function() {
         _this.getData(uid, id, hostId)
       }, 20000)
-    },
-    handleCheckin() {
-      if(this.currentDomain.id !== undefined) {
-        this.checkinLoading = true
-        checkIn(this.currentDomain.uid, {user_id: this.currentDomain.uid})
-          .then(res => {
-            if(res.data.repeat) {
-              this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
-                confirmButtonText: this.$t('common.ok')
-              })
-            } else {
-              this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {
-                type: 'success',
-                confirmButtonText: this.$t('common.ok'),
-                showCancelButton: false
-              })
-              this.getData(this.currentDomain.uid, this.currentDomain.id)
-            }
-            this.checkinLoading = false
-          })
-          .catch(err => {
-            this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {
-              type: 'error',
-              confirmButtonText: this.$t('common.ok'),
-              showCancelButton: false
-            })
-            this.checkinLoading = false
-            console.log(err)
-          })
-      } else {
-        this.$messageBox.confirm(this.$t('dashboard.tip'), {
-          confirmButtonText: this.$t('common.ok'),
-          cancelButtonText: this.$t('common.cancel')
-        })
-          .then(() => {
-            this.$router.push('/user/domain')
-          })
-          .catch(() => {
-            return
-          })
-      }
-    },
-    handleSwitchDomain(uid, id) {
-      clearInterval(timer)
-      this.getDisData(uid, id)
-      this.loopGetData(uid, id)
     },
     checkPayResult() {
       const paramObj = getQueryObj()

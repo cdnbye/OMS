@@ -54,16 +54,17 @@ export default {
     shopping: '商城',
   },
   navbar: {
-    logOut: '退出登錄',
+    logOut: '登出',
     dashboard: '首頁',
     dosAddress: '文檔地址',
     screenfull: '全屏',
     theme: '換膚',
     size: '布局大小',
     myInfo: '個人信息',
+    currZone: '地區: ',
   },
   auth: {
-    login: '登錄',
+    login: '登入',
     signup: '註冊',
     resetPasswd: '忘記密碼',
     email: '請輸入正確的郵箱',
@@ -76,7 +77,7 @@ export default {
     vcodeError: '驗證碼不能小於4位',
     console: '選擇地區',
     consoleHK: '香港',
-    consoleCN: '大陸',
+    consoleCN: '中國',
     consoleUSA: '美國',
 
   },

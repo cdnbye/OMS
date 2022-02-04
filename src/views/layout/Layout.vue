@@ -1,12 +1,12 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+    <div v-if="device==='mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <Sidebar class="sidebar-container"/>
     <div class="main-container">
       <Navbar />
-      <TagsView v-show="device!=='mobile'" />
-      <div v-show="device==='mobile'" class="switch-domain-container">
-        <switch-domain v-if="showDomain"  style="margin: auto" />
+      <TagsView v-show="device!=='mobile' || !showDomain" />
+      <div v-if="device==='mobile' && showDomain" class="switch-domain-container">
+        <switch-domain style="margin: auto" />
       </div>
 
       <AppMain/>

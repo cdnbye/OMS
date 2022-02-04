@@ -1,3 +1,5 @@
+import {getItem} from "./storage";
+
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
@@ -52,5 +54,4 @@ export function downloadFile(content, filename) {
 export function trim(str){
     return str.replace(/(^\s*)|(\s*$)/g, "");
 }
-
 

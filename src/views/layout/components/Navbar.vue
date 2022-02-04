@@ -2,6 +2,9 @@
   <div class="navbar">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <!-- <breadcrumb class="breadcrumb-container"/> -->
+    <el-tag class="current-zone" type="info" effect="plain">
+      {{ $t('navbar.currZone') }}{{ currZone }}
+    </el-tag>
     <div class="right-menu">
 
 <!--      <screenfull class="right-menu-item hover-effect screenfull"/>-->
@@ -44,12 +47,14 @@ import LangSelect from '@/components/LangSelect'
 import Logo from '@/assets/logo.png'
 // import Screenfull from '@/components/Screenfull'
 import SwitchDomain from '@/components/SwitchDomain'
+import {getItem} from "../../../utils/storage";
 
 export default {
   data() {
     return {
       showDomain: true,
-      Avatar: Logo
+      Avatar: Logo,
+      currZone: '',
     }
   },
   components: {
@@ -61,6 +66,15 @@ export default {
   },
   created() {
     this.showDomain = !this.roles.includes('admin')
+
+  },
+  mounted() {
+    this.currZone = this.getCurrZone()
+  },
+  watch: {
+    language() {
+      this.currZone = this.getCurrZone()
+    }
   },
   computed: {
     ...mapGetters([
@@ -72,6 +86,18 @@ export default {
     ])
   },
   methods: {
+    getCurrZone() {
+      const loc = getItem('loc')
+      if (loc === 'cn') {
+        return this.$t('auth.consoleCN')
+      }
+      if (loc === 'hk') {
+        return this.$t('auth.consoleHK')
+      }
+      if (loc === 'us') {
+        return this.$t('auth.consoleUSA')
+      }
+    },
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar')
     },
@@ -99,6 +125,10 @@ export default {
   // .breadcrumb-container{
   //   float: left;
   // }
+  .current-zone {
+    float: left;
+    margin-top: 10px;
+  }
   .errLog-container {
     display: inline-block;
     vertical-align: top;

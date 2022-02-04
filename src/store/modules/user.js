@@ -1,6 +1,6 @@
 import { loginByUsername, signup } from '@/api/auth'
 import { getToken, setToken, removeToken, getID, setID, removeID } from '@/utils/auth'
-import Cookies from 'js-cookie'
+import { getItem, setItem } from '@/utils/storage'
 
 const user = {
   state: {
@@ -17,7 +17,7 @@ const user = {
     },
     userDomain: [],
     userValidDomain: '',
-    currentDomain: (Cookies.get('userDomain') ? JSON.parse(Cookies.get('userDomain')) : {}) || {}
+    currentDomain: getItem('userDomain') || {}
   },
 
   mutations: {
@@ -51,10 +51,10 @@ const user = {
     SET_USERVALIDDOMAIN: (state, userValidDomain) => {
       const validDomain = JSON.stringify(userValidDomain)
       state.userValidDomain = validDomain
-      Cookies.set('validDomain', validDomain, { expires: 99999 })
+      setItem('validDomain', validDomain)
     },
     SET_CURRENTDOMAIN: (state, currentDomain) => {
-      Cookies.set('userDomain', currentDomain, { expires: 99999 })
+      setItem('userDomain', currentDomain)
       state.currentDomain = currentDomain
     },
   },
