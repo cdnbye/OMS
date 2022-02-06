@@ -161,11 +161,10 @@
 
   <script>
   import { fetchUserDomain, bindDomain, checkDomain, deleteDomain } from '@/api/userDomain'
-  // import SwitchDomain from '@/components/SwitchDomain'
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
-  import store from '@/store'
+  import { fetchAllDomainAndApp } from '@/utils'
   import { trim } from '@/utils'
 
   export default {
@@ -235,10 +234,9 @@
         fetchUserDomain(page, pageSize, {web: true}).then(res => {
           if(res.data) {
             this.tableData = [...res.data]
-            const validDomain = res.data.filter(item => item.isValid === 1)
-            store.dispatch('setValidDomain', validDomain)
           }
           this.loading = false
+          fetchAllDomainAndApp()
         }).catch(err => {
           this.loading = false
           console.log(err)
@@ -276,23 +274,8 @@
           console.log(err)
         })
       },
-      // getDomain(domain) {
-      //   let temp = ''
-      //   temp = domain.replace('http://', '')
-      //   temp = temp.replace('https://', '')
-      //   if (temp.indexOf('/') > -1)
-      //     temp = temp.substr(0, temp.indexOf('/'))
-      //   if (temp.indexOf(':') > -1)
-      //     temp = temp.substr(0, temp.indexOf(':'))
-      //   const arr = temp.split('.')
-      //   return arr[arr.length - 2] + '.' + arr[arr.length - 1]
-      // },
       handleDeleteDomain(domainData) {
         deleteDomain(domainData.id).then(res => {
-          // this.$message({
-          //   message: this.$t('common.deleteSuccess'),
-          //   type: 'success'
-          // })
           this.$notify({
               title: this.$t('common.success'),
               message: this.$t('common.deleteSuccess'),

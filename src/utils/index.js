@@ -1,4 +1,5 @@
-import {getItem} from "./storage";
+import store from '@/store'
+import { fetchUserDomain } from '@/api/userDomain'
 
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
@@ -53,5 +54,37 @@ export function downloadFile(content, filename) {
 //删除左右两端的空格
 export function trim(str){
     return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+export function fetchAllDomainAndApp() {
+  fetchUserDomain(1, 300).then(res => {
+    if(res.data) {
+      let hasValidDomain = false
+      for (let i = 0; i < res.data.length; i++) {
+        if(res.data[i].isValid === 1) {
+          store.dispatch('setDomain', res.data)
+          // console.warn(JSON.stringify(res.data[i]))
+          hasValidDomain = true
+          break
+        }
+      }
+      if(hasValidDomain) {
+        const validDomain = res.data.filter(item => item.isValid === 1)
+        // 排序 首先按域名级数排序 同一级数按字母排序
+        validDomain.sort((x, y) =>  {
+          const dotsX = x.domain.split('.').length
+          const dotsY = y.domain.split('.').length
+          if (dotsX !== dotsY) {
+            return dotsX - dotsY
+          }
+          return x.domain.localeCompare(y.domain)
+        })
+        store.dispatch('setValidDomain', validDomain)
+        store.dispatch('setCurrentDomain', validDomain[0])
+      }
+    }
+  }).catch(err => {
+    console.log(err)
+  })
 }
 

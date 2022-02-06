@@ -1,19 +1,12 @@
 <template>
   <div style="display: inline-block; text-align: center; width: 100%; ">
-    <!--<el-input-->
-      <!--style="width: 55%"-->
-      <!--:value="currentDomain.domain ? currentDomain.domain : $t('domainTable.none')"-->
-      <!--:disabled="true"-->
-    <!--&gt;-->
-    <!--</el-input>-->
-
     <el-tag style="font-weight: bold;; font-size: medium; margin: 0px;"
             effect="dark"
             :type="currentDomain.domain ? 'success' : 'danger'">
 <!--      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>-->
       {{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}
       <el-button size="mini" type="primary" plain @click="selectDomainVisible = true"
-                 style="font-size: medium; margin-right: -10px">
+                 style="font-size: medium; margin-right: -10px;">
         {{ $t('dashboard.switchDomain') }}
       </el-button>
     </el-tag>
@@ -24,7 +17,7 @@
       :visible.sync="selectDomainVisible"
       :width="device === 'mobile' ? '80%' : '30%'">
       <el-select v-model="selectValue" :placeholder="$t('domainTable.select')" style="width: 80%">
-        <template v-for = "value in validDomain">
+        <template v-for = "value in userValidDomain">
           <el-option
             v-if="value.isValid === 1"
             :key="value.domain"
@@ -44,6 +37,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import store from '@/store'
+import { fetchAllDomainAndApp } from '@/utils'
 
 export default {
   name: 'SwitchDomain',
@@ -64,7 +58,6 @@ export default {
   data() {
     return {
       selectValue: '',
-      validDomain: [],
       selectDomainVisible: false
     }
   },
@@ -75,20 +68,13 @@ export default {
       'userValidDomain'
     ])
   },
-  watch: {
-    userValidDomain(val) {
-      if(val)
-        this.validDomain = JSON.parse(val)
-    }
-  },
   mounted() {
-    if(this.userValidDomain)
-      this.validDomain = JSON.parse(this.userValidDomain)
+      fetchAllDomainAndApp()
   },
   methods: {
     handleSelect() {
       if(this.selectValue) {
-        this.validDomain.forEach(item => {
+        this.userValidDomain.forEach(item => {
           if(item.domain === this.selectValue) {
             store.dispatch('setCurrentDomain', item).then(() => {
               this.selectDomainVisible = false
@@ -103,3 +89,9 @@ export default {
 
 }
 </script>
+
+<style>
+.el-button--mini {
+  padding: 6px 15px;
+}
+</style>

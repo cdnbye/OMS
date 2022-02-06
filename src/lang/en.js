@@ -147,6 +147,7 @@ export default {
     viewsTip: 'Total view times today',
     goApp: 'Create App',
     descGlobal: 'This Page is used to show the summarized real-time data of all domains/APPs.',
+    descPerApp: 'This Page is used to display the real-time data of a single domain/APP. You can switch through the "Switch" button above.',
   },
   domainTable: {
     bindDomain: 'Register Your Domain/Root Domain',
@@ -243,6 +244,7 @@ export default {
     message: 'Message',
     sureDelete: 'Sure to delete?',
     sureUpdate: 'Sure to update?',
+    default: 'Default',
   },
   historyData: {
     hour: '1 Hour',

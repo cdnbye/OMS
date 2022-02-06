@@ -51,29 +51,6 @@ const userRouter = [
     {
         path: '/',
         component: Layout,
-        redirect: '/user/liveData',
-        meta: {
-            title: 'liveData',
-            icon: 'dashboard',
-            roles: ['user']
-        },
-        children: [
-            {
-                path: '/user/liveData',
-                component: () => import('@/views/dashboard/user/liveData'),
-                name: 'UserLiveData',
-                meta: {
-                    title: 'liveData',
-                    roles: ['user'],
-                    noCache: true
-                }
-            }
-        ]
-    },
-
-    {
-        path: '/global',
-        component: Layout,
         redirect: '/user/liveDataGlobal',
         meta: {
             title: 'liveData',
@@ -87,6 +64,29 @@ const userRouter = [
                 name: 'UserLiveDataGlobal',
                 meta: {
                     title: 'liveDataGlobal',
+                    roles: ['user'],
+                    noCache: true
+                }
+            }
+        ]
+    },
+
+    {
+        path: '/liveData',
+        component: Layout,
+        redirect: '/user/liveData',
+        meta: {
+            title: 'liveData',
+            icon: 'dashboard',
+            roles: ['user']
+        },
+        children: [
+            {
+                path: '/user/liveData',
+                component: () => import('@/views/dashboard/user/liveData'),
+                name: 'UserLiveData',
+                meta: {
+                    title: 'liveData',
                     roles: ['user'],
                     noCache: true
                 }

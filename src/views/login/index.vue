@@ -10,7 +10,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="hk" :disabled="!showHK">{{ $t('auth.consoleHK') }}</el-dropdown-item>
-            <el-dropdown-item command="cn" :disabled="!showCN">{{ $t('auth.consoleCN') }}</el-dropdown-item>
+            <el-dropdown-item command="cn" :disabled="!showCN">{{ $t('auth.consoleCN') }} ({{ $t('common.default') }})</el-dropdown-item>
             <el-dropdown-item command="us" :disabled="!showUSA">{{ $t('auth.consoleUSA') }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

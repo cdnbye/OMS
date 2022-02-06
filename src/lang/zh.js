@@ -61,7 +61,7 @@ export default {
     theme: '換膚',
     size: '布局大小',
     myInfo: '個人信息',
-    currZone: '地區: ',
+    currZone: '可用區: ',
   },
   auth: {
     login: '登入',
@@ -75,21 +75,21 @@ export default {
     phoneError: '請輸入正確的手機號碼',
     passwdError: '密碼必須在6到18位之間',
     vcodeError: '驗證碼不能小於4位',
-    console: '選擇地區',
+    console: '選擇可用區',
     consoleHK: '香港',
-    consoleCN: '中國',
+    consoleCN: '廣州',
     consoleUSA: '美國',
 
   },
   login: {
-    title: '登錄',
-    logIn: '登錄',
-    logInSuccess: '登錄成功',
+    title: '登入',
+    logIn: '登入',
+    logInSuccess: '登入成功',
     username: '請輸入已驗證的郵箱',
     password: '請輸入密碼',
-    switchToHK: '已切換至香港地區',
-    switchToCN: '已切換至中國大陸地區',
-    switchToUS: '已切換至美國地區',
+    switchToHK: '已切換至香港可用區',
+    switchToCN: '已切換至廣州可用區',
+    switchToUS: '已切換至美國可用區',
   },
   signup: {
     title: '註冊',
@@ -148,6 +148,7 @@ export default {
     viewsTip: '總的觀看量，每觀看一個視頻計數一次',
     goApp: '創建APP',
     descGlobal: '此界面用於展示匯總所有域名/APP的實時數據。',
+    descPerApp: '此界面用於展示單個域名/APP的實時數據，請通過上方"切換"按鈕來切換域名或APP。',
   },
   domainTable: {
     bindDomain: '綁定域名/根域名',
@@ -167,7 +168,7 @@ export default {
     verifyNow: '立即驗證',
     delete: '刪除',
     tip: '確定刪除嗎？',
-    none: '暫無域名',
+    none: '未綁定',
     current: '當前:  ',
     select: '請選擇',
     userVerifyDomain: {
@@ -243,6 +244,7 @@ export default {
     message: '消息',
     sureDelete: '確定要刪除嗎？',
     sureUpdate: '確定要更新嗎？',
+    default: '默認',
   },
   historyData: {
     hour: '1小時內',

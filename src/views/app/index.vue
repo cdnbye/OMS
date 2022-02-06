@@ -191,6 +191,7 @@
   import androidImg from '@/assets/platform/android.png'
   import clip from '@/utils/clipboard'
   import copyImg from '@/assets/copy.png'
+  import { fetchAllDomainAndApp } from '@/utils'
 
   export default {
     name: 'app',
@@ -291,6 +292,7 @@
             }
           }
           this.tableLoading = false
+          fetchAllDomainAndApp()
         }).catch(err => {
           this.tableLoading = false
         })

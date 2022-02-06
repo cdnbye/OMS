@@ -1,5 +1,11 @@
 <template>
   <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
+    <el-alert
+        :title="$t('domainTable.title')"
+        :description="$t('dashboard.descPerApp')"
+        type="info"
+        show-icon>
+    </el-alert>
     <el-row style="text-align: left; margin: 20px 0">
     </el-row>
     <LiveTime :statis="statis" ></LiveTime>
@@ -12,8 +18,7 @@
 import store from '@/store'
 import { mapGetters } from 'vuex'
 import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
-import { checkAlipayOrder, checkPaypalOrder, checkIn } from '@/api/user/package'
-import { fetchUserDomain } from '@/api/userDomain'
+import { checkAlipayOrder, checkPaypalOrder } from '@/api/user/package'
 import { formatTraffic, formatPieData, getQueryObj } from '@/utils/format'
 import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
@@ -79,7 +84,6 @@ export default {
     ...mapGetters([
       'currentDomain',
       'device',
-      'userValidDomain',
       'language'
     ])
   },
@@ -87,8 +91,9 @@ export default {
     currentDomain: function () {
       if (!this.$route.params.hostId) {
         clearInterval(timer)
+        this.getUserDomain()
       }
-      this.getUserDomain()
+
     }
   },
   mounted() {
@@ -214,10 +219,10 @@ export default {
       })
   },
     loopGetData(uid, id, hostId) {
-      const _this = this
-      _this.getData(uid, id, hostId)
-      timer = setInterval(function() {
-        _this.getData(uid, id, hostId)
+      this.getData(uid, id, hostId)
+      clearInterval(timer)
+      timer = setInterval(() => {
+        this.getData(uid, id, hostId)
       }, 20000)
     },
     checkPayResult() {
@@ -281,42 +286,16 @@ export default {
             }
             break
           default:
+            this.checkResultLoading = false
             break
         }
       }
     },
     getUserDomain() {
-      fetchUserDomain(1, 200).then(res => {
-        if(res.data) {
-          let hasValidDomain = false
-          if(!this.currentDomain.id) {
-            for (let i = 0; i < res.data.length; i++) {
-              if(res.data[i].isValid === 1) {
-                store.dispatch('setDomain', res.data)
-                // console.warn(JSON.stringify(res.data[i]))
-                store.dispatch('setCurrentDomain', res.data[i])
-                hasValidDomain = true
-                break
-              }
-            }
-          } else {
-            for (let i = 0; i < res.data.length; i++) {
-              if(res.data[i].isValid === 1) {
-                hasValidDomain = true
-                break
-              }
-            }
-          }
-          if(hasValidDomain) {
-            const validDomain = res.data.filter(item => item.isValid === 1)
-            store.dispatch('setValidDomain', validDomain)
-            this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
-            this.getDisData(this.currentDomain.uid, this.currentDomain.id)
-          }
-        }
-      }).catch(err => {
-        console.log(err)
-      })
+      if(this.currentDomain.id) {
+        this.loopGetData(this.currentDomain.uid, this.currentDomain.id)
+        this.getDisData(this.currentDomain.uid, this.currentDomain.id)
+      }
     }
   }
 }

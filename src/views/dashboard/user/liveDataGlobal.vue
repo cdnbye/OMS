@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
         <el-alert
                 :title="$t('domainTable.title')"
                 :description="$t('dashboard.descGlobal')"
@@ -24,6 +24,7 @@
     import { mapGetters } from 'vuex'
     import { getID } from '@/utils/auth'
     import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
+    import { checkAlipayOrder, checkPaypalOrder } from '@/api/user/package'
     import { fetchGlobalDomains } from '@/api/user/global'
     import { checkIn } from '@/api/user/package'
     import { formatTraffic, getQueryObj, formatPieData } from '@/utils/format'
@@ -43,6 +44,7 @@
         },
         data() {
             return {
+                checkResultLoading: false,
                 checkinLoading: false,
                 remainTrafficFlag: true,
                 showCheckin: true,
@@ -98,6 +100,7 @@
             if (!!getItem('checkin')) {
               this.showCheckin = false
             }
+            this.checkPayResult()
         },
         beforeDestroy() {
             clearInterval(int)
@@ -246,7 +249,73 @@
                             return
                         })
                 }
-            }
+            },
+            checkPayResult() {
+              const paramObj = getQueryObj()
+              if(paramObj.payment) {
+                this.checkResultLoading = true
+                switch (paramObj.payment) {
+                  case 'alipay':
+                    checkAlipayOrder(paramObj.out_trade_no)
+                        .then(res => {
+                          this.checkResultLoading = false
+                          if(res.data.is_payed) {
+                            this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                              type: 'success',
+                              confirmButtonText: this.$t('common.ok'),
+                              showCancelButton: false
+                            })
+                          } else {
+                            this.$messageBox.confirm(this.$t('package.payFail'), {
+                              type: 'error',
+                              confirmButtonText: this.$t('common.ok'),
+                              showCancelButton: false
+                            })
+                          }
+                        })
+                        .catch(err => {
+                          this.checkResultLoading = false
+                          console.log(err)
+                        })
+                    break
+                  case 'paypal':
+                    if(paramObj.cancel) {
+                      this.checkResultLoading = false
+                      this.$messageBox.confirm(this.$t('package.payFail'), {
+                        type: 'error',
+                        confirmButtonText: this.$t('common.ok'),
+                        showCancelButton: false
+                      })
+                    } else {
+                      checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
+                          .then(res => {
+                            if(res.data.is_payed) {
+                              this.checkResultLoading = false
+                              this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                                type: 'success',
+                                confirmButtonText: this.$t('common.ok'),
+                                showCancelButton: false
+                              })
+                            } else {
+                              this.$messageBox.confirm(this.$t('package.payFail'), {
+                                type: 'error',
+                                confirmButtonText: this.$t('common.ok'),
+                                showCancelButton: false
+                              })
+                            }
+                          })
+                          .catch(err => {
+                            this.checkResultLoading = false
+                            console.log(err)
+                          })
+                    }
+                    break
+                  default:
+                    this.checkResultLoading = false
+                    break
+                }
+              }
+            },
         }
     }
 </script>

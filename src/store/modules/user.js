@@ -16,7 +16,7 @@ const user = {
       articlePlatform: []
     },
     userDomain: [],
-    userValidDomain: '',
+    userValidDomain: getItem('validDomain') || [],
     currentDomain: getItem('userDomain') || {}
   },
 
@@ -49,9 +49,8 @@ const user = {
       state.userDomain = userDomain
     },
     SET_USERVALIDDOMAIN: (state, userValidDomain) => {
-      const validDomain = JSON.stringify(userValidDomain)
-      state.userValidDomain = validDomain
-      setItem('validDomain', validDomain)
+      state.userValidDomain = userValidDomain
+      setItem('validDomain', userValidDomain)
     },
     SET_CURRENTDOMAIN: (state, currentDomain) => {
       setItem('userDomain', currentDomain)
@@ -131,15 +130,6 @@ const user = {
     },
     //设置用户所有有效域名
     setValidDomain({ commit }, validDomain) {
-      // 排序 首先按域名级数排序 同一级数按字母排序
-      validDomain.sort((x, y) =>  {
-        const dotsX = x.domain.split('.').length
-        const dotsY = y.domain.split('.').length
-        if (dotsX !== dotsY) {
-          return dotsX - dotsY
-        }
-        return x.domain.localeCompare(y.domain)
-      })
       return new Promise((resolve, reject) => {
         commit('SET_USERVALIDDOMAIN', validDomain)
         resolve(validDomain)
