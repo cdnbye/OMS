@@ -17,7 +17,7 @@
           <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="user-avatar"> -->
           <i class="el-icon-caret-bottom"/>
         </div>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu slot="dropdown" style="text-align: center">
           <a target="_blank" :href="language==='en'?'https://swarmcloud.net/en/views/':'https://www.cdnbye.com/cn/views/'">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
@@ -31,7 +31,7 @@
           </router-link>
 
           <el-dropdown-item divided>
-            <span style="display:block; text-align: center" @click="logout">{{ $t('navbar.logOut') }}</span>
+            <span style="display:block" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -128,6 +128,7 @@ export default {
   .current-zone {
     float: left;
     margin-top: 10px;
+    margin-left: 5px;
   }
   .errLog-container {
     display: inline-block;

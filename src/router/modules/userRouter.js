@@ -300,7 +300,7 @@ const userRouter = [
 
     // user router 历史订单
     {
-        path: '/user',
+        path: '/order',
         component: Layout,
         redirect: '/user/order',
         meta: {
