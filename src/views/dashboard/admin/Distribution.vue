@@ -2,102 +2,47 @@
   <div class="dashboard-editor-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>Web版本分布</span>
-          </div>
-          <Piechart :chart-data="this.webVerData" />
-        </el-card>
+        <pie-card title="Web版本分布" :data="webVerData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>Android版本分布</span>
-          </div>
-          <Piechart :chart-data="this.androidVerData" />
-        </el-card>
+        <pie-card title="Android版本分布" :data="androidVerData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>iOS版本分布</span>
-          </div>
-          <Piechart :chart-data="this.iosVerData" />
-        </el-card>
+        <pie-card title="iOS版本分布" :data="iosVerData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>Electron版本分布</span>
-          </div>
-          <Piechart :chart-data="this.pcVerData" />
-        </el-card>
+        <pie-card title="Electron版本分布" :data="pcVerData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>Tag分布</span>
-          </div>
-          <Piechart :chart-data="tagData" />
-        </el-card>
+        <pie-card title="Tag分布" :data="tagData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>终端分布</span>
-          </div>
-          <Piechart :chart-data="deviceData" />
-        </el-card>
+        <pie-card title="终端分布" :data="deviceData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>直播点播分布</span>
-          </div>
-          <Piechart :chart-data="liveData" />
-        </el-card>
+        <pie-card title="直播点播分布" :data="liveData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>头部域名分布</span>
-          </div>
-          <Piechart :chart-data="topSiteData" />
-        </el-card>
+        <pie-card title="头部域名分布" :data="topSiteData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>网络类型分布</span>
-          </div>
-          <Piechart :chart-data="netTypeData" />
-        </el-card>
+        <pie-card title="网络类型分布" :data="netTypeData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>运营商分布</span>
-          </div>
-          <Piechart :chart-data="ispData" />
-        </el-card>
+        <pie-card title="运营商分布" :data="ispData"/>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <el-card>
-          <div slot="header">
-            <span>NAT类型分布</span>
-          </div>
-          <Piechart :chart-data="natTypeData" />
-        </el-card>
+        <pie-card title="NAT类型分布" :data="natTypeData"/>
       </el-col>
 
     </el-row>
@@ -105,7 +50,7 @@
 </template>
 
 <script>
-import Piechart from '@/components/PieChart'
+import PieCard from '@/components/PieCard'
 import { fetchLiveTimeData } from '@/api/liveData'
 import { fetchLiveData } from '@/api/liveData'
 import { fetchDomain } from '@/api/userDomain'
@@ -114,7 +59,7 @@ import { formatPieData } from '@/utils/format'
 export default {
   name: 'Distribution',
   components: {
-    Piechart
+    PieCard
   },
   data() {
     return {

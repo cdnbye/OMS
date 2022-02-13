@@ -7,7 +7,6 @@
 
 <script>
 import PanelGroup from './components/PanelGroup'
-import { fetchLiveData } from '@/api/liveData'
 
 export default {
   name: 'Dashboard',

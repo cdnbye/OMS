@@ -38,7 +38,6 @@ export default {
         { url: 'https://signal.web3-lab.com:7078/total_count', value: 0, name: '香港' },
         { url: 'http://signal.ubtvmarket.com:8077/total_count', value: 0, name: '香港' },
         { url: 'https://signal.swarmcloud.net/count', value: 0, name: '上海' },
-        { url: 'http://119.28.136.195:8088/count', value: 0, name: 'cdnbye' },
         { url: 'http://43.154.238.224:8088/count', value: 0, name: 'cdnbye-2' },
         { url: 'http://43.129.228.44:8088/count', value: 0, name: 'cdnbye-3' },
         { url: 'http://43.154.236.139:8088/count', value: 0, name: 'cdnbye-4' },

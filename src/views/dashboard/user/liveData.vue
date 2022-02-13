@@ -1,17 +1,18 @@
 <template>
-  <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
+  <div class="dashboard-realtime-container" v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
     <el-alert
         :title="$t('domainTable.title')"
         :description="$t('dashboard.descPerApp')"
         type="info"
         show-icon>
     </el-alert>
-    <el-row style="text-align: left; margin: 20px 0">
+    <el-row style="text-align: left;">
     </el-row>
     <LiveTime :statis="statis" ></LiveTime>
     <Dis :data="disData"/>
     <NoBindTip />
   </div>
+
 </template>
 
 <script>
@@ -302,6 +303,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-
-
+.dashboard-realtime-container {
+  padding: 4px 25px;
+  background-color: rgb(240, 242, 245);
+  min-height: calc(100vh - 84px);
+}
 </style>

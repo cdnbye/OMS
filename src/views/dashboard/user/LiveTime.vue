@@ -1,125 +1,93 @@
 <template>
-
         <el-row :gutter="20" class="panel-group">
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.onlinesTip')" />
-                    </div>
-                    <div class="card-panel-description">
-                        <span class="card-panel-num">{{ statis.online | positive }}</span>
-                        <div class="card-panel-text">{{ $t('dashboard.online') }}</div>
-                    </div>
-                </div>
+                <card :num="formatNum(statis.online) | positive"
+                      :desc="$t('dashboard.online')">
+                  <div class="tip">
+                    <PointTip :content="$t('dashboard.onlinesTip')" />
+                  </div>
+                </card>
             </el-col>
 
             <!--每日p2p流量-->
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.p2pTip')" />
-                    </div>
-                    <div class="card-panel-description">
-                        <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
-                        <div class="card-panel-text">{{ $t('dashboard.p2pTraffic') }} ({{ statis.traffic_p2p.unit }})</div>
-                    </div>
-                </div>
+                <card :num="`${statis.traffic_p2p.num}`"
+                      :desc="`${$t('dashboard.p2pTraffic')} (${statis.traffic_p2p.unit})`">
+                  <div class="tip">
+                    <PointTip :content="$t('dashboard.p2pTip')" />
+                  </div>
+                </card>
             </el-col>
 
             <!--每日http流量-->
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.httpTip')" />
-                    </div>
-                    <div class="card-panel-description">
-                        <span class="card-panel-num">{{ statis.traffic_http.num }}</span>
-                        <div class="card-panel-text">{{ $t('dashboard.httpTraffic') }} ({{ statis.traffic_http.unit }})</div>
-                    </div>
-                </div>
+                <card :num="`${statis.traffic_http.num}`"
+                      :desc="`${$t('dashboard.httpTraffic')} (${statis.traffic_http.unit})`">
+                  <div class="tip">
+                    <PointTip :content="$t('dashboard.httpTip')" />
+                  </div>
+                </card>
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.freeTip')" />
-                    </div>
-                    <div class="card-panel-description">
-                        <span class="card-panel-num">{{ statis.whiteList ? '+∞' : statis.flow.free.num }}</span>
-                        <div class="card-panel-text">{{ $t('dashboard.free') }} ({{ statis.flow.free.unit }})</div>
-                    </div>
-                </div>
+                <card :num="`${statis.whiteList ? '+∞' : statis.flow.free.num}`"
+                      :desc="`${$t('dashboard.free')} (${statis.flow.free.unit})`">
+                  <div class="tip">
+                    <PointTip :content="$t('dashboard.freeTip')" />
+                  </div>
+                </card>
             </el-col>
 
             <!--流量包-->
             <el-col v-if="statis.flow.remain > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <!--<div class="tip">-->
-                        <!--<PointTip :content="$t('dashboard.remainTip')" />-->
-                    <!--</div>-->
-                    <div class="card-panel-description">
-                        <span class="card-panel-num" :style="statis.flow.totalRemain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=99999?'+∞':formatTraffic(statis.flow.remain).num }}</span>
-
-                        <div class="card-panel-text">{{ $t('dashboard.remain') }} ({{ formatTraffic(statis.flow.remain).unit }})
-                            <!--<div>{{ formatType() }}</div>-->
-                        </div>
-                    </div>
-                </div>
+                <card
+                    :num="`${formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=99999?'+∞':formatTraffic(statis.flow.remain).num}`"
+                    :desc="`${$t('dashboard.remain')} (${formatTraffic(statis.flow.remain).unit})`"
+                    :color="statis.flow.totalRemain > 1024*1024*100 ? 'green' : 'red'"
+                >
+                </card>
             </el-col>
 
             <!--包月套餐-->
             <el-col v-if="statis.type.product_type > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <!--<div class="tip">-->
-                        <!--<PointTip :content="$t('dashboard.remainTip')" />-->
-                    <!--</div>-->
-                    <div class="resetTip">
-                        <span>{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
-                    </div>
-                    <div class="card-panel-description">
-                        <span class="card-panel-num" :style="statis.flow.daily_remain > 1024*1024*100 ? 'color: green' : 'color: red'">{{ formatTraffic(statis.flow.daily_remain).num }}</span>
-
-                        <div class="card-panel-text">{{ $t('dashboard.monthlyRemain') }} ({{ formatTraffic(statis.flow.daily_remain).unit }})
-                            <div>{{ formatType() }}</div>
-                        </div>
-                    </div>
-                </div>
+                <card
+                    :num="`${formatTraffic(statis.flow.daily_remain).num}`"
+                    :desc="`${$t('dashboard.monthlyRemain')} (${formatTraffic(statis.flow.daily_remain).unit})`"
+                    :color="statis.flow.daily_remain > 1024*1024*100 ? 'green' : 'red'"
+                >
+                  <div class="resetTip">
+                    <span>{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
+                  </div>
+                </card>
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="tip">
-                        <PointTip :content="$t('dashboard.viewsTip')" />
-                    </div>
-                    <div class="card-panel-description">
-                        <span class="card-panel-num">{{ statis.frequency_day }}</span>
-                        <div class="card-panel-text">{{ $t('dashboard.serveNum') }}</div>
-                    </div>
-                </div>
+                <card
+                    :num="`${formatNum(statis.frequency_day)}`"
+                    :desc="$t('dashboard.serveNum')">
+                </card>
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <div class="card-panel">
-                    <div class="card-panel-description">
-                        <span class="card-panel-num">{{ statis.num_max }}</span>
-                        <div class="card-panel-text">{{ $t('dashboard.maxOnlineNum') }}</div>
-                    </div>
-                </div>
+                <card
+                    :num="`${formatNum(statis.num_max)}`"
+                    :desc="$t('dashboard.maxOnlineNum')">
+                </card>
             </el-col>
         </el-row>
 </template>
 
 <script>
     import moment from 'moment'
-
-    import { formatTraffic } from '@/utils/format'
-
+    import { formatTraffic, formatNum } from '@/utils/format'
     import PointTip from '@/components/PointTip'
+    import Card from '@/components/Card'
 
     export default {
         name: 'LiveTime',
         components: {
-            PointTip
+            PointTip,
+            Card,
         },
         props: {
             statis: {
@@ -157,6 +125,8 @@
                 },
             },
         },
+        computed: {
+        },
         data() {
             return {
                 leftMinutes: 0,
@@ -181,7 +151,7 @@
         },
         methods: {
             formatTraffic,
-
+            formatNum,
             formatType() {
                 if(this.statis.type.product_type === 0) {
                     return ''

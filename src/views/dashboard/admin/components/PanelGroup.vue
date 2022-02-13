@@ -1,98 +1,78 @@
 <template>
   <el-row :gutter="20" class="panel-group">
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.online }}</span>
-          <div class="card-panel-text">当前在线人数</div>
-        </div>
-      </div>
+      <card :num="`${formatNum(statis.online)}`"
+            desc="当前在线人数"
+            :color="statis.online > 500000 ? 'red' : ''"
+      >
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.bandwidth_p2p.num }}</span>
-          <div class="card-panel-text">当前P2P带宽({{ statis.bandwidth_p2p.unit }})</div>
-        </div>
-      </div>
+      <card :num="`${statis.bandwidth_p2p.num}`"
+            :desc="`当前P2P带宽(${statis.bandwidth_p2p.unit})`">
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.bandwidth_http.num }}</span>
-          <div class="card-panel-text">当前HTTP带宽({{ statis.bandwidth_http.unit }})</div>
-        </div>
-      </div>
+      <card :num="`${statis.bandwidth_http.num}`"
+            :desc="`当前HTTP带宽(${statis.bandwidth_http.unit})`">
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.p2p_rate }}</span>
-          <div class="card-panel-text">当前P2P分享率(%)</div>
-        </div>
-      </div>
+      <card :num="`${statis.p2p_rate}`"
+            desc="当前P2P分享率(%)"
+            :color="statis.p2p_rate < 30 ? 'red' : ''"
+      >
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.traffic_p2p.num }}</span>
-          <div class="card-panel-text">今日P2P流量({{statis.traffic_p2p.unit}})</div>
-        </div>
-      </div>
+      <card :num="`${statis.traffic_p2p.num}`"
+            :desc="`今日P2P流量(${statis.traffic_p2p.unit})`">
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.traffic_http.num }}</span>
-          <div class="card-panel-text">今日HTTP流量({{statis.traffic_http.unit}})</div>
-        </div>
-      </div>
+      <card :num="`${statis.traffic_http.num}`"
+            :desc="`今日HTTP流量(${statis.traffic_http.unit})`">
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.frequency_day }}</span>
-          <div class="card-panel-text">今日服务次数</div>
-        </div>
-      </div>
+      <card :num="`${formatNum(statis.frequency_day)}`"
+            desc="今日服务次数">
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.hostNum }}</span>
-          <div class="card-panel-text">活跃网站/APP总数</div>
-        </div>
-      </div>
+      <card :num="`${formatNum(statis.hostNum)}`"
+            desc="活跃网站/APP总数">
+      </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-description">
-          <span class="card-panel-num">{{ statis.max_online }}</span>
-          <div class="card-panel-text">历史最高在线人数</div>
-        </div>
-      </div>
+      <card :num="`${formatNum(statis.max_online)}`"
+            desc="历史最高在线人数">
+      </card>
     </el-col>
-
   </el-row>
 </template>
 
 <script>
 import { fetchLiveTimeData } from '@/api/liveData'
 import { fetchHostNum } from '@/api/userDomain'
-import { formatBandwidth, formatTraffic } from '@/utils/format'
+import { formatBandwidth, formatTraffic, formatNum } from '@/utils/format'
+import Card from '@/components/Card'
 
 let int = undefined
 
 export default {
   name: 'PanelGroup',
+  components: {
+    Card,
+  },
   data() {
     return {
       statis: {
@@ -136,6 +116,7 @@ export default {
     clearInterval(int)
   },
   methods: {
+    formatNum,
     getData() {
         fetchLiveTimeData().then(res => {
         const { data } = res

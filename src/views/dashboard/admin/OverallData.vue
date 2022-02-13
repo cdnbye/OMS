@@ -1,97 +1,76 @@
 <template>
+  <div class="dashboard-overall-container">
     <el-row :gutter="20" class="panel-group">
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.max_online_week }}</span>
-        <div class="card-panel-text">过去七天最高在线人数</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.max_online_week}`"
+              desc="过去七天最高在线人数">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.bandwidth_p2p_week.num }}</span>
-        <div class="card-panel-text">过去七天P2P带宽峰值({{ statis.bandwidth_p2p_week.unit }})</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.bandwidth_p2p_week.num}`"
+              :desc="`过去七天P2P带宽峰值(${ statis.bandwidth_p2p_week.unit })`">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.p2p_rate_week }}</span>
-        <div class="card-panel-text">过去七天P2P分享率(%)</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.p2p_rate_week}` | positive"
+              desc="过去七天P2P分享率(%)">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.frequency_week }}</span>
-        <div class="card-panel-text">过去七天服务人数</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.frequency_week}`"
+              desc="过去七天服务人数">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.max_online_month }}</span>
-        <div class="card-panel-text">近1月最高在线人数</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.max_online_month}`"
+              desc="近1月最高在线人数">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.traffic_p2p_month.num }}</span>
-        <div class="card-panel-text">近1月P2P流量({{statis.traffic_p2p_month.unit}})</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.traffic_p2p_month.num}`"
+              :desc="`近1月P2P流量(${ statis.traffic_p2p_month.unit })`">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.bandwidth_p2p_month.num }}</span>
-        <div class="card-panel-text">近1月P2P带宽峰值({{ statis.bandwidth_p2p_month.unit }})</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.bandwidth_p2p_month.num}`"
+              :desc="`近1月P2P带宽峰值(${ statis.bandwidth_p2p_month.unit })`">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.p2p_rate_month }}</span>
-        <div class="card-panel-text">近1月P2P分享率(%)</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.p2p_rate_month}`"
+              desc="近1月P2P分享率(%)">
+        </card>
+      </el-col>
 
-        <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel">
-        <div class="card-panel-description">
-        <span class="card-panel-num">{{ statis.frequency_month }}</span>
-        <div class="card-panel-text">近1月服务人数</div>
-        </div>
-        </div>
-        </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <card :num="`${statis.frequency_month}`"
+              desc="近1月服务人数">
+        </card>
+      </el-col>
 
     </el-row>
+  </div>
 </template>
 
 <script>
     import { fetchOverallData } from '@/api/liveData'
     import { fetchHostNum } from '@/api/userDomain'
     import { formatBandwidth, formatTraffic } from '@/utils/format'
+    import Card from '@/components/Card'
 
     export default {
         name: 'OverallData',
+        components: {
+          Card,
+        },
         data() {
             return {
                 statis: {
@@ -153,35 +132,41 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .panel-group {
-        margin-top: 18px;
-        .card-panel-col{
-            margin-bottom: 20px;
-        }
-        .card-panel {
-            height: 108px;
-            font-size: 12px;
-            position: relative;
-            overflow: hidden;
-            color: #666;
-            background: #fff;
-            box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-            border-color: rgba(0, 0, 0, .05);
-            .card-panel-description {
-                text-align: right;
-                line-height: 42px;
-                font-weight: bold;
-                margin: 26px;
-                margin-left: 0;
-                .card-panel-text {
-                    line-height: 18px;
-                    color: rgba(0, 0, 0, 0.45);
-                    font-size: 16px;
-                }
-                .card-panel-num {
-                    font-size: 24px;
-                }
-            }
-        }
+.dashboard-overall-container {
+  padding: 4px 25px;
+  background-color: rgb(240, 242, 245);
+  min-height: calc(100vh - 84px);
+  .panel-group {
+    margin-top: 18px;
+    .card-panel-col{
+      margin-bottom: 20px;
     }
+    .card-panel {
+      height: 108px;
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+      color: #666;
+      background: #fff;
+      box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
+      border-color: rgba(0, 0, 0, .05);
+      .card-panel-description {
+        text-align: right;
+        line-height: 42px;
+        font-weight: bold;
+        margin: 26px;
+        margin-left: 0;
+        .card-panel-text {
+          line-height: 18px;
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 16px;
+        }
+        .card-panel-num {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
 </style>

@@ -1,23 +1,26 @@
 <template>
-    <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
+    <div class="dashboard-global-container">
+      <div v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
         <el-alert
-                :title="$t('domainTable.title')"
-                :description="$t('dashboard.descGlobal')"
-                type="info"
-                show-icon>
+            :title="$t('domainTable.title')"
+            :description="$t('dashboard.descGlobal')"
+            type="info"
+            show-icon>
         </el-alert>
-        <el-row style="text-align: left; margin: 20px 0" v-show="showCheckin">
-            <el-col :xs="7" :sm="4" :lg="2">
-                <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
-                           style="font-size: medium;">
-                    {{ $t('dashboard.checkin') }}
-                </el-button>
-            </el-col>
+        <el-row style="text-align: left;" v-show="showCheckin">
+          <el-col :xs="7" :sm="4" :lg="2">
+            <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
+                       style="font-size: medium;">
+              {{ $t('dashboard.checkin') }}
+            </el-button>
+          </el-col>
         </el-row>
-        <LiveTime :statis="statis" ></LiveTime>
-        <DistributionGlobal :data="disData"/>
+            <LiveTime :statis="statis" ></LiveTime>
+            <DistributionGlobal :data="disData"/>
         <NoBindTip />
+      </div>
     </div>
+
 </template>
 
 <script>
@@ -320,6 +323,10 @@
     }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-
+<style rel="stylesheet/scss" lang="scss">
+.dashboard-global-container {
+  padding: 4px 25px;
+  background-color: rgb(240, 242, 245);
+  min-height: calc(100vh - 84px);
+}
 </style>

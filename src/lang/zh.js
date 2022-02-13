@@ -131,7 +131,7 @@ export default {
     tagDis: '自定義標簽',
     terminalDis: '終端類型',
     liveDis: '直播/點播',
-    netDis: '網絡類型',
+    netDis: '網路類型',
     ispDis: '運營商',
     natDis: 'NAT類型',
     domainDis: '在線人數',
