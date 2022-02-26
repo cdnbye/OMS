@@ -174,6 +174,8 @@ export default {
               message,
               type: 'success'
             })
+            // 获取profile
+            this.$store.dispatch('getProfile')
           }).catch(() => {
             this.loading = false
           })

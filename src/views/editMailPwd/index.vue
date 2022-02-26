@@ -25,13 +25,13 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-          </el-form>            
+          </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="mailDialogVisible = false">{{$t('common.cancel')}}</el-button>
             <el-button type="primary" @click="changeEmail" :loading="confirmButtonLoading">{{$t('common.ok')}}</el-button>
           </span>
         </el-dialog>
-        
+
         <p>
           <span>{{$t('myInfo.passwd')}}********</span>&nbsp;
           <el-button type="text" @click="passwdDialogVisible = true">{{$t('myInfo.change')}}</el-button>
@@ -46,7 +46,7 @@
               <el-form-item prop="newpasswd">
                 <el-input :placeholder="$t('myInfo.changePasswd.new')" v-model="passwdForm.newpasswd"></el-input>
               </el-form-item>
-            </el-form>            
+            </el-form>
             <span slot="footer" class="dialog-footer">
               <el-button @click="passwdDialogVisible = false">{{$t('common.cancel')}}</el-button>
               <el-button type="primary" @click="changePasswd" :loading="confirmButtonLoading">{{$t('common.ok')}}</el-button>
@@ -55,6 +55,10 @@
         </p>
         <p>
           <span>{{$t('myInfo.time')}}{{userInfo.time}}</span>
+        </p>
+        <div style="margin-top: 25px"></div>
+        <p>
+          <span>Token: {{userInfo.token}}</span>
         </p>
       </el-card>
   </div>
@@ -130,7 +134,8 @@ export default {
       confirmButtonLoading: false,
       userInfo: {
         time: '',
-        email: ''
+        email: '',
+        token: '',
       },
       emailForm: {
         email: '',
@@ -159,8 +164,10 @@ export default {
     getUserData() {
       fetchUserData().then(res => {
         if(res.data) {
-          this.userInfo.time = moment(res.data.reg_date * 1000).format('YYYY-MM-DD hh:mm:ss')
-          this.userInfo.email = res.data.email
+          const { data } = res
+          this.userInfo.time = moment(data.reg_date * 1000).format('YYYY-MM-DD hh:mm:ss')
+          this.userInfo.email = data.email
+          this.userInfo.token = data.token
         }
       }).catch(err => {
         console.log(err)
@@ -263,7 +270,7 @@ export default {
 <style>
   .edit-container {
     text-align: left;
-    padding: 16px 32px; 
+    padding: 16px 32px;
     background-color: #f0f2f5;
     height: calc(100vh - 84px);
   }

@@ -68,6 +68,16 @@ export default {
       'userValidDomain'
     ])
   },
+  watch: {
+    currentDomain: {
+      handler: function (val) {
+        if (val) {
+          this.selectValue = val.domain
+        }
+      },
+      deep: true,
+    }
+  },
   mounted() {
       fetchAllDomainAndApp()
   },

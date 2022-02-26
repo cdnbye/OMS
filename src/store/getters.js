@@ -10,6 +10,7 @@ const getters = {
   addRouters: state => state.permission.addRouters,
   userDomain: state => state.user.userDomain,
   userValidDomain: state => state.user.userValidDomain,
-  currentDomain: state => state.user.currentDomain
+  currentDomain: state => state.user.currentDomain,
+  profile: state => state.user.profile,
 }
 export default getters

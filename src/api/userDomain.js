@@ -132,6 +132,15 @@ export function deleteDomain(domainID) {
   })
 }
 
+// shadow domain
+export function shadowDomain(data) {
+    return request({
+        url: `user/user_id/${getID()}/shadow_domain`,
+        method: 'post',
+        data,
+    })
+}
+
 // 管理员权限用户列表
 export function fetchAdminUser() {
   return request({

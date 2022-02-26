@@ -40,7 +40,7 @@
             :style="device==='mobile'?'':'margin-left: 10px'"
             trigger="manual"
             placement="top"
-            width="160"
+            width="200"
             :ref="'popover-' + scope.row.order_id">
             <p>{{ $t('order.tip') }}</p>
             <div style="text-align: right; margin: 0">

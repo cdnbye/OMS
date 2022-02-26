@@ -6,16 +6,27 @@
     type="info"
     show-icon>
   </el-alert>
-  <el-row style="text-align: left">
-    <el-col :xs="24" :sm="12" :lg="8" style="margin: 10px 0">
-      <el-button type="primary" @click="dialogVisible = true">{{ $t('domainTable.bindDomain') }}</el-button>
-    </el-col>
-<!--    <el-col :xs="24" :sm="12" :lg="12" style="margin: 10px 0">-->
-<!--      <SwitchDomain mobileWidth="25%" />-->
-<!--    </el-col>-->
+  <div class="tool-container">
+    <el-button type="primary" @click="dialogVisible = true">{{ $t('domainTable.bindDomain') }}</el-button>
+    <el-tooltip :content="$t('domainTable.tokenOnly')" placement="top">
+      <el-switch
+          v-model="shadowEnabled"
+          active-text="Token Only"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="shadowChanged"
+      >
+      </el-switch>
+    </el-tooltip>
+  </div>
+
+  <el-row>
+    <template v-if="showCopyToken">
+      <CopyToken :token="profile.token"></CopyToken>
+    </template>
   </el-row>
 
-  <el-table border :data="tableData" v-loading="loading" style="width: 100%">
+  <el-table border :data="tableData" v-loading="loading" style="width: 100%; margin-top: 10px">
     <el-table-column align="center" prop="domain" :label="$t('domainTable.domain')"></el-table-column>
     <el-table-column align="center" :label="$t('domainTable.status')">
       <template slot-scope="scope">
@@ -33,7 +44,7 @@
             :style="device==='mobile'?'':'margin-left: 10px'"
             trigger="manual"
             placement="top"
-            width="160"
+            width="200"
             :ref="'popover-' + scope.row.id">
             <p>{{ $t('domainTable.tip') }}</p>
             <div style="text-align: right; margin: 0">
@@ -160,17 +171,18 @@
 </template>
 
   <script>
-  import { fetchUserDomain, bindDomain, checkDomain, deleteDomain } from '@/api/userDomain'
+  import { fetchUserDomain, bindDomain, checkDomain, deleteDomain, shadowDomain } from '@/api/userDomain'
   import { validateURL } from '@/utils/validate'
   import { downloadFile } from '@/utils'
   import { mapGetters } from 'vuex'
   import { fetchAllDomainAndApp } from '@/utils'
   import { trim } from '@/utils'
+  import CopyToken from "@/components/CopyToken";
 
   export default {
     name: 'UserDomain',
     components: {
-      // SwitchDomain
+      CopyToken,
     },
     data() {
       const formValidateURL = (rule, value, callback) => {
@@ -191,13 +203,14 @@
       }
       return {
         loading: false,
+        showCopyToken: false,
         tableData: [],
         tableParam: {
           page: 1,
           pageSize: 10
         },
         dialogVisible: false,
-
+        shadowEnabled: false,
         checkDialogVisible: false,
         checkSelect: 'dns',
         checkDomainLoading: false,
@@ -219,10 +232,36 @@
     },
     computed: {
       ...mapGetters([
-        'device'
-      ])
+        'device',
+        'profile'
+      ]),
+    },
+    watch: {
+      profile: {
+        handler: function (val) {
+          if (val.token && this.shadowEnabled) {
+            this.showCopyToken = true
+          }
+        },
+        deep: true,
+      }
     },
     methods: {
+      shadowChanged() {
+        shadowDomain({enabled: this.shadowEnabled}).then(() => {
+          this.fetchTableData()
+          this.$notify({
+            title: this.$t('common.success'),
+            type: 'success'
+          });
+        }).catch(e => {
+            this.$notify.error({
+              title: this.$t('common.error'),
+              message: e,
+            });
+            this.shadowEnabled = !this.shadowEnabled
+        })
+      },
       pClose(id) {
         this.$refs[`popover-` + id].doClose()
       },
@@ -236,7 +275,21 @@
             this.tableData = [...res.data]
           }
           this.loading = false
-          fetchAllDomainAndApp()
+          fetchAllDomainAndApp().then(domains => {
+            let shadowEnabled = false;
+            for (let item of domains) {
+              if (item.shadow) {
+                shadowEnabled = true
+              }
+            }
+            this.shadowEnabled = shadowEnabled
+            if (!this.profile.token) {
+              this.$store.dispatch('getProfile')
+            } else {
+              this.showCopyToken = this.shadowEnabled
+            }
+          })
+
         }).catch(err => {
           this.loading = false
           console.log(err)
@@ -394,6 +447,12 @@
     bottom: 0;
 
     width: 50%;
+  }
+  .tool-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    justify-content: space-between;
   }
 </style>
 

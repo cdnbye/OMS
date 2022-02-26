@@ -1,5 +1,6 @@
 import store from '@/store'
 import { fetchUserDomain } from '@/api/userDomain'
+import el from "element-ui/src/locale/lang/el";
 
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
@@ -57,34 +58,54 @@ export function trim(str){
 }
 
 export function fetchAllDomainAndApp() {
-  fetchUserDomain(1, 300).then(res => {
-    if(res.data) {
-      let hasValidDomain = false
-      for (let i = 0; i < res.data.length; i++) {
-        if(res.data[i].isValid === 1) {
-          store.dispatch('setDomain', res.data)
-          // console.warn(JSON.stringify(res.data[i]))
-          hasValidDomain = true
-          break
+  return new Promise((resolve, reject) => {
+    fetchUserDomain(1, 300).then(res => {
+      let currentDomainExist = false
+      let currentDomain = store.getters.currentDomain
+      if(res.data) {
+        let hasValidDomain = false
+        for (let i = 0; i < res.data.length; i++) {
+          if(res.data[i].isValid === 1) {
+            store.dispatch('setDomain', res.data)
+            // console.warn(JSON.stringify(res.data[i]))
+            hasValidDomain = true
+            break
+          }
+        }
+        if (currentDomain.domain) {
+          currentDomainExist = res.data.some(item => {
+            return item.domain === currentDomain.domain
+          })
+        }
+        if(hasValidDomain) {
+          const validDomain = res.data.filter(item => item.isValid === 1)
+          // 排序 首先按域名级数排序 同一级数按字母排序
+          validDomain.sort((x, y) =>  {
+            const dotsX = x.domain.split('.').length
+            const dotsY = y.domain.split('.').length
+            if (dotsX !== dotsY) {
+              return dotsX - dotsY
+            }
+            return x.domain.localeCompare(y.domain)
+          })
+          store.dispatch('setValidDomain', validDomain)
+          // console.warn(store.getters.currentDomain)
+          // console.warn(currentDomainExist)
+          if (!currentDomainExist) {
+            store.dispatch('setCurrentDomain', validDomain[0])
+          }
+          resolve(validDomain)
+        } else {
+          store.dispatch('setValidDomain', [])
+          store.dispatch('setCurrentDomain', {})
+          store.dispatch('setDomain', [])
         }
       }
-      if(hasValidDomain) {
-        const validDomain = res.data.filter(item => item.isValid === 1)
-        // 排序 首先按域名级数排序 同一级数按字母排序
-        validDomain.sort((x, y) =>  {
-          const dotsX = x.domain.split('.').length
-          const dotsY = y.domain.split('.').length
-          if (dotsX !== dotsY) {
-            return dotsX - dotsY
-          }
-          return x.domain.localeCompare(y.domain)
-        })
-        store.dispatch('setValidDomain', validDomain)
-        store.dispatch('setCurrentDomain', validDomain[0])
-      }
-    }
-  }).catch(err => {
-    console.log(err)
+      resolve([])
+    }).catch(err => {
+      console.log(err)
+      reject(err)
+    })
   })
 }
 

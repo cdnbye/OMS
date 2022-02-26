@@ -4,7 +4,11 @@
       <slot></slot>
       <div class="card-panel-description">
         <span class="card-panel-num" :style="{color: color}">{{ num }}</span>
-        <div class="card-panel-text">{{ desc }}</div>
+        <div class="card-panel-text">
+          {{ desc }}
+          <slot name="footer"></slot>
+        </div>
+
       </div>
     </div>
   </el-card>

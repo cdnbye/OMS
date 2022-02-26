@@ -8,26 +8,14 @@
   </el-alert>
   <el-row style="margin: 15px 0">
     <template v-if="hasToken">
-      <el-col :xs="20" :sm="12" :lg="12">
-        <el-input v-model="inputToken" :disabled="true">
-          <template slot="prepend">Token: </template>
-        </el-input>
-      </el-col>
-      <el-col :xs="3" :sm="2" :lg="1">
-        <el-tooltip placement="top">
-          <div slot="content">{{ $t('app.copy') }}</div>
-          <el-button @click="handleCopy($event)" type="info" plain style="padding: 6px 10px">
-            <img v-bind:src="copyImg" alt="" min-width="24" height="24">
-          </el-button>
-        </el-tooltip>
-      </el-col>
+      <CopyToken :token="inputToken"></CopyToken>
     </template>
   </el-row>
 
   <el-row style="float: left">
     <template v-if="!hasToken">
       <el-col :xs="10" :sm="4" :lg="2" style="margin: 10px 0">
-          <el-popover placement="top" width="160" v-model="popoverVisible">
+          <el-popover placement="top" width="200" v-model="popoverVisible">
             <p>{{ $t('app.sureCreateToken') }}</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="popoverVisible = false">{{ $t('common.cancel') }}</el-button>
@@ -39,7 +27,7 @@
     </template>
 
     <template v-if="hasToken">
-      <el-col :xs="10" :sm="4" :lg="2" style="margin: 10px 0">
+      <el-col :xs="10" :sm="4" :lg="2">
           <el-button style="float: 'left'" type="primary" @click="dialogFormVisible = true">{{ $t('app.createFormItem') }}</el-button>
       </el-col>
     </template>
@@ -91,7 +79,7 @@
         <template slot-scope="scope">
           <el-button slot="reference" size="mini" type="primary" @click="handleWatch(scope.row)">{{ $t('app.watch') }}</el-button>
 
-          <el-popover v-if="scope.row.platform==='android'" placement="top" width="160" :ref="'popover-update-' + scope.row.id" trigger="manual">
+          <el-popover v-if="scope.row.platform==='android'" placement="top" width="200" :ref="'popover-update-' + scope.row.id" trigger="manual">
             <p>{{ $t('common.sureUpdate') }}</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="updateClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
@@ -100,7 +88,7 @@
             <el-button slot="reference" size="mini" type="warning" @click="updateShow(scope.row.id)" :style="device==='mobile'?'':'margin-left: 10px'">{{ $t('app.updateSign') }}</el-button>
           </el-popover>
 
-          <el-popover placement="top" width="160" :ref="'popover-' + scope.row.id" trigger="manual">
+          <el-popover placement="top" width="200" :ref="'popover-' + scope.row.id" trigger="manual">
             <p>{{ $t('common.sureDelete') }}</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
@@ -192,6 +180,7 @@
   import clip from '@/utils/clipboard'
   import copyImg from '@/assets/copy.png'
   import { fetchAllDomainAndApp } from '@/utils'
+  import CopyToken from "@/components/CopyToken";
 
   export default {
     name: 'app',
@@ -221,11 +210,12 @@
       }
     },
     components: {
-      PointTip
+      PointTip,
+      CopyToken
     },
     computed: {
       ...mapGetters([
-        'device'
+        'device',
       ])
     },
     methods: {
@@ -374,7 +364,6 @@
           })
       },
       handleWatch(item) {
-          console.warn(JSON.stringify(item))
         this.$router.push({
           name: 'UserLiveData',
           params: {

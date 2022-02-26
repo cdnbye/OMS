@@ -1,8 +1,9 @@
 export default {
   route: {
-    liveData: 'Per App Realtime Data',
+    liveData: 'Realtime Data',
+    liveDataPerApp: 'Per Domain/App',
+    liveDataGlobal: 'Global',
     liveDataAdmin: 'Realtime Data',
-    liveDataGlobal: 'Global Realtime Data',
     overallData: 'Overall Data',
     hotChannel: 'Content Popularity',
     financial: 'Finance Info',
@@ -190,6 +191,7 @@ export default {
     title: 'Notice:',
     desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. You can register up to 300 domains. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains, one domain per line, up to 50 domains in one submit.',
     illegal: 'Not Approved',
+    tokenOnly: 'If enabled, domain registration is no longer required once you have config token in web SDK',
   },
   documentation: {
     documentation: 'Documentation',

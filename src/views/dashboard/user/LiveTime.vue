@@ -55,9 +55,14 @@
                     :desc="`${$t('dashboard.monthlyRemain')} (${formatTraffic(statis.flow.daily_remain).unit})`"
                     :color="statis.flow.daily_remain > 1024*1024*100 ? 'green' : 'red'"
                 >
-                  <div class="resetTip">
-                    <span>{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
-                  </div>
+                  <template>
+                    <div class="resetTip">
+                      <span>{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
+                    </div>
+                  </template>
+                  <template slot="footer">
+                    <div>{{ formatType() }}</div>
+                  </template>
                 </card>
             </el-col>
 

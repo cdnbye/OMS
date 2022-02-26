@@ -1,8 +1,9 @@
 export default {
   route: {
-    liveData: '實時數據(分應用)',
+    liveData: '實時數據',
+    liveDataPerApp: '分域名/APP',
+    liveDataGlobal: '匯總',
     liveDataAdmin: '实时数据',
-    liveDataGlobal: '實時數據(匯總)',
     overallData: '汇总数据',
     hotChannel: '資源熱度',
     financial: '財務信息',
@@ -189,7 +190,8 @@ export default {
     verifySuccess: '驗證成功',
     title: '說明：',
     desc: '本頁面用於綁定網站域名，移動端原生 App 和 Electron 應用無需綁定域名。每個賬號最多可以綁定300個域名，60天內未使用的域名記錄將被自動刪除。服務於國內的域名必須已備案。\nTips:支持根域名通配所有子域名，每行一個域名，支持同時輸入50個域名。',
-    illegal: '未通過審核(需要備案)',
+    illegal: '未通過審核(請聯繫客服)',
+    tokenOnly: '启动后只需在SDK配置token，无需再绑定域名，联系客服认证通过后才能启用',
   },
   documentation: {
     documentation: '使用文檔',

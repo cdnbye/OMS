@@ -1,4 +1,5 @@
 import { loginByUsername, signup } from '@/api/auth'
+import { fetchUserData } from '@/api/user'
 import { getToken, setToken, removeToken, getID, setID, removeID } from '@/utils/auth'
 import { getItem, setItem } from '@/utils/storage'
 
@@ -17,7 +18,8 @@ const user = {
     },
     userDomain: [],
     userValidDomain: getItem('validDomain') || [],
-    currentDomain: getItem('userDomain') || {}
+    currentDomain: getItem('userDomain') || {},
+    profile: {},
   },
 
   mutations: {
@@ -26,6 +28,9 @@ const user = {
     },
     SET_TOKEN: (state, token) => {
       state.token = token
+    },
+    SET_PROFILE: (state, profile) => {
+      state.profile = profile
     },
     SET_ID: (state, id) => {
       state.id = id
@@ -134,8 +139,17 @@ const user = {
         commit('SET_USERVALIDDOMAIN', validDomain)
         resolve(validDomain)
       })
+    },
+    getProfile({ commit }) {
+      return new Promise((resolve, reject) => {
+        fetchUserData().then(res => {
+            commit('SET_PROFILE', res.data)
+            resolve(res.data)
+        }).catch(error => {
+            reject(error)
+        })
+      })
     }
-
   }
 }
 

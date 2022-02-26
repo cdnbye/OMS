@@ -67,26 +67,13 @@ const userRouter = [
                     roles: ['user'],
                     noCache: true
                 }
-            }
-        ]
-    },
-
-    {
-        path: '/liveData',
-        component: Layout,
-        redirect: '/user/liveData',
-        meta: {
-            title: 'liveData',
-            icon: 'dashboard',
-            roles: ['user']
-        },
-        children: [
+            },
             {
                 path: '/user/liveData',
                 component: () => import('@/views/dashboard/user/liveData'),
                 name: 'UserLiveData',
                 meta: {
-                    title: 'liveData',
+                    title: 'liveDataPerApp',
                     roles: ['user'],
                     noCache: true
                 }
@@ -388,7 +375,7 @@ const userRouter = [
 ]
 
 if (navLang() === 'zh') {
-    userRouter.splice(10, 0, {
+    userRouter.splice(9, 0, {
         path: '/invoice',
         component: Layout,
         redirect: '/user/invoice',
