@@ -3,7 +3,6 @@
     <el-tag style="font-weight: bold;; font-size: medium; margin: 0px;"
             effect="dark"
             :type="currentDomain.domain ? 'success' : 'danger'">
-<!--      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>-->
       {{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}
       <el-button size="mini" type="primary" plain @click="selectDomainVisible = true"
                  style="font-size: medium; margin-right: -10px;">

@@ -168,7 +168,7 @@ export default {
     verifyLater: 'Verify Later',
     verifyNow: 'Verify Now',
     delete: 'Delete',
-    tip: 'Sure to delete？',
+    tip: 'Are you sure to delete？',
     none: 'None',
     current: 'Current:  ',
     select: 'please select',
@@ -244,8 +244,8 @@ export default {
     error: 'Error',
     warning: 'Warning',
     message: 'Message',
-    sureDelete: 'Sure to delete?',
-    sureUpdate: 'Sure to update?',
+    sureDelete: 'Are you sure to delete?',
+    sureUpdate: 'Are you sure to update?',
     default: 'Default',
   },
   historyData: {
@@ -294,7 +294,7 @@ export default {
     waitPay: 'Pending',
     finish: 'Finished',
     fail: 'Closed',
-    tip: 'Sure to close order?',
+    tip: 'Are you sure to close order?',
     alipay: 'alipay',
     packageName: 'Item',
     amount: 'Quantity',
@@ -338,7 +338,7 @@ export default {
     appName: 'The display name of APP',
     appID: 'You can refer to <a style="color: #337ab7" target="view_window" href="https://swarmcloud.net/en/views/bindings.html#app-id-and-token">here</a> to obtain APP ID',
     platform: 'Platform',
-    sureCreateToken: 'Sure to create token?',
+    sureCreateToken: 'Are you sure to create token?',
     deleteItemSuccess: 'Delete successfully',
     updateItemSuccess: 'Update successfully',
     createTime: 'Create Time',
@@ -358,6 +358,6 @@ export default {
   hotChannels: {
     content: 'Content',
     num: 'Viewers',
-    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 200 is not shown.',
+    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 100 is not shown.',
   }
 }

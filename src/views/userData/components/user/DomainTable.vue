@@ -243,6 +243,7 @@
             this.showCopyToken = true
           }
         },
+        immediate: true,
         deep: true,
       }
     },
@@ -311,10 +312,6 @@
         this.checkDomainLoading = true
         checkDomain(this.checkDomainData.id).then(res => {
           this.fetchTableData()
-          // this.$message({
-          //   message: this.$t('domainTable.verifySuccess'),
-          //   type: 'success'
-          // })
           this.$notify({
               title: this.$t('common.success'),
               message: this.$t('domainTable.verifySuccess'),
