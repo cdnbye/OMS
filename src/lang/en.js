@@ -41,7 +41,7 @@ export default {
     domainInfo: 'Website Management',
     domainList: 'Domain List',
     package: 'Traffic Package',
-    monthlyPackage: 'Monthly Plan',
+    monthlyPackage: 'Monthly/Yearly Plan',
     order: 'Order History',
     p2pConfig: 'P2P Setting',
     edit: 'edit',
@@ -53,6 +53,7 @@ export default {
     stunManage: 'Stun Configuration',
     invoices: 'Invoices',
     shopping: 'Shopping',
+    geofly: 'GEO Fly Line',
   },
   navbar: {
     logOut: 'Log Out',
@@ -191,7 +192,7 @@ export default {
     title: 'Notice:',
     desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. You can register up to 300 domains. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains, one domain per line, up to 50 domains in one submit.',
     illegal: 'Not Approved',
-    tokenOnly: 'If enabled, domain registration is no longer required once you have config token in web SDK',
+    tokenOnly: 'If enabled, domain registration is no longer required once you have config token in web SDK, it is applicable to the scene where a large number of domains are used',
   },
   documentation: {
     documentation: 'Documentation',

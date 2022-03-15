@@ -3,7 +3,17 @@
     <div class="card-panel">
       <slot></slot>
       <div class="card-panel-description">
-        <span class="card-panel-num" :style="{color: color}">{{ num }}</span>
+        <span v-if="infinite" class="card-panel-num" :style="{color: color}">+∞</span>
+        <count-to
+            v-else
+            class="card-panel-num"
+            :style="{color: color}"
+            :startVal="startVal"
+            :endVal="num"
+            :decimals="decimals"
+            :duration="duration"
+            >
+        </count-to>
         <div class="card-panel-text">
           {{ desc }}
           <slot name="footer"></slot>
@@ -15,22 +25,55 @@
 </template>
 
 <script>
+import countTo from 'vue-count-to';
+
 export default {
   name: "Card",
+  components: {
+    countTo
+  },
   props: {
     num: {
-      type: String,
+      type: Number,
+      default: 0,
       required: true,
+    },
+    duration: {
+      type: Number,
+      default: 3000,
+    },
+    decimals: {
+      type: Number,
+      default: 0,
     },
     desc: {
       type: String,
+      default: '',
       required: true
     },
     color: {
       type: String,
       default: '',
+    },
+    infinite: {
+      type: Boolean,
+      default: false,
     }
   },
+  data() {
+    return {
+      startVal: 0,
+    }
+  },
+  watch: {
+    num: {
+      handler: function(newValue, oldValue) {
+        this.startVal = oldValue
+      },
+    }
+  },
+  methods: {
+  }
 }
 </script>
 

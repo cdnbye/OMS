@@ -47,7 +47,7 @@ import LangSelect from '@/components/LangSelect'
 import Logo from '@/assets/logo.png'
 // import Screenfull from '@/components/Screenfull'
 import SwitchDomain from '@/components/SwitchDomain'
-import {getItem} from "../../../utils/storage";
+import {getItem} from "@/utils/storage";
 
 export default {
   data() {

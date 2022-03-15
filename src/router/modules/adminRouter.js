@@ -43,6 +43,16 @@ export default [
                 }
             },
             {
+                path: '/geofly',
+                component: () => import('@/views/geofly'),
+                name: 'geofly',
+                meta: {
+                    title: 'geofly',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            },
+            {
                 path: '/overall',
                 component: () => import('@/views/dashboard/admin/OverallData'),
                 name: 'OverallData',

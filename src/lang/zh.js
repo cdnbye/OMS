@@ -41,7 +41,7 @@ export default {
     domainInfo: '網站管理',
     domainList: '域名列表',
     package: '流量包',
-    monthlyPackage: '包月套餐',
+    monthlyPackage: '包年包月套餐',
     order: '歷史訂單',
     p2pConfig: 'P2P配置',
     edit: '編輯信息',
@@ -53,6 +53,7 @@ export default {
     stunManage: 'Stun配置',
     invoices: '發票管理',
     shopping: '商城',
+    geofly: '飞线图',
   },
   navbar: {
     logOut: '登出',
@@ -191,7 +192,7 @@ export default {
     title: '說明：',
     desc: '本頁面用於綁定網站域名，移動端原生 App 和 Electron 應用無需綁定域名。每個賬號最多可以綁定300個域名，60天內未使用的域名記錄將被自動刪除。服務於國內的域名必須已備案。\nTips:支持根域名通配所有子域名，每行一個域名，支持同時輸入50個域名。',
     illegal: '未通過審核(請聯繫客服)',
-    tokenOnly: '启动后只需在SDK配置token，无需再绑定域名，联系客服认证通过后才能启用',
+    tokenOnly: '启动后只需在SDK配置token，无需再绑定域名，适用于有大量域名使用的情形，联系客服认证通过后才能启用',
   },
   documentation: {
     documentation: '使用文檔',

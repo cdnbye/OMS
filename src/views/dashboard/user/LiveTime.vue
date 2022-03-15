@@ -1,7 +1,7 @@
 <template>
         <el-row :gutter="20" class="panel-group">
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <card :num="formatNum(statis.online) | positive"
+                <card :num="statis.online | positive"
                       :desc="$t('dashboard.online')">
                   <div class="tip">
                     <PointTip :content="$t('dashboard.onlinesTip')" />
@@ -11,7 +11,8 @@
 
             <!--每日p2p流量-->
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <card :num="`${statis.traffic_p2p.num}`"
+                <card :num="statis.traffic_p2p.num"
+                      :decimals="2"
                       :desc="`${$t('dashboard.p2pTraffic')} (${statis.traffic_p2p.unit})`">
                   <div class="tip">
                     <PointTip :content="$t('dashboard.p2pTip')" />
@@ -21,7 +22,8 @@
 
             <!--每日http流量-->
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <card :num="`${statis.traffic_http.num}`"
+                <card :num="statis.traffic_http.num"
+                      :decimals="2"
                       :desc="`${$t('dashboard.httpTraffic')} (${statis.traffic_http.unit})`">
                   <div class="tip">
                     <PointTip :content="$t('dashboard.httpTip')" />
@@ -30,7 +32,10 @@
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-                <card :num="`${statis.whiteList ? '+∞' : statis.flow.free.num}`"
+                <card
+                    :num="statis.flow.free.num"
+                    :decimals="2"
+                    :infinite="statis.whiteList"
                       :desc="`${$t('dashboard.free')} (${statis.flow.free.unit})`">
                   <div class="tip">
                     <PointTip :content="$t('dashboard.freeTip')" />
@@ -41,7 +46,9 @@
             <!--流量包-->
             <el-col v-if="statis.flow.remain > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card
-                    :num="`${formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=99999?'+∞':formatTraffic(statis.flow.remain).num}`"
+                    :num="formatTraffic(statis.flow.remain).num"
+                    :decimals="2"
+                    :infinite="formatTraffic(statis.flow.remain).unit==='TB' && formatTraffic(statis.flow.remain).num>=99999"
                     :desc="`${$t('dashboard.remain')} (${formatTraffic(statis.flow.remain).unit})`"
                     :color="statis.flow.totalRemain > 1024*1024*100 ? 'green' : 'red'"
                 >
@@ -51,7 +58,8 @@
             <!--包月套餐-->
             <el-col v-if="statis.type.product_type > 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card
-                    :num="`${formatTraffic(statis.flow.daily_remain).num}`"
+                    :num="formatTraffic(statis.flow.daily_remain).num"
+                    :decimals="2"
                     :desc="`${$t('dashboard.monthlyRemain')} (${formatTraffic(statis.flow.daily_remain).unit})`"
                     :color="statis.flow.daily_remain > 1024*1024*100 ? 'green' : 'red'"
                 >
@@ -68,14 +76,14 @@
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card
-                    :num="`${formatNum(statis.frequency_day)}`"
+                    :num="statis.frequency_day"
                     :desc="$t('dashboard.serveNum')">
                 </card>
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card
-                    :num="`${formatNum(statis.num_max)}`"
+                    :num="statis.num_max"
                     :desc="$t('dashboard.maxOnlineNum')">
                 </card>
             </el-col>
@@ -84,7 +92,7 @@
 
 <script>
     import moment from 'moment'
-    import { formatTraffic, formatNum } from '@/utils/format'
+    import { formatTraffic } from '@/utils/format'
     import PointTip from '@/components/PointTip'
     import Card from '@/components/Card'
 
@@ -156,12 +164,11 @@
         },
         methods: {
             formatTraffic,
-            formatNum,
             formatType() {
                 if(this.statis.type.product_type === 0) {
                     return ''
                 } else {
-                    const time = this.statis.type.time ? moment(this.statis.type.time).format('MM-DD') : ''
+                    const time = this.statis.type.time ? moment(this.statis.type.time).format('YY-MM-DD') : ''
                     return this.$t('package.monthly') + `${time}`
                 }
             },

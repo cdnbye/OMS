@@ -77,20 +77,7 @@ const userRouter = [
                     roles: ['user'],
                     noCache: true
                 }
-            }
-        ]
-    },
-
-    {
-        path: '/channels',
-        component: Layout,
-        redirect: '/user/hotChannel',
-        meta: {
-            title: 'dashboard',
-            icon: 'peoples',
-            roles: ['user']
-        },
-        children: [
+            },
             {
                 path: '/user/hotChannel',
                 component: () => import('@/views/dashboard/user/hotChannel'),
@@ -100,9 +87,33 @@ const userRouter = [
                     roles: ['user'],
                     noCache: true
                 }
+            },
+            {
+                path: '/user/geofly',
+                component: () => import('@/views/geofly'),
+                name: 'geofly',
+                meta: {
+                    title: 'geofly',
+                    roles: ['user'],
+                    noCache: true
+                }
             }
         ]
     },
+
+    // {
+    //     path: '/channels',
+    //     component: Layout,
+    //     redirect: '/user/hotChannel',
+    //     meta: {
+    //         title: 'dashboard',
+    //         icon: 'peoples',
+    //         roles: ['user']
+    //     },
+    //     children: [
+    //
+    //     ]
+    // },
 
     // user router 历史数据
     {
@@ -375,7 +386,7 @@ const userRouter = [
 ]
 
 if (navLang() === 'zh') {
-    userRouter.splice(9, 0, {
+    userRouter.splice(8, 0, {
         path: '/invoice',
         component: Layout,
         redirect: '/user/invoice',

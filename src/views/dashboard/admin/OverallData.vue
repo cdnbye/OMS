@@ -3,55 +3,59 @@
     <el-row :gutter="20" class="panel-group">
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.max_online_week}`"
+        <card :num="statis.max_online_week"
               desc="过去七天最高在线人数">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.bandwidth_p2p_week.num}`"
+        <card :num="statis.bandwidth_p2p_week.num"
               :desc="`过去七天P2P带宽峰值(${ statis.bandwidth_p2p_week.unit })`">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.p2p_rate_week}` | positive"
+        <card :num="statis.p2p_rate_week | positive"
+              :decimals="2"
               desc="过去七天P2P分享率(%)">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.frequency_week}`"
+        <card :num="statis.frequency_week"
               desc="过去七天服务人数">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.max_online_month}`"
+        <card :num="statis.max_online_month"
               desc="近1月最高在线人数">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.traffic_p2p_month.num}`"
+        <card :num="statis.traffic_p2p_month.num"
+              :decimals="2"
               :desc="`近1月P2P流量(${ statis.traffic_p2p_month.unit })`">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.bandwidth_p2p_month.num}`"
+        <card :num="statis.bandwidth_p2p_month.num"
+              :decimals="2"
               :desc="`近1月P2P带宽峰值(${ statis.bandwidth_p2p_month.unit })`">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.p2p_rate_month}`"
+        <card :num="statis.p2p_rate_month"
+              :decimals="2"
               desc="近1月P2P分享率(%)">
         </card>
       </el-col>
 
       <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-        <card :num="`${statis.frequency_month}`"
+        <card :num="statis.frequency_month"
               desc="近1月服务人数">
         </card>
       </el-col>
@@ -113,8 +117,8 @@
                     this.statis.max_online_month = data.max_num_month
                     this.statis.bandwidth_p2p_week = formatBandwidth(data.bwp_p2p_7)
                     this.statis.bandwidth_p2p_month = formatBandwidth(data.bwp_p2p_month)
-                    this.statis.p2p_rate_week = (data.p2p_rate_7 * 100).toFixed(2)
-                    this.statis.p2p_rate_month = (data.p2p_rate_month * 100).toFixed(2)
+                    this.statis.p2p_rate_week = Number((data.p2p_rate_7 * 100).toFixed(2))
+                    this.statis.p2p_rate_month = Number((data.p2p_rate_month * 100).toFixed(2))
                     this.statis.traffic_p2p_month = formatTraffic(data.traffic_p2p_30)
                     this.statis.frequency_week = data.api_frequency_7
                     this.statis.frequency_month = data.api_frequency_30

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-realtime-container" v-loading="checkResultLoading" :element-loading-text="$t('package.checkResultLoadingTip')">
+  <div class="dashboard-realtime-container" :element-loading-text="$t('package.checkResultLoadingTip')">
     <el-alert
         :title="$t('domainTable.title')"
         :description="$t('dashboard.descPerApp')"
@@ -19,8 +19,7 @@
 import store from '@/store'
 import { mapGetters } from 'vuex'
 import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
-import { checkAlipayOrder, checkPaypalOrder } from '@/api/user/package'
-import { formatTraffic, formatPieData, getQueryObj } from '@/utils/format'
+import { formatTraffic, formatPieData } from '@/utils/format'
 import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
 import LiveTime from './LiveTime'
@@ -36,12 +35,7 @@ export default {
   },
   data() {
     return {
-      checkinLoading: false,
-      checkResultLoading: false,
       remainTrafficFlag: true,
-
-      showDomain: false,
-
       statis: {
         whiteList: false,
         type: {
@@ -103,14 +97,9 @@ export default {
     if(domainInfo && domainInfo.id && domainInfo.uid) {
       this.loopGetData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
       this.getDisData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
-      this.showDomain = false
-
       store.dispatch('setCurrentDomain', domainInfo)
     } else {
       this.getUserDomain()
-      this.checkPayResult()
-
-      this.showDomain = true
     }
   },
   beforeDestroy() {
@@ -138,7 +127,7 @@ export default {
 
           // 如果剩余流量为0，则提醒用户购买
           if(data.flow.free === 0 && data.flow.remain === 0 && data.flow.daily_remain === 0) {
-            if(this.remainTrafficFlag && getQueryObj().payment === undefined && !data.whitelist) {
+            if(this.remainTrafficFlag && !data.whitelist) {
               this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
                 distinguishCancelAndClose: true,
                 confirmButtonText: this.$t('package.buyFlow'),
@@ -162,135 +151,69 @@ export default {
     },
     getDisData(uid, id, hostID) {
         if (id < 0) return
-      fetchDisData(uid, id, 'version', hostID).then(res => {
-        const data = res.data.data
-        if(data) {
-          this.disData.versionData = formatPieData(data)
-        } else {
-            this.disData.versionData = [];
-        }
-      })
-      fetchDisData(uid, id, 'tag', hostID).then(res => {
-        const data = res.data.data
-        if(data) {
-          this.disData.tagData = formatPieData(data)
-        } else {
-            this.disData.tagData = [];
-        }
-      })
-      fetchDisData(uid, id, 'device', hostID).then(res => {
-        const data = res.data.data
-        if(data) {
-          this.disData.deviceData = formatPieData(data)
-        } else {
-            this.disData.deviceData = [];
-        }
-      })
-      fetchDisData(uid, id, 'live', hostID).then(res => {
-        const data = res.data.data
-        if(data) {
-          this.disData.liveData = formatPieData(data)
-        } else {
-            this.disData.liveData = [];
-        }
-      })
-      fetchDisData(uid, id, 'netType', hostID).then(res => {
-        const data = res.data.data
-        if(data) {
-          this.disData.netTypeData = formatPieData(data)
-        } else {
-            this.disData.netTypeData = [];
-        }
-      })
-      fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
+        fetchDisData(uid, id, 'version', hostID).then(res => {
+          const data = res.data.data
+          if(data) {
+            this.disData.versionData = formatPieData(data)
+          } else {
+              this.disData.versionData = [];
+          }
+        })
+        fetchDisData(uid, id, 'tag', hostID).then(res => {
+          const data = res.data.data
+          if(data) {
+            this.disData.tagData = formatPieData(data)
+          } else {
+              this.disData.tagData = [];
+          }
+        })
+        fetchDisData(uid, id, 'device', hostID).then(res => {
+          const data = res.data.data
+          if(data) {
+            this.disData.deviceData = formatPieData(data)
+          } else {
+              this.disData.deviceData = [];
+          }
+        })
+        fetchDisData(uid, id, 'live', hostID).then(res => {
+          const data = res.data.data
+          if(data) {
+            this.disData.liveData = formatPieData(data)
+          } else {
+              this.disData.liveData = [];
+          }
+        })
+        fetchDisData(uid, id, 'netType', hostID).then(res => {
+          const data = res.data.data
+          if(data) {
+            this.disData.netTypeData = formatPieData(data)
+          } else {
+              this.disData.netTypeData = [];
+          }
+        })
+        fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
           const data = res.data.data
           if(data) {
               this.disData.ispData = formatPieData(data)
           } else {
               this.disData.ispData = [];
           }
-      })
-      fetchDisData(uid, id, 'nat', hostID).then(res => {
+        })
+        fetchDisData(uid, id, 'nat', hostID).then(res => {
           const data = res.data.data
           if(data) {
               this.disData.natTypeData = formatPieData(data)
           } else {
               this.disData.natTypeData = [];
           }
-      })
-  },
+        })
+    },
     loopGetData(uid, id, hostId) {
       this.getData(uid, id, hostId)
       clearInterval(timer)
       timer = setInterval(() => {
         this.getData(uid, id, hostId)
       }, 20000)
-    },
-    checkPayResult() {
-      const paramObj = getQueryObj()
-      if(paramObj.payment) {
-        this.checkResultLoading = true
-        switch (paramObj.payment) {
-          case 'alipay':
-            checkAlipayOrder(paramObj.out_trade_no)
-              .then(res => {
-                this.checkResultLoading = false
-                if(res.data.is_payed) {
-                  this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                    type: 'success',
-                    confirmButtonText: this.$t('common.ok'),
-                    showCancelButton: false
-                  })
-                } else {
-                  this.$messageBox.confirm(this.$t('package.payFail'), {
-                    type: 'error',
-                    confirmButtonText: this.$t('common.ok'),
-                    showCancelButton: false
-                  })
-                }
-              })
-              .catch(err => {
-                this.checkResultLoading = false
-                console.log(err)
-              })
-            break
-          case 'paypal':
-            if(paramObj.cancel) {
-              this.checkResultLoading = false
-              this.$messageBox.confirm(this.$t('package.payFail'), {
-                type: 'error',
-                confirmButtonText: this.$t('common.ok'),
-                showCancelButton: false
-              })
-            } else {
-              checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
-                .then(res => {
-                  if(res.data.is_payed) {
-                    this.checkResultLoading = false
-                    this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                      type: 'success',
-                      confirmButtonText: this.$t('common.ok'),
-                      showCancelButton: false
-                    })
-                  } else {
-                    this.$messageBox.confirm(this.$t('package.payFail'), {
-                      type: 'error',
-                      confirmButtonText: this.$t('common.ok'),
-                      showCancelButton: false
-                    })
-                  }
-                })
-                .catch(err => {
-                  this.checkResultLoading = false
-                  console.log(err)
-                })
-            }
-            break
-          default:
-            this.checkResultLoading = false
-            break
-        }
-      }
     },
     getUserDomain() {
       if(this.currentDomain.id) {

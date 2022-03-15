@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20" class="panel-group">
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${formatNum(statis.online)}`"
+      <card :num="statis.online"
             desc="当前在线人数"
             :color="statis.online > 500000 ? 'red' : ''"
       >
@@ -9,19 +9,22 @@
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${statis.bandwidth_p2p.num}`"
+      <card :num="statis.bandwidth_p2p.num"
+            :decimals="2"
             :desc="`当前P2P带宽(${statis.bandwidth_p2p.unit})`">
       </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${statis.bandwidth_http.num}`"
+      <card :num="statis.bandwidth_http.num"
+            :decimals="2"
             :desc="`当前HTTP带宽(${statis.bandwidth_http.unit})`">
       </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${statis.p2p_rate}`"
+      <card :num="statis.p2p_rate"
+            :decimals="2"
             desc="当前P2P分享率(%)"
             :color="statis.p2p_rate < 30 ? 'red' : ''"
       >
@@ -29,31 +32,33 @@
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${statis.traffic_p2p.num}`"
+      <card :num="statis.traffic_p2p.num"
+            :decimals="2"
             :desc="`今日P2P流量(${statis.traffic_p2p.unit})`">
       </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${statis.traffic_http.num}`"
+      <card :num="statis.traffic_http.num"
+            :decimals="2"
             :desc="`今日HTTP流量(${statis.traffic_http.unit})`">
       </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${formatNum(statis.frequency_day)}`"
+      <card :num="statis.frequency_day"
             desc="今日服务次数">
       </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${formatNum(statis.hostNum)}`"
+      <card :num="statis.hostNum"
             desc="活跃网站/APP总数">
       </card>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="`${formatNum(statis.max_online)}`"
+      <card :num="statis.max_online"
             desc="历史最高在线人数">
       </card>
     </el-col>
@@ -63,10 +68,10 @@
 <script>
 import { fetchLiveTimeData } from '@/api/liveData'
 import { fetchHostNum } from '@/api/userDomain'
-import { formatBandwidth, formatTraffic, formatNum } from '@/utils/format'
+import { formatBandwidth, formatTraffic } from '@/utils/format'
 import Card from '@/components/Card'
 
-let int = undefined
+let timer = undefined
 
 export default {
   name: 'PanelGroup',
@@ -108,15 +113,14 @@ export default {
   mounted() {
     const _this = this
     _this.getData()
-    int = setInterval(function() {
+    timer = setInterval(function() {
       _this.getData()
     }, 20000)
   },
   destroyed() {
-    clearInterval(int)
+    clearInterval(timer)
   },
   methods: {
-    formatNum,
     getData() {
         fetchLiveTimeData().then(res => {
         const { data } = res
@@ -125,7 +129,7 @@ export default {
         this.statis.bandwidth_p2p = formatBandwidth(data.rt_bw_p2p)
 
         this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
-        this.statis.p2p_rate = (data.p2p_rate_rt * 100).toFixed(2)
+        this.statis.p2p_rate = Number((data.p2p_rate_rt * 100).toFixed(2))
 
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
         this.statis.traffic_http = formatTraffic(data.traffic_http_day)
