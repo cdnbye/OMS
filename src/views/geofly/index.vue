@@ -11,7 +11,7 @@ import { getItem } from "@/utils/storage";
 
 const SERVER_URLS = {
   'dev': 'ws://localhost',
-  'cn': 'wss://tracker.cdnbye.com',
+  'cn': 'wss://cn.cdnbye.com',
   'hk': 'wss://hk.swarmcloud.net',
   'us': 'wss://tracker.hdtvcloud.com',
 }
@@ -24,6 +24,7 @@ const FLY_TYPE2COLOR = {
   4: '#FFD700',     // SameContinent
   5: '#FF7F00',     // SameAbrLevel
   6: '#B22222',     // SameChannel
+  7: '#A020F0',     // VodPosFirst
 }
 
 export default {
@@ -169,7 +170,7 @@ export default {
           lon1: from.lon,
           lat2: item.lat,
           lon2: item.lon,
-          color: FLY_TYPE2COLOR[item.typ],
+          color: FLY_TYPE2COLOR[item.typ] || '#B22222',
         })
       })
       return coords

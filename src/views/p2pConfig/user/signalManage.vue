@@ -1,8 +1,14 @@
 <template>
     <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
-        <el-alert :title="$t('p2pConfig.signalManage.desc')" style="margin-bottom: 20px"/>
+        <el-alert :title="$t('p2pConfig.signalManage.desc')" style="margin-bottom: 20px">
+          <template>
+            <br>
+            <br>
+            <a style="color: #337ab7; font-weight: bold" target="view_window" href="https://swarmcloud.net/views/signaling.html#official-signaling-service">{{ $t('p2pConfig.signalManage.official') }} -></a>
+          </template>
+        </el-alert>
         <el-table border :data="tableData" v-loading="loading">
-            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"  min-width="150"></el-table-column>
+            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"  min-width="100"></el-table-column>
             <el-table-column align="center" :formatter="formatterStatus"
                              :label="$t('p2pConfig.signalManage.signalAddr')"
                              min-width="150">
@@ -19,7 +25,7 @@
             </el-table-column>
             <el-table-column align="center" :formatter="formatterStatus"
                              :label="$t('p2pConfig.signalManage.signalAddr2')"
-                             min-width="150">
+                             min-width="130">
               <template slot-scope="scope">
                 <el-input
                     placeholder="wss://"
@@ -31,14 +37,14 @@
                 </el-input>
               </template>
             </el-table-column>
-            <el-table-column align="center" :formatter="formatterStatus" min-width="50" width="70"
+            <el-table-column align="center" :formatter="formatterStatus" min-width="50" width="120"
                              :label="$t('p2pConfig.signalManage.switch')">
                 <template slot-scope="scope">
                     <el-switch v-if="!scope.row.blocked" v-model="scope.row.signal_enabled" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
                 </template>
             </el-table-column>
 
-            <el-table-column :label="$t('domainTable.operation')" align="center"  min-width="50" width="100">
+            <el-table-column :label="$t('domainTable.operation')" align="center"  min-width="50" width="120">
                 <template slot-scope="scope">
                     <el-button v-if="!scope.row.blocked" :loading="loading" type="primary" @click.native.prevent="handleSubmit(scope.row)">{{$t('common.ok')}}</el-button>
                 </template>

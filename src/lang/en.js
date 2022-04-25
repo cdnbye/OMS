@@ -64,6 +64,7 @@ export default {
     size: 'Global Size',
     myInfo: 'Profile',
     currZone: 'Zone: ',
+    zoneTip: 'If a non default zone (HK, USA) is selected, you need to manually configure the tracker address for the SDK. Details can be found <a style="color: #337ab7" href="https://swarmcloud.net/views/tracker.html" target="_blank">here</a>',
   },
   auth: {
     login: 'Login',
@@ -88,9 +89,7 @@ export default {
     logInSuccess: 'login successfully',
     username: 'Please enter your verified email',
     password: 'Please enter your password',
-    switchToHK: 'Switched to console on HongKong',
-    switchToCN: 'Switched to console on China Mainland',
-    switchToUS: 'Switched to console on USA',
+    selectZoneWarn: 'Please select a zone',
   },
   signup: {
     title: 'Signup',
@@ -190,7 +189,7 @@ export default {
     },
     verifySuccess: 'verify successfully',
     title: 'Notice:',
-    desc: 'This page is used to register domain name, mobile native App and Electron App do not require to register domain name. You can register up to 300 domains. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains, one domain per line, up to 50 domains in one submit.',
+    desc: 'This page is used to register domain name, please note that mobile native App and Electron App do not require to register domain name. You can register up to 300 domains. Domain records that have not been used within 60 days will be automatically deleted. \nTips:You can use root domain to match all sub-domains, one domain per line, up to 50 domains in one submit.',
     illegal: 'Not Approved',
     tokenOnly: 'If enabled, domain registration is no longer required once you have config token in web SDK, it is applicable to the scene where a large number of domains are used',
   },
@@ -323,6 +322,7 @@ export default {
       signalAddr: 'Primary Signal Address',
       signalAddr2: 'Backup Signal Address',
       switch: "Disable/Enable",
+      official: 'Pick an official signaling address that is geographically close to your viewers',
     },
     stunManage: {
         addr: 'Stun Address',

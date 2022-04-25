@@ -20,9 +20,9 @@
       <pie-card :title="$t('dashboard.netDis')" :data="data.netTypeData"/>
     </el-col>
 
-    <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-      <pie-card :title="$t('dashboard.ispDis')" :data="data.ispData"/>
-    </el-col>
+<!--    <el-col :xs="24" :sm="12" :lg="8" class="chart-col">-->
+<!--      <pie-card :title="$t('dashboard.ispDis')" :data="data.ispData"/>-->
+<!--    </el-col>-->
 
     <el-col v-if="currentDomain.native" :xs="24" :sm="12" :lg="8" class="chart-col">
       <pie-card :title="$t('dashboard.natDis')" :data="data.natTypeData"/>
@@ -55,7 +55,7 @@ export default {
         deviceData: [],
         liveData: [],
         netTypeData: [],
-        ispData: [],
+        // ispData: [],
         natTypeData: [],
       }
     }

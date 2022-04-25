@@ -1,6 +1,9 @@
 import store from '@/store'
 import { fetchUserDomain } from '@/api/userDomain'
-import el from "element-ui/src/locale/lang/el";
+import { getItem } from '@/utils/storage'
+import { LOCATION } from '@/constant'
+import { Message } from 'element-ui'
+import i18n from '@/lang'
 
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
@@ -107,5 +110,18 @@ export function fetchAllDomainAndApp() {
       reject(err)
     })
   })
+}
+
+export function checkSelectZone() {
+  const loc = getItem(LOCATION)
+  if (!loc) {
+    Message({
+      message: i18n.t('login.selectZoneWarn'),
+      type: 'error',
+      duration: 3 * 1000
+    })
+    return false
+  }
+  return true
 }
 

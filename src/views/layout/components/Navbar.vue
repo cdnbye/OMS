@@ -4,6 +4,7 @@
     <!-- <breadcrumb class="breadcrumb-container"/> -->
     <el-tag class="current-zone" type="info" effect="plain">
       {{ $t('navbar.currZone') }}{{ currZone }}
+      <PointTip style="font-size: 14px; margin-left: 5px" :content="$t('navbar.zoneTip')" />
     </el-tag>
     <div class="right-menu">
 
@@ -14,11 +15,10 @@
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img v-bind:src="Avatar" class="user-avatar">
-          <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="user-avatar"> -->
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="text-align: center">
-          <a target="_blank" :href="language==='en'?'https://swarmcloud.net/en/views/':'https://www.cdnbye.com/cn/views/'">
+          <a target="_blank" href="https://swarmcloud.net/views/">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
             </el-dropdown-item>
@@ -45,6 +45,7 @@ import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
 import Logo from '@/assets/logo.png'
+import PointTip from '@/components/PointTip'
 // import Screenfull from '@/components/Screenfull'
 import SwitchDomain from '@/components/SwitchDomain'
 import {getItem} from "@/utils/storage";
@@ -62,6 +63,7 @@ export default {
     Hamburger,
     LangSelect,
     SwitchDomain,
+    PointTip,
     // Screenfull,
   },
   created() {
@@ -103,7 +105,8 @@ export default {
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+        // location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
       })
     }
   }

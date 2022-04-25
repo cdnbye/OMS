@@ -16,8 +16,10 @@
       <el-form-item label="日志采样比率">
         <el-slider v-model="configForm.log_rate" :min="0" :max="100" @change="piChange" show-input></el-slider>
       </el-form-item>
-      <el-form-item label="ShareOnly模式">
-        <el-switch v-model="configForm.share_only" active-color="green" inactive-color="red" @change="shareOnlyChange"></el-switch>
+      <el-form-item label="自适应上报时间">
+        <el-tooltip content="打开后上报时间间隔表示30万在线时应达到的值" placement="top">
+          <el-switch v-model="configForm.auto_report_interval" active-color="green" inactive-color="red" @change="autoReportIntervalChange"></el-switch>
+        </el-tooltip>
       </el-form-item>
       <el-form-item label="在线调试模式">
         <el-switch v-model="configForm.online_debug" active-color="green" inactive-color="red" @change="debugChange"></el-switch>
@@ -60,7 +62,7 @@ export default {
         report_interval: 0,
         tracker_open: false,
         max_nodes: 0,
-        share_only: false,
+        auto_report_interval: false,
         log_rate: 0,
         online_debug: false,
         enable_fusing: false,
@@ -117,7 +119,7 @@ export default {
     maxNodesChange() {
       this.isChanged = true
     },
-    shareOnlyChange() {
+    autoReportIntervalChange() {
       this.isChanged = true
     },
     debugChange() {

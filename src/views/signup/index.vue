@@ -4,6 +4,7 @@
       <div class="title-container">
         <h3 class="title">{{ $t('signup.title') }}</h3>
         <lang-select class="set-language"/>
+        <select-zone class="console"></select-zone>
       </div>
       <el-form-item prop="email">
         <span class="svg-container svg-container_login">
@@ -82,13 +83,15 @@
 
 <script>
 import LangSelect from '@/components/LangSelect'
-import { validatePhone, validateEmail } from '@/utils/validate'
+import { validateEmail } from '@/utils/validate'
 import { sendCode } from '@/api/auth'
 import { mapGetters } from 'vuex'
+import SelectZone from '@/components/SelectZone'
+import {checkSelectZone } from '@/utils'
 
 export default {
   name: 'Signup',
-  components: { LangSelect },
+  components: { LangSelect, SelectZone },
   data() {
     const formValidateEmail = (rule, value, callback) => {
       if (!validateEmail(value)) {
@@ -162,13 +165,14 @@ export default {
       }
     },
     handleSignup() {
-        if (!this.contractChecked) {
-            this.$messageBox.alert(this.$t('signup.confirmContract'), {
-                distinguishCancelAndClose: true,
-                confirmButtonText: this.$t('common.ok'),
-            });
-            return
-        }
+      if (!checkSelectZone()) return
+      if (!this.contractChecked) {
+          this.$messageBox.alert(this.$t('signup.confirmContract'), {
+              distinguishCancelAndClose: true,
+              confirmButtonText: this.$t('common.ok'),
+          });
+          return
+      }
       this.$refs.signupForm.validate(valid => {
         if (valid) {
           this.signupLoading = true
@@ -197,6 +201,7 @@ export default {
       })
     },
     onSendCode() {
+      if (!checkSelectZone()) return
       const { email } = this.signupForm
       if(email) {
         if(validateEmail(email)) {
@@ -347,6 +352,12 @@ $light_gray:#eee;
       position: absolute;
       top: 5px;
       right: 0px;
+    }
+    .console {
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      left: 0px;
     }
   }
   .show-pwd {

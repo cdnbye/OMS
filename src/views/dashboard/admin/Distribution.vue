@@ -17,9 +17,9 @@
         <pie-card title="Electron版本分布" :data="pcVerData"/>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <pie-card title="Tag分布" :data="tagData"/>
-      </el-col>
+<!--      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">-->
+<!--        <pie-card title="Tag分布" :data="tagData"/>-->
+<!--      </el-col>-->
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <pie-card title="终端分布" :data="deviceData"/>
@@ -37,9 +37,9 @@
         <pie-card title="网络类型分布" :data="netTypeData"/>
       </el-col>
 
-      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-        <pie-card title="运营商分布" :data="ispData"/>
-      </el-col>
+<!--      <el-col :xs="24" :sm="12" :lg="8" class="chart-col">-->
+<!--        <pie-card title="运营商分布" :data="ispData"/>-->
+<!--      </el-col>-->
 
       <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
         <pie-card title="NAT类型分布" :data="natTypeData"/>
@@ -67,12 +67,12 @@ export default {
       androidVerData: [],
       iosVerData: [],
       webVerData: [],
-      tagData: [],
+      // tagData: [],
       deviceData: [],
       liveData: [],
       topSiteData: [],
       netTypeData: [],
-      ispData: [],
+      // ispData: [],
       natTypeData: [],
       onlineNum: 0
     }
@@ -131,12 +131,12 @@ export default {
               this.pcVerData = formatPieData(data.data)
           }
       })
-      fetchLiveData('tag').then(res => {
-        const data = res.data
-        if(data) {
-          this.tagData = formatPieData(data.data)
-        }
-      })
+      // fetchLiveData('tag').then(res => {
+      //   const data = res.data
+      //   if(data) {
+      //     this.tagData = formatPieData(data.data)
+      //   }
+      // })
       fetchLiveData('device').then(res => {
         const data = res.data
         if(data) {
@@ -155,12 +155,12 @@ export default {
           this.netTypeData = formatPieData(data.data)
         }
       })
-      fetchLiveData('isp').then(res => {
-          const data = res.data
-          if(data) {
-              this.ispData = formatPieData(data.data)
-          }
-      })
+      // fetchLiveData('isp').then(res => {
+      //     const data = res.data
+      //     if(data) {
+      //         this.ispData = formatPieData(data.data)
+      //     }
+      // })
       fetchLiveData('nat').then(res => {
           const data = res.data
           if(data) {

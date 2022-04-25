@@ -64,6 +64,7 @@ export default {
     size: '布局大小',
     myInfo: '個人信息',
     currZone: '可用區: ',
+    zoneTip: '如果選擇了廣州以外的可用區，需要手動配置SDK連接的服務器地址，請參考<a style="color: #337ab7" href="https://swarmcloud.net/views/tracker.html" target="_blank">這裏</a>',
   },
   auth: {
     login: '登入',
@@ -89,9 +90,7 @@ export default {
     logInSuccess: '登入成功',
     username: '請輸入已驗證的郵箱',
     password: '請輸入密碼',
-    switchToHK: '已切換至香港可用區',
-    switchToCN: '已切換至廣州可用區',
-    switchToUS: '已切換至美國可用區',
+    selectZoneWarn: '請選擇一個可用區',
   },
   signup: {
     title: '註冊',
@@ -324,6 +323,7 @@ export default {
       signalAddr: '主信令地址',
       signalAddr2: '備用信令地址',
       switch: "關閉/開啟",
+      official: '挑選地理上接近您的用戶的官方信令地址',
     },
     stunManage: {
       addr: 'Stun地址',

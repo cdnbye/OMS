@@ -70,7 +70,7 @@ export default {
         deviceData: [],
         liveData: [],
         netTypeData: [],
-        ispData: [],
+        // ispData: [],
         natTypeData:[],
       }
     }
@@ -191,14 +191,14 @@ export default {
               this.disData.netTypeData = [];
           }
         })
-        fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
-          const data = res.data.data
-          if(data) {
-              this.disData.ispData = formatPieData(data)
-          } else {
-              this.disData.ispData = [];
-          }
-        })
+        // fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
+        //   const data = res.data.data
+        //   if(data) {
+        //       this.disData.ispData = formatPieData(data)
+        //   } else {
+        //       this.disData.ispData = [];
+        //   }
+        // })
         fetchDisData(uid, id, 'nat', hostID).then(res => {
           const data = res.data.data
           if(data) {

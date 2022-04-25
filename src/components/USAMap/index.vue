@@ -158,20 +158,6 @@
             const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
             sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler)
         },
-        beforeDestroy() {
-            if (!this.chart) {
-                return
-            }
-            if (this.autoResize) {
-                window.removeEventListener('resize', this.__resizeHandler)
-            }
-
-            const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
-            sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler)
-
-            this.chart.dispose()
-            this.chart = null
-        },
         methods: {
           resetProvinceData() {
             this.province_data.forEach(item => {
@@ -344,7 +330,7 @@
             }
 
             const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
-            sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler)
+            sidebarElm && sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler)
 
             this.chart.dispose()
             this.chart = null

@@ -4,6 +4,7 @@
       <div class="title-container">
         <h3 class="title">{{ $t('passwdReset.title') }}</h3>
         <lang-select class="set-language"/>
+        <select-zone class="console"></select-zone>
       </div>
 
       <el-form-item prop="email">
@@ -63,9 +64,13 @@
 <script>
 import { validateEmail } from '@/utils/validate'
 import { sendCode, resetPasswd } from '@/api/auth'
+import SelectZone from '@/components/SelectZone'
+import LangSelect from '@/components/LangSelect'
+import {checkSelectZone } from '@/utils'
 
 export default {
   name: 'PasswdReset',
+  components: { LangSelect, SelectZone },
   data() {
     const formValidateMail = (rule, value, callback) => {
       if (!validateEmail(value)) {
@@ -127,6 +132,7 @@ export default {
       }
     },
     handleReset() {
+      if (!checkSelectZone()) return
       this.$refs.resetForm.validate(valid => {
         if (valid) {
           this.resetLoading = true
@@ -148,6 +154,7 @@ export default {
       })
     },
     onSendCode() {
+      if (!checkSelectZone()) return
       const { email } = this.resetForm
       if(email) {
         if(validateEmail(email)) {
@@ -294,6 +301,12 @@ $light_gray:#eee;
       position: absolute;
       top: 5px;
       right: 0px;
+    }
+    .console {
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      left: 0px;
     }
   }
   .show-pwd {

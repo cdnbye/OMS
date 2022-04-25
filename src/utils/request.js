@@ -2,22 +2,14 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-import { getQueryObj } from '@/utils/format'
 import { setItem, getItem } from '@/utils/storage'
 import { LOCATION, BASE_URLS } from '@/constant'
 
-let { loc } = getQueryObj()
-if (!loc) {
-  // const cachedLoc = getItem(LOCATION)
-  loc = getItem(LOCATION) || process.env.VUE_APP_LOC
-  // 缓存
-  // if (!cachedLoc) {
-  //   setItem(LOCATION, loc)
-  // }
-} else {
-  loc = loc.substring(0, 2)
+const loc = getItem(LOCATION)
+if (loc) {
+  setItem(LOCATION, loc)
 }
-setItem(LOCATION, loc)
+
 
 // console.warn(`loc ${loc}`)
 

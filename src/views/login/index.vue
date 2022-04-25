@@ -4,16 +4,7 @@
       <div class="title-container">
         <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language"/>
-        <el-dropdown @command="handleConsoleSelect" class="console" :hide-on-click="false">
-          <span class="el-dropdown-link">
-            {{ $t('auth.console') }}<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="hk" :disabled="!showHK">{{ $t('auth.consoleHK') }}</el-dropdown-item>
-            <el-dropdown-item command="cn" :disabled="!showCN">{{ $t('auth.consoleCN') }} ({{ $t('common.default') }})</el-dropdown-item>
-            <el-dropdown-item command="us" :disabled="!showUSA">{{ $t('auth.consoleUSA') }}</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <select-zone class="console"></select-zone>
       </div>
 
       <el-form-item prop="username">
@@ -59,16 +50,13 @@
 <script>
 import { validateEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
+import SelectZone from '@/components/SelectZone'
 import { setSha256 } from '@/utils/format'
-import { trim } from '@/utils'
-import request from "@/utils/request";
-import { LOCATION, BASE_URLS } from '@/constant'
-import { setItem } from '@/utils/storage'
-import {getItem} from "../../utils/storage";
+import { trim, checkSelectZone } from '@/utils'
 
 export default {
   name: 'Login',
-  components: { LangSelect },
+  components: { LangSelect, SelectZone },
   data() {
     const validateUsername = (rule, value, callback) => {
       value = trim(value)
@@ -99,9 +87,6 @@ export default {
       passwordType: 'password',
       loading: false,
       redirect: undefined,
-      showCN: true,
-      showHK: true,
-      showUSA: true,
     }
   },
   watch: {
@@ -113,40 +98,9 @@ export default {
     }
   },
   mounted() {
-    this.checkSelected()
+
   },
   methods: {
-    checkSelected(env) {
-      // const env = process.env.VUE_APP_ENV
-      this.showCN = this.showHK = this.showUSA = true
-      if (!env) {
-        env = getItem(LOCATION)
-      }
-      if (env === 'cn') {
-        this.showCN = false
-      } else if (env === 'hk') {
-        this.showHK = false
-      } else if (env === 'us') {
-        this.showUSA = false
-      }
-    },
-    handleConsoleSelect(command) {
-        let msg
-        if (command === 'hk') {
-          msg = this.$t('login.switchToHK')
-        } else if (command === 'cn') {
-          msg = this.$t('login.switchToCN')
-        } else if (command === 'us') {
-          msg = this.$t('login.switchToUS')
-        }
-        this.$message({
-          message: msg,
-          type: 'success'
-        });
-        request.defaults.baseURL = BASE_URLS[command]
-        setItem(LOCATION, command)
-        this.checkSelected(command)
-    },
     formatData(data) {
       const temp = {...data}
       delete temp.username
@@ -162,6 +116,7 @@ export default {
       }
     },
     handleLogin() {
+      if (!checkSelectZone()) return
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
