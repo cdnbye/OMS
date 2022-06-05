@@ -31,6 +31,14 @@
                 </card>
             </el-col>
 
+            <!--p2p效率-->
+            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+              <card :num="p2pEfficiency"
+                    :decimals="2"
+                    :desc="`${$t('dashboard.p2pEfficiency')} (%)`">
+              </card>
+            </el-col>
+
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card
                     :num="statis.flow.free.num"
@@ -95,6 +103,7 @@
     import { formatTraffic } from '@/utils/format'
     import PointTip from '@/components/PointTip'
     import Card from '@/components/Card'
+    import { mapGetters } from "vuex";
 
     export default {
         name: 'LiveTime',
@@ -112,38 +121,62 @@
                             type: {
                         product_type: 0,
                             time: ''
-                    },
+                         },
                         online: 0,
-                            traffic_p2p: {
-                        num: 0,
+                        traffic_p2p: {
+                            num: 0,
                             unit: 'KB'
-                    },
+                        },
                         traffic_http: {
                             num: 0,
-                                unit: 'KB'
+                            unit: 'KB'
                         },
                         frequency_day: 0,
-                            num_max: 0,
+                        num_max: 0,
                         flow: {
-                        remain: 0,
+                            remain: 0,
                             daily_remain: 0,
                             totalRemain: 0,
                             free: {
-                            num: 0,
-                                unit: 'KB'
-                        }
-                    },
+                              num: 0,
+                              unit: 'KB'
+                            }
+                        },
                         clock: new Date(),
+                        traffic_p2p_day: 0,
+                        traffic_http_day: 0,
                     }
                 },
             },
         },
         computed: {
+            ...mapGetters([
+              'currentDomain',
+            ]),
+            p2pEfficiency: function () {
+              let p2pDiff = this.statis.traffic_p2p_day - this.lastP2pTraffic;
+              if (p2pDiff < 0) p2pDiff = 0;
+              let httpDiff = this.statis.traffic_http_day - this.lastHttpTraffic;
+              if (httpDiff < 0) httpDiff = 0;
+              this.lastP2pTraffic = this.statis.traffic_p2p_day;
+              this.lastHttpTraffic = this.statis.traffic_http_day;
+              if (p2pDiff === 0) {
+                return 0
+              }
+              if (httpDiff === 0) {
+                return 100
+              }
+              this.lastRatio = Number((p2pDiff/(p2pDiff+httpDiff)*100).toFixed(2))
+              return this.lastRatio
+            }
         },
         data() {
             return {
                 leftMinutes: 0,
                 leftHours: 0,
+                lastP2pTraffic: 0,
+                lastHttpTraffic: 0,
+                lastRatio: 0,
             }
         },
         watch: {
@@ -154,6 +187,10 @@
                   this.leftMinutes = 60 - serverClock.minutes()
                   this.leftHours = 23 - serverClock.hours()
               }
+          },
+          currentDomain: function () {
+            this.lastP2pTraffic = 0;
+            this.lastHttpTraffic = 0;
           }
         },
         mounted() {

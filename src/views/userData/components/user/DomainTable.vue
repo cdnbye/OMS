@@ -30,7 +30,7 @@
     <el-table-column align="center" prop="domain" :label="$t('domainTable.domain')"></el-table-column>
     <el-table-column align="center" :label="$t('domainTable.status')">
       <template slot-scope="scope">
-        <span :style="scope.row.blocked || !scope.row.isValid ?'color: red':'color: green'">
+        <span :style="scope.row.blocked || !scope.row.isValid || scope.row.disable_p2p?'color: red':'color: green'">
           {{ formatterStatus(scope.row) }}
         </span>
       </template>
@@ -343,7 +343,7 @@
         this.domainFormData.playUrl = trim(this.domainFormData.playUrl)
         this.$refs.domainForm.validate(valid => {
           if(valid) {
-            const domains = this.domainFormData.domain.split('\n').map(dm => trim(dm)).filter(dm => {
+            const domains = this.domainFormData.domain.split('\n').map(dm => trim(dm).toLowerCase()).filter(dm => {
               return dm !== ""
             })
             const data = {
@@ -372,6 +372,9 @@
         // if(row.reviewing) {
         //   return this.$t('common.reviewing')
         // }
+        if (row.disable_p2p) {
+          return this.$t('common.userClosed')
+        }
         return row.isValid === 0 ? this.$t('domainTable.unavailable') : this.$t('common.available')
       },
       saveFile() {

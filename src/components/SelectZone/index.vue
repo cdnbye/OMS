@@ -18,13 +18,6 @@ import request from "@/utils/request";
 
 export default {
   name: "SelectZone",
-  props: {
-    color: {
-      type: String,
-      default: '#f56c6c',
-      required: false
-    }
-  },
   data() {
     return {
       selectedZone: '',

@@ -123,6 +123,7 @@ export default {
     online: '當前在線人數',
     p2pTraffic: '今日P2P流量',
     httpTraffic: '今日HTTP流量',
+    p2pEfficiency: '当前P2P效率',
     serveNum: '今日播放次數',
     maxOnlineNum: '歷史最高在線人數',
     remain: '剩余流量包流量',
@@ -152,7 +153,7 @@ export default {
     descPerApp: '此界面用於展示單個域名/APP的實時數據，請通過上方"切換"按鈕來切換域名或APP。',
   },
   domainTable: {
-    bindDomain: '綁定域名/根域名',
+    bindDomain: '綁定(根)域名',
     bindDomainTip: '輸入你的網站域名(請勿輸入IP地址)，例如：www.example.com\n註意：域名是指播放器所在的域名（如果嵌入iframe則是src的域名），不是流地址(m3u8)的域名。\n端口不需要填寫，支持根域名通配。每行輸入一個域名，最多50個。',
     playUrlTip: '輸入你的網站首頁鏈接或者可以進入播放頁面的引導頁鏈接。網站不得包含非法內容，也不得包含跳轉到非法內容的鏈接。\nhttps://example.com/index.html',
     bindWarning: 'CDNBye不對色情、博彩等非法內容提供服務，請確保您的網站符合法律規範，服務於國內的域名必須已備案。',
@@ -238,6 +239,7 @@ export default {
     no: 'NO',
     status: '狀態',
     available: '可用',
+    userClosed: '用户关闭',
     reviewing: '正在審核中',
     illegal: '未通過審核',
     success: '成功',
@@ -319,7 +321,7 @@ export default {
       status: '激活比率(%)',
     },
     signalManage: {
-      desc: '本頁面用於雲端配置信令地址，信令用於節點之間交換信息以建立P2P連接。如果在此頁面配置了信令地址則會覆蓋SDK側配置的信令地址。如果設置了備用信令地址，那麽SDK會同時連接兩個信令，並在主信令不可用時自動切換到備用信令。每行輸入一個地址，最多輸入10個地址。',
+      desc: '本頁面用於雲端配置信令地址，信令用於節點之間交換信息以建立P2P連接。如果在此頁面配置了信令地址則會覆蓋SDK側配置的信令地址。如果設置了備用信令地址，那麽SDK會同時連接兩個信令，並在主信令不可用時自動切換到備用信令。',
       signalAddr: '主信令地址',
       signalAddr2: '備用信令地址',
       switch: "關閉/開啟",

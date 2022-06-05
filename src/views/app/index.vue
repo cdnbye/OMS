@@ -71,7 +71,7 @@
 
       <el-table-column :label="$t('common.status')" align="center">
         <template slot-scope="scope">
-          <span :style="scope.row.blocked?'color: red':'color: green'">{{ formatterStatus(scope.row) }}</span>
+          <span :style="scope.row.blocked || scope.row.disable_p2p?'color: red':'color: green'">{{ formatterStatus(scope.row) }}</span>
         </template>
       </el-table-column>
 
@@ -396,6 +396,9 @@
           // if(row.reviewing) {
           //     return this.$t('common.reviewing')
           // }
+          if (row.disable_p2p) {
+            return this.$t('common.userClosed')
+          }
           return this.$t('common.available')
       },
     },

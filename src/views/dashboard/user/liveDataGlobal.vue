@@ -78,6 +78,8 @@
                         }
                     },
                     clock: null,
+                    traffic_p2p_day: 0,
+                    traffic_http_day: 0,
                 },
                 disData: {
                   domainData: [],
@@ -165,6 +167,8 @@
                     .then(res => {
                         const { data } = res
                         this.statis.online = data.num_rt
+                        this.statis.traffic_p2p_day = data.traffic_p2p_day
+                        this.statis.traffic_http_day = data.traffic_http_day
                         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
                         this.statis.traffic_http = formatTraffic(data.traffic_http_day)
                         this.statis.frequency_day = data.api_frequency_day
