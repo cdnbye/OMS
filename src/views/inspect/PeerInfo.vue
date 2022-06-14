@@ -62,9 +62,9 @@
       <el-form-item label="player_hooked">
         <el-input v-model="peerInfo.player_hooked"></el-input>
       </el-form-item>
-
-
-
+      <el-form-item label="offline">
+        <el-input v-model="peerInfo.off"></el-input>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -96,6 +96,7 @@ export default {
         column: "",
         abr: "",
         player_hooked: "",
+        off: "",
       },
     }
   },

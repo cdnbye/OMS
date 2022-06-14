@@ -140,6 +140,7 @@ export default {
     httpTip: 'The stream traffic downloaded through HTTP (origin server or CDNs), the sum of HTTP traffic and P2P traffic is equal to the total traffic',
     freeTip: '5GB traffic will be given after the domain name is registered, and additional 20 GB after signing in every day. \nNote that both of these will be cleared the next day. The consumed P2P traffic is first deducted by free traffic while the excess is deducted by paid traffic. \nIf there is no available traffic, P2P service will be stopped.',
     remainTip: 'Please buy <a style="color: #337ab7" href="#/shopping/package">traffic package</a> or <a style="color: #337ab7" href="#/shopping/monthly_package">monthly/annual plan</a> in time to avoid service interruption.',
+    efficiencyTip: 'Percentage of P2P traffic increment to total traffic increment',
     checkin: 'Get Free Traffic',
     checkinSuccess: 'Get free traffic successfully!',
     haveChecked: 'You have signed in today',

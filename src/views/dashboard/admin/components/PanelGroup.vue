@@ -25,7 +25,7 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <card :num="statis.p2p_rate"
             :decimals="2"
-            desc="当前P2P分享率(%)"
+            desc="当前P2P效率(%)"
             :color="statis.p2p_rate < 30 ? 'red' : ''"
       >
       </card>

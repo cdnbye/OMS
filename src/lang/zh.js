@@ -141,6 +141,7 @@ export default {
     httpTip: '通過HTTP方式（源服務器或者CDN）下載媒體的流量，HTTP流量和P2P流量加和等於總流量。',
     freeTip: '綁定後的域名每日贈送5GB流量，簽到後再額外贈送20GB流量，次日重置。<br/>消耗的P2P流量先用免費流量抵扣，超出部分用付費流量抵扣。<br/>如果可用流量為零，則停止P2P服務。',
     remainTip: '請及時購買<a style="color: #337ab7" href="#/shopping/package">流量包</a>或者<a style="color: #337ab7" href="#/shopping/monthly_package">包年包月套餐</a>，以避免服務中斷。',
+    efficiencyTip: 'P2P流量增量占总流量增量的百分比',
     checkin: '簽到免費領流量',
     checkinSuccess: '簽到成功！',
     haveChecked: '你今天已經簽到了哦~',

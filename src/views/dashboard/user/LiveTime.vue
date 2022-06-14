@@ -36,6 +36,9 @@
               <card :num="p2pEfficiency"
                     :decimals="2"
                     :desc="`${$t('dashboard.p2pEfficiency')} (%)`">
+                    <div class="tip">
+                      <PointTip :content="$t('dashboard.efficiencyTip')" />
+                    </div>
               </card>
             </el-col>
 
