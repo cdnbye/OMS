@@ -359,6 +359,7 @@ export default {
     illegal: '未通過審核(請聯系客服)',
     signature: '應用簽名(SHA1)',
     updateSign: '更新SHA1',
+    websiteWarn: '請在網站管理頁面綁定域名',
   },
   hotChannels: {
     content: '資源',

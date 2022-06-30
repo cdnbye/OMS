@@ -316,6 +316,16 @@
         this.form.app_id = trim(this.form.app_id)
         this.form.play_url = trim(this.form.play_url)
         this.form.signature = trim(this.form.signature)
+
+        const { app_id } = this.form;
+        if (app_id.startsWith('http://') || app_id.startsWith('https://')) {
+          this.$notify.error({
+            title: this.$t('common.error'),
+            message: this.$t('app.websiteWarn'),
+          });
+          return
+        }
+
         this.$refs.createForm.validate(valid => {
           if(valid) {
             this.createItemLoading = true

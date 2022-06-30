@@ -306,6 +306,14 @@
                 value: '13',
                 label: "monthly_250TB",
             },
+            {
+              value: '14',
+              label: "annual_5TB",
+            },
+            {
+              value: '15',
+              label: "MONTHLY_2TB",
+            },
         ],
         currencyOptions:[
             "USD",

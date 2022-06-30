@@ -199,10 +199,17 @@
                                     type: 'success'
                                 })
                             } else {
-                                this.$message({
+                                if (res.data.expired) {
+                                  this.$message({
+                                    message: '备案API过期',
+                                    type: 'error'
+                                  })
+                                } else {
+                                  this.$message({
                                     message: '未备案',
                                     type: 'error'
-                                })
+                                  })
+                                }
                             }
                         } else {
                             this.$message({

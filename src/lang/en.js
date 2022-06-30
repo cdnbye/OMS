@@ -358,6 +358,7 @@ export default {
     illegal: 'Not Approved',
     signature: 'Signature(SHA1)',
     updateSign: 'Update SHA1',
+    websiteWarn: 'Please add domain on the tab of Website Management',
   },
   hotChannels: {
     content: 'Content',
