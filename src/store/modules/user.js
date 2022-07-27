@@ -30,6 +30,7 @@ const user = {
       state.token = token
     },
     SET_PROFILE: (state, profile) => {
+      setItem('profile', profile)
       state.profile = profile
     },
     SET_ID: (state, id) => {

@@ -14,7 +14,10 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img v-bind:src="Avatar" class="user-avatar">
+          <div v-if="userName" class="username-wrapper">
+            {{ userName }}
+          </div>
+          <img v-else v-bind:src="Avatar" class="user-avatar"/>
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="text-align: center">
@@ -46,9 +49,8 @@ import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
 import Logo from '@/assets/logo.png'
 import PointTip from '@/components/PointTip'
-// import Screenfull from '@/components/Screenfull'
 import SwitchDomain from '@/components/SwitchDomain'
-import {getItem} from "@/utils/storage";
+import {getItem, removeItem} from "@/utils/storage";
 
 export default {
   data() {
@@ -56,6 +58,7 @@ export default {
       showDomain: true,
       Avatar: Logo,
       currZone: '',
+      userName: '',
     }
   },
   components: {
@@ -64,7 +67,6 @@ export default {
     LangSelect,
     SwitchDomain,
     PointTip,
-    // Screenfull,
   },
   created() {
     this.showDomain = !this.roles.includes('admin')
@@ -72,19 +74,25 @@ export default {
   },
   mounted() {
     this.currZone = this.getCurrZone()
+    const profile = getItem('profile')
+    if (profile) this.userName = profile.name
   },
   watch: {
     language() {
       this.currZone = this.getCurrZone()
+    },
+    profile() {
+      const profile = getItem('profile')
+      if (profile) this.userName = profile.name
     }
   },
   computed: {
     ...mapGetters([
       'language',
       'sidebar',
-      'name',
       'device',
-      'roles'
+      'roles',
+      'profile'
     ])
   },
   methods: {
@@ -104,6 +112,7 @@ export default {
       this.$store.dispatch('toggleSideBar')
     },
     logout() {
+      removeItem('profile')
       this.$store.dispatch('LogOut').then(() => {
         // location.reload()// In order to re-instantiate the vue-router object to avoid bugs
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
@@ -149,7 +158,7 @@ export default {
 
     .right-menu-item {
       display: inline-block;
-      margin: 0 8px;
+      margin: 0 5px;
       //font-size: 24px;
       //color: #5a5e66;
       //vertical-align: text-bottom;
@@ -183,11 +192,22 @@ export default {
     }
     .avatar-container {
       height: 50px;
-      margin-right: 30px;
+      margin-right: 25px;
       cursor: pointer;
       .avatar-wrapper {
         margin-top: 8px;
         position: relative;
+        .username-wrapper {
+          margin-top: 20px;
+          margin-right: 5px;
+          position: relative;
+          width: 140px;
+          font-weight: bold;
+          font-size: 13px;
+          word-wrap: break-word;
+          word-break: normal;
+          text-align: right;
+        }
         .user-avatar {
           height: 30px;
           width: 30px;
@@ -196,8 +216,8 @@ export default {
         }
         .el-icon-caret-bottom {
           position: absolute;
-          right: -20px;
-          top: 25px;
+          right: -17px;
+          top: 16px;
           font-size: 12px;
         }
       }

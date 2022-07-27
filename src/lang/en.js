@@ -100,7 +100,7 @@ export default {
     confirm_password_error: 'The two passwords you entered were inconsistent',
     vcode: 'Verification Code',
     email: 'E-mail',
-    send: 'Send Verification Code',
+    send: 'Send Verification Code (Contact support if no email received)',
     contract: 'I have read and agreed to ',
     contractName: 'Terms of Service',
     confirmContract: 'Please agree to the Terms of Service',
@@ -124,7 +124,7 @@ export default {
     httpTraffic: 'HTTP Traffic Today',
     p2pEfficiency: 'Current Efficiency',
     serveNum: 'Playback Sessions Today',
-    maxOnlineNum: 'Peak Concurrent Viewers',
+    maxOnlineNum: 'Max Concurrent Viewers',
     remain: 'Remaining Paid Traffic',
     monthlyRemain: 'Remaining Plan Traffic Today',
     free: 'Remaining Free Traffic',
@@ -317,7 +317,7 @@ export default {
       off: 'Disabled',
     },
     activationRatio: {
-      desc: 'This page enables you to allocate an exact percentage of your audience to benefit from CDNBye peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.\n0% - No users are P2P enabled.\n100% - All users are P2P enabled(the default setting).',
+      desc: 'This page enables you to allocate an exact percentage of your audience to benefit from SwarmCloud peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.\n0% - No users are P2P enabled.\n100% - All users are P2P enabled(the default setting).',
       status: 'Activation Ratio(%)',
     },
     signalManage: {
