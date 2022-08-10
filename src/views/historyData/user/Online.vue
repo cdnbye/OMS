@@ -73,10 +73,13 @@ export default {
     ]),
   },
   mounted() {
+    this.$store.dispatch('toggleSwitchDomain', true)
     if(this.currentDomain.id) {
       this.getData()
     }
-    // this.test();
+  },
+  beforeDestroy() {
+    this.$store.dispatch('toggleSwitchDomain', false)
   },
   watch: {
     currentDomain: function () {

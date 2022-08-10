@@ -81,7 +81,7 @@ export default {
     console: '選擇可用區',
     consoleHK: '香港',
     consoleCN: '廣州',
-    consoleUSA: '美國',
+    consoleUSA: '弗吉尼亞',
 
   },
   login: {

@@ -94,6 +94,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('toggleSwitchDomain', true)
     // console.warn(`hostId ${this.$route.params.hostId}`)
     const domainInfo = this.$route.params.domainInfo;
     if(domainInfo && domainInfo.id && domainInfo.uid) {
@@ -106,6 +107,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(timer)
+    this.$store.dispatch('toggleSwitchDomain', false)
   },
   methods: {
     formatTraffic,

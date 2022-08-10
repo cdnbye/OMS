@@ -86,9 +86,13 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('toggleSwitchDomain', true)
     if(this.currentDomain.id) {
       this.getData()
     }
+  },
+  beforeDestroy() {
+    this.$store.dispatch('toggleSwitchDomain', false)
   },
   methods: {
     dataChange(date) {

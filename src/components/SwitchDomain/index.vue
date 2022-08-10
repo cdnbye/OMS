@@ -2,7 +2,8 @@
   <div style="display: inline-block; text-align: center; width: 100%; ">
     <el-tag style="font-weight: bold;; font-size: medium; margin: 0px;"
             effect="dark"
-            :type="currentDomain.domain ? 'success' : 'danger'">
+            :type="currentDomain.domain ? 'success' : 'danger'"
+            v-show="switchDomainVisible">
       {{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}
       <el-button size="mini" type="primary" plain @click="selectDomainVisible = true"
                  style="font-size: medium; margin-right: -10px;">
@@ -57,14 +58,16 @@ export default {
   data() {
     return {
       selectValue: '',
-      selectDomainVisible: false
+      selectDomainVisible: false,
+      visible: false,
     }
   },
   computed: {
     ...mapGetters([
       'device',
       'currentDomain',
-      'userValidDomain'
+      'userValidDomain',
+      'switchDomainVisible',
     ])
   },
   watch: {

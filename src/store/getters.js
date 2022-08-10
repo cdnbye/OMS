@@ -12,5 +12,6 @@ const getters = {
   userValidDomain: state => state.user.userValidDomain,
   currentDomain: state => state.user.currentDomain,
   profile: state => state.user.profile,
+  switchDomainVisible: state => state.app.switchDomainVisible,
 }
 export default getters
