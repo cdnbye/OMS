@@ -151,7 +151,7 @@ export default [
         children: [
             {
                 path: 'bandwidth',
-                component: () => import('@/views/historyData/bandwidth'),
+                component: () => import('@/views/historyData/admin/Traffic'),
                 name: 'bandwidth',
                 meta: {
                     title: 'bandwidth',

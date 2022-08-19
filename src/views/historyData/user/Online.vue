@@ -1,30 +1,6 @@
 <template>
   <div class="app-container">
-<!--    <el-tag style="font-weight: bold;; font-size: medium; margin: 0px 10px; float: left"-->
-<!--            effect="dark"-->
-<!--            :type="currentDomain.domain ? 'success' : 'danger'">-->
-<!--      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>{{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}-->
-<!--    </el-tag>-->
-    <el-form :inline="true">
-      <el-form-item :xs="10" :sm="6" :lg="4">
-        <el-radio-group v-model="radio" @change="selectChange">
-          <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
-          <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
-          <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
-          <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item :xs="10" :sm="6" :lg="4">
-        <el-date-picker
-          v-model="date"
-          @change="dataChange"
-          type="datetimerange"
-          range-separator="To"
-          start-placeholder="Start date"
-          end-placeholder="End date">
-        </el-date-picker>
-      </el-form-item>
-    </el-form>
+    <DataPicker :date="date" :radio="radio" @selectChange="selectChange" @dataChange="dataChange"></DataPicker>
     <LineChart :chart-data="onlineData" :option="option" />
     <NoBindTip />
     <el-button type="primary" style="float: left">
@@ -41,6 +17,7 @@
 <script>
 import moment from 'moment'
 import { fetchNum } from '@/api/user/historyData'
+import DataPicker from '@/components/DataPicker'
 import LineChart from '@/components/LineChart'
 import NoBindTip from '@/components/NoBindTip'
 import { mapGetters } from 'vuex'
@@ -49,6 +26,7 @@ import JsonExcel from 'vue-json-excel'
 export default {
   name: 'Online',
   components: {
+    DataPicker,
     LineChart,
     NoBindTip,
     JsonExcel,
@@ -92,7 +70,7 @@ export default {
         if (!date) return
         this.date[0] = date[0]
         this.date[1] = date[1]
-      this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
+        this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
     },
     selectChange(val) {
       this.date[1] = moment()

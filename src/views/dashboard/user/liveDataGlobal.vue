@@ -7,11 +7,19 @@
             type="info"
             show-icon>
         </el-alert>
-        <el-row style="text-align: left;" v-show="showCheckin">
+        <el-row :gutter="20" style="text-align: left;">
           <el-col :xs="7" :sm="4" :lg="2">
-            <el-button size="small" type="success" @click="handleCheckin" v-loading="checkinLoading"
-                       style="font-size: medium;">
+            <el-button size="small" type="success" @click="handleCheckin"
+                       v-loading="checkinLoading"
+                       v-show="showCheckin"
+                       style="font-size: medium; margin-right: 80px">
               {{ $t('dashboard.checkin') }}
+            </el-button>
+          </el-col>
+          <el-col :xs="7" :sm="4" :lg="2">
+            <el-button size="small" type="primary" @click="changeUTC"
+                       style="font-size: medium;">
+              {{ $t('dashboard.changeUTC') }}
             </el-button>
           </el-col>
         </el-row>
@@ -88,7 +96,23 @@
                   liveData: [],
                   netTypeData: [],
                   ispData: [],
-                }
+                },
+                utcOptions: [{
+                  value: '12',
+                  label: '+12'
+                }, {
+                  value: '11',
+                  label: '+11'
+                }, {
+                  value: '10',
+                  label: '+10'
+                }, {
+                  value: '9',
+                  label: '+9'
+                }, {
+                  value: '8',
+                  label: '+8'
+                }],
             }
         },
         computed: {
@@ -213,6 +237,9 @@
                 int = setInterval(function() {
                     _this.getData(uid, id)
                 }, 20000)
+            },
+            changeUTC() {
+
             },
             handleCheckin() {
                 if(this.currentDomain.id !== undefined) {

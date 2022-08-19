@@ -4,7 +4,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import adminTraffic from './admin/Traffic'
+import adminTraffic from './admin/P2pRatio'
 import userTraffic from './user/Traffic'
 
 export default {

@@ -6,24 +6,8 @@
                 type="info"
                 show-icon>
         </el-alert>
-        <el-form :inline="true" style="margin-top: 10px">
-            <el-form-item :xs="10" :sm="6" :lg="4">
-                <el-radio-group v-model="radio" @change="selectChange">
-                    <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
-                    <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item :xs="10" :sm="6" :lg="4">
-                <el-date-picker
-                        v-model="date"
-                        @change="dataChange"
-                        type="datetimerange"
-                        range-separator="To"
-                        start-placeholder="Start date"
-                        end-placeholder="End date">
-                </el-date-picker>
-            </el-form-item>
-        </el-form>
+        <DataPicker :date="date" :radio="radio" :hour="false" :day="false" @selectChange="selectChange" @dataChange="dataChange">
+        </DataPicker>
         <LineChart :chart-data="lineChartData" :option="option" />
         <NoBindTip />
         <el-button type="primary" style="float: left">
@@ -39,6 +23,7 @@
 
 <script>
     import moment from 'moment'
+    import DataPicker from '@/components/DataPicker'
     import NoBindTip from '@/components/NoBindTip'
     import LineChart from '@/components/LineChart'
     import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/user/historyData'
@@ -50,6 +35,7 @@
     export default {
         name: 'TrafficGlobal',
         components: {
+            DataPicker,
             LineChart,
             NoBindTip,
             JsonExcel
@@ -85,7 +71,6 @@
         methods: {
             dataChange(date) {
                 if (!date) return
-                console.warn(`date[0] ${date[0]} date[1] ${date[1]}`)
                 this.date[0] = date[0]
                 this.date[1] = date[1]
                 this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))

@@ -6,26 +6,7 @@
                 type="info"
                 show-icon>
         </el-alert>
-        <el-form :inline="true" style="margin-top: 10px">
-            <el-form-item :xs="10" :sm="6" :lg="4">
-                <el-radio-group v-model="radio" @change="selectChange">
-                    <el-radio-button label="hour">{{ $t('historyData.hour')}}</el-radio-button>
-                    <el-radio-button label="day">{{ $t('historyData.day')}}</el-radio-button>
-                    <el-radio-button label="week">{{ $t('historyData.week')}}</el-radio-button>
-                    <el-radio-button label="month">{{ $t('historyData.month')}}</el-radio-button>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item :xs="10" :sm="6" :lg="4">
-                <el-date-picker
-                        v-model="date"
-                        @change="dataChange"
-                        type="datetimerange"
-                        range-separator="To"
-                        start-placeholder="Start date"
-                        end-placeholder="End date">
-                </el-date-picker>
-            </el-form-item>
-        </el-form>
+        <DataPicker :date="date" :radio="radio" @selectChange="selectChange" @dataChange="dataChange"></DataPicker>
         <LineChart :chart-data="onlineData" :option="option" />
         <NoBindTip />
         <el-button type="primary" style="float: left">
@@ -42,6 +23,7 @@
 <script>
     import moment from 'moment'
     import { fetchNum } from '@/api/user/historyData'
+    import DataPicker from '@/components/DataPicker'
     import LineChart from '@/components/LineChart'
     import NoBindTip from '@/components/NoBindTip'
     import JsonExcel from 'vue-json-excel'
@@ -50,6 +32,7 @@
     export default {
         name: 'OnlineGlobal',
         components: {
+            DataPicker,
             LineChart,
             NoBindTip,
             JsonExcel,

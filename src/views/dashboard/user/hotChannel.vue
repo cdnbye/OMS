@@ -72,7 +72,6 @@
                 this.fetchTableData()
             },
             indexMethod(index) {
-                console.warn()
                 return index + (this.tableParam.page-1)*this.tableParam.pageSize + 1;
             }
         },

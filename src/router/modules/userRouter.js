@@ -101,20 +101,6 @@ const userRouter = [
         ]
     },
 
-    // {
-    //     path: '/channels',
-    //     component: Layout,
-    //     redirect: '/user/hotChannel',
-    //     meta: {
-    //         title: 'dashboard',
-    //         icon: 'peoples',
-    //         roles: ['user']
-    //     },
-    //     children: [
-    //
-    //     ]
-    // },
-
     // user router 历史数据
     {
         path: '/history',
@@ -128,21 +114,31 @@ const userRouter = [
         },
         children: [
             {
-                path: 'p2p_rate',
-                component: () => import('@/views/historyData/Traffic'),
-                name: 'P2PRate',
-                meta: {
-                    title: 'p2pTraffic',
-                    roles: ['user'],
-                    noCache: true
-                }
-            },
-            {
                 path: 'p2p_rate_global',
                 component: () => import('@/views/historyData/user/TrafficGlobal'),
                 name: 'P2PRateGlobal',
                 meta: {
                     title: 'p2pTrafficGlobal',
+                    roles: ['user'],
+                    noCache: true
+                }
+            },
+            {
+                path: 'online_global',
+                component: () => import('@/views/historyData/user/OnlineGlobal'),
+                name: 'OnlineGlobal',
+                meta: {
+                    title: 'onlineNumGlobal',
+                    roles: ['user'],
+                    noCache: true
+                }
+            },
+            {
+                path: 'p2p_rate',
+                component: () => import('@/views/historyData/Traffic'),
+                name: 'P2PRate',
+                meta: {
+                    title: 'p2pTraffic',
                     roles: ['user'],
                     noCache: true
                 }
@@ -157,16 +153,6 @@ const userRouter = [
                     noCache: true
                 }
             },
-            {
-                path: 'online_global',
-                component: () => import('@/views/historyData/user/OnlineGlobal'),
-                name: 'OnlineGlobal',
-                meta: {
-                    title: 'onlineNumGlobal',
-                    roles: ['user'],
-                    noCache: true
-                }
-            }
         ]
     },
 
@@ -181,33 +167,6 @@ const userRouter = [
             roles: ['user']
         },
         children: [
-            {
-                path: 'world',
-                component: () => import('@/views/userDistribution/World'),
-                name: 'WorldDistribution',
-                meta: {
-                    title: 'worldDistribution',
-                    roles: ['user']
-                }
-            },
-            {
-                path: 'usa',
-                component: () => import('@/views/userDistribution/USA'),
-                name: 'USADistribution',
-                meta: {
-                    title: 'USADistribution',
-                    roles: ['user']
-                }
-            },
-            {
-                path: 'china',
-                component: () => import('@/views/userDistribution/China'),
-                name: 'ChinaDistribution',
-                meta: {
-                    title: 'chinaDistribution',
-                    roles: ['user']
-                }
-            },
             {
                 path: 'worldGlobal',
                 component: () => import('@/views/userDistribution/user/WorldGlobal'),
@@ -232,6 +191,33 @@ const userRouter = [
                 name: 'ChinaDisGlobal',
                 meta: {
                     title: 'chinaDisGlobal',
+                    roles: ['user']
+                }
+            },
+            {
+                path: 'world',
+                component: () => import('@/views/userDistribution/World'),
+                name: 'WorldDistribution',
+                meta: {
+                    title: 'worldDistribution',
+                    roles: ['user']
+                }
+            },
+            {
+                path: 'usa',
+                component: () => import('@/views/userDistribution/USA'),
+                name: 'USADistribution',
+                meta: {
+                    title: 'USADistribution',
+                    roles: ['user']
+                }
+            },
+            {
+                path: 'china',
+                component: () => import('@/views/userDistribution/China'),
+                name: 'ChinaDistribution',
+                meta: {
+                    title: 'chinaDistribution',
                     roles: ['user']
                 }
             },

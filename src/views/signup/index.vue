@@ -178,10 +178,13 @@ export default {
           this.signupLoading = true
 
           // 获取代理商
-          const agent = this.$route.query.agent;
-          if (agent) {
-              this.signupForm.agent = agent;
-          }
+          // const agent = this.$route.query.agent;
+          // if (agent) {
+          //     this.signupForm.agent = agent;
+          // }
+
+          // 获取时区
+          this.signupForm.utc = (new Date().getTimezoneOffset()/60)*(-1)
 
           this.$store.dispatch('signup', this.signupForm).then(() => {
             this.signupLoading = false

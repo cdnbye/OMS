@@ -1,10 +1,5 @@
 <template>
   <div>
-<!--    <el-tag style="font-weight: bold;; font-size: medium; margin: 0px 10px; float: left"-->
-<!--            effect="dark"-->
-<!--            :type="currentDomain.domain ? 'success' : 'danger'">-->
-<!--      <span style="color: #99a9bf">{{$t('domainTable.current')}}</span>{{ currentDomain.domain ? currentDomain.domain : $t('domainTable.none') }}-->
-<!--    </el-tag>-->
     <china-map :chartData="cityData" :provinceData="provinceData" :total="total" />
     <NoBindTip />
   </div>
