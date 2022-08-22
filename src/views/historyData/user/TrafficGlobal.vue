@@ -137,7 +137,7 @@
                 }
             },
             getTimeStamp(date) {
-                return moment(date).format('X')
+                return moment(date).unix()
             },
 
             async dataForExcel() {

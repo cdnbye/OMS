@@ -27,6 +27,15 @@ export function changeMail(data) {
   })
 }
 
+// 修改时区
+export function changeTimeZone(data) {
+  return request({
+    url: `user/user_id/${getID()}/timezone`,
+    method: 'put',
+    data
+  })
+}
+
 // 冻结用户
 export function frozenUser(data) {
   return request({

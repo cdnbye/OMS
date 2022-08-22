@@ -1,3 +1,4 @@
+
 module.exports = {
   baseUrl: './',
   devServer: {
@@ -19,5 +20,12 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        'moment': "dayjs"
+      }
+    }
   }
 }

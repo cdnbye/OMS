@@ -16,12 +16,6 @@
               {{ $t('dashboard.checkin') }}
             </el-button>
           </el-col>
-          <el-col :xs="7" :sm="4" :lg="2">
-            <el-button size="small" type="primary" @click="changeUTC"
-                       style="font-size: medium;">
-              {{ $t('dashboard.changeUTC') }}
-            </el-button>
-          </el-col>
         </el-row>
             <LiveTime :statis="statis" ></LiveTime>
             <DistributionGlobal :data="disData"/>
@@ -77,13 +71,14 @@
                     frequency_day: 0,
                     num_max: 0,
                     flow: {
-                        remain: 0,
-                        daily_remain: 0,
-                        totalRemain: 0,
-                        free: {
-                            num: 0,
-                            unit: 'KB'
-                        }
+                      remain: 0,
+                      daily_remain: 0,
+                      totalRemain: 0,
+                      free: {
+                          num: 0,
+                          unit: 'KB'
+                      },
+                      utc: 0,
                     },
                     clock: null,
                     traffic_p2p_day: 0,
@@ -97,22 +92,6 @@
                   netTypeData: [],
                   ispData: [],
                 },
-                utcOptions: [{
-                  value: '12',
-                  label: '+12'
-                }, {
-                  value: '11',
-                  label: '+11'
-                }, {
-                  value: '10',
-                  label: '+10'
-                }, {
-                  value: '9',
-                  label: '+9'
-                }, {
-                  value: '8',
-                  label: '+8'
-                }],
             }
         },
         computed: {
@@ -201,7 +180,7 @@
                         this.statis.flow.daily_remain = data.flow.daily_remain
                         this.statis.flow.totalRemain = data.flow.daily_remain + data.flow.remain
                         this.statis.flow.free = formatTraffic(data.flow.free)
-
+                        this.statis.flow.utc = data.flow.utc
                         this.statis.whiteList = data.whitelist
                         this.statis.type.product_type = data.flow.product_type
                         this.statis.type.time = data.flow.duetime
@@ -237,9 +216,6 @@
                 int = setInterval(function() {
                     _this.getData(uid, id)
                 }, 20000)
-            },
-            changeUTC() {
-
             },
             handleCheckin() {
                 if(this.currentDomain.id !== undefined) {

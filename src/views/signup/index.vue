@@ -184,7 +184,9 @@ export default {
           // }
 
           // 获取时区
-          this.signupForm.utc = (new Date().getTimezoneOffset()/60)*(-1)
+          let utc = (new Date().getTimezoneOffset()/60)*(-1)
+          if (utc === -12) utc = 12
+          this.signupForm.utc = utc
 
           this.$store.dispatch('signup', this.signupForm).then(() => {
             this.signupLoading = false

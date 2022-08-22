@@ -1,14 +1,12 @@
 <template>
   <div class="navbar">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-    <!-- <breadcrumb class="breadcrumb-container"/> -->
     <el-tag class="current-zone" type="info" effect="plain">
       {{ $t('navbar.currZone') }}{{ currZone }}
       <PointTip style="font-size: 14px; margin-left: 5px" :content="$t('navbar.zoneTip')" />
     </el-tag>
     <div class="right-menu">
 
-<!--      <screenfull class="right-menu-item hover-effect screenfull"/>-->
       <switch-domain v-if="showDomain && device!=='mobile'" class="switchdomain "/>
       <lang-select class="international right-menu-item"/>
 
@@ -33,28 +31,34 @@
             </el-dropdown-item>
           </router-link>
 
+          <el-dropdown-item>
+            <span style="display:block" @click="showTimeZone">{{ $t('dashboard.changeUTC') }}</span>
+          </el-dropdown-item>
+
           <el-dropdown-item divided>
             <span style="display:block" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <time-zone :visible="timeZoneVisible" @hide="timeZoneVisible = false"></time-zone>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-// import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
 import Logo from '@/assets/logo.png'
 import PointTip from '@/components/PointTip'
 import SwitchDomain from '@/components/SwitchDomain'
+import TimeZone from '@/components/TimeZone'
 import {getItem, removeItem} from "@/utils/storage";
 
 export default {
   data() {
     return {
+      timeZoneVisible: false,
       showDomain: true,
       Avatar: Logo,
       currZone: '',
@@ -62,10 +66,10 @@ export default {
     }
   },
   components: {
-    // Breadcrumb,
     Hamburger,
     LangSelect,
     SwitchDomain,
+    TimeZone,
     PointTip,
   },
   created() {
@@ -96,6 +100,9 @@ export default {
     ])
   },
   methods: {
+    showTimeZone() {
+      this.timeZoneVisible = true
+    },
     getCurrZone() {
       const loc = getItem('loc')
       if (loc === 'cn') {
@@ -134,9 +141,6 @@ export default {
     float: left;
     padding: 0 10px;
   }
-  // .breadcrumb-container{
-  //   float: left;
-  // }
   .current-zone {
     float: left;
     margin-top: 10px;

@@ -60,7 +60,8 @@ export default {
           free: {
             num: 0,
             unit: 'KB'
-          }
+          },
+          utc: 0,
         },
         clock: null,
         traffic_p2p_day: 0,
@@ -126,6 +127,7 @@ export default {
           this.statis.flow.daily_remain = data.flow.daily_remain
           this.statis.flow.totalRemain = data.flow.daily_remain + data.flow.remain
           this.statis.flow.free = formatTraffic(data.flow.free)
+          this.statis.flow.utc = data.flow.utc
           this.statis.whiteList = data.whitelist
           this.statis.type.product_type = data.flow.product_type
           this.statis.type.time = data.flow.duetime

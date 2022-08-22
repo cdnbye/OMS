@@ -186,15 +186,17 @@
             statis: {
                 deep: true,
                 handler(val) {
-                  const serverClock = moment(val.clock)
-                  this.leftMinutes = 60 - serverClock.minutes()
-                  this.leftHours = 23 - serverClock.hours()
+                  // const serverClock = moment(val.clock)
+                  const utc = val.flow.utc
+                  const serverClock = new Date(val.clock)
+                  this.leftMinutes = 60 - serverClock.getUTCMinutes()
+                  this.leftHours = 23 - (serverClock.getUTCHours() + utc)%24
               }
-          },
-          currentDomain: function () {
-            this.lastP2pTraffic = 0;
-            this.lastHttpTraffic = 0;
-          }
+            },
+            currentDomain: function () {
+              this.lastP2pTraffic = 0;
+              this.lastHttpTraffic = 0;
+            }
         },
         mounted() {
 
