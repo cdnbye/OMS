@@ -210,6 +210,7 @@ export default {
     mail: '郵箱：',
     passwd: '密碼：',
     time: '註冊時間：',
+    timeZone: '时区',
     change: '修改',
     changeMail: {
       change: '修改郵箱',

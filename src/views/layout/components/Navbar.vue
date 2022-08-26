@@ -122,7 +122,7 @@ export default {
       removeItem('profile')
       this.$store.dispatch('LogOut').then(() => {
         // location.reload()// In order to re-instantiate the vue-router object to avoid bugs
-        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`).catch(err => { console.log(err) })
       })
     }
   }
@@ -202,10 +202,12 @@ export default {
         margin-top: 8px;
         position: relative;
         .username-wrapper {
-          margin-top: 20px;
+          padding-top: 10px;
+          padding-bottom: 10px;
           margin-right: 5px;
           position: relative;
           width: 140px;
+          //height: 50px;
           font-weight: bold;
           font-size: 13px;
           word-wrap: break-word;

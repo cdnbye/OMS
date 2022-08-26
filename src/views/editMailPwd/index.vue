@@ -60,6 +60,10 @@
         <p>
           <span>Token: {{userInfo.token}}</span>
         </p>
+        <div style="margin-top: 25px"></div>
+        <p>
+          <span>{{$t('myInfo.timeZone')}}: UTC{{userInfo.utc>=0 ? '+' :''}}{{userInfo.utc}}</span>
+        </p>
       </el-card>
   </div>
 </template>
@@ -136,6 +140,7 @@ export default {
         time: '',
         email: '',
         token: '',
+        utc: 0,
       },
       emailForm: {
         email: '',
@@ -168,6 +173,7 @@ export default {
           this.userInfo.time = moment(data.reg_date * 1000).format('YYYY-MM-DD hh:mm:ss')
           this.userInfo.email = data.email
           this.userInfo.token = data.token
+          this.userInfo.utc = data.utc
         }
       }).catch(err => {
         console.log(err)

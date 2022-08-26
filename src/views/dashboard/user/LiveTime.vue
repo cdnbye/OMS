@@ -42,7 +42,7 @@
               </card>
             </el-col>
 
-            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col" v-show="statis.flow.free.num > 0">
                 <card
                     :num="statis.flow.free.num"
                     :decimals="2"

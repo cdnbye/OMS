@@ -208,8 +208,9 @@ export default {
   },
   myInfo: {
     mail: 'E-mail: ',
-    passwd: 'password: ',
+    passwd: 'Password: ',
     time: 'Registration time: ',
+    timeZone: 'TimeZone',
     change: 'update',
     changeMail: {
       change: 'update E-mail',
