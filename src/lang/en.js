@@ -124,7 +124,7 @@ export default {
     httpTraffic: 'HTTP Traffic Today',
     p2pEfficiency: 'Current Efficiency',
     serveNum: 'Playback Sessions Today',
-    maxOnlineNum: 'Max Concurrent Viewers',
+    maxOnlineNum: 'Peak Concurrent Viewers',
     remain: 'Remaining Paid Traffic',
     monthlyRemain: 'Remaining Plan Traffic Today',
     free: 'Remaining Free Traffic',

@@ -67,10 +67,12 @@
 </template>
 
 <script>
-    import {fetchUserDomain} from '@/api/userDomain'
+    import { fetchUserDomain } from '@/api/userDomain'
     import { updateSignalAddr } from '@/api/user/p2pConfig'
     import {mapGetters} from 'vuex'
     import { trim } from '@/utils'
+
+    const APPLY_TO_ALL = '*Apply To All*'
 
     export default {
         name: 'signalManage',
@@ -82,6 +84,14 @@
                     page: 1,
                     pageSize: 10
                 },
+                applyAll: {
+                  id: 0,
+                  domain: APPLY_TO_ALL,
+                  signals: '',
+                  signals2: '',
+                  signal_enabled: true,
+                  blocked: false,
+                }
             }
         },
         computed: {
@@ -107,16 +117,20 @@
                 fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
                     if (res.data) {
                         this.tableData = res.data
-                    }
-                    this.tableData.forEach(row => {
-                        // console.warn(row)
-                        if (row.signals && row.signals.length >= 0) {
+                        this.tableData.forEach(row => {
+                          // console.warn(row)
+                          if (row.signals && row.signals.length >= 0) {
                             row.signals = row.signals.join('\n')
-                        }
-                        if (row.signals2 && row.signals2.length >= 0) {
+                          }
+                          if (row.signals2 && row.signals2.length >= 0) {
                             row.signals2 = row.signals2.join('\n')
+                          }
+                        })
+                        if (this.tableData.length > 1) {
+                          this.applyAll.uid = this.tableData[0].uid
+                          this.tableData.unshift(this.applyAll)
                         }
-                    })
+                    }
                     this.loading = false
                 }).catch(() => {
                     this.loading = false
@@ -124,26 +138,28 @@
             },
             handleSignalAddr(uid, id, data) {
                 this.loading = true
-                updateSignalAddr(uid, id, data)
-                    .then(res => {
-                        if (res.data.succeed) {
-                            this.$notify({
-                                title: this.$t('common.success'),
-                                message: this.$t('p2pConfig.configSuccess'),
-                                type: 'success'
-                            });
-                        } else {
-                            const msg = res.data.msg || this.$t('p2pConfig.configFail')
-                            this.$notify.error({
-                                title: this.$t('common.error'),
-                                message: msg,
-                            });
+                updateSignalAddr(uid, id, data).then(res => {
+                    if (res.data.succeed) {
+                        this.$notify({
+                            title: this.$t('common.success'),
+                            message: this.$t('p2pConfig.configSuccess'),
+                            type: 'success'
+                        });
+                        if (id === 0) {
+                          this.fetchTableData()
                         }
-                        this.loading = false
-                    })
-                    .catch(() => {
-                        this.loading = false
-                    })
+                    } else {
+                        const msg = res.data.msg || this.$t('p2pConfig.configFail')
+                        this.$notify.error({
+                            title: this.$t('common.error'),
+                            message: msg,
+                        });
+                    }
+                    this.loading = false
+                })
+                .catch(() => {
+                    this.loading = false
+                })
             },
             handleSubmit(domain) {
                 let signals;

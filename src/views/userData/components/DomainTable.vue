@@ -2,12 +2,31 @@
 <div class="app-container">
   <el-row :gutter="20" style="margin-bottom: 20px">
     <el-col :xs="24" :sm="12" :lg="6">
+      <el-input
+          class="filter-item"
+          prefix-icon="el-icon-search"
+          placeholder="请输入域名"
+          v-model="searchValue"
+          @keyup.enter.native="handleSearch"/>
+    </el-col>
+    <el-col :xs="12" :sm="6" :lg="3">
       <el-select v-model="selectValue" @change="selectChange" class="filter-item">
         <el-option
           v-for="item in selectOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </el-col>
+    <el-col :xs="12" :sm="6" :lg="3">
+      <el-select v-model="platformValue" @change="selectChange" class="filter-item">
+        <el-option
+            v-for="item in platformOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
         >
         </el-option>
       </el-select>
@@ -26,14 +45,6 @@
     </el-col>
     <el-col :xs="8" :sm="12" :lg="4">
       <el-checkbox v-model="showNative" @change="showNativeChange">Native</el-checkbox>
-    </el-col>
-    <el-col :xs="24" :sm="12" :lg="6">
-      <el-input
-        class="filter-item"
-        prefix-icon="el-icon-search"
-        placeholder="请输入域名"
-        v-model="searchValue"
-        @keyup.enter.native="handleSearch"/>
     </el-col>
   </el-row>
   <el-table
@@ -184,6 +195,25 @@
             label: '近一月http流量',
             value: 'http_month'
           }
+        ],
+        platformValue: undefined,
+        platformOptions: [
+          {
+            label: 'all platform',
+            value: undefined
+          },
+          {
+            label: 'android',
+            value: 'android'
+          },
+          {
+            label: 'ios',
+            value: 'ios'
+          },
+          {
+            label: 'pc',
+            value: 'pc'
+          },
         ]
       }
     },
@@ -351,9 +381,9 @@
         })
         return data
       },
-      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue, filters=this.filters) {
+      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue, filters=this.filters, platform=this.platformValue) {
         this.loading = true
-        fetchDomain(page, pageSize, order, filters).then(res => {
+        fetchDomain(page, pageSize, order, filters, platform).then(res => {
           this.loading = false
           this.tableData = this.formatData(res.data)
         }).catch(err => {

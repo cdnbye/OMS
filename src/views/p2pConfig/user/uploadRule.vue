@@ -38,6 +38,8 @@
     import { p2pConfigWifiOnly } from '@/api/user/p2pConfig'
     import { mapGetters } from 'vuex'
 
+    const APPLY_TO_ALL = '*Apply To All*'
+
     export default {
         name: 'uploadRule',
         data() {
@@ -48,6 +50,12 @@
                     page: 1,
                     pageSize: 10
                 },
+                applyAll: {
+                  id: 0,
+                  domain: APPLY_TO_ALL,
+                  blocked: false,
+                  wifi_only: false,
+                }
             }
         },
         computed: {
@@ -73,6 +81,10 @@
                 fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
                     if(res.data) {
                         this.tableData = res.data
+                        if (this.tableData.length > 1) {
+                          this.applyAll.uid = this.tableData[0].uid
+                          this.tableData.unshift(this.applyAll)
+                        }
                     }
                     this.loading = false
                 }).catch(() => {
@@ -89,11 +101,10 @@
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
                             });
-                            this.tableData.forEach(item => {
-                                if(item.id === id) {
-                                    item.wifi_only = data.wifi_only
-                                }
-                            })
+                            if (id === 0) {
+                              this.applyAll.wifi_only = !this.applyAll.wifi_only
+                            }
+                            this.fetchTableData()
                         } else {
                             this.$notify.error({
                                 title: this.$t('common.error'),

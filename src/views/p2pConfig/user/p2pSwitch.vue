@@ -35,6 +35,8 @@ import { fetchUserDomain } from '@/api/userDomain'
 import { p2pConfig } from '@/api/user/p2pConfig'
 import { mapGetters } from 'vuex'
 
+const APPLY_TO_ALL = '*Apply To All*'
+
 export default {
   name: 'p2pSwitch',
   data() {
@@ -45,6 +47,12 @@ export default {
           page: 1,
           pageSize: 10
       },
+      applyAll: {
+        id: 0,
+        domain: APPLY_TO_ALL,
+        blocked: false,
+        disable_p2p: false,
+      }
     }
   },
   computed: {
@@ -70,21 +78,16 @@ export default {
       fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
         if(res.data) {
           this.tableData = res.data
+          if (this.tableData.length > 1) {
+            this.applyAll.uid = this.tableData[0].uid
+            this.tableData.unshift(this.applyAll)
+          }
         }
         this.loading = false
       }).catch(() => {
         this.loading = false
       })
     },
-    // 检查是否可以关闭P2P
-    // checkCanCloseP2P() {
-    //   let openNum = 0
-    //   this.tableData.forEach(item => {
-    //     if(!item.blocked && !item.disable_p2p)
-    //       openNum += 1
-    //   })
-    //   return openNum >= 2 ? true : false
-    // },
     handleP2PConfig(uid, id, data) {
       this.loading = true
       p2pConfig(uid, id, data)
@@ -95,6 +98,9 @@ export default {
                 message: this.$t('p2pConfig.configSuccess'),
                 type: 'success'
             });
+            if (id === 0) {
+              this.fetchTableData()
+            }
             this.tableData.forEach(item => {
               if(item.id === id) {
                 item.disable_p2p = data.disable

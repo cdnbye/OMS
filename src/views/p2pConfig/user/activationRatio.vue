@@ -39,6 +39,8 @@
     import {p2pConfigRatio} from '@/api/user/p2pConfig'
     import {mapGetters} from 'vuex'
 
+    const APPLY_TO_ALL = '*Apply To All*'
+
     export default {
         name: 'activationRatio',
         data() {
@@ -49,6 +51,12 @@
                     page: 1,
                     pageSize: 10
                 },
+                applyAll: {
+                  id: 0,
+                  domain: APPLY_TO_ALL,
+                  blocked: false,
+                  ratio: 100,
+                }
             }
         },
         computed: {
@@ -74,6 +82,10 @@
                 fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
                     if (res.data) {
                         this.tableData = res.data
+                        if (this.tableData.length > 1) {
+                          this.applyAll.uid = this.tableData[0].uid
+                          this.tableData.unshift(this.applyAll)
+                        }
                     }
                     this.loading = false
                 }).catch(() => {
@@ -90,6 +102,9 @@
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
                             });
+                            if (id === 0) {
+                              this.fetchTableData()
+                            }
                         } else {
                             this.$notify.error({
                                 title: this.$t('common.error'),

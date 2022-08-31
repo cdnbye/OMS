@@ -10,8 +10,11 @@ export function fetchHostNum() {
 }
 
 // 获取域名列表
-export function fetchDomain(page, pageSize, order, filters) {
+export function fetchDomain(page, pageSize, order, filters, platform) {
   let url = `host?page=${page}&page_size=${pageSize}&order=${order}`
+  if (platform) {
+      url = `${url}&platform=${platform}`
+  }
   filters.forEach(item => {
     if(item.value)
       url += `&${item.name}=${item.value}`

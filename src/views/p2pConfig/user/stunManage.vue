@@ -12,7 +12,7 @@
                             type="textarea"
                             :autosize="{ minRows: 1, maxRows: 3}"
                             placeholder="stun:"
-                            v-model="scope.row.stunsStr"
+                            v-model="scope.row.stuns"
                             clearable
                     >
                     </el-input>
@@ -41,10 +41,12 @@
 </template>
 
 <script>
-    import {fetchUserDomain} from '@/api/userDomain'
+    import { fetchUserDomain } from '@/api/userDomain'
     import { updateStuns } from '@/api/user/p2pConfig'
     import {mapGetters} from 'vuex'
     import { trim } from '@/utils'
+
+    const APPLY_TO_ALL = '*Apply To All*'
 
     export default {
         name: 'stunManage',
@@ -56,6 +58,12 @@
                     page: 1,
                     pageSize: 10
                 },
+                applyAll: {
+                  id: 0,
+                  domain: APPLY_TO_ALL,
+                  stuns: '',
+                  blocked: false,
+                }
             }
         },
         computed: {
@@ -77,10 +85,14 @@
                         })
                         this.tableData.forEach(row => {
                             // console.warn(row)
-                            if (row.stuns && row.stuns.length > 0) {
-                                row.stunsStr = row.stuns.join('\n')
+                            if (row.stuns && row.stuns.length >= 0) {
+                                row.stuns = row.stuns.join('\n')
                             }
                         })
+                        if (this.tableData.length > 1) {
+                          this.applyAll.uid = this.tableData[0].uid
+                          this.tableData.unshift(this.applyAll)
+                        }
                     }
                     this.loading = false
                 }).catch(() => {
@@ -90,10 +102,10 @@
             handleSubmit(domain) {
                 this.loading = true
                 let stuns;
-                if (!domain.stunsStr) {
+                if (!domain.stuns) {
                     stuns = []
                 } else {
-                    stuns = domain.stunsStr.split('\n').map(stun => trim(stun)).filter(stun => {
+                    stuns = domain.stuns.split('\n').map(stun => trim(stun)).filter(stun => {
                         return stun !== ""
                     })
                 }
@@ -105,6 +117,9 @@
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
                             });
+                            if (domain.id === 0) {
+                              this.fetchTableData()
+                            }
                         } else {
                             const msg = res.data.msg || this.$t('p2pConfig.configFail')
                             this.$notify.error({

@@ -15,14 +15,7 @@
   <el-row style="float: left">
     <template v-if="!hasToken">
       <el-col :xs="10" :sm="4" :lg="2" style="margin: 10px 0">
-          <el-popover placement="top" width="200" v-model="popoverVisible">
-            <p>{{ $t('app.sureCreateToken') }}</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="popoverVisible = false">{{ $t('common.cancel') }}</el-button>
-              <el-button type="primary" size="mini" @click="handleCreateToken">{{ $t('common.ok') }}</el-button>
-            </div>
-            <el-button slot="reference" style="float: 'left'" type="primary" @click="popoverVisible=true">{{ $t('app.createToken') }}</el-button>
-          </el-popover>
+        <el-button slot="reference" style="float: 'left'" type="primary" @click="handleCreateToken">{{ $t('app.createToken') }}</el-button>
       </el-col>
     </template>
 
@@ -193,7 +186,6 @@
         tableLoading: false,
         tokenLoading: false,
         dialogFormVisible: false,
-        popoverVisible: false,
         deletePopVisible: false,
         form: {
           app_name: '',
@@ -232,7 +224,6 @@
           this.$refs[`popover-update-` + id].doClose()
       },
       handleCreateToken() {
-        this.popoverVisible = true
         this.tokenLoading = true
         createToken(getID())
           .then(res => {
