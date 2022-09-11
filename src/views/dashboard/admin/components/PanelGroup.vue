@@ -26,6 +26,14 @@
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <card :num="statis.bandwidth_share.num"
+            :duration="500"
+            :decimals="2"
+            :desc="`当前上行带宽(${statis.bandwidth_http.unit})`">
+      </card>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <card :num="statis.p2p_rate"
             :duration="500"
             :decimals="2"
@@ -48,6 +56,14 @@
             :duration="500"
             :decimals="2"
             :desc="`今日HTTP流量(${statis.traffic_http.unit})`">
+      </card>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <card :num="statis.traffic_share.num"
+            :duration="500"
+            :decimals="2"
+            :desc="`今日上行流量(${statis.traffic_http.unit})`">
       </card>
     </el-col>
 
@@ -104,17 +120,22 @@ export default {
           num: 0,
           unit: 'kbps'
         },
-
+        bandwidth_share: {
+          num: 0,
+          unit: 'kbps'
+        },
         traffic_p2p: {
           num: 0,
           unit: 'KB'
         },
-
         traffic_http: {
           num: 0,
           unit: 'KB'
         },
-
+        traffic_share: {
+          num: 0,
+          unit: 'KB'
+        },
         frequency_day: 0,
       }
     }
@@ -136,12 +157,13 @@ export default {
         this.statis.online = data.num_rt
         this.statis.max_online = data.max_num
         this.statis.bandwidth_p2p = formatBandwidth(data.rt_bw_p2p)
-
+        this.statis.bandwidth_share = formatBandwidth(data.rt_bw_share)
         this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
         this.statis.p2p_rate = Number((data.p2p_rate_rt * 100).toFixed(2))
 
         this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
         this.statis.traffic_http = formatTraffic(data.traffic_http_day)
+        this.statis.traffic_share = formatTraffic(data.traffic_share_day)
 
         this.statis.frequency_day = data.api_frequency_day
         this.$emit('numChange', data.num_rt)

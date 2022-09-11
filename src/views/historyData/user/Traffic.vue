@@ -102,11 +102,7 @@ export default {
           })
 
           res.data.list.forEach((item, index) => {
-              if (this.displayDay) {
-                  this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
-              } else {
-                  this.option.xData.push(moment(item.ts * 1000).format('MM-DD HH:mm'))
-              }
+              this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
               this.lineChartData.HTTP.push(getTrafficNum(item.value, this.option.unit))
           })
 
@@ -115,16 +111,6 @@ export default {
     selectChange(val) {
         this.date[1] = moment()
       switch (val) {
-        case 'hour':
-            this.date[0] = moment().subtract(1, 'hour')
-            // this.date[1] = moment()
-          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
-          break;
-        case 'day':
-            this.date[0] = moment().subtract(1, 'day')
-            // this.date[1] = moment()
-          this.getData(this.getTimeStamp(this.date[0]), this.getTimeStamp(this.date[1]))
-          break;
         case 'week':
             this.date[0] = moment().startOf('day').subtract(1, 'week')
             // this.date[1] = moment().startOf('day')

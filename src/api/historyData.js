@@ -34,6 +34,16 @@ export function fetchHttpTraffic(start, end, gran) {
   })
 }
 
+export function fetchShareTraffic(start, end, gran) {
+  if (!gran) {
+    gran = 1440
+  }
+  return request({
+    url: `global/share?start_ts=${start}&end_ts=${end}&gran=${gran}`,
+    method: 'get'
+  })
+}
+
 export function fetchHttpBandwidth(year, month) {
   return request({
     url: `global/http/peak?year=${year}&month=${month}`,

@@ -70,6 +70,7 @@
                     },
                     frequency_day: 0,
                     num_max: 0,
+                    rebuffer_ratio: -1,
                     flow: {
                       remain: 0,
                       daily_remain: 0,

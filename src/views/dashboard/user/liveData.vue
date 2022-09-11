@@ -53,6 +53,7 @@ export default {
         },
         frequency_day: 0,
         num_max: 0,
+        rebuffer_ratio: -1,
         flow: {
           remain: 0,
           daily_remain: 0,
@@ -122,6 +123,7 @@ export default {
           this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
           this.statis.traffic_http = formatTraffic(data.traffic_http_day)
           this.statis.frequency_day = data.api_frequency_day
+          this.statis.rebuffer_ratio = data.rebuffer_ratio
           this.statis.num_max = data.num_max
           this.statis.flow.remain = data.flow.remain
           this.statis.flow.daily_remain = data.flow.daily_remain

@@ -11,7 +11,7 @@ import moment from 'moment'
 import DataPicker from '@/components/DataPicker'
 import LineChart from '@/components/LineChart'
 import { formatTraffic, getTrafficNum } from '@/utils/format'
-import { fetchP2PTraffic, fetchHttpTraffic } from '@/api/historyData'
+import { fetchP2PTraffic, fetchHttpTraffic, fetchShareTraffic } from '@/api/historyData'
 
 /*
  已改成显示流量
@@ -29,7 +29,8 @@ export default {
       radio: 'week',
       bandwidthData: {
         p2p: [],
-        http: []
+        http: [],
+        share: [],
       },
       option: {
         xData: [],
@@ -49,7 +50,10 @@ export default {
       fetchHttpTraffic(start, end, gran).then(res => {
         this.formatHttpData(res, gran)
         fetchP2PTraffic(start, end, gran).then(res => {
-          this.formatData(res)
+          this.formatP2pData(res)
+        })
+        fetchShareTraffic(start, end, gran).then(res => {
+          this.formatShareData(res)
         })
       })
     },
@@ -71,11 +75,18 @@ export default {
           break;
       }
     },
-    formatData(res) {
+    formatP2pData(res) {
       const data = res.data.list
       this.bandwidthData.p2p = []
       data.forEach(item => {
         this.bandwidthData.p2p.push(getTrafficNum(item.value, this.option.unit))
+      })
+    },
+    formatShareData(res) {
+      const data = res.data.list
+      this.bandwidthData.share = []
+      data.forEach(item => {
+        this.bandwidthData.share.push(getTrafficNum(item.value, this.option.unit))
       })
     },
     formatHttpData(res, gran) {

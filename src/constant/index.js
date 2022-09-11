@@ -8,5 +8,5 @@ export const BASE_URLS = {
     test: 'http://193.112.137.78:6066/v1',
     cn: 'https://cgi.cdnbye.com:8080/v1/',
     us: 'https://cgi.hdtvcloud.com:8080/v1/',
-    hk: 'https://hk.swarmcloud.net:8080/v1/',
+    hk: 'https://cgi.swarmcloud.net:6060/v1/',
 }

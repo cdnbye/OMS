@@ -22,3 +22,11 @@ export function fetchHttpTraffic(uid, domainID, start, end, gran) {
       method: 'get'
   })
 }
+
+export function fetchRebufferRatio(uid, domainID, start, end, gran) {
+  if (!gran) gran = 5
+  return request({
+    url: `user/user_id/${uid}/domain/domain_id/${domainID}/rebuffer_ratio?start_ts=${start}&end_ts=${end}&gran=${gran}`,
+    method: 'get'
+  })
+}

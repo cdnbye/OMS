@@ -42,7 +42,7 @@
               </card>
             </el-col>
 
-            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col" v-show="statis.flow.free.num > 0">
+            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col" v-show="statis.flow.free.num > 0 || statis.whiteList">
                 <card
                     :num="statis.flow.free.num"
                     :decimals="2"
@@ -90,6 +90,17 @@
                     :num="statis.frequency_day"
                     :desc="$t('dashboard.serveNum')">
                 </card>
+            </el-col>
+
+            <el-col v-if="statis.rebuffer_ratio >= 0" :xs="24" :sm="12" :lg="6" class="card-panel-col">
+              <card
+                  :num="statis.rebuffer_ratio*100"
+                  :decimals="2"
+                  :desc="`${$t('dashboard.rebufferRatio')} (%)`">
+                <div class="tip">
+                  <PointTip :content="$t('dashboard.rebufferTip')" />
+                </div>
+              </card>
             </el-col>
 
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
