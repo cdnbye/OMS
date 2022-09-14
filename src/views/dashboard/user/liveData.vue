@@ -1,14 +1,12 @@
 <template>
-  <div class="dashboard-realtime-container" :element-loading-text="$t('package.checkResultLoadingTip')">
+  <div class="dashboard-realtime-container">
     <el-alert
         :title="$t('domainTable.title')"
         :description="$t('dashboard.descPerApp')"
         type="info"
         show-icon>
     </el-alert>
-    <el-row style="text-align: left;">
-    </el-row>
-    <LiveTime :statis="statis" ></LiveTime>
+    <LiveTime :statis="statis"></LiveTime>
     <Dis :data="disData"/>
     <NoBindTip />
   </div>
@@ -123,7 +121,11 @@ export default {
           this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
           this.statis.traffic_http = formatTraffic(data.traffic_http_day)
           this.statis.frequency_day = data.api_frequency_day
-          this.statis.rebuffer_ratio = data.rebuffer_ratio
+          if (data.total_rebuffers !== 0 && data.total_media_requests !== 0) {
+            this.statis.rebuffer_ratio = data.total_rebuffers/data.total_media_requests
+          } else {
+            this.statis.rebuffer_ratio = -1
+          }
           this.statis.num_max = data.num_max
           this.statis.flow.remain = data.flow.remain
           this.statis.flow.daily_remain = data.flow.daily_remain
@@ -235,7 +237,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
 .dashboard-realtime-container {
   padding: 4px 25px;
   background-color: rgb(240, 242, 245);

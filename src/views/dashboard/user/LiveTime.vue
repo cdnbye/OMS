@@ -74,11 +74,7 @@
                     :desc="`${$t('dashboard.monthlyRemain')} (${formatTraffic(statis.flow.daily_remain).unit})`"
                     :color="statis.flow.daily_remain > 1024*1024*100 ? 'green' : 'red'"
                 >
-                  <template>
-                    <div class="resetTip">
-                      <span>{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
-                    </div>
-                  </template>
+                  <span class="resetTip">{{ $t('package.resetAfter') }} {{ leftHours }}h:{{ leftMinutes }}min</span>
                   <template slot="footer">
                     <div>{{ formatType() }}</div>
                   </template>
@@ -234,6 +230,14 @@
         margin-top: 18px;
         .card-panel-col{
             margin-bottom: 20px;
+            .resetTip {
+              position: absolute;
+              font-size: 12px;
+              top: 0;
+              right: 0;
+              padding: 5px;
+              color: #006eff;
+            }
         }
         .card-panel {
             height: 108px;
@@ -278,12 +282,5 @@
         right: 0;
         padding: 10px;
     }
-    .resetTip {
-        position: absolute;
-        font-size: 12px;
-        top: 0;
-        right: 0;
-        padding: 5px;
-        color: #006eff;
-    }
+
 </style>

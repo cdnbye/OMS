@@ -26,20 +26,20 @@
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
-      <card :num="statis.bandwidth_share.num"
-            :duration="500"
-            :decimals="2"
-            :desc="`当前上行带宽(${statis.bandwidth_http.unit})`">
-      </card>
-    </el-col>
-
-    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <card :num="statis.p2p_rate"
             :duration="500"
             :decimals="2"
             desc="当前P2P效率(%)"
             :color="statis.p2p_rate < 30 ? 'red' : ''"
       >
+      </card>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <card :num="statis.bandwidth_share.num"
+            :duration="500"
+            :decimals="2"
+            :desc="`当前上行带宽(${statis.bandwidth_http.unit})`">
       </card>
     </el-col>
 
@@ -64,6 +64,14 @@
             :duration="500"
             :decimals="2"
             :desc="`今日上行流量(${statis.traffic_http.unit})`">
+      </card>
+    </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <card :num="shareEfficiency"
+            :duration="500"
+            :decimals="2"
+            :desc="`当前分享效率(%)`">
       </card>
     </el-col>
 
@@ -149,6 +157,13 @@ export default {
   },
   destroyed() {
     clearInterval(timer)
+  },
+  computed: {
+    shareEfficiency: {
+      get(){
+        return this.statis.bandwidth_p2p.num/this.statis.bandwidth_share.num * 100
+      },
+    }
   },
   methods: {
     getData() {

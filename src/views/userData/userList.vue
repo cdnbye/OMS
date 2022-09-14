@@ -106,8 +106,9 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="8">
-            <el-button type="text" size="big" @click="handleEditPlan(scope.row)">修改</el-button>
+          <el-col :span="15">
+            <el-button type="text" size="big" @click="handleEditPlan(scope.row, true)">修改</el-button>
+            <el-button type="text" size="big" @click="handleEditPlan(scope.row)">更新</el-button>
           </el-col>
         </el-row>
       </template>
@@ -313,6 +314,18 @@
             {
               value: '15',
               label: "MONTHLY_2TB",
+            },
+            {
+              value: '16',
+              label: "MONTHLY_500TB",
+            },
+            {
+              value: '17',
+              label: "MONTHLY_1000TB",
+            },
+            {
+              value: '18',
+              label: "MONTHLY_500GB",
             },
         ],
         currencyOptions:[
@@ -520,10 +533,10 @@
       copyPassword(pw, event) {
           clip(pw, event)
       },
-      handleEditPlan(item) {
+      handleEditPlan(item, keepDueTime) {
           const type = this.getPlanLabel(item.flow.product_type)
           if (!type) return
-          MessageBox.confirm(`更新套餐至${type}吗？`, '提示', {
+          MessageBox.confirm(`${keepDueTime?'修改':'更新'}套餐至${type}吗？`, '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning',
@@ -531,7 +544,8 @@
           }).then(() => {
               const data = {
                   uid: item.uid,
-                  product_type: Number(item.flow.product_type)
+                  product_type: Number(item.flow.product_type),
+                  keep_due_time: keepDueTime
               }
               updateUserPlan(data).then(res => {
                   if(res.ret === 0) {

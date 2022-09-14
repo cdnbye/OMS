@@ -17,8 +17,8 @@
             </el-button>
           </el-col>
         </el-row>
-            <LiveTime :statis="statis" ></LiveTime>
-            <DistributionGlobal :data="disData"/>
+        <LiveTime :statis="statis" ></LiveTime>
+        <DistributionGlobal :data="disData"/>
         <NoBindTip />
       </div>
     </div>

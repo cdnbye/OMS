@@ -153,16 +153,16 @@ const userRouter = [
                     noCache: true
                 }
             },
-            // {
-            //     path: 'rebuffer',
-            //     component: () => import('@/views/historyData/user/Rebuffer'),
-            //     name: 'Rebuffer',
-            //     meta: {
-            //         title: 'rebufferTrend',
-            //         roles: ['user'],
-            //         noCache: true
-            //     }
-            // },
+            {
+                path: 'rebuffer',
+                component: () => import('@/views/historyData/user/Rebuffer'),
+                name: 'Rebuffer',
+                meta: {
+                    title: 'rebufferTrend',
+                    roles: ['user'],
+                    noCache: true
+                }
+            },
         ]
     },
 
