@@ -197,7 +197,7 @@
                   const utc = val.flow.utc
                   const serverClock = new Date(val.clock)
                   this.leftMinutes = 60 - serverClock.getUTCMinutes()
-                  this.leftHours = 23 - (serverClock.getUTCHours() + utc)%24
+                  this.leftHours = (23 - (serverClock.getUTCHours() + utc)%24)%24
               }
             },
             currentDomain: function () {
