@@ -45,11 +45,13 @@ service.interceptors.response.use(
     const res = response.data
     // console.log(res)
     if (res.ret !== 0) {
-      Message({
-        message: res.data.msg,
-        type: 'error',
-        duration: 5 * 1000
-      })
+      if (res.data) {
+        Message({
+          message: res.data.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
       // 处理 token 超时问题
       if (
           res.data &&

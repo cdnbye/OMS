@@ -51,7 +51,12 @@
               <el-button type="text" size="mini" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
               <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
             </div>
-            <el-button slot="reference" type="danger" size="mini" @click="pShow(scope.row.id)">{{ $t('domainTable.delete') }}</el-button>
+            <el-button :disabled="scope.row.shadow"
+                       slot="reference"
+                       type="danger"
+                       size="mini"
+                       @click="pShow(scope.row.id)"
+            >{{ $t('domainTable.delete') }}</el-button>
           </el-popover>
         </template>
       </template>

@@ -32,7 +32,7 @@ export default {
       option: {
         xData: [],
         unit: '%',
-        yName: 'Ratio'
+        yName: 'Rebuffer'
       },
     }
   },
@@ -76,7 +76,7 @@ export default {
       fetchRebufferRatio(this.currentDomain.uid, this.currentDomain.id, start, end, gran).then(res => {
         res.data.list.forEach((item, index) => {
           this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
-          this.lineChartData.rebuffer.push(parseFloat((item.value).toFixed(4))*100)
+          this.lineChartData.rebuffer.push(parseFloat((item.value*100).toFixed(2)))
         })
 
       })

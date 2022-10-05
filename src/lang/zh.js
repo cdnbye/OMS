@@ -102,7 +102,7 @@ export default {
     confirm_password_error: '兩次輸入的密碼不一致',
     vcode: '請輸入驗證碼',
     email: '請輸入郵箱',
-    send: '發送驗證碼 (收不到郵件請聯繫客服)',
+    send: '發送驗證碼',
     contract: '我已經閱讀並同意',
     contractName: 'SwarmCloud用戶服務協議',
     confirmContract: '請先同意用戶服務協議',

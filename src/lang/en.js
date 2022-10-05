@@ -101,7 +101,7 @@ export default {
     confirm_password_error: 'The two passwords you entered were inconsistent',
     vcode: 'Verification Code',
     email: 'E-mail',
-    send: 'Send Verification Code (Contact support if no email received)',
+    send: 'Send Verification Code',
     contract: 'I have read and agreed to ',
     contractName: 'Terms of Service',
     confirmContract: 'Please agree to the Terms of Service',
