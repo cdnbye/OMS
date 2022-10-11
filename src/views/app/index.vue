@@ -13,15 +13,12 @@
   </el-row>
 
   <el-row style="float: left">
-    <template v-if="!hasToken">
-      <el-col :xs="10" :sm="4" :lg="2" style="margin: 10px 0">
-        <el-button slot="reference" style="float: 'left'" type="primary" @click="handleCreateToken">{{ $t('app.createToken') }}</el-button>
-      </el-col>
-    </template>
-
-    <template v-if="hasToken">
-      <el-col :xs="10" :sm="4" :lg="2">
+    <template >
+      <el-col :xs="10" :sm="4" :lg="2" v-if="hasToken">
           <el-button style="float: 'left'" type="primary" @click="dialogFormVisible = true">{{ $t('app.createFormItem') }}</el-button>
+      </el-col>
+      <el-col :xs="10" :sm="4" :lg="2" style="margin: 10px 0" v-else>
+          <el-button style="float: 'left'" type="primary" @click="handleCreateToken">{{ $t('app.createToken') }}</el-button>
       </el-col>
     </template>
   </el-row>

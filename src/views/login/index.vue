@@ -36,6 +36,19 @@
         </span>
       </el-form-item>
 
+      <el-form-item prop="captcha" v-if="captchaUrl">
+        <span class="svg-container">
+          <svg-icon icon-class="lock" />
+        </span>
+        <el-input
+            type="text"
+            v-model="loginForm.captchaValue"
+            :placeholder="$t('login.code')"
+            name="captcha"
+            @keyup.enter.native="handleLogin" />
+      </el-form-item>
+      <img :src="captchaUrl" @click="getImage"/>
+
       <el-row type="flex" justify="space-between">
         <a @click="goSignup" style="color:#eee">{{ $t('auth.signup') }}</a>
         <a @click="goFindPwd" style="color:#eee">{{ $t('auth.resetPasswd') }}</a>
@@ -53,6 +66,7 @@ import LangSelect from '@/components/LangSelect'
 import SelectZone from '@/components/SelectZone'
 import { setSha256 } from '@/utils/format'
 import { trim, checkSelectZone } from '@/utils'
+import { getCaptcha } from '@/api/captcha'
 
 export default {
   name: 'Login',
@@ -78,15 +92,18 @@ export default {
     return {
       loginForm: {
         username: '',
-        passwd: ''
+        passwd: '',
+        captchaId: '',
+        captchaValue: '',
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        passwd: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        passwd: [{ required: true, trigger: 'blur', validator: validatePassword }],
       },
       passwordType: 'password',
       loading: false,
       redirect: undefined,
+      captchaUrl: '',
     }
   },
   watch: {
@@ -98,15 +115,31 @@ export default {
     }
   },
   mounted() {
-
   },
   methods: {
-    formatData(data) {
-      const temp = {...data}
-      delete temp.username
-      temp.passwd = setSha256(data.passwd)
-      temp.email = trim(data.username)
-      return temp
+    getImage() {
+      // 获取验证码
+      getCaptcha(this.loginForm.captchaId).then(res => {
+        const { data } = res
+        if (data) {
+          this.loginForm.captchaId = data.captcha_id
+          this.captchaUrl = data.captcha_url
+        }
+      })
+    },
+    formatData(source) {
+      let data = {
+        passwd: setSha256(source.passwd),
+        email: trim(source.username)
+      }
+      if (source.captchaId && source.captchaValue) {
+        data = {
+          captcha_id: source.captchaId,
+          captcha_value: source.captchaValue,
+          ...data,
+        }
+      }
+      return data
     },
     showPwd() {
       if (this.passwordType === 'password') {
@@ -131,7 +164,10 @@ export default {
             })
             // 获取profile
             this.$store.dispatch('getProfile')
-          }).catch(() => {
+          }).catch(msg => {
+            if (msg.code === 4005 || msg.code === 4019) {
+              this.getImage()
+            }
             this.loading = false
           })
         } else {

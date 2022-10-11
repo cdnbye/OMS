@@ -64,7 +64,7 @@ service.interceptors.response.use(
           })
         }, 5000)
       }
-      return Promise.reject('error')
+      return Promise.reject(res.data)
     } else {
       return response.data
     }

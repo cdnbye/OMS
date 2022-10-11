@@ -35,9 +35,9 @@
 </template>
 
 <script>
-    import {fetchUserDomain} from '@/api/userDomain'
-    import {p2pConfigRatio} from '@/api/user/p2pConfig'
-    import {mapGetters} from 'vuex'
+    import { fetchUserDomain } from '@/api/userDomain'
+    import { p2pConfigRatio } from '@/api/user/p2pConfig'
+    import { mapGetters } from 'vuex'
 
     const APPLY_TO_ALL = '*Apply To All*'
 

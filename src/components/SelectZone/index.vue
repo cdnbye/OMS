@@ -7,6 +7,7 @@
       <el-dropdown-item command="cn" >{{ $t('auth.consoleCN') }}</el-dropdown-item>
       <el-dropdown-item command="hk" >{{ $t('auth.consoleHK') }}</el-dropdown-item>
       <el-dropdown-item command="us" >{{ $t('auth.consoleUSA') }}</el-dropdown-item>
+      <el-dropdown-item v-if="showLocal" command="local" >Localhost</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
@@ -22,10 +23,14 @@ export default {
     return {
       selectedZone: '',
       showRed: false,
+      showLocal: false,
     }
   },
   mounted() {
     this.checkSelected()
+    if (location.hostname === 'localhost') {
+      this.showLocal = true
+    }
   },
   computed: {
     selectedText() {
@@ -46,6 +51,8 @@ export default {
         this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleHK')
       } else if (env === 'us') {
         this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleUSA')
+      } else if (env === 'local') {
+        this.selectedZone = this.$t('navbar.currZone') + "local"
       } else {
         this.showRed = true
       }

@@ -114,6 +114,10 @@ export default {
       if (loc === 'us') {
         return this.$t('auth.consoleUSA')
       }
+      if (loc === 'local') {
+        return "Local"
+      }
+      return "Unknown"
     },
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar')

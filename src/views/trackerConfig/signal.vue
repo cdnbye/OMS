@@ -36,8 +36,6 @@ export default {
         { url: 'https://ca.p2pengine.net:8089/count', value: 0, name: '加拿大' },
         { url: 'https://sg.cdnbye.com/count', value: 0, name: '新加坡' },
         { url: 'https://sg.p2pengine.net:8089/count', value: 0, name: '新加坡' },
-        { url: 'https://as.cdnbye.com/count', value: 0, name: '悉尼' },
-        { url: 'https://as.p2pengine.net:8089/count', value: 0, name: '悉尼' },
         { url: 'https://se.cdnbye.com/count', value: 0, name: '斯德哥尔摩' },
         { url: 'https://se.p2pengine.net:8089/count', value: 0, name: '斯德哥尔摩' },
         { url: 'https://korea.cdnbye.com/count', value: 0, name: '首尔' },
