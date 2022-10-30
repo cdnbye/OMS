@@ -212,6 +212,7 @@ export default {
     closeAll: '關閉所有'
   },
   myInfo: {
+    name: '用戶名：',
     mail: '郵箱：',
     passwd: '密碼：',
     time: '註冊時間：',
@@ -235,6 +236,11 @@ export default {
       blankError: '密碼不允許包含空格',
       lengthError: '請輸入6到18位的密碼',
     },
+    changeName: {
+      change: '輸入新的用戶名',
+      newName: '新用戶名',
+      noneError: '請輸入用戶名',
+    }
   },
   common: {
     ok: '確定',

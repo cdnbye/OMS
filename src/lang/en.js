@@ -212,6 +212,7 @@ export default {
     closeAll: 'Close All'
   },
   myInfo: {
+    name: 'Username: ',
     mail: 'E-mail: ',
     passwd: 'Password: ',
     time: 'Registration time: ',
@@ -235,6 +236,11 @@ export default {
       blankError: 'Passwords are not allowed to contain spaces',
       lengthError: 'Please enter a 6 to 18 digit password',
     },
+    changeName: {
+      change: 'update username',
+      newName: 'new username',
+      noneError: 'Please enter your username',
+    }
   },
   common: {
     ok: 'Confirm',
@@ -280,7 +286,7 @@ export default {
     confirmPurchase: 'Pay Now',
     paySuccess: 'Thank you! The payment for your order has been confirmed, and your subscription is now active. Your order information has been sent to your mailbox.',
     payFail: 'Failed to pay!',
-    payPending: 'Your payment is under process, the order information will be sent to your mailbox after the payment is completed.',
+    payPending: 'Your payment is under process, the order information will be sent to your mailbox once the payment is completed.',
     systemError: 'Sorry, the system is maintaining',
     payLoadingTip: 'Jumping to payment page...',
     checkResultLoadingTip: 'Checking payment status...',
@@ -298,7 +304,7 @@ export default {
     flowPackage: 'Traffic Package',
     price: 'Price',
     currency:'Currency',
-    status: 'Order Status',
+    status: 'Status',
     action: 'Action',
     pay: 'Pay',
     close: 'Close',
@@ -307,7 +313,7 @@ export default {
     finish: 'Finished',
     fail: 'Closed',
     tip: 'Are you sure to close order?',
-    alipay: 'alipay',
+    alipay: 'Alipay',
     packageName: 'Item',
     amount: 'Quantity',
     totalTraffic: 'Traffic'

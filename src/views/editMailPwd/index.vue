@@ -1,6 +1,26 @@
 <template>
   <div class="edit-container">
       <el-card>
+
+        <p>
+          <span>{{$t('myInfo.name')}}{{ userInfo.name }}</span>&nbsp;
+          <el-button type="text" @click="nameDialogVisible = true">{{$t('myInfo.change')}}</el-button>
+          <el-dialog
+              :title="$t('myInfo.changeName.change')"
+              :visible.sync="nameDialogVisible"
+              :width="device==='mobile'?'80%':'30%'">
+            <el-form ref="nameForm" :model="nameForm" :rules="nameRules">
+              <el-form-item prop="name">
+                <el-input :placeholder="$t('myInfo.changeName.newName')" v-model="nameForm.name"></el-input>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="nameDialogVisible = false">{{$t('common.cancel')}}</el-button>
+              <el-button type="primary" @click="changeUserName" :loading="confirmButtonLoading">{{$t('common.ok')}}</el-button>
+            </span>
+          </el-dialog>
+        </p>
+
         <p>
           <span>{{$t('myInfo.mail')}}{{userInfo.email}}</span>&nbsp;
           <el-button type="text" @click="mailDialogVisible = true">{{$t('myInfo.change')}}</el-button>
@@ -71,7 +91,7 @@
 <script>
 import moment from 'moment'
 import { mapGetters } from 'vuex'
-import { fetchUserData, changePasswd, changeMail } from '@/api/user'
+import { fetchUserData, changeUserName, changePasswd, changeMail } from '@/api/user'
 import { sendCode } from '@/api/auth'
 import { setSha256 } from '@/utils/format'
 
@@ -94,6 +114,15 @@ export default {
       }
     }
     return {
+      nameRules: {
+        name: [
+          {
+            required: true,
+            message: this.$t('myInfo.changeName.noneError'),
+            trigger: 'blur'
+          },
+        ]
+      },
       emailRules: {
         email: [
           {
@@ -135,8 +164,10 @@ export default {
 
       mailDialogVisible: false,
       passwdDialogVisible: false,
+      nameDialogVisible: false,
       confirmButtonLoading: false,
       userInfo: {
+        name: '',
         time: '',
         email: '',
         token: '',
@@ -149,6 +180,9 @@ export default {
       passwdForm: {
         passwd: '',
         newpasswd: ''
+      },
+      nameForm: {
+        name: '',
       },
       sendButton: {
       value: 'Send',
@@ -174,6 +208,7 @@ export default {
           this.userInfo.email = data.email
           this.userInfo.token = data.token
           this.userInfo.utc = data.utc
+          this.userInfo.name = data.name
         }
       }).catch(err => {
         console.log(err)
@@ -215,6 +250,32 @@ export default {
         this.$message.error(this.$t('myInfo.changeMail.noneError'))
       }
     },
+    changeUserName() {
+      this.$refs.nameForm.validate(valid => {
+        if(valid) {
+          const data = {
+            name: this.nameForm.name,
+          }
+          this.confirmButtonLoading = true
+          changeUserName(data).then(res => {
+            this.confirmButtonLoading = false
+            this.$message({
+              message: this.$t('common.success'),
+              type: 'success'
+            })
+            this.nameDialogVisible = false
+            this.userInfo.name = res.data.name
+            this.resetForm('nameForm')
+            this.$store.dispatch('getProfile')
+          }).catch(err => {
+            this.confirmButtonLoading = false
+            console.log(err)
+          })
+        } else {
+          return false
+        }
+      })
+    },
     changeEmail() {
       this.$refs.emailForm.validate(valid => {
         if(valid) {
@@ -226,7 +287,7 @@ export default {
           changeMail(data).then(res => {
             this.confirmButtonLoading = false
             this.$message({
-              message: '修改邮箱成功',
+              message: this.$t('common.success'),
               type: 'success'
             })
             this.userInfo.email = res.data.email
@@ -252,7 +313,7 @@ export default {
           changePasswd(data).then(res => {
             this.confirmButtonLoading = false
             this.$message({
-              message: '修改密码成功',
+              message: this.$t('common.success'),
               type: 'success'
             })
             this.passwdDialogVisible = false

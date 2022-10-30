@@ -9,6 +9,15 @@ export function fetchUserData() {
   })
 }
 
+// 修改用户名
+export function changeUserName(data) {
+  return request({
+    url: `user/user_id/${getID()}/profile/name`,
+    method: 'put',
+    data
+  })
+}
+
 // 用户修改密码
 export function changePasswd(data) {
   return request({

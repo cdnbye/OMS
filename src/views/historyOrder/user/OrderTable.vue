@@ -23,6 +23,7 @@
 
       <el-table-column align="center" prop="created_at" :label="$t('order.createTime')"></el-table-column>
       <el-table-column align="center" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
+      <el-table-column align="center" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>
       <el-table-column align="center" prop="price" :label="$t('order.price')"></el-table-column>
       <el-table-column align="center" prop="currency" :label="$t('order.currency')"></el-table-column>
 
@@ -154,6 +155,16 @@ export default {
     cueerntPageChange(current) {
       this.currentPage = current
       this.handleGetOrder()
+    },
+    formatterPayMethod(row) {
+      switch (row.payment) {
+        case 'alipay':
+          return this.$t('order.alipay')
+        case 'paypal':
+          return 'Paypal'
+        case 'crypto':
+          return 'Coinbase'
+      }
     },
     formatData(data) {
       if (!data) data = []
