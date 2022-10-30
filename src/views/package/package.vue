@@ -1,24 +1,5 @@
 <template>
   <div class="package" :style="device === 'mobile' ? {} : {padding: '30px 120px'}">
-    <!-- 进入页面首先选择支付方式提示框 -->
-    <el-dialog
-      :title="$t('package.payMethod')"
-      :visible.sync="payVisible"
-      :width="device === 'mobile' ? '80%' : '30%'"
-      :before-close="dialogClose">
-      <el-radio v-if="language==='en'" v-model="paySelect" label="paypal">
-        <img :src="payImg.paypal" />
-      </el-radio>
-      <!--<el-radio v-if="language==='en'" v-model="paySelect" label="btc">-->
-        <!--<img style="width: 60px" :src="payImg.btc" />-->
-      <!--</el-radio>-->
-      <el-radio v-model="paySelect" label="alipay">
-        <img :src="payImg.ali" />
-      </el-radio>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSelect">{{ $t('common.ok') }}</el-button>
-      </span>
-    </el-dialog>
     <!-- 没有选择套餐点击购买时的提示框 -->
     <el-dialog
       :title="$t('package.noBuyTitle')"
@@ -37,7 +18,7 @@
       <el-row :key="item.subject" :style="index==(packages.length-1)?{'margin-bottom':'20px','visibility':'hidden'}:{'margin-bottom':'20px'}">
         <el-col :span="24">
           <el-card shadow="never" :body-style="device==='mobile'?'padding: 20px 10px':''">
-            <template v-if="paySelect === 'alipay'">
+            <template v-if="currency === 'CNY'">
               <div class="container">
                 <div class="item-desc">
                   <em class="shop-card-em">{{ item.traffic }}TB</em>
@@ -87,7 +68,7 @@
 
 
     <div class="create-order">
-      <div v-if="paySelect === 'alipay'">
+      <div v-if="currency === 'CNY'">
         <div class="buy">
           <div class="tip">
             总计费用：
@@ -122,14 +103,8 @@ export default {
   name: 'Package',
   data() {
     return {
-      payVisible: true,
       noSelectVisible: false,
-      paySelect: '',
-      payImg: {
-        ali: require('../../assets/ali_pay.png'),
-        paypal: require('../../assets/paypal.jpeg'),
-        btc: require('../../assets/btc.png')
-      },
+      currency: '',
       totalPrice: 0,
       packages: [],
       selectPackage: {
@@ -137,6 +112,9 @@ export default {
         en: []
       }
     }
+  },
+  mounted() {
+    this.getPackageData()
   },
   computed: {
     ...mapGetters([
@@ -148,7 +126,8 @@ export default {
     getPackageData() {
       fetchPackage(getID())
         .then(res => {
-          if(this.paySelect === 'alipay') {
+          if(this.language==='zh') {
+            this.currency = 'CNY'
             this.packages = [...res.data.list_cn]
 
             this.packages.push({...res.data.list_cn[0], subject: 'hide'})
@@ -157,6 +136,7 @@ export default {
               this.selectPackage.cn.push({...item, amount: 0})
             })
           } else {
+            this.currency = 'USD'
             this.packages = [...res.data.list_en]
 
             this.packages.push({...res.data.list_en[0], subject: 'hide'})
@@ -175,16 +155,6 @@ export default {
     },
     selectCountChange(value, item) {
       this.getTotalPrice()
-    },
-    handleSelect() {
-        if (this.paySelect === '') return
-        if (this.paySelect === 'btc') {
-            window.open('https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet')
-        } else {
-            this.payVisible = false
-            this.getPackageData()
-        }
-
     },
     getTotalPrice() {
       let total = 0
@@ -206,12 +176,12 @@ export default {
     handleCreateOrder() {
       const data = {
         price: Number(this.totalPrice),
-        payment: this.paySelect,
+        currency: this.currency,
         goods: [],
-        goods_type: this.paySelect === 'alipay' ? 'flow_packet_cn' : 'flow_packet_en',
+        goods_type: this.currency === 'CNY' ? 'flow_packet_cn' : 'flow_packet_en',
         customized: false,
       }
-      const selected = this.paySelect === 'alipay' ? this.selectPackage.cn : this.selectPackage.en
+      const selected = this.currency === 'CNY' ? this.selectPackage.cn : this.selectPackage.en
       data.goods = selected.filter(item => item.amount > 0)
       data.customized = data.goods.every(item => item.customized)
       createOrder(getID(), data)
@@ -219,7 +189,7 @@ export default {
           this.$router.push({
             name: 'OrderDetail',
             query: {
-              payMethod: this.paySelect,
+              currency: this.currency,
               orderID: res.data.order_id,
               totalPrice: this.totalPrice,
               buyData: JSON.stringify(data.goods)
@@ -235,19 +205,6 @@ export default {
             this.noSelectVisible = true
             return
         }
-        // paypal支付并且大于50美元需要用加密货币
-        // if (this.paySelect === 'paypal' && this.totalPrice >= 50) {
-        //     this.$messageBox.alert(this.$t('package.payAnotherWay'), {
-        //         distinguishCancelAndClose: true,
-        //         confirmButtonText: this.$t('common.ok'),
-        //         callback: action => {
-        //             if (action === 'confirm') {
-        //                 window.open(`https://swarmcloud.net/en/views/prices.html#cryptocurrency-wallet`)
-        //             }
-        //         }
-        //     });
-        //     return
-        // }
         this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
             distinguishCancelAndClose: true,
             confirmButtonText: this.$t('common.ok'),
@@ -354,7 +311,7 @@ export default {
   .create-order {
     text-align: left;
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
     z-index: 99;
     background-color: rgb(255, 255, 255);

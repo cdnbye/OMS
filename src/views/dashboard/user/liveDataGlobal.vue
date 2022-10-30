@@ -29,7 +29,7 @@
     import { mapGetters } from 'vuex'
     import { getID } from '@/utils/auth'
     import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
-    import { checkAlipayOrder, checkPaypalOrder } from '@/api/user/package'
+    import { checkAlipayOrder, checkPaypalOrder, updateCryptoTrade } from '@/api/user/package'
     import { fetchGlobalDomains } from '@/api/user/global'
     import { checkIn } from '@/api/user/package'
     import { formatTraffic, getQueryObj, formatPieData } from '@/utils/format'
@@ -263,6 +263,14 @@
             },
             checkPayResult() {
               const paramObj = getQueryObj()
+              if(paramObj.cancel) {
+                this.$messageBox.confirm(this.$t('package.payFail'), {
+                  type: 'error',
+                  confirmButtonText: this.$t('common.ok'),
+                  showCancelButton: false
+                })
+                return
+              }
               if(paramObj.payment) {
                 this.checkResultLoading = true
                 switch (paramObj.payment) {
@@ -290,36 +298,43 @@
                         })
                     break
                   case 'paypal':
-                    if(paramObj.cancel) {
+                    checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID, paramObj.credit_card)
+                        .then(res => {
+                          if(res.data.is_payed) {
+                            this.checkResultLoading = false
+                            this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                              type: 'success',
+                              confirmButtonText: this.$t('common.ok'),
+                              showCancelButton: false
+                            })
+                          } else {
+                            this.$messageBox.confirm(this.$t('package.payFail'), {
+                              type: 'error',
+                              confirmButtonText: this.$t('common.ok'),
+                              showCancelButton: false
+                            })
+                          }
+                        }).catch(err => {
+                          this.checkResultLoading = false
+                          console.log(err)
+                        })
+                    break
+                  case 'crypto':
+                    updateCryptoTrade({
+                      uid: parseInt(getID()),
+                      order_id: paramObj.orderId,
+                      processing: true,
+                    }).then(() => {
                       this.checkResultLoading = false
-                      this.$messageBox.confirm(this.$t('package.payFail'), {
-                        type: 'error',
+                      this.$messageBox.confirm(this.$t('package.payPending'), {
+                        type: 'info',
                         confirmButtonText: this.$t('common.ok'),
                         showCancelButton: false
                       })
-                    } else {
-                      checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
-                          .then(res => {
-                            if(res.data.is_payed) {
-                              this.checkResultLoading = false
-                              this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                                type: 'success',
-                                confirmButtonText: this.$t('common.ok'),
-                                showCancelButton: false
-                              })
-                            } else {
-                              this.$messageBox.confirm(this.$t('package.payFail'), {
-                                type: 'error',
-                                confirmButtonText: this.$t('common.ok'),
-                                showCancelButton: false
-                              })
-                            }
-                          })
-                          .catch(err => {
-                            this.checkResultLoading = false
-                            console.log(err)
-                          })
-                    }
+                    }).catch(err => {
+                      this.checkResultLoading = false
+                      console.log(err)
+                    })
                     break
                   default:
                     this.checkResultLoading = false

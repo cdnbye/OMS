@@ -153,10 +153,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Traffic">
-        <el-input-number v-model.number="selectedCustomPlan.traffic" min="1" ></el-input-number>   TB
+        <el-input-number v-model.number="selectedCustomPlan.traffic" ></el-input-number>   TB
       </el-form-item>
       <el-form-item label="Price">
-        <el-input-number v-model.number="selectedCustomPlan.price" min="1"></el-input-number>
+        <el-input-number v-model.number="selectedCustomPlan.price"></el-input-number>
       </el-form-item>
       <el-form-item label="Currency">
         <el-select v-model="selectedCustomPlan.currency" class="filter-item" style="float: left">
@@ -256,6 +256,10 @@
                 label: "flow_packet",
             },
             {
+              value: '99',
+              label: "monthly_custom",
+            },
+            {
                 value: '7',
                 label: "monthly_1TB",
             },
@@ -313,19 +317,19 @@
             },
             {
               value: '15',
-              label: "MONTHLY_2TB",
+              label: "monthly_2TB",
             },
             {
               value: '16',
-              label: "MONTHLY_500TB",
+              label: "monthly_500TB",
             },
             {
               value: '17',
-              label: "MONTHLY_1000TB",
+              label: "monthly_1000TB",
             },
             {
               value: '18',
-              label: "MONTHLY_500GB",
+              label: "monthly_500GB",
             },
         ],
         currencyOptions:[

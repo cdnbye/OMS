@@ -12,11 +12,21 @@
           <div class="cost">
             <span>{{ $t('package.total') }}</span>
             <span class="price">
-              <span>{{ payMethod === 'alipay' ? '￥' : '$' }}</span>
-              <em>{{ totalPrice }}</em>
+              <em> {{ totalPrice }}</em>
+              <span>{{ currency === 'CNY' ? ' ￥' : ' $' }}</span>
             </span>
           </div>
-          <el-button type="warning" @click="payClick">{{ $t('package.confirmPurchase') }}</el-button>
+          <div class="payMethod">
+            <img v-if="currency === 'CNY'" style="" :src="payImg.ali" @click="alipayClick" />
+
+            <div v-if="currency !== 'CNY'">
+              <div id="paypal-button-container" style="margin-top: 40px"></div>
+              <img style="width: 150px" :src="payImg.credit" />
+            </div>
+            <img v-if="currency !== 'CNY'" style="" :src="payImg.paypal" @click="paypalClick" />
+            <img v-if="currency !== 'CNY' && showCrypto" style="" :src="payImg.coinbase" @click="coinbaseClick" />
+
+          </div>
         </div>
       </el-card>
     </div>
@@ -32,15 +42,34 @@
 <script>
 import { mapGetters } from 'vuex'
 import { fetchPayUrl } from '@/api/user/package'
+import { getItem } from '@/utils/storage'
+
+const FUNDING_SOURCES = [
+  // paypal.FUNDING.PAYPAL,
+  paypal.FUNDING.VENMO,
+  // paypal.FUNDING.PAYLATER,
+  paypal.FUNDING.CREDIT,
+  paypal.FUNDING.CARD,
+]
 
 export default {
   name: 'OrderDetail',
+  // components: {
+  //   "paypal-buttons": PayPalButton,
+  // },
   data() {
     return {
+      showCrypto: true,
+      payImg: {
+        ali: require('../../assets/ali_pay.png'),
+        paypal: require('../../assets/paypal.jpeg'),
+        coinbase: require('../../assets/coinbase.png'),
+        credit: require('../../assets/credit_card.png')
+      },
       payLoading: false,
       cantBuyVisible: false,
       tableData: [],
-      payMethod: '',
+      currency: '',
       totalPrice: 0,
       orderID: 0
     }
@@ -48,35 +77,90 @@ export default {
   computed: {
     ...mapGetters([
       'device'
-    ])
+    ]),
   },
   mounted() {
-    if(this.$route.query.payMethod) {
+    if (getItem('loc') === 'cn') {
+      this.showCrypto = false
+    }
+    if(this.$route.query.currency) {
       this.formatData()
+      if (this.currency !== 'CNY') {
+        FUNDING_SOURCES.forEach((fundingSource) => {
+          var button = paypal.Buttons({
+            style: {
+              // layout: 'vertical',
+              color:  'white',
+              // shape:  'pill',
+              // label:  'paypal'
+            },
+            fundingSource: fundingSource,
+            createOrder: (data, actions) => {
+              return actions.order.create({
+                purchase_units: [{
+                  amount: {
+                    value: this.totalPrice
+                  }
+                }]
+              });
+            },
+            onApprove: (data, actions) => {
+              return actions.order.capture().then((orderData) => {
+                // Successful capture! For dev/demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                console.warn(JSON.stringify(data))
+                this.$router.push(`/?payment=paypal&orderId=${this.orderID}&paymentId=${data.paymentID}&PayerID=${data.payerID}&credit_card=true`);
+              });
+            },
+            onError: () => {
+              return (err) => {
+                console.error(err);
+                this.cantBuyVisible = true
+              }
+            },
+          })
+// Check if the button is eligible
+          if (button.isEligible()) {
+// Render the standalone button for that funding source
+            button.render('#paypal-button-container')
+          }
+        })
+      }
+
     } else {
       this.$router.push('/shopping/package')
     }
   },
   methods: {
     formatData() {
-      this.tableData = [...JSON.parse(this.$route.query.buyData)]
-      // console.log(this.tableData)
-      this.tableData.forEach(item => {
-        item.total = item.amount ? (item.amount * item.price).toFixed(2) : item.price.toFixed(2)
-        if(!item.amount) {
-          item.amount = 1
-        }
-      })
-      this.payMethod = this.$route.query.payMethod
+      try {
+        this.tableData = [...JSON.parse(this.$route.query.buyData)]
+        // console.log(this.tableData)
+        this.tableData.forEach(item => {
+          item.total = item.amount ? (item.amount * item.price).toFixed(2) : item.price.toFixed(2)
+          if(!item.amount) {
+            item.amount = 1
+          }
+        })
+      } catch (e) {
+        this.$router.push('/')
+      }
+      this.currency = this.$route.query.currency
       this.totalPrice = this.$route.query.totalPrice
       this.orderID = this.$route.query.orderID
     },
-    payClick() {
-      this.handleFetchPayUrl()
+    paypalClick() {
+      this.handleFetchPayUrl('paypal')
     },
-    handleFetchPayUrl() {
+    alipayClick() {
+      this.handleFetchPayUrl('alipay')
+    },
+    coinbaseClick() {
+      this.handleFetchPayUrl('crypto')
+    },
+    handleFetchPayUrl(payMethod) {
       this.payLoading = true
-      fetchPayUrl(this.payMethod, this.orderID, this.device)
+      fetchPayUrl(payMethod, this.orderID, this.device)
         .then(res => {
           if(res.data.available) {
             window.location.href = `${res.data.pay_url}`
@@ -89,7 +173,7 @@ export default {
           this.payLoading = false
           console.log(err)
         })
-    }
+    },
   }
 }
 </script>
@@ -118,6 +202,16 @@ export default {
         color: #ed711f;
       }
     }
-
+  }
+  .payMethod {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    >img {
+      cursor: pointer;
+      width: 130px;
+    }
   }
 </style>

@@ -33,6 +33,15 @@ export function createOrder(userID, data) {
   })
 }
 
+// 更新支付状态
+export function updateCryptoTrade(data) {
+    return request({
+        url: `charge/crypto/trade`,
+        method: 'post',
+        data
+    })
+}
+
 // 获取支付地址
 export function fetchPayUrl(payMethod, orderID, device) {
   const origin = location.origin + location.pathname
@@ -52,9 +61,13 @@ export function checkAlipayOrder(orderID) {
 }
 
 // 检查paypal支付状态
-export function checkPaypalOrder(orderID, paymentID, payerID) {
+export function checkPaypalOrder(orderID, paymentID, payerID, creditCard) {
+  let url = `charge/paypal/query?order_id=${orderID}&payment_id=${paymentID}&payer_id=${payerID}`
+  if (creditCard) {
+      url = `${url}&credit_card=true`
+  }
   return request({
-    url: `charge/paypal/query?order_id=${orderID}&payment_id=${paymentID}&payer_id=${payerID}`,
+    url,
     method: 'get'
   })
 }

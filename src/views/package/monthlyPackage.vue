@@ -1,24 +1,5 @@
 <template>
   <div class="package" :style="device === 'mobile' ? {} : {padding: '30px 120px'}">
-    <!-- 进入页面首先选择支付方式提示框 -->
-    <el-dialog
-      :title="$t('package.payMethod')"
-      :visible.sync="payVisible"
-      :width="device === 'mobile' ? '80%' : '30%'"
-      :before-close="dialogClose">
-      <el-radio v-if="language==='en'" v-model="paySelect" label="paypal">
-        <img :src="payImg.paypal" />
-      </el-radio>
-      <!--<el-radio v-if="language==='en'" v-model="paySelect" label="btc">-->
-        <!--<img style="width: 60px" :src="payImg.btc" />-->
-      <!--</el-radio>-->
-      <el-radio v-model="paySelect" label="alipay">
-        <img :src="payImg.ali" />
-      </el-radio>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handleSelect">{{ $t('common.ok') }}</el-button>
-      </span>
-    </el-dialog>
     <!-- 套餐顶部说明 -->
     <el-alert style="margin-bottom: 20px" type="info" show-icon :title="$t('package.packageSubTitle')" :description="$t('package.monthlyPackageSub')" />
 
@@ -26,24 +7,25 @@
       <el-row :key="item.subject" :style="{'margin-bottom':'20px'}">
         <el-col :span="24">
           <el-card shadow="never" :body-style="device==='mobile'?'padding: 20px 10px':''">
-            <template v-if="paySelect === 'alipay'">
+            <template v-if="currency === 'CNY'">
               <div class="container">
                 <div class="item-desc">
                   <em class="shop-card-em" :style="device==='mobile'?{'fontSize': '16px'}:{'fontSize': '20px'}">{{ item.subject }}</em>
                   <span class="shop-card-tips" :style="item.original_price - item.price > 0 ? {display: 'inline-block'} : {display: 'none'}">
                     立减 ￥ {{ (item.original_price - item.price).toFixed(2) }}
                   </span>
-                  <span class="shop-card-txt">{{ item.type.indexOf('month') > -1 ? '30天有效' : '365天有效' }}</span>
+                  <span class="shop-card-txt">{{ item.leftDays }}天有效</span>
                 </div>
                 <div class="item-price">
                   <span class="price">
+                    <span v-if="showUpgrade"><strong>+</strong></span>
                     <span>￥</span>
                     <em>{{ item.price }}</em>
                     <s v-if="item.price !== item.original_price">￥{{ item.original_price }}</s>
                   </span>
                 </div>
                 <div class="count">
-                  <el-button type="warning" @click="handleBuy(item)">购买</el-button>
+                  <el-button type="warning" @click="handleBuy(item)">{{showUpgrade ? '升级' : '购买'}}</el-button>
                 </div>
               </div>
             </template>
@@ -55,17 +37,18 @@
                   <span class="shop-card-tips" :style="item.original_price - item.price >0 ? {display: 'inline-block'} : {display: 'none'}">
                     {{((item.original_price - item.price)/item.original_price * 100).toFixed(1)}}% off
                   </span>
-                  <span class="shop-card-txt">{{ item.type.indexOf('month') > -1 ? '30 days period' : '365 days period' }}</span>
+                  <span class="shop-card-txt">{{ item.leftDays }} days period</span>
                 </div>
                 <div class="item-price">
                   <span class="price">
+                    <span v-if="showUpgrade"><strong>+</strong></span>
                     <span>$</span>
                     <em>{{ item.price }}</em>
                     <s v-if="item.price !== item.original_price">${{ item.original_price }}</s>
                   </span>
                 </div>
                 <div class="count">
-                  <el-button type="warning" @click="handleBuy(item)">Buy</el-button>
+                  <el-button type="warning" @click="handleBuy(item)">{{showUpgrade ? 'Upgrade' :  'Buy'}}</el-button>
                 </div>
               </div>
             </template>
@@ -85,19 +68,17 @@ export default {
   name: 'Package',
   data() {
     return {
-      payVisible: true,
-      paySelect: '',
-      payImg: {
-        ali: require('../../assets/ali_pay.png'),
-        paypal: require('../../assets/paypal.jpeg'),
-        // btc: require('../../assets/btc.png')
-      },
+      showUpgrade: false,
+      currency: '',
       packages: [],
       selectPackage: {
         cn: [],
         en: []
       }
     }
+  },
+  mounted() {
+    this.getPackageData()
   },
   computed: {
     ...mapGetters([
@@ -109,14 +90,31 @@ export default {
     getPackageData() {
       fetchMonthlyPackage(getID())
         .then(res => {
-          if(this.paySelect === 'alipay') {
-            this.packages = [...res.data.list_cn]
+          const { data } = res
+          this.showUpgrade = data.show_upgrade
+
+          const attachLeftDays = (item) => {
+            if (this.showUpgrade) {
+              item.leftDays = data.left_days
+            } else if (item.type.toLowerCase().startsWith('annual')) {
+              item.leftDays = 365
+            } else {
+              item.leftDays = 30
+            }
+          }
+
+          if(this.language==='zh') {
+            this.currency = 'CNY'
+            this.packages = [...data.list_cn]
             this.packages.forEach(item => {
+              attachLeftDays(item)
               this.selectPackage.cn.push({...item, amount: 0})
             })
           } else {
-            this.packages = [...res.data.list_en]
+            this.currency = 'USD'
+            this.packages = [...data.list_en]
             this.packages.forEach(item => {
+              attachLeftDays(item)
               this.selectPackage.en.push({...item, amount: 0})
             })
           }
@@ -128,22 +126,13 @@ export default {
     dialogClose() {
       this.$router.push('/')
     },
-    handleSelect() {
-      if (this.paySelect === '') return
-      if (this.paySelect === 'btc') {
-          window.open('https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet')
-      } else {
-          this.payVisible = false
-          this.getPackageData()
-      }
-    },
     handleCreateOrder(data) {
       createOrder(getID(), data)
         .then(res => {
           this.$router.push({
             name: 'OrderDetail',
             query: {
-              payMethod: this.paySelect,
+              currency: this.currency,
               orderID: res.data.order_id,
               totalPrice: data.price,
               buyData: JSON.stringify(data.goods)
@@ -155,18 +144,6 @@ export default {
         })
     },
     handleBuy(subject) {
-      // if (this.paySelect === 'paypal' && Number(subject.price) >= 50) {
-      //     this.$messageBox.alert(this.$t('package.payAnotherWay'), {
-      //         distinguishCancelAndClose: true,
-      //         confirmButtonText: this.$t('common.ok'),
-      //         callback: action => {
-      //             if (action === 'confirm') {
-      //                 window.open(`https://www.cdnbye.com/en/views/prices.html#cryptocurrency-wallet`)
-      //             }
-      //         }
-      //     });
-      //     return
-      // }
       this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
           distinguishCancelAndClose: true,
           confirmButtonText: this.$t('common.ok'),
@@ -175,10 +152,11 @@ export default {
           .then(() => {
               const data = {
                   price: Number(subject.price),
-                  payment: this.paySelect,
+                  currency: this.currency,
                   goods: [subject],
-                  goods_type: this.paySelect === 'alipay' ? 'monthly_packet_cn' : 'monthly_packet_en',
+                  goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
                   customized: subject.customized,
+                  upgrade: this.showUpgrade,
               }
               this.handleCreateOrder(data)
               // console.log(subject)

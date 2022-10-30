@@ -23,13 +23,14 @@
 
       <el-table-column align="center" prop="created_at" :label="$t('order.createTime')"></el-table-column>
       <el-table-column align="center" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
-      <el-table-column align="center" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>
       <el-table-column align="center" prop="price" :label="$t('order.price')"></el-table-column>
       <el-table-column align="center" prop="currency" :label="$t('order.currency')"></el-table-column>
 
       <el-table-column align="center"  :label="$t('order.status')">
         <template slot-scope="scope" :formatter="formatterStatus">
-          <el-tag size="medium" :type="scope.row.trade_status==='WAIT_BUYER_PAY'?'':scope.row.trade_status==='TRADE_CLOSED'?'danger':'success'">{{ formatterStatus(scope.row) }}</el-tag>
+          <el-tag size="medium" :type="tagStatus(scope.row.trade_status)">
+            {{ formatterStatus(scope.row) }}
+          </el-tag>
         </template>
       </el-table-column>
 
@@ -88,6 +89,10 @@ export default {
     this.handleGetOrder()
   },
   methods: {
+    tagStatus(tradeStatus) {
+      return (tradeStatus==='WAIT_BUYER_PAY' || tradeStatus==='TRADE_PROCESSING')
+          ?'':tradeStatus==='TRADE_CLOSED'?'danger':'success'
+    },
     pClose(id) {
       this.$refs[`popover-` + id].doClose()
     },
@@ -123,14 +128,14 @@ export default {
       }
       return type
     },
-    formatterPayMethod(row) {
-      return (row.payment === 'alipay') ? this.$t('order.alipay') : row.payment
-    },
     formatterStatus(row, column) {
       let status = ''
       switch (row.trade_status) {
         case 'WAIT_BUYER_PAY':
           status = this.$t('order.waitPay')
+          break;
+        case 'TRADE_PROCESSING':
+          status = this.$t('order.processing')
           break;
         case 'TRADE_SUCCESS':
           status = this.$t('order.finish')
@@ -151,6 +156,7 @@ export default {
       this.handleGetOrder()
     },
     formatData(data) {
+      if (!data) data = []
       data.forEach(item => {
         item.created_at = moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')
       })
@@ -174,23 +180,32 @@ export default {
         })
     },
     handlePay(order) {
-      this.payLoading = true
-      fetchPayUrl(order.payment, order.order_id, this.device)
-        .then(res => {
-          if(res.data.available) {
-            window.location.href = `${res.data.pay_url}`
-          } else {
-            this.$messageBox.confirm(this.$t('package.systemError'), {
-              type: 'error',
-              confirmButtonText: this.$t('common.ok'),
-              showCancelButton: false
-            })
-          }
-        })
-        .catch(err => {
-          this.payLoading = false
-          console.log(err)
-        })
+      this.$router.push({
+        name: 'OrderDetail',
+        query: {
+          currency: order.currency,
+          orderID: order.order_id,
+          totalPrice: order.price,
+          buyData: JSON.stringify(order.details)
+        }
+      })
+      // this.payLoading = true
+      // fetchPayUrl(order.payment, order.order_id, this.device)
+      //   .then(res => {
+      //     if(res.data.available) {
+      //       window.location.href = `${res.data.pay_url}`
+      //     } else {
+      //       this.$messageBox.confirm(this.$t('package.systemError'), {
+      //         type: 'error',
+      //         confirmButtonText: this.$t('common.ok'),
+      //         showCancelButton: false
+      //       })
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.payLoading = false
+      //     console.log(err)
+      //   })
     }
   }
 }

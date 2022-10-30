@@ -11,7 +11,7 @@
         <el-slider v-model="configForm.min_peer_conn" :max="15" @change="minConnChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="上报时间间隔">
-        <el-slider v-model="configForm.report_interval" :min="10" :max="120" @change="intervalChange" show-input></el-slider>
+        <el-slider v-model="configForm.report_interval" :min="10" :max="300" @change="intervalChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="日志采样比率">
         <el-slider v-model="configForm.log_rate" :min="0" :max="100" @change="piChange" show-input></el-slider>
