@@ -61,13 +61,9 @@ export function checkAlipayOrder(orderID) {
 }
 
 // 检查paypal支付状态
-export function checkPaypalOrder(orderID, paymentID, payerID, creditCard) {
-  let url = `charge/paypal/query?order_id=${orderID}&payment_id=${paymentID}&payer_id=${payerID}`
-  if (creditCard) {
-      url = `${url}&credit_card=true`
-  }
+export function checkPaypalOrder(orderID, paymentID, payerID) {
   return request({
-    url,
+    url: `charge/paypal/query?order_id=${orderID}&payment_id=${paymentID}&payer_id=${payerID}`,
     method: 'get'
   })
 }

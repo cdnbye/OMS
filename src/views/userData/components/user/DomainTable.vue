@@ -46,7 +46,7 @@
             placement="top"
             width="200"
             :ref="'popover-' + scope.row.id">
-            <p>{{ $t('domainTable.tip') }}</p>
+            <p>{{ $t('common.sureDelete') }}</p>
             <div style="text-align: right; margin: 0">
               <el-button type="text" size="mini" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
               <el-button type="primary" size="mini" @click="handleDeleteDomain(scope.row)">{{ $t('common.ok') }}</el-button>
@@ -56,7 +56,7 @@
                        type="danger"
                        size="mini"
                        @click="pShow(scope.row.id)"
-            >{{ $t('domainTable.delete') }}</el-button>
+            >{{ $t('common.delete') }}</el-button>
           </el-popover>
         </template>
       </template>

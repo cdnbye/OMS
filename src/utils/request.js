@@ -5,13 +5,24 @@ import { getToken } from '@/utils/auth'
 import { setItem, getItem } from '@/utils/storage'
 import { LOCATION, BASE_URLS } from '@/constant'
 
-const loc = getItem(LOCATION)
-if (loc) {
-  setItem(LOCATION, loc)
+const LocMap = {
+  cn: 'p1',
+  us: 'p2',
+  hk: 'p3',
+  local: 'd1',
 }
 
-
+let loc = getItem(LOCATION)
 // console.warn(`loc ${loc}`)
+if (loc) {
+  if (LocMap[loc]) {
+    loc = LocMap[loc]
+    setItem(LOCATION, loc)
+  } else {
+    setItem(LOCATION, loc)
+  }
+
+}
 
 // create an axios instance
 const service = axios.create({

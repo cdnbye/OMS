@@ -105,16 +105,16 @@ export default {
     },
     getCurrZone() {
       const loc = getItem('loc')
-      if (loc === 'cn') {
+      if (loc === 'p1') {
         return this.$t('auth.consoleCN')
       }
-      if (loc === 'hk') {
+      if (loc === 'p3') {
         return this.$t('auth.consoleHK')
       }
-      if (loc === 'us') {
+      if (loc === 'p2') {
         return this.$t('auth.consoleUSA')
       }
-      if (loc === 'local') {
+      if (loc === 'd1') {
         return "Local"
       }
       return "Unknown"
@@ -188,7 +188,7 @@ export default {
     //}
     .international{
       vertical-align: center;
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .switchdomain {
       white-space: nowrap;
@@ -206,11 +206,9 @@ export default {
         margin-top: 8px;
         position: relative;
         .username-wrapper {
-          padding-top: 10px;
-          padding-bottom: 10px;
-          margin-right: 5px;
+          padding: 10px;
           position: relative;
-          width: 140px;
+          width: auto;
           //height: 50px;
           font-weight: bold;
           font-size: 13px;

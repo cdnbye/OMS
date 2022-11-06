@@ -4,10 +4,10 @@
             {{ selectedText }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item command="cn" >{{ $t('auth.consoleCN') }}</el-dropdown-item>
-      <el-dropdown-item command="hk" >{{ $t('auth.consoleHK') }}</el-dropdown-item>
-      <el-dropdown-item command="us" >{{ $t('auth.consoleUSA') }}</el-dropdown-item>
-      <el-dropdown-item v-if="showLocal" command="local" >Localhost</el-dropdown-item>
+      <el-dropdown-item command="p1" >{{ $t('auth.consoleCN') }}</el-dropdown-item>
+      <el-dropdown-item command="p3" >{{ $t('auth.consoleHK') }}</el-dropdown-item>
+      <el-dropdown-item command="p2" >{{ $t('auth.consoleUSA') }}</el-dropdown-item>
+      <el-dropdown-item v-if="showLocal" command="d1" >Localhost</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
@@ -45,13 +45,13 @@ export default {
       if (!env) {
         env = getItem(LOCATION)
       }
-      if (env === 'cn') {
+      if (env === 'p1') {
         this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleCN')
-      } else if (env === 'hk') {
+      } else if (env === 'p3') {
         this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleHK')
-      } else if (env === 'us') {
+      } else if (env === 'p2') {
         this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleUSA')
-      } else if (env === 'local') {
+      } else if (env === 'd1') {
         this.selectedZone = this.$t('navbar.currZone') + "local"
       } else {
         this.showRed = true

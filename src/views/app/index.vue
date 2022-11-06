@@ -84,7 +84,7 @@
               <el-button size="mini" type="text" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
               <el-button type="primary" size="mini" @click="handleDelete(scope.row)">{{ $t('common.ok') }}</el-button>
             </div>
-            <el-button slot="reference" size="mini" type="danger" @click="pShow(scope.row.id)" :style="device==='mobile'?'':'margin-left: 10px'">{{ $t('domainTable.delete') }}</el-button>
+            <el-button slot="reference" size="mini" type="danger" @click="pShow(scope.row.id)" :style="device==='mobile'?'':'margin-left: 10px'">{{ $t('common.delete') }}</el-button>
           </el-popover>
 
         </template>

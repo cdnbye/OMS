@@ -264,7 +264,7 @@
             checkPayResult() {
               const paramObj = getQueryObj()
               if(paramObj.cancel) {
-                this.$messageBox.confirm(this.$t('package.payFail'), {
+                this.$messageBox.confirm(this.$t('package.paySuspended'), {
                   type: 'error',
                   confirmButtonText: this.$t('common.ok'),
                   showCancelButton: false
@@ -298,26 +298,28 @@
                         })
                     break
                   case 'paypal':
-                    checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID, paramObj.credit_card)
-                        .then(res => {
-                          if(res.data.is_payed) {
-                            this.checkResultLoading = false
-                            this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                              type: 'success',
-                              confirmButtonText: this.$t('common.ok'),
-                              showCancelButton: false
-                            })
-                          } else {
-                            this.$messageBox.confirm(this.$t('package.payFail'), {
-                              type: 'error',
-                              confirmButtonText: this.$t('common.ok'),
-                              showCancelButton: false
-                            })
-                          }
-                        }).catch(err => {
-                          this.checkResultLoading = false
-                          console.log(err)
-                        })
+                    if (paramObj.paymentId && paramObj.PayerID) {
+                      checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
+                          .then(res => {
+                            if(res.data.is_payed) {
+                              this.checkResultLoading = false
+                              this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                                type: 'success',
+                                confirmButtonText: this.$t('common.ok'),
+                                showCancelButton: false
+                              })
+                            } else {
+                              this.$messageBox.confirm(this.$t('package.payFail'), {
+                                type: 'error',
+                                confirmButtonText: this.$t('common.ok'),
+                                showCancelButton: false
+                              })
+                            }
+                          }).catch(err => {
+                        this.checkResultLoading = false
+                        console.log(err)
+                      })
+                    }
                     break
                   case 'crypto':
                     updateCryptoTrade({

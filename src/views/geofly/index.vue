@@ -10,10 +10,10 @@ import { mapGetters } from 'vuex'
 import { getItem } from "@/utils/storage";
 
 const SERVER_URLS = {
-  'dev': 'ws://localhost',
-  'cn': 'wss://cn.cdnbye.com',
-  'hk': 'wss://hk.swarmcloud.net',
-  'us': 'wss://tracker.hdtvcloud.com',
+  'd1': 'ws://localhost',
+  'p1': 'wss://cn.cdnbye.com',
+  'p3': 'wss://hk.swarmcloud.net',
+  'p2': 'wss://tracker.hdtvcloud.com',
 }
 const MAX_LINES = 7000
 const FLY_TYPE2COLOR = {
