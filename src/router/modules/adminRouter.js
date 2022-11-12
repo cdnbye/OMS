@@ -160,16 +160,6 @@ export default [
                 }
             },
             {
-                path: 'p2p_rate',
-                component: () => import('@/views/historyData/Traffic'),
-                name: 'P2PRate',
-                meta: {
-                    title: 'p2pRate',
-                    roles: ['admin'],
-                    noCache: true
-                }
-            },
-            {
                 path: 'online',
                 component: () => import('@/views/historyData/OnlineNum'),
                 name: 'Online',

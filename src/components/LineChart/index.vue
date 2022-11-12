@@ -29,9 +29,16 @@ export default {
       type: Object,
       required: true
     },
+    secondChartData: {
+      type: Object,
+      required: false
+    },
     option: {
       type: Object,
       required: true
+    },
+    showSecondYAxis: {
+      type: Boolean,
     }
   },
   data() {
@@ -41,10 +48,18 @@ export default {
         xData: [],
         unit: ''
       },
-      data: {}
+      data: {},
+      secondData: {}
     }
   },
   watch: {
+    secondChartData: {
+      deep: true,
+      handler(val) {
+        this.secondData = val
+        this.setOptions()
+      }
+    },
     chartData: {
       deep: true,
       handler(val) {
@@ -125,7 +140,25 @@ export default {
           animationEasing: 'cubicInOut'
         })
       })
-      this.chart.setOption({
+      Object.keys(this.secondData).forEach((item, index) => {
+        legend.push(item)
+        series.push({
+          name: item,
+          markPoint: {
+            data: [
+              {type: 'max', name: '最大值'},
+              {type: 'min', name: '最小值'}
+            ]
+          },
+          yAxisIndex: 1,
+          smooth: true,
+          type: 'line',
+          data: this.secondData[item],
+          animationDuration: 2800,
+          animationEasing: 'cubicInOut'
+        })
+      })
+      const options = {
         xAxis: {
           data: this.optionData.xData,
           boundaryGap: false,
@@ -154,24 +187,41 @@ export default {
             type: 'cross'
           },
           textStyle: {
-        　  align: 'left'
-        　}
-        },
-        yAxis: {
-          name: this.optionData.unit ? `${this.optionData.yName}(${this.optionData.unit})` : `${this.optionData.yName}`,
-          axisTick: {
-            show: false
+            align: 'left'
           }
         },
+        yAxis: [
+          {
+            name: this.optionData.unit ? `${this.optionData.yName}(${this.optionData.unit})` : `${this.optionData.yName}`,
+            axisTick: {
+              show: false
+            },
+          },
+        ],
         legend: {
           data: legend
         },
         series
-      })
+      }
+      if (this.showSecondYAxis) {
+        options.yAxis.push({
+          name: 'P2P Ratio',
+          max: 100,
+          min: 0,
+          axisTick: {
+            show: false
+          },
+          position: 'right',
+          axisLabel: {
+            formatter: '{value} %'
+          }
+        })
+      }
+      this.chart.setOption(options)
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.setOptions()
     }
   }
 }

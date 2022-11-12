@@ -150,6 +150,9 @@ export default {
           cancelButtonText: this.$t('common.cancel')
       })
           .then(() => {
+              if (this.showUpgrade) {
+                subject.upgrade = true
+              }
               const data = {
                   price: Number(subject.price),
                   currency: this.currency,

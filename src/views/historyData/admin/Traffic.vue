@@ -2,7 +2,7 @@
   <div class="app-container">
     <DataPicker :date="date" :radio="radio" @selectChange="selectChange" @dataChange="dataChange">
     </DataPicker>
-    <LineChart :chart-data="bandwidthData" :option="option" />
+    <LineChart :chart-data="bandwidthData" :second-chart-data="ratioData" :showSecondYAxis=true :option="option" />
   </div>
 </template>
 
@@ -32,11 +32,14 @@ export default {
         http: [],
         share: [],
       },
+      ratioData: {
+        ratio: [],
+      },
       option: {
         xData: [],
         unit: '',
-        yName: '流量'
-      }
+        yName: '流量',
+      },
     }
   },
   mounted() {
@@ -47,14 +50,12 @@ export default {
       this.getData(this.getTimeStamp(date[0]), this.getTimeStamp(date[1]))
     },
     getData(start = this.getTimeStamp(this.date[0]), end = this.getTimeStamp(this.date[1]), gran) {
-      fetchHttpTraffic(start, end, gran).then(res => {
-        this.formatHttpData(res, gran)
-        fetchP2PTraffic(start, end, gran).then(res => {
-          this.formatP2pData(res)
-        })
-        fetchShareTraffic(start, end, gran).then(res => {
-          this.formatShareData(res)
-        })
+      Promise.all([fetchHttpTraffic(start, end, gran), fetchP2PTraffic(start, end, gran), fetchShareTraffic(start, end, gran)])
+      .then((result) => {
+        this.formatHttpData(result[0], gran)
+        this.formatP2pData(result[1], gran)
+        this.formatShareData(result[2], gran)
+        this.formatRatioData(result[0].data.list, result[1].data.list)
       })
     },
     selectChange(val) {
@@ -87,6 +88,13 @@ export default {
       this.bandwidthData.share = []
       data.forEach(item => {
         this.bandwidthData.share.push(getTrafficNum(item.value, this.option.unit))
+      })
+    },
+    formatRatioData(httpList, p2pList) {
+      this.ratioData.ratio = []
+      p2pList.forEach((item, index) => {
+        const ratio = item.value > 0 && httpList[index] ? item.value/(item.value + httpList[index].value) : 0
+        this.ratioData.ratio.push(Number((ratio*100).toFixed(1)))
       })
     },
     formatHttpData(res, gran) {

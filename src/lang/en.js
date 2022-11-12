@@ -315,7 +315,8 @@ export default {
     alipay: 'Alipay',
     packageName: 'Item',
     amount: 'Quantity',
-    totalTraffic: 'Traffic'
+    totalTraffic: 'Traffic',
+    upgraded: 'Note: Upgraded Plan',
   },
   p2pConfig: {
     status: 'Status',

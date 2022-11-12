@@ -16,6 +16,10 @@
                 <span>{{ item.traffic*item.amount }} TB</span>
               </el-form-item>
             </template>
+            <template v-else-if="item.upgrade">
+              <el-form-item :label="$t('order.upgraded')" :key="item.order_id">
+              </el-form-item>
+            </template>
           </template>
         </el-form>
       </template>

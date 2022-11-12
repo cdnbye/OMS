@@ -316,7 +316,8 @@ export default {
     alipay: '支付寶',
     packageName: '商品名稱',
     amount: '數量',
-    totalTraffic: '流量'
+    totalTraffic: '流量',
+    upgraded: '備註：套餐升級',
   },
   p2pConfig: {
     status: '狀態',

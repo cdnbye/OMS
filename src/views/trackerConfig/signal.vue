@@ -46,6 +46,8 @@ export default {
         { url: 'https://signal.p2pengine.net:8089/count', value: 0, name: '香港' },
         { url: 'http://signal.ubtvmarket.com:8077/total_count', value: 0, name: '香港' },
         { url: 'https://signal.swarmcloud.net/count', value: 0, name: '上海' },
+        { url: 'https://gz.swarmcloud.net/total_count', value: 0, name: '广州' },
+        { url: 'https://gz.p2pengine.net:8089/total_count', value: 0, name: '广州' },
         { url: 'https://pk.swarmcloud.net/count', value: 0, name: '北京' },
         { url: 'https://cd.swarmcloud.net/count', value: 0, name: '成都' },
         { url: 'http://119.28.136.195:8077/count', value: 0, name: 'cdnbye' },

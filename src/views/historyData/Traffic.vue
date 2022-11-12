@@ -4,12 +4,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import adminTraffic from './admin/P2pRatio'
 import userTraffic from './user/Traffic'
 
 export default {
   name: 'Traffic',
-  components: { adminTraffic, userTraffic },
+  components: { userTraffic },
   data() {
     return {
       currentRole: 'adminTraffic'

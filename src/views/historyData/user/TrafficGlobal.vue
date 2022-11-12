@@ -8,7 +8,7 @@
         </el-alert>
         <DataPicker :date="date" :radio="radio" :hour="false" :day="false" @selectChange="selectChange" @dataChange="dataChange">
         </DataPicker>
-        <LineChart :chart-data="lineChartData" :option="option" />
+        <LineChart :chart-data="lineChartData" :second-chart-data="ratioData" :showSecondYAxis=true :option="option" />
         <NoBindTip />
         <el-button type="primary" style="float: left">
             <json-excel
@@ -46,13 +46,15 @@
                     P2P: [],
                     HTTP: [],
                 },
+                ratioData: {
+                    ratio: [],
+                },
                 date: [moment().startOf('day').subtract(1, 'week'), moment().startOf('day')],
                 radio: 'week',
-                // p2pData: [],
                 option: {
                     xData: [],
                     unit: '%',
-                    yName: 'Traffic'
+                    yName: 'Traffic',
                 },
                 excelName: '',
             }
@@ -80,30 +82,34 @@
                 this.option.xData = []
                 this.lineChartData.P2P = []
                 this.lineChartData.HTTP = []
+                this.ratioData.ratio = []
                 let gran = 5    // 显示粒度5分钟
                 if (this.displayDay) {
                     gran = 1440     // 显示粒度一天
                 }
                 const uid = getID()
                 const domainId = 0
-                fetchHttpTraffic(uid, domainId, start, end, gran).then(res => {
-                    let trafficValue = [...res.data.list].sort((a, b) => {
+                Promise.all([fetchHttpTraffic(uid, domainId, start, end, gran), fetchP2PTraffic(uid, domainId, start, end, gran)])
+                    .then((result) => {
+                      const [httpRes, p2pRes] = result
+                      const httpList = httpRes.data.list
+                      const p2pList = p2pRes.data.list
+                      let trafficValue = [...httpList].sort((a, b) => {
                         return a.value - b.value
-                    })
-                    this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
-                    fetchP2PTraffic(uid, domainId, start, end, gran).then(res => {
-                        res.data.list.forEach((item, index) => {
-                            this.lineChartData.P2P.push(getTrafficNum(item.value, this.option.unit))
-                        })
-
-                    })
-
-                    res.data.list.forEach((item, index) => {
+                      })
+                      this.option.unit = formatTraffic(trafficValue[(trafficValue.length - 1)].value).unit
+                      p2pList.forEach((item, index) => {
+                        this.lineChartData.P2P.push(getTrafficNum(item.value, this.option.unit))
+                      })
+                      httpList.forEach((item, index) => {
                         this.option.xData.push(moment(item.ts * 1000).format('MM-DD'))
                         this.lineChartData.HTTP.push(getTrafficNum(item.value, this.option.unit))
-                    })
-
-                })
+                      })
+                      p2pList.forEach((item, index) => {
+                        const ratio = item.value > 0 && httpList[index] ? item.value/(item.value + httpList[index].value) : 0
+                        this.ratioData.ratio.push(Number((ratio*100).toFixed(1)))
+                      })
+              })
             },
             selectChange(val) {
                 this.date[1] = moment()
