@@ -283,6 +283,8 @@
                               type: 'success',
                               confirmButtonText: this.$t('common.ok'),
                               showCancelButton: false
+                            }).then(() => {
+                               this.$router.replace('/')
                             })
                           } else {
                             this.$messageBox.confirm(this.$t('package.payFail'), {
@@ -307,6 +309,8 @@
                                 type: 'success',
                                 confirmButtonText: this.$t('common.ok'),
                                 showCancelButton: false
+                              }).then(() => {
+                                this.$router.replace('/')
                               })
                             } else {
                               this.$messageBox.confirm(this.$t('package.payFail'), {

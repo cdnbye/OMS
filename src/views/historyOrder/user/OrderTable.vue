@@ -5,19 +5,17 @@
       <template slot-scope="props">
         <el-form label-position="left" inline class="table-expand">
           <template v-for="item in props.row.details">
-            <template v-if="item.amount">
+            <template>
               <el-form-item :label="$t('order.packageName')" :key="item.order_id">
                 <span>{{ item.subject }}</span>
               </el-form-item>
-              <el-form-item :label="$t('order.amount')" :key="item.order_id">
+              <el-form-item v-if="item.amount" :label="$t('order.amount')" :key="item.order_id">
                 <span>{{ item.amount }}</span>
               </el-form-item>
-              <el-form-item :label="$t('order.totalTraffic')" :key="item.order_id">
+              <el-form-item v-if="item.amount && item.traffic" :label="$t('order.totalTraffic')" :key="item.order_id">
                 <span>{{ item.traffic*item.amount }} TB</span>
               </el-form-item>
-            </template>
-            <template v-else-if="item.upgrade">
-              <el-form-item :label="$t('order.upgraded')" :key="item.order_id">
+              <el-form-item v-if="item.upgrade" :label="$t('order.upgraded')" :key="item.order_id">
               </el-form-item>
             </template>
           </template>
@@ -129,7 +127,8 @@ export default {
       if(row.type === 'flow_packet_cn' || row.type === 'flow_packet_en'){
         type = this.$t('order.flowPackage')
       } else {
-        type = this.language === 'en' ? row.details[0].subject : row.details[0].subject
+        // type = this.language === 'en' ? row.details[0].subject : row.details[0].subject
+        type = this.$t('order.monthlyPlan')
       }
       return type
     },
