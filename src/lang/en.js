@@ -270,8 +270,6 @@ export default {
     descGlobal: 'This page shows the summarized historical data of all domains/APPs.',
   },
   package: {
-    noBuyTitle: 'Tips',
-    noBuyTip: 'Please select the traffic package you want to purchase first.',
     payMethod: 'Payment method',
     packageSubTitle: 'Notice: ',
     packageSub: 'Each user can consume a certain amount of P2P traffic. You can increase quota of traffic by buying the listed traffic packages below. Contact service@cdnbye.com if you have problems. Notice: Refunds are not supported.',
@@ -293,6 +291,8 @@ export default {
     buyFlow: 'Traffic package',
     buyMonthly: 'Monthly plan',
     monthly: 'Until ',
+    totalMonths: 'Total Months: ',
+    totalPrice: 'Total Price: ',
     resetAfter: 'Reset After',
     payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
   },

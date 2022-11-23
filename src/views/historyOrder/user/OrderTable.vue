@@ -12,7 +12,7 @@
               <el-form-item v-if="item.amount" :label="$t('order.amount')" :key="item.order_id">
                 <span>{{ item.amount }}</span>
               </el-form-item>
-              <el-form-item v-if="item.amount && item.traffic" :label="$t('order.totalTraffic')" :key="item.order_id">
+              <el-form-item v-if="!item.type && item.amount && item.traffic" :label="$t('order.totalTraffic')" :key="item.order_id">
                 <span>{{ item.traffic*item.amount }} TB</span>
               </el-form-item>
               <el-form-item v-if="item.upgrade" :label="$t('order.upgraded')" :key="item.order_id">

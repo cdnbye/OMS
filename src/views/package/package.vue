@@ -1,16 +1,5 @@
 <template>
   <div class="package" :style="device === 'mobile' ? {} : {padding: '30px 120px'}">
-    <!-- 没有选择套餐点击购买时的提示框 -->
-    <el-dialog
-      :title="$t('package.noBuyTitle')"
-      :width="device === 'mobile' ? '80%' : '30%'"
-      :visible.sync="noSelectVisible">
-      {{$t('package.noBuyTip')}}
-      <span slot="footer" class="dialog-footer">
-        <!--<el-button type="primary" @click="noSelectVisible = false">{{ $t('common.cancel') }}</el-button>-->
-        <el-button type="primary" @click="noSelectVisible = false">{{ $t('common.ok') }}</el-button>
-      </span>
-    </el-dialog>
     <!-- 套餐顶部说明 -->
     <el-alert style="margin-bottom: 20px" type="info" show-icon :title="$t('package.packageSubTitle')" :description="$t('package.packageSub')" />
 
@@ -35,7 +24,7 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-model="selectPackage.cn[index].amount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
+                  <el-input-number v-model="selectPackage.cn[index].amount" controls-position="right" size="small" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
                 </div>
               </div>
             </template>
@@ -57,7 +46,7 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-model="selectPackage.en[index].amount" size="mini" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
+                  <el-input-number v-model="selectPackage.en[index].amount" controls-position="right" size="small" :min="0" @change="value => selectCountChange(value, item)"></el-input-number>
                 </div>
               </div>
             </template>
@@ -77,7 +66,7 @@
             <em>{{totalPrice}} <span class="unit">RMB</span></em>
           </div>
         </div>
-        <el-button type="warning" @click="handleBuyClick">创建订单</el-button>
+        <el-button :disabled="totalPrice == 0" type="warning" @click="handleBuyClick">创建订单</el-button>
       </div>
       <div v-else>
         <div class="buy">
@@ -88,7 +77,7 @@
             <em>{{totalPrice}} <span class="unit">USD</span></em>
           </div>
         </div>
-        <el-button type="warning" @click="handleBuyClick">Create Order</el-button>
+        <el-button :disabled="totalPrice === 0" type="warning" @click="handleBuyClick">Create Order</el-button>
       </div>
     </div>
   </div>
@@ -103,7 +92,6 @@ export default {
   name: 'Package',
   data() {
     return {
-      noSelectVisible: false,
       currency: '',
       totalPrice: 0,
       packages: [],
@@ -201,11 +189,8 @@ export default {
         })
     },
     handleBuyClick() {
-        if ( this.totalPrice <= 0) {
-            this.noSelectVisible = true
-            return
-        }
         this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
+            type: 'info',
             distinguishCancelAndClose: true,
             confirmButtonText: this.$t('common.ok'),
             cancelButtonText: this.$t('common.cancel')

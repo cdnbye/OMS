@@ -1,5 +1,5 @@
 <template>
-  <div :style="device === 'mobile' ? {} : {padding: '30px 350px'}" v-loading="payLoading" :element-loading-text="$t('package.payLoadingTip')">
+  <div :style="device === 'mobile' ? {} : {padding: '30px 250px'}" v-loading="payLoading" :element-loading-text="$t('package.payLoadingTip')">
     <el-table :data="tableData" border>
       <el-table-column align="left" prop="subject" :label="$t('package.packageInfo')"></el-table-column>
       <el-table-column align="left" prop="price" :label="$t('package.unitPrice')"></el-table-column>

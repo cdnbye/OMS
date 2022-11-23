@@ -25,7 +25,8 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-button type="warning" @click="handleBuy(item)">{{showUpgrade ? '升级' : '购买'}}</el-button>
+                  <el-input-number v-if="!showUpgrade" v-model="item.amount" style="margin-right: 10px" placeholder="月数" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
+                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{showUpgrade ? '升级' : '购买'}}</el-button>
                 </div>
               </div>
             </template>
@@ -48,7 +49,8 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-button type="warning" @click="handleBuy(item)">{{showUpgrade ? 'Upgrade' :  'Buy'}}</el-button>
+                  <el-input-number v-if="!showUpgrade" v-model="item.amount" style="margin-right: 10px" placeholder="months" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
+                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{showUpgrade ? 'Upgrade' :  'Buy'}}</el-button>
                 </div>
               </div>
             </template>
@@ -96,6 +98,7 @@ export default {
           const attachLeftDays = (item) => {
             if (this.showUpgrade) {
               item.leftDays = data.left_days
+              item.amount = 1
             } else if (item.type.toLowerCase().startsWith('annual')) {
               item.leftDays = 365
             } else {
@@ -108,14 +111,14 @@ export default {
             this.packages = [...data.list_cn]
             this.packages.forEach(item => {
               attachLeftDays(item)
-              this.selectPackage.cn.push({...item, amount: 0})
+              this.selectPackage.cn.push({...item,})
             })
           } else {
             this.currency = 'USD'
             this.packages = [...data.list_en]
             this.packages.forEach(item => {
               attachLeftDays(item)
-              this.selectPackage.en.push({...item, amount: 0})
+              this.selectPackage.en.push({...item})
             })
           }
         })
@@ -144,7 +147,15 @@ export default {
         })
     },
     handleBuy(subject) {
-      this.$messageBox.confirm(this.$t('package.comfirmCreate'), {
+      const months = subject.amount
+      const totalPrice = Number(subject.price) * subject.amount
+      const msg = `
+        ${this.$t('package.totalMonths')}${months}<br/>${this.$t('package.totalPrice')}${totalPrice}<br/>
+        ${this.$t('package.comfirmCreate')}
+      `
+      this.$messageBox.confirm(this.showUpgrade ? this.$t('package.comfirmCreate') : msg, {
+          type: 'info',
+          dangerouslyUseHTMLString: true,
           distinguishCancelAndClose: true,
           confirmButtonText: this.$t('common.ok'),
           cancelButtonText: this.$t('common.cancel')
@@ -154,16 +165,18 @@ export default {
                 subject.upgrade = true
               }
               const data = {
-                  price: Number(subject.price),
+                  price: totalPrice,
                   currency: this.currency,
-                  goods: [subject],
+                  goods: [{...subject, price: totalPrice}],
                   goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
                   customized: subject.customized,
                   upgrade: this.showUpgrade,
               }
               this.handleCreateOrder(data)
               // console.log(subject)
-          })
+          }).catch(e => {
+
+      })
     }
   }
 }

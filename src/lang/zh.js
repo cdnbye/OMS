@@ -272,8 +272,6 @@ export default {
     descGlobal: '此界面用於展示匯總所有域名/APP的歷史數據。',
   },
   package: {
-    noBuyTitle: '溫馨提示',
-    noBuyTip: '請先選擇你要購買的流量包',
     payMethod: '付款方式',
     packageSubTitle: '購買說明：',
     packageSub: '流量包用於提高可消耗的P2P流量額度，屬於消耗品。購買後當日生效（可能會有幾分鐘延遲）。不支持退款。支付遇到問題請聯系 service@cdnbye.com。',
@@ -295,6 +293,8 @@ export default {
     buyFlow: '購買流量包',
     buyMonthly: '購買包月服務',
     monthly: '有效期至 ',
+    totalMonths: '購買月數：',
+    totalPrice: '總價：',
     resetAfter: '距離重置',
     payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
   },

@@ -41,8 +41,6 @@ export default {
         { url: 'https://korea.p2pengine.net:8089/count', value: 0, name: '首尔' },
         { url: 'https://jp.cdnbye.com/count', value: 0, name: '东京' },
         { url: 'https://jp.p2pengine.net:8089/count', value: 0, name: '东京' },
-        { url: 'https://id.cdnbye.com/count', value: 0, name: '孟买' },
-        { url: 'https://id.p2pengine.net:8089/count', value: 0, name: '孟买' },
         { url: 'https://br.cdnbye.com/count', value: 0, name: '圣保罗' },
         { url: 'https://signal.p2pengine.net:8089/count', value: 0, name: '香港' },
         { url: 'http://signal.ubtvmarket.com:8077/total_count', value: 0, name: '香港' },
