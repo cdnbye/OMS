@@ -293,8 +293,9 @@ export default {
     monthly: 'Until ',
     totalMonths: 'Total Months: ',
     totalPrice: 'Total Price: ',
+    totalTraffic: 'Total Traffic: ',
     resetAfter: 'Reset After',
-    payAnotherWay: 'Please pay with cryptocurrency such as BTC or ETH. Contact us for the details.',
+    createOrder: 'Create Order',
   },
   order: {
     createTime: 'Date',

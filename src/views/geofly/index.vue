@@ -8,6 +8,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket'
 import { getID } from '@/utils/auth'
 import { mapGetters } from 'vuex'
 import { getItem } from "@/utils/storage";
+import { LOCATION } from '@/constant'
 
 const SERVER_URLS = {
   'd1': 'ws://localhost',
@@ -45,7 +46,7 @@ export default {
     ]),
   },
   mounted() {
-    const loc = getItem('loc')
+    const loc = getItem(LOCATION)
     if (this.profile.token) {
       this.initScene(loc)
     } else {

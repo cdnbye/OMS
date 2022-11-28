@@ -167,7 +167,7 @@ export default {
               const data = {
                   price: totalPrice,
                   currency: this.currency,
-                  goods: [{...subject, price: totalPrice}],
+                  goods: [subject],
                   goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
                   customized: subject.customized,
                   upgrade: this.showUpgrade,

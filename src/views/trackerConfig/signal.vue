@@ -121,8 +121,6 @@ export default {
         { url: 'http://43.153.10.122/count', value: 0, name: 'us-16' },
         { url: 'http://43.153.13.133/count', value: 0, name: 'us-17' },
         { url: 'http://43.153.67.114/count', value: 0, name: 'us-18' },
-        { url: 'http://43.153.38.157/count', value: 0, name: 'us-19' },
-        { url: 'http://43.153.64.45/count', value: 0, name: 'us-20' },
         { url: 'http://43.153.91.36:7077/count', value: 0, name: 'us-1' },
         { url: 'http://43.153.32.156:7077/count', value: 0, name: 'us-2' },
         { url: 'http://43.153.20.4:7077/count', value: 0, name: 'us-3' },
@@ -141,8 +139,6 @@ export default {
         { url: 'http://43.153.10.122:7077/count', value: 0, name: 'us-16' },
         { url: 'http://43.153.13.133:7077/count', value: 0, name: 'us-17' },
         { url: 'http://43.153.67.114:7077/count', value: 0, name: 'us-18' },
-        { url: 'http://43.153.38.157:7077/count', value: 0, name: 'us-19' },
-        { url: 'http://43.153.64.45:7077/count', value: 0, name: 'us-20' },
       ]
     }
   },

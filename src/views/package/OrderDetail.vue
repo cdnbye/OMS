@@ -42,6 +42,7 @@
 import { mapGetters } from 'vuex'
 import { fetchPayUrl } from '@/api/user/package'
 import { getItem } from '@/utils/storage'
+import { LOCATION } from '@/constant'
 
 export default {
   name: 'OrderDetail',
@@ -68,7 +69,7 @@ export default {
     ]),
   },
   mounted() {
-    if (getItem('loc') === 'p1') {
+    if (getItem(LOCATION) === 'p1') {
       this.showCrypto = false
     }
     if(this.$route.query.currency) {

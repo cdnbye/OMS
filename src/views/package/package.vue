@@ -55,31 +55,28 @@
       </el-row>
     </template>
 
-
     <div class="create-order">
-      <div v-if="currency === 'CNY'">
-        <div class="buy">
+      <div class="buy">
+        <div class="total">
           <div class="tip">
-            总计费用：
+            {{ $t('package.totalTraffic') }}
           </div>
-          <div class="total-price">
-            <em>{{totalPrice}} <span class="unit">RMB</span></em>
+          <div class="total-traffic">
+            <em>{{totalTraffic}} <span class="unit">TB</span></em>
           </div>
         </div>
-        <el-button :disabled="totalPrice == 0" type="warning" @click="handleBuyClick">创建订单</el-button>
-      </div>
-      <div v-else>
-        <div class="buy">
+        <div class="total">
           <div class="tip">
-            Total Amount:
+            {{ $t('package.totalPrice') }}
           </div>
           <div class="total-price">
-            <em>{{totalPrice}} <span class="unit">USD</span></em>
+            <em>{{totalPrice}} <span class="unit">{{currency === 'CNY' ? 'RMB' : 'USD' }}</span></em>
           </div>
         </div>
-        <el-button :disabled="totalPrice === 0" type="warning" @click="handleBuyClick">Create Order</el-button>
       </div>
+      <el-button :disabled="totalPrice == 0" type="warning" @click="handleBuyClick">{{ $t('package.createOrder') }}</el-button>
     </div>
+
   </div>
 </template>
 
@@ -94,6 +91,7 @@ export default {
     return {
       currency: '',
       totalPrice: 0,
+      totalTraffic: 0,
       packages: [],
       selectPackage: {
         cn: [],
@@ -146,20 +144,24 @@ export default {
     },
     getTotalPrice() {
       let total = 0
-      if(this.selectPackage.cn.length > 0) {
+      let traffic = 0
+      if (this.selectPackage.cn.length > 0) {
         this.selectPackage.cn.forEach(item => {
           if(item.amount > 0) {
             total += item.price * item.amount
+            traffic += item.traffic * item.amount
           }
         })
       } else {
         this.selectPackage.en.forEach(item => {
           if(item.amount > 0) {
             total += item.price * item.amount
+            traffic += item.traffic * item.amount
           }
         })
       }
-      this.totalPrice = total.toFixed(2)
+      this.totalPrice = total
+      this.totalTraffic = traffic
     },
     handleCreateOrder() {
       const data = {
@@ -275,8 +277,21 @@ export default {
   .tip {
     font-size: 14px;
     display: inline-block;
-    width: 95px;
+    width: 80px;
     vertical-align: top;
+  }
+  .total-traffic {
+    display: inline-block;
+    color: #0f4de5;
+    vertical-align: top;
+    margin-right: 20px;
+    em {
+      font-size: 25px;
+      line-height: 20px;
+      .unit {
+        font-size: 16px;
+      }
+    }
   }
   .total-price {
     display: inline-block;
@@ -292,6 +307,9 @@ export default {
   }
   .buy {
     margin-bottom: 12px;
+  }
+  .total {
+    display: inline-block;
   }
   .create-order {
     text-align: left;

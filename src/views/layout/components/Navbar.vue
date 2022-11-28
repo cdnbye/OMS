@@ -54,6 +54,7 @@ import PointTip from '@/components/PointTip'
 import SwitchDomain from '@/components/SwitchDomain'
 import TimeZone from '@/components/TimeZone'
 import {getItem, removeItem} from "@/utils/storage";
+import { LOCATION } from '@/constant'
 
 export default {
   data() {
@@ -104,7 +105,7 @@ export default {
       this.timeZoneVisible = true
     },
     getCurrZone() {
-      const loc = getItem('loc')
+      const loc = getItem(LOCATION)
       if (loc === 'p1') {
         return this.$t('auth.consoleCN')
       }
@@ -117,6 +118,10 @@ export default {
       if (loc === 'd1') {
         return "Local"
       }
+      // logout
+      this.$store.dispatch('LogOut').then(() => {
+        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      })
       return "Unknown"
     },
     toggleSideBar() {
