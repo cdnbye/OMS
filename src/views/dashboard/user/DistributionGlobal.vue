@@ -9,7 +9,7 @@
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
-      <pie-card :title="$t('dashboard.tagDis')" :data="data.tagData"/>
+      <pie-card :title="$t('dashboard.terminalDis')" :data="data.deviceData"/>
     </el-col>
 
     <el-col :xs="24" :sm="12" :lg="8" class="chart-col">
@@ -42,7 +42,7 @@ export default {
       default: {
         domainData: [],
         versionData: [],
-        tagData: [],
+        deviceData: [],
         liveData: [],
         netTypeData: [],
         ispData: [],

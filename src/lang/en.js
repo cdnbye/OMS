@@ -119,7 +119,7 @@ export default {
   },
   dashboard : {
     currentDomain: 'Current Domain: ',
-    goBind: 'Register your domain',
+    goBind: 'Register Domain',
     switchDomain: 'Switch',
     tip: 'Register domain name or create app now?',
     online: 'Current Online Viewers',
@@ -213,8 +213,8 @@ export default {
     name: 'Username: ',
     mail: 'E-mail: ',
     passwd: 'Password: ',
-    time: 'Registration time: ',
-    timeZone: 'TimeZone',
+    time: 'Registration Date: ',
+    timeZone: 'Time Zone',
     change: 'update',
     changeMail: {
       change: 'update E-mail',
@@ -306,7 +306,7 @@ export default {
     price: 'Price',
     currency:'Currency',
     status: 'Status',
-    action: 'Action',
+    action: 'Operation',
     pay: 'Pay',
     close: 'Close',
     waitPay: 'Pending',

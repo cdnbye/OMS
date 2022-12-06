@@ -88,7 +88,7 @@
                 disData: {
                   domainData: [],
                   versionData: [],
-                  tagData: [],
+                  deviceData: [],
                   liveData: [],
                   netTypeData: [],
                   ispData: [],
@@ -132,12 +132,12 @@
                   this.disData.versionData = [];
                 }
               })
-              fetchDisData(uid, 0, 'tag').then(res => {
+              fetchDisData(uid, 0, 'device').then(res => {
                 const data = res.data.data
                 if(data) {
-                  this.disData.tagData = formatPieData(data)
+                  this.disData.deviceData = formatPieData(data)
                 } else {
-                  this.disData.tagData = [];
+                  this.disData.deviceData = [];
                 }
               })
               fetchDisData(uid, 0, 'live').then(res => {
