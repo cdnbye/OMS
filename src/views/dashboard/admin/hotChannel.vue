@@ -19,6 +19,11 @@
             <el-table-column align="center" prop="channel" :label="$t('hotChannels.content')"></el-table-column>
             <el-table-column align="center" width="100" prop="num" :label="$t('hotChannels.num')"></el-table-column>
             <el-table-column align="center" width="100" prop="columns.length" label="槽数"></el-table-column>
+            <el-table-column align="center" width="100" label="操作">
+               <template slot-scope="scope">
+                 <el-button type="primary" @click="splitChannel(scope.row.channel_id)">拆分</el-button>
+               </template>
+            </el-table-column>
 
         </el-table>
 
@@ -37,7 +42,7 @@
 </template>
 
 <script>
-    import { fetchHotChannels } from '@/api/liveData'
+    import { fetchHotChannels, splitHotChannels } from '@/api/liveData'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -87,6 +92,19 @@
             },
             indexMethod(index) {
                 return index + (this.tableParam.page-1)*this.tableParam.pageSize + 1;
+            },
+            splitChannel(channelId) {
+              splitHotChannels({
+                channel_id: channelId,
+              }).then(res => {
+                const data = res.data
+                const { columns } = data
+                this.$notify({
+                  title: this.$t('common.success'),
+                  message: `当前槽数：${columns}`,
+                  type: 'success'
+                });
+              })
             }
         },
         beforeDestroy() {

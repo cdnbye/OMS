@@ -31,7 +31,7 @@
         <el-switch v-model="configForm.signal_compressed" active-color="green" inactive-color="red" @change="fusingChange"></el-switch>
       </el-form-item>
       <el-form-item label="同时在线节点数">
-        <el-slider v-model="configForm.max_nodes" :min="0" :max="5000000" @change="maxNodesChange" show-input></el-slider>
+        <el-slider v-model="configForm.max_nodes" :min="0" :max="10000000" @change="maxNodesChange" show-input></el-slider>
       </el-form-item>
       <el-form-item label="服务状态">
         <el-switch v-model="configForm.tracker_open" active-color="green" inactive-color="red" :disabled="true"></el-switch>

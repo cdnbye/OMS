@@ -18,15 +18,15 @@
                 </div>
                 <div class="item-price">
                   <span class="price">
-                    <span v-if="showUpgrade"><strong>+</strong></span>
+                    <span v-if="item.upgrade"><strong>+</strong></span>
                     <span>￥</span>
                     <em>{{ item.price }}</em>
                     <s v-if="item.price !== item.original_price">￥{{ item.original_price }}</s>
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-if="!showUpgrade" v-model="item.amount" style="margin-right: 10px" placeholder="月数" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
-                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{showUpgrade ? '升级' : '购买'}}</el-button>
+                  <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" placeholder="月数" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
+                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{item.upgrade ? '升級' : '購買'}}</el-button>
                 </div>
               </div>
             </template>
@@ -42,15 +42,15 @@
                 </div>
                 <div class="item-price">
                   <span class="price">
-                    <span v-if="showUpgrade"><strong>+</strong></span>
+                    <span v-if="item.upgrade"><strong>+</strong></span>
                     <span>$</span>
                     <em>{{ item.price }}</em>
                     <s v-if="item.price !== item.original_price">${{ item.original_price }}</s>
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-if="!showUpgrade" v-model="item.amount" style="margin-right: 10px" placeholder="months" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
-                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{showUpgrade ? 'Upgrade' :  'Buy'}}</el-button>
+                  <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" placeholder="months" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
+                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{item.upgrade ? 'Upgrade' :  'Buy'}}</el-button>
                 </div>
               </div>
             </template>
@@ -70,7 +70,6 @@ export default {
   name: 'Package',
   data() {
     return {
-      showUpgrade: false,
       currency: '',
       packages: [],
       selectPackage: {
@@ -93,10 +92,8 @@ export default {
       fetchMonthlyPackage(getID())
         .then(res => {
           const { data } = res
-          this.showUpgrade = data.show_upgrade
-
           const attachLeftDays = (item) => {
-            if (this.showUpgrade) {
+            if (item.upgrade) {
               item.leftDays = data.left_days
               item.amount = 1
             } else if (item.type.toLowerCase().startsWith('annual')) {
@@ -148,12 +145,13 @@ export default {
     },
     handleBuy(subject) {
       const months = subject.amount
+      const isUpgrade = subject.upgrade
       const totalPrice = Number(subject.price) * subject.amount
       const msg = `
         ${this.$t('package.totalMonths')}${months}<br/>${this.$t('package.totalPrice')}${totalPrice}<br/>
         ${this.$t('package.comfirmCreate')}
       `
-      this.$messageBox.confirm(this.showUpgrade ? this.$t('package.comfirmCreate') : msg, {
+      this.$messageBox.confirm(isUpgrade ? this.$t('package.comfirmCreate') : msg, {
           type: 'info',
           dangerouslyUseHTMLString: true,
           distinguishCancelAndClose: true,
@@ -161,16 +159,13 @@ export default {
           cancelButtonText: this.$t('common.cancel')
       })
           .then(() => {
-              if (this.showUpgrade) {
-                subject.upgrade = true
-              }
               const data = {
                   price: totalPrice,
                   currency: this.currency,
                   goods: [subject],
                   goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
                   customized: subject.customized,
-                  upgrade: this.showUpgrade,
+                  upgrade: isUpgrade,
               }
               this.handleCreateOrder(data)
               // console.log(subject)

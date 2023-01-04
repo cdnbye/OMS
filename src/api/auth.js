@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import { validateEmail } from '@/utils/validate'
 
 // 登录
 export function loginByUsername(data) {

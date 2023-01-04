@@ -80,8 +80,6 @@ export default {
         { url: 'http://43.157.66.89/count', value: 0, name: 'eu-16' },
         { url: 'http://43.157.30.17/count', value: 0, name: 'eu-17' },
         { url: 'http://43.157.79.234/count', value: 0, name: 'eu-18' },
-        { url: 'http://43.131.56.80/count', value: 0, name: 'eu-19' },
-        { url: 'http://43.131.63.174/count', value: 0, name: 'eu-20' },
         { url: 'http://43.153.91.36/count', value: 0, name: 'us-1' },
         { url: 'http://43.153.32.156/count', value: 0, name: 'us-2' },
         { url: 'http://43.153.20.4/count', value: 0, name: 'us-3' },

@@ -6,9 +6,9 @@ set -e
 # build
 npm run build
 
-rm -rf release
+rm -rf release/*
 
-cp -r dist release
+cp -r dist/ release
 
 cp -r .github release
 

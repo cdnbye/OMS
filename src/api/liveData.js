@@ -43,3 +43,13 @@ export function fetchHotChannels(page, pageSize) {
         method: 'get'
     })
 }
+
+// 全局热门频道拆分
+export function splitHotChannels(data) {
+    let url = `global/channel/split`
+    return request({
+        url,
+        method: 'post',
+        data,
+    })
+}
