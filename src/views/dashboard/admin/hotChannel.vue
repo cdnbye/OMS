@@ -8,15 +8,20 @@
                             <span>{{ props.row.users.join(' ') }}</span>
                         </el-form-item>
                     </el-form>
+                    <el-form  inline align="left">
+                      <el-form-item  label="channel">
+                        <span>{{ props.row.channel }}</span>
+                      </el-form-item>
+                    </el-form>
                     <el-form v-if="props.row.columns.length > 1" inline align="left">
                         <el-form-item  label="columns">
-                            <span>{{ props.row.columns.join('--') }}</span>
+                            <span>{{ props.row.columns.join('+') }}</span>
                         </el-form-item>
                     </el-form>
                 </template>
             </el-table-column>
             <el-table-column align="center" width="50" type="index" :index="indexMethod"></el-table-column>
-            <el-table-column align="center" prop="channel" :label="$t('hotChannels.content')"></el-table-column>
+            <el-table-column align="center" prop="channel_id" :label="$t('hotChannels.content')"></el-table-column>
             <el-table-column align="center" width="100" prop="num" :label="$t('hotChannels.num')"></el-table-column>
             <el-table-column align="center" width="100" prop="columns.length" label="槽数"></el-table-column>
             <el-table-column align="center" width="100" label="操作">

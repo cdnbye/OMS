@@ -50,6 +50,19 @@
         </span>
       </el-form-item>
 
+      <el-form-item prop="captcha" v-if="captchaUrl">
+        <span class="svg-container">
+          <svg-icon icon-class="lock" />
+        </span>
+        <el-input
+            type="text"
+            v-model="resetForm.captcha_value"
+            :placeholder="$t('login.code')"
+            name="captcha"
+            @keyup.enter.native="handleReset" />
+      </el-form-item>
+      <img :src="captchaUrl" @click="getImage"/>
+
       <el-row type="flex" justify="space-between">
         <a @click="goLogin" style="color:#eee">{{ $t('auth.login') }}</a>
         <a @click="goSignup" style="color:#eee">{{ $t('auth.signup') }}</a>
@@ -67,6 +80,7 @@ import { sendCode, resetPasswd } from '@/api/auth'
 import SelectZone from '@/components/SelectZone'
 import LangSelect from '@/components/LangSelect'
 import {checkSelectZone } from '@/utils'
+import { getCaptcha } from '@/api/captcha'
 
 export default {
   name: 'PasswdReset',
@@ -101,6 +115,8 @@ export default {
         email: '',
         Passwd: '',
         Vcode: '',
+        captcha_id: '',
+        captcha_value: '',
       },
       resetRules: {
         email: [{ required: true, trigger: 'blur', validator: formValidateMail }],
@@ -112,7 +128,8 @@ export default {
       sendLoading: false,
       sendDisabled: false,
       redirect: undefined,
-      int: undefined
+      int: undefined,
+      captchaUrl: '',
     }
   },
   watch: {
@@ -124,6 +141,16 @@ export default {
     }
   },
   methods: {
+    getImage() {
+      // 获取验证码
+      getCaptcha(this.resetForm.captcha_id).then(res => {
+        const { data } = res
+        if (data) {
+          this.resetForm.captcha_id = data.captcha_id
+          this.captchaUrl = data.captcha_url
+        }
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -144,8 +171,11 @@ export default {
               type: 'success'
             })
             this.$router.push({ path: '/login' })
-          }).catch(() => {
+          }).catch(msg => {
             this.resetLoading = false
+            if (msg.code === 4005 || msg.code === 4019) {
+              this.getImage()
+            }
           })
         } else {
           console.log('error submit!!')

@@ -64,6 +64,19 @@
         </span>
       </el-form-item>
 
+      <el-form-item prop="captcha" v-if="captchaUrl">
+        <span class="svg-container">
+          <svg-icon icon-class="lock" />
+        </span>
+        <el-input
+            type="text"
+            v-model="signupForm.captcha_value"
+            :placeholder="$t('login.code')"
+            name="captcha"
+            @keyup.enter.native="handleSignup" />
+      </el-form-item>
+      <img :src="captchaUrl" @click="getImage"/>
+
       <!--用户服务协议-->
       <el-row type="flex" justify="space-between" style="margin-bottom: 14px">
         <el-checkbox v-if="language==='en'" style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/en/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
@@ -88,6 +101,7 @@ import { sendCode } from '@/api/auth'
 import { mapGetters } from 'vuex'
 import SelectZone from '@/components/SelectZone'
 import {checkSelectZone } from '@/utils'
+import { getCaptcha } from '@/api/captcha'
 
 export default {
   name: 'Signup',
@@ -132,6 +146,8 @@ export default {
         vcode: '',
         passwd: '',
         confirm_passwd: '',
+        captcha_id: '',
+        captcha_value: '',
       },
       signupRules: {
         email: [{ required: true, trigger: 'blur', validator: formValidateEmail }],
@@ -146,6 +162,7 @@ export default {
       redirect: undefined,
       int: undefined,
       contractChecked: true,
+      captchaUrl: '',
     }
   },
   watch: {
@@ -157,6 +174,16 @@ export default {
     }
   },
   methods: {
+    getImage() {
+      // 获取验证码
+      getCaptcha(this.signupForm.captcha_id).then(res => {
+        const { data } = res
+        if (data) {
+          this.signupForm.captcha_id = data.captcha_id
+          this.captchaUrl = data.captcha_url
+        }
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -196,8 +223,11 @@ export default {
               message,
               type: 'success'
             })
-          }).catch(() => {
+          }).catch(msg => {
             this.signupLoading = false
+            if (msg.code === 4005 || msg.code === 4019) {
+              this.getImage()
+            }
           })
         } else {
           console.log('error submit!!')

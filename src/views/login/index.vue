@@ -42,7 +42,7 @@
         </span>
         <el-input
             type="text"
-            v-model="loginForm.captchaValue"
+            v-model="loginForm.captcha_value"
             :placeholder="$t('login.code')"
             name="captcha"
             @keyup.enter.native="handleLogin" />
@@ -93,8 +93,8 @@ export default {
       loginForm: {
         username: '',
         passwd: '',
-        captchaId: '',
-        captchaValue: '',
+        captcha_id: '',
+        captcha_value: '',
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -119,25 +119,20 @@ export default {
   methods: {
     getImage() {
       // 获取验证码
-      getCaptcha(this.loginForm.captchaId).then(res => {
+      getCaptcha(this.loginForm.captcha_id).then(res => {
         const { data } = res
         if (data) {
-          this.loginForm.captchaId = data.captcha_id
+          this.loginForm.captcha_id = data.captcha_id
           this.captchaUrl = data.captcha_url
         }
       })
     },
-    formatData(source) {
+    formatData({passwd, username, captcha_id, captcha_value}) {
       let data = {
-        passwd: setSha256(source.passwd),
-        email: trim(source.username)
-      }
-      if (source.captchaId && source.captchaValue) {
-        data = {
-          captcha_id: source.captchaId,
-          captcha_value: source.captchaValue,
-          ...data,
-        }
+        passwd: setSha256(passwd),
+        email: trim(username),
+        captcha_id,
+        captcha_value,
       }
       return data
     },

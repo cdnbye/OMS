@@ -70,7 +70,7 @@ export default {
   auth: {
     login: 'Login',
     signup: 'Signup',
-    resetPasswd: 'Forget Password',
+    resetPasswd: 'Forgot password?',
     email: 'Please input the correct E-mail',
     usernameError: 'Please input the correct E-mail',
     mailError: 'Please enter the correct E-mail',
@@ -89,9 +89,9 @@ export default {
     title: 'Login',
     logIn: 'Log in',
     logInSuccess: 'login successfully',
-    username: 'Please enter your verified email',
-    password: 'Please enter your password',
-    code: 'Please enter the code below',
+    username: 'Enter your verified email',
+    password: 'Enter your password',
+    code: 'Enter characters here',
     selectZoneWarn: 'Please select a zone',
   },
   signup: {

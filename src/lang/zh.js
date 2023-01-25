@@ -70,7 +70,7 @@ export default {
   auth: {
     login: '登入',
     signup: '註冊',
-    resetPasswd: '忘記密碼',
+    resetPasswd: '忘記密碼？',
     email: '請輸入正確的郵箱',
     usernameError: '請輸入正確的郵箱',
     mailError: '請輸入正確的郵箱',
@@ -90,9 +90,9 @@ export default {
     title: '登入',
     logIn: '登入',
     logInSuccess: '登入成功',
-    username: '請輸入已驗證的郵箱',
-    password: '請輸入密碼',
-    code: '請輸入驗證碼',
+    username: '輸入已驗證的郵箱',
+    password: '輸入密碼',
+    code: '輸入驗證碼',
     selectZoneWarn: '請選擇一個可用區',
   },
   signup: {

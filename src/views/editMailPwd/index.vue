@@ -64,7 +64,7 @@
                   <el-input :placeholder="$t('myInfo.changePasswd.old')" v-model="passwdForm.passwd" type="password"></el-input>
               </el-form-item>
               <el-form-item prop="newpasswd">
-                <el-input :placeholder="$t('myInfo.changePasswd.new')" v-model="passwdForm.newpasswd"></el-input>
+                <el-input :placeholder="$t('myInfo.changePasswd.new')" v-model="passwdForm.newpasswd" type="password"></el-input>
               </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
