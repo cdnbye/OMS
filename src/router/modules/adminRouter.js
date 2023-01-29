@@ -128,10 +128,19 @@ export default [
         children: [
             {
                 path: 'page',
-                component: () => import('@/views/financeInfo'),
+                component: () => import('@/views/financeInfo/admin/Global'),
                 name: 'Financial',
                 meta: {
                     title: 'financial',
+                    roles: ['admin']
+                }
+            },
+            {
+                path: 'trend',
+                component: () => import('@/views/financeInfo/admin/IncomeTrend'),
+                name: 'Trend',
+                meta: {
+                    title: 'incomeTrend',
                     roles: ['admin']
                 }
             }

@@ -26,8 +26,8 @@ export default {
       token: 'RF9ix9jkZhdA',
       list: [
         { url: 'https://signal.cdnbye.com/total_count', value: 0, name: '香港' },
-        { url: 'https://signalcloud.cdnbye.com/total_count', value: 0, name: '德国' },
-        { url: 'https://opensignal.cdnbye.com/total_count', value: 0, name: '美国' },
+        { url: 'https://signalcloud.cdnbye.com/total_count', value: 0, name: '法兰克福' },
+        { url: 'https://opensignal.cdnbye.com/total_count', value: 0, name: '硅谷' },
         { url: 'https://fr.cdnbye.com/count', value: 0, name: '巴黎' },
         { url: 'https://fr.web3-lab.com:8443/count', value: 0, name: '巴黎' },
         { url: 'https://fr.p2pengine.net:2053/count', value: 0, name: '巴黎' },

@@ -1,6 +1,5 @@
 <template>
   <section class="app-main">
-    <Advertisement/>
     <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
         <router-view :key="key"/>
@@ -10,12 +9,10 @@
 </template>
 
 <script>
-import Advertisement from '@/components/Advertisement'
 
 export default {
   name: 'AppMain',
   components: {
-    Advertisement
   },
   computed: {
     cachedViews() {

@@ -7,6 +7,7 @@ export default {
     overallData: 'Overall Data',
     hotChannel: 'Content Popularity',
     financial: 'Finance Info',
+    incomeTrend: 'Income Trend',
     disChart: 'Distribution',
     Operational: 'Operational data',
     bandwidth: 'Traffic',

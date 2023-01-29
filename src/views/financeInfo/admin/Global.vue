@@ -6,7 +6,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{ financeData.active_payed_num }}</span>
-            <div class="card-panel-text">活跃付费用户数</div>
+            <div class="card-panel-text">近60天付费用户数</div>
           </div>
         </div>
       </el-col>

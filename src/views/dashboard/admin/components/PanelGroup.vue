@@ -85,7 +85,7 @@
     <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <card :num="statis.hostNum"
             :duration="500"
-            desc="活跃网站/APP总数">
+            desc="近30分钟活跃网站/APP数">
       </card>
     </el-col>
 

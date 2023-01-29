@@ -144,12 +144,13 @@ export default {
         })
     },
     handleBuy(subject) {
+      const name = subject.subject
       const months = subject.amount
       const isUpgrade = subject.upgrade
       const totalPrice = Number(subject.price) * subject.amount
       const msg = `
-        ${this.$t('package.totalMonths')}${months}<br/>${this.$t('package.totalPrice')}${totalPrice}<br/>
-        ${this.$t('package.comfirmCreate')}
+        ${this.$t('order.packageName')}: ${name}<br/>${this.$t('package.totalMonths')}${months}<br/>
+        ${this.$t('package.totalPrice')}${totalPrice}<br/>${this.$t('package.comfirmCreate')}
       `
       this.$messageBox.confirm(isUpgrade ? this.$t('package.comfirmCreate') : msg, {
           type: 'info',

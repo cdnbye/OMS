@@ -42,7 +42,7 @@
               </card>
             </el-col>
 
-            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col" v-show="statis.flow.free.num > 0 || statis.whiteList">
+            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col" v-show="!isPaidUser || statis.whiteList">
                 <card
                     :num="statis.flow.free.num"
                     :decimals="2"
@@ -178,6 +178,9 @@
               }
               this.lastRatio = Number((p2pDiff/(p2pDiff+httpDiff)*100).toFixed(2))
               return this.lastRatio
+            },
+            isPaidUser: function ()  {
+              return this.statis.flow.remain > 0 || this.statis.type.product_type > 0
             }
         },
         data() {

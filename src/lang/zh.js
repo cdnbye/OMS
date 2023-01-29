@@ -7,6 +7,7 @@ export default {
     overallData: '汇总数据',
     hotChannel: '資源熱度',
     financial: '財務信息',
+    incomeTrend: '收入趨勢',
     disChart: '分布圖',
     Operational: '整體運營數據',
     bandwidth: '流量趨勢圖',

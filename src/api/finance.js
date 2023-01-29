@@ -24,3 +24,11 @@ export function updateInvoice(data) {
         data
     })
 }
+
+// 收入趋势
+export function fetchIncomeTrend() {
+    return request({
+        url: `finance/income_trend`,
+        method: 'get'
+    })
+}
