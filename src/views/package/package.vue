@@ -70,11 +70,14 @@
             {{ $t('package.totalPrice') }}
           </div>
           <div class="total-price">
-            <em>{{totalPrice}} <span class="unit">{{currency === 'CNY' ? 'RMB' : 'USD' }}</span></em>
+            <em>{{ realPrice }} <span class="unit">{{currency === 'CNY' ? 'RMB' : 'USD' }}</span></em>
           </div>
         </div>
       </div>
-      <el-button :disabled="totalPrice == 0" type="warning" @click="handleBuyClick">{{ $t('package.createOrder') }}</el-button>
+      <el-button :disabled="totalPrice === 0" type="warning" @click="handleBuyClick">{{ $t('package.createOrder') }}</el-button>
+      <el-checkbox v-if="balance > 0" :disabled="totalPrice === 0" style="margin-left: 10px" v-model="useBalance" @change="useBalanceChanged">
+        {{ $t('package.useBalance') }} ({{ balance }})
+      </el-checkbox>
     </div>
 
   </div>
@@ -89,6 +92,9 @@ export default {
   name: 'Package',
   data() {
     return {
+      useBalance: false,
+      realPrice: 0,
+      balance: 0,
       currency: '',
       totalPrice: 0,
       totalTraffic: 0,
@@ -109,23 +115,37 @@ export default {
     ])
   },
   methods: {
+    useBalanceChanged() {
+      if (this.useBalance) {
+        if (this.balance >= this.totalPrice) {
+          this.realPrice = 0
+        } else {
+          this.realPrice = Number((this.totalPrice - this.balance).toFixed(1))
+        }
+      } else {
+        this.realPrice = this.totalPrice
+      }
+    },
     getPackageData() {
       fetchPackage(getID())
         .then(res => {
+          const { data } = res
           if(this.language==='zh') {
             this.currency = 'CNY'
-            this.packages = [...res.data.list_cn]
+            this.balance = data.balance_cny
+            this.packages = [...data.list_cn]
 
-            this.packages.push({...res.data.list_cn[0], subject: 'hide'})
+            this.packages.push({...data.list_cn[0], subject: 'hide'})
 
             this.packages.forEach(item => {
               this.selectPackage.cn.push({...item, amount: 0})
             })
           } else {
             this.currency = 'USD'
-            this.packages = [...res.data.list_en]
+            this.balance = data.balance_usd
+            this.packages = [...data.list_en]
 
-            this.packages.push({...res.data.list_en[0], subject: 'hide'})
+            this.packages.push({...data.list_en[0], subject: 'hide'})
 
             this.packages.forEach(item => {
               this.selectPackage.en.push({...item, amount: 0})
@@ -161,6 +181,7 @@ export default {
         })
       }
       this.totalPrice = total
+      this.realPrice = total
       this.totalTraffic = traffic
     },
     handleCreateOrder() {
@@ -170,21 +191,31 @@ export default {
         goods: [],
         goods_type: this.currency === 'CNY' ? 'flow_packet_cn' : 'flow_packet_en',
         customized: false,
+        balance_used: this.totalPrice - this.realPrice,
       }
       const selected = this.currency === 'CNY' ? this.selectPackage.cn : this.selectPackage.en
       data.goods = selected.filter(item => item.amount > 0)
       data.customized = data.goods.every(item => item.customized)
       createOrder(getID(), data)
         .then(res => {
-          this.$router.push({
-            name: 'OrderDetail',
-            query: {
-              currency: this.currency,
-              orderID: res.data.order_id,
-              totalPrice: this.totalPrice,
-              buyData: JSON.stringify(data.goods)
-            }
-          })
+          if (res.data.finished) {
+            this.$router.push({
+              path: '/',
+              query: {
+                is_payed: true,
+              }
+            })
+          } else {
+            this.$router.push({
+              name: 'OrderDetail',
+              query: {
+                currency: this.currency,
+                orderID: res.data.order_id,
+                totalPrice: this.realPrice,
+                buyData: JSON.stringify(data.goods)
+              }
+            })
+          }
         })
         .catch(err => {
           console.log(err)

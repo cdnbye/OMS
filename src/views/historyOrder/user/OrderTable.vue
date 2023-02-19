@@ -18,6 +18,9 @@
               <el-form-item v-if="item.upgrade" :label="$t('order.upgraded')" :key="item.order_id">
               </el-form-item>
             </template>
+            <el-form-item v-if="props.row.balance_used" :label="$t('package.useBalance')">
+              <span>{{ props.row.balance_used }}</span>
+            </el-form-item>
           </template>
         </el-form>
       </template>
@@ -31,7 +34,7 @@
 
       <el-table-column align="center"  :label="$t('order.status')">
         <template slot-scope="scope" :formatter="formatterStatus">
-          <el-tag size="medium" :type="tagStatus(scope.row.trade_status)">
+          <el-tag size="small" effect="plain" :type="tagStatus(scope.row.trade_status)">
             {{ formatterStatus(scope.row) }}
           </el-tag>
         </template>
@@ -124,11 +127,12 @@ export default {
     },
     formatterType(row) {
       let type = ''
-      if(row.type === 'flow_packet_cn' || row.type === 'flow_packet_en'){
+      if (row.type.startsWith('flow_packet')){
         type = this.$t('order.flowPackage')
-      } else {
-        // type = this.language === 'en' ? row.details[0].subject : row.details[0].subject
+      } else if (row.type.startsWith('monthly_packet')) {
         type = this.$t('order.monthlyPlan')
+      } else if (row.type.startsWith('recharge')) {
+        type = this.$t('order.recharge')
       }
       return type
     },
@@ -142,10 +146,10 @@ export default {
           status = this.$t('order.processing')
           break;
         case 'TRADE_SUCCESS':
-          status = this.$t('order.finish')
+          status = this.$t('invitation.done')
           break;
         case 'TRADE_FINISHED':
-          status = this.$t('order.finish')
+          status = this.$t('invitation.done')
           break;
         case 'TRADE_CLOSED':
           status = this.$t('order.fail')
@@ -167,6 +171,8 @@ export default {
           return 'Paypal'
         case 'crypto':
           return 'Coinbase'
+        case 'balance':
+          return this.$t('order.balance')
       }
     },
     formatData(data) {
@@ -237,6 +243,6 @@ export default {
     text-align: center;
     margin-right: 0;
     margin-bottom: 0;
-    width: 33%;
+    width: 25%;
   }
 </style>

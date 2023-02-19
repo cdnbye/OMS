@@ -12,10 +12,12 @@ import './permission' // permission control
 
 import { Alert, Popover, Select, Option, Loading, Pagination, Slider,
   Card, Table, TableColumn, Radio, RadioGroup, RadioButton, DatePicker, Tooltip, Button, Form, FormItem, Input, Dialog, Dropdown, DropdownItem, DropdownMenu,
-  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Submenu, InputNumber, MessageBox, Tag, Switch, Checkbox, Notification } from 'element-ui'
+  Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Submenu, InputNumber, MessageBox, Tag, Switch, Checkbox, Notification, Carousel, CarouselItem } from 'element-ui'
 
 Vue.config.productionTip = false
 
+Vue.use(Carousel)
+Vue.use(CarouselItem)
 Vue.use(Alert)
 Vue.use(Popover)
 Vue.use(Select)

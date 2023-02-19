@@ -163,6 +163,31 @@
           </div>
         </div>
       </el-col>
+
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.commission_records }}</span>
+            <div class="card-panel-text">发放佣金总数</div>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.commission_amount_usd }}</span>
+            <div class="card-panel-text">USD佣金总额</div>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-description">
+            <span class="card-panel-num">{{ financeData.commission_amount_cny }}</span>
+            <div class="card-panel-text">CNY佣金总额</div>
+          </div>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>

@@ -25,6 +25,15 @@ export function updateInvoice(data) {
     })
 }
 
+// 开票剩余额度变动
+export function updateInvoiceIssued(data) {
+    return request({
+        url: `finance/invoice_update`,
+        method: 'post',
+        data
+    })
+}
+
 // 收入趋势
 export function fetchIncomeTrend() {
     return request({

@@ -5,7 +5,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <span class="card-panel-num">{{item.value}}</span>
-            <div class="card-panel-text">{{item.url}}</div>
+            <div class="card-panel-text">{{item.url}} {{ item.version ? ' ' + item.version : '' }}</div>
             <div class="card-panel-name">{{item.name}}</div>
           </div>
         </div>
@@ -43,61 +43,59 @@ export default {
         { url: 'https://gz.swarmcloud.net/total_count', value: 0, name: '广州' },
         { url: 'https://pk.swarmcloud.net/count', value: 0, name: '北京' },
         { url: 'https://cd.swarmcloud.net/count', value: 0, name: '成都' },
-        { url: 'http://119.28.136.195:8077/count', value: 0, name: 'cdnbye' },
         { url: 'http://119.28.74.92:8077/count', value: 0, name: 'master-live' },
         { url: 'http://119.28.74.92/count', value: 0, name: 'master-live' },
         { url: 'http://124.156.138.240:8077/count', value: 0, name: 'slave-live' },
         { url: 'http://124.156.138.240/count', value: 0, name: 'slave-live' },
-        { url: 'http://119.28.136.195/count', value: 0, name: 'cdnbye' },
-        { url: 'http://43.134.199.138/count', value: 0, name: 'cdnbye-2' },
-        { url: 'http://43.129.228.44/count', value: 0, name: 'cdnbye-3' },
-        { url: 'http://43.154.211.238/count', value: 0, name: 'cdnbye-4' },
-        { url: 'http://43.154.209.102/count', value: 0, name: 'cdnbye-5' },
-        { url: 'http://43.154.40.235/count', value: 0, name: 'cdnbye-6' },
-        { url: 'http://43.154.49.215/count', value: 0, name: 'cdnbye-7' },
-        { url: 'http://43.154.53.74/count', value: 0, name: 'cdnbye-8' },
-        { url: 'http://43.154.166.99/count', value: 0, name: 'cdnbye-9' },
-        { url: 'http://43.155.116.14/count', value: 0, name: 'cdnbye-10' },
-        { url: 'http://43.154.49.170/count', value: 0, name: 'cdnbye-11' },
-        { url: 'http://43.134.203.230/count', value: 0, name: 'cdnbye-12' },
-        { url: 'http://43.154.120.28/count', value: 0, name: 'cdnbye-13' },
-        { url: 'http://43.154.219.36/count', value: 0, name: 'cdnbye-14' },
-        { url: 'http://43.154.0.207/count', value: 0, name: 'cdnbye-15' },
-        { url: 'http://43.157.32.236/count', value: 0, name: 'eu-1' },
-        { url: 'http://43.131.39.155/count', value: 0, name: 'eu-2' },
-        { url: 'http://43.131.50.73/count', value: 0, name: 'eu-3' },
-        { url: 'http://43.131.38.224/count', value: 0, name: 'eu-4' },
-        { url: 'http://43.157.49.248/count', value: 0, name: 'eu-5' },
-        { url: 'http://43.157.2.188/count', value: 0, name: 'eu-6' },
-        { url: 'http://43.131.40.66/count', value: 0, name: 'eu-7' },
-        { url: 'http://43.131.59.5/count', value: 0, name: 'eu-8' },
-        { url: 'http://43.131.29.153/count', value: 0, name: 'eu-9' },
-        { url: 'http://43.157.47.140/count', value: 0, name: 'eu-10' },
-        { url: 'http://43.131.45.141/count', value: 0, name: 'eu-12' },
-        { url: 'http://43.131.29.226/count', value: 0, name: 'eu-13' },
-        { url: 'http://43.157.7.153/count', value: 0, name: 'eu-14' },
-        { url: 'http://43.157.64.66/count', value: 0, name: 'eu-15' },
-        { url: 'http://43.157.66.89/count', value: 0, name: 'eu-16' },
-        { url: 'http://43.157.30.17/count', value: 0, name: 'eu-17' },
-        { url: 'http://43.157.79.234/count', value: 0, name: 'eu-18' },
-        { url: 'http://43.153.91.36/count', value: 0, name: 'us-1' },
-        { url: 'http://43.153.32.156/count', value: 0, name: 'us-2' },
-        { url: 'http://43.153.20.4/count', value: 0, name: 'us-3' },
-        { url: 'http://43.153.52.120/count', value: 0, name: 'us-4' },
-        { url: 'http://43.153.69.243/count', value: 0, name: 'us-5' },
-        { url: 'http://43.153.30.126/count', value: 0, name: 'us-6' },
-        { url: 'http://43.135.166.77/count', value: 0, name: 'us-7' },
-        { url: 'http://43.153.26.15/count', value: 0, name: 'us-8' },
-        { url: 'http://43.153.71.21/count', value: 0, name: 'us-9' },
-        { url: 'http://43.135.161.66/count', value: 0, name: 'us-10' },
-        { url: 'http://43.135.159.196/count', value: 0, name: 'us-11' },
-        { url: 'http://43.153.84.233/count', value: 0, name: 'us-12' },
-        { url: 'http://43.153.106.237/count', value: 0, name: 'us-13' },
-        { url: 'http://43.153.33.153/count', value: 0, name: 'us-14' },
-        { url: 'http://43.153.57.117/count', value: 0, name: 'us-15' },
-        { url: 'http://43.153.10.122/count', value: 0, name: 'us-16' },
-        { url: 'http://43.153.13.133/count', value: 0, name: 'us-17' },
-        { url: 'http://43.153.67.114/count', value: 0, name: 'us-18' },
+        { url: 'http://43.134.199.138/info', value: 0, name: 'cdnbye-2' },
+        { url: 'http://43.129.228.44/info', value: 0, name: 'cdnbye-3' },
+        { url: 'http://43.154.211.238/info', value: 0, name: 'cdnbye-4' },
+        { url: 'http://43.154.209.102/info', value: 0, name: 'cdnbye-5' },
+        { url: 'http://43.154.40.235/info', value: 0, name: 'cdnbye-6' },
+        { url: 'http://43.154.49.215/info', value: 0, name: 'cdnbye-7' },
+        { url: 'http://43.154.53.74/info', value: 0, name: 'cdnbye-8' },
+        { url: 'http://43.154.166.99/info', value: 0, name: 'cdnbye-9' },
+        { url: 'http://43.155.116.14/info', value: 0, name: 'cdnbye-10' },
+        { url: 'http://43.154.49.170/info', value: 0, name: 'cdnbye-11' },
+        { url: 'http://43.134.203.230/info', value: 0, name: 'cdnbye-12' },
+        { url: 'http://43.154.120.28/info', value: 0, name: 'cdnbye-13' },
+        { url: 'http://43.154.219.36/info', value: 0, name: 'cdnbye-14' },
+        { url: 'http://43.154.0.207/info', value: 0, name: 'cdnbye-15' },
+        { url: 'http://43.157.32.236/info', value: 0, name: 'eu-1' },
+        { url: 'http://43.131.39.155/info', value: 0, name: 'eu-2' },
+        { url: 'http://43.131.50.73/info', value: 0, name: 'eu-3' },
+        { url: 'http://43.131.38.224/info', value: 0, name: 'eu-4' },
+        { url: 'http://43.157.49.248/info', value: 0, name: 'eu-5' },
+        { url: 'http://43.157.2.188/info', value: 0, name: 'eu-6' },
+        { url: 'http://43.131.40.66/info', value: 0, name: 'eu-7' },
+        { url: 'http://43.131.59.5/info', value: 0, name: 'eu-8' },
+        { url: 'http://43.131.29.153/info', value: 0, name: 'eu-9' },
+        { url: 'http://43.157.47.140/info', value: 0, name: 'eu-10' },
+        { url: 'http://43.131.45.141/info', value: 0, name: 'eu-12' },
+        { url: 'http://43.131.29.226/info', value: 0, name: 'eu-13' },
+        { url: 'http://43.157.7.153/info', value: 0, name: 'eu-14' },
+        { url: 'http://43.157.64.66/info', value: 0, name: 'eu-15' },
+        { url: 'http://43.157.66.89/info', value: 0, name: 'eu-16' },
+        { url: 'http://43.157.30.17/info', value: 0, name: 'eu-17' },
+        { url: 'http://43.157.79.234/info', value: 0, name: 'eu-18' },
+        { url: 'http://43.153.91.36/info', value: 0, name: 'us-1' },
+        { url: 'http://43.153.32.156/info', value: 0, name: 'us-2' },
+        { url: 'http://43.153.20.4/info', value: 0, name: 'us-3' },
+        { url: 'http://43.153.52.120/info', value: 0, name: 'us-4' },
+        { url: 'http://43.153.69.243/info', value: 0, name: 'us-5' },
+        { url: 'http://43.153.30.126/info', value: 0, name: 'us-6' },
+        { url: 'http://43.135.166.77/info', value: 0, name: 'us-7' },
+        { url: 'http://43.153.26.15/info', value: 0, name: 'us-8' },
+        { url: 'http://43.153.71.21/info', value: 0, name: 'us-9' },
+        { url: 'http://43.135.161.66/info', value: 0, name: 'us-10' },
+        { url: 'http://43.135.159.196/info', value: 0, name: 'us-11' },
+        { url: 'http://43.153.84.233/info', value: 0, name: 'us-12' },
+        { url: 'http://43.153.106.237/info', value: 0, name: 'us-13' },
+        { url: 'http://43.153.33.153/info', value: 0, name: 'us-14' },
+        { url: 'http://43.153.57.117/info', value: 0, name: 'us-15' },
+        { url: 'http://43.153.10.122/info', value: 0, name: 'us-16' },
+        { url: 'http://43.153.13.133/info', value: 0, name: 'us-17' },
+        { url: 'http://43.153.67.114/info', value: 0, name: 'us-18' },
       ]
     }
   },
@@ -113,8 +111,13 @@ export default {
         const url = `${item.url}?token=${this.token}`
         axios.get(url)
           .then(res => {
-            if(typeof res.data === 'number')
+            if (typeof res.data === 'number') {
               item.value = res.data
+            } else if (typeof res.data === 'object') {
+              const { data } = res.data
+              item.value = data.current_connections
+              item.version = data.version
+            }
           })
           .catch(err => {
             item.value = 0

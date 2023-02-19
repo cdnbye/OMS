@@ -35,10 +35,9 @@
     <!--<el-table-column align="center" prop="username" label="用户名"></el-table-column>-->
     <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
     <el-table-column align="center" prop="reg_date" label="注册时间"></el-table-column>
-    <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>
+<!--    <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>-->
     <el-table-column align="center" prop="domain" label="域名" width="60"></el-table-column>
-    <!--<el-table-column align="center" prop="agent" width="90" label="代理商"></el-table-column>-->
-    <el-table-column align="center" prop="whitelist" width="90" label="白名单">
+    <el-table-column align="center" prop="whitelist" width="60" label="白名单">
       <template slot-scope="scope">
         <el-switch slot="reference" :value="scope.row.whitelist" active-color="#42b983" @change="handleWhitelistUser(scope.row)"></el-switch>
       </template>
@@ -60,7 +59,7 @@
         </el-popover>
       </template>
     </el-table-column>
-    <el-table-column align="center" width="90" label="管理员权限">
+    <el-table-column align="center" width="60" label="管理员权限">
       <template slot-scope="scope">
         <el-popover
           trigger="manual"
@@ -75,6 +74,42 @@
           </div>
           <el-switch slot="reference" :value="scope.row.admin" active-color="#42b983" @change="pShow(scope.row.uid)"></el-switch>
         </el-popover>
+      </template>
+    </el-table-column>
+
+    <el-table-column align="center" label="人民币">
+      <template slot-scope="scope">
+        <el-row :gutter="4">
+          <el-col :span="50">
+            <el-input v-model="scope.row.balance_cny" />
+          </el-col>
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="changeBalance(scope.row.balance_cny, 'CNY', scope.row.uid)">修改</el-button>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+
+    <el-table-column align="center" label="美元">
+      <template slot-scope="scope">
+        <el-row :gutter="4">
+          <el-col :span="50">
+            <el-input v-model="scope.row.balance_usd" />
+          </el-col>
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="changeBalance(scope.row.balance_usd, 'USD', scope.row.uid)">修改</el-button>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+
+    <el-table-column align="center" label="发票">
+      <template slot-scope="scope">
+        <el-row :gutter="4">
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="changeInvoiceIssued(scope.row.invoice_await, scope.row.uid)">修改</el-button>
+          </el-col>
+        </el-row>
       </template>
     </el-table-column>
 
@@ -114,7 +149,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column align="center" label="套餐定制">
+    <el-table-column align="center" width="60" label="套餐定制">
       <template slot-scope="scope">
         <el-row :gutter="4">
           <el-col :span="50" v-if="scope.row.custom_plan">
@@ -122,6 +157,19 @@
           </el-col>
           <el-col :span="8">
             <el-button type="text" size="big" @click="handleCustomPlan(scope.row)">修改</el-button>
+          </el-col>
+        </el-row>
+      </template>
+    </el-table-column>
+
+    <el-table-column align="center" width="60" label="邀请人">
+      <template slot-scope="scope">
+        <el-row :gutter="4">
+          <el-col :span="50">
+            {{ scope.row.flow.inviter }}
+          </el-col>
+          <el-col :span="8">
+            <el-button type="text" size="big" @click="handleCommission(scope.row.flow)">修改</el-button>
           </el-col>
         </el-row>
       </template>
@@ -176,6 +224,21 @@
     </div>
   </el-dialog>
 
+  <el-dialog title="邀请人" :visible.sync="commissionVisible" :width="device === 'mobile' ? '90%' : '30%' ">
+    <el-form :model="selectedInviterInfo" size="small">
+      <el-form-item label="email">
+        <el-input type="email" v-model="selectedInviterInfo.inviter" ></el-input>
+      </el-form-item>
+      <el-form-item label="佣金比例">
+        <el-input type="number" v-model.number="selectedInviterInfo.rate" ></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="commissionVisible = false">取 消</el-button>
+      <el-button type="primary" @click="submitCommission">确 定</el-button>
+    </div>
+  </el-dialog>
+
   <div class="pagination-container">
     <el-pagination
       layout="sizes, prev, pager, next"
@@ -191,18 +254,21 @@
 
   <script>
   import { fetchUserList, fetchAdminUser, fetchWhitelistUser, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
-  import { frozenUser, adminUser, whitelistUser, searchUser, userTrafficChange } from '@/api/user'
+  import { frozenUser, adminUser, whitelistUser, searchUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
+  import { updateInvoiceIssued } from '@/api/finance'
   import clip from '@/utils/clipboard'
   import moment from 'moment'
   import { MessageBox } from 'element-ui'
   import { trim } from '@/utils'
   import { mapGetters } from 'vuex'
+  import { validateEmail } from '@/utils/validate'
 
   export default {
     data() {
       return {
         loading: false,
         dialogVisible: false,
+        commissionVisible: false,
         selectedCustomPlan: {
             uid: 0,
             subject: 'VIP Plan',
@@ -210,6 +276,10 @@
             traffic: 0,
             price: 0,
             currency: 'USD',
+        },
+        selectedInviterInfo: {
+          inviter: '',
+          rate: 0,
         },
         tableData: [],
         tableParam: {
@@ -236,10 +306,6 @@
           {
             label: '注册时间',
             value: 'reg_date'
-          },
-          {
-            label: '代理商',
-            value: 'agent'
           },
           {
             label: '域名',
@@ -347,11 +413,49 @@
         ])
     },
     methods: {
+      changeInvoiceIssued(value, uid) {
+        this.$messageBox.prompt('', '已开金额', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          // inputPattern: /^[1-9]\d*$/,
+        }).then(({ value }) => {
+          updateInvoiceIssued({
+            uid,
+            value: Number(value)
+          }).then(res => {
+            if(res.ret === 0) {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              })
+              this.fetchTableData()
+            }
+          })
+        })
+      },
       pShow(id) {
         this.$refs[`popover-` + id].doShow()
       },
       pClose(id) {
         this.$refs[`popover-` + id].doClose()
+      },
+      changeBalance(value, currency, uid) {
+        MessageBox.confirm(`更新${currency}至${value}吗？`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          updateBalance({uid, balance: Number(value), currency}).then(res => {
+            if(res.ret === 0) {
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              })
+              this.fetchTableData()
+            }
+          })
+        })
       },
       handleEditRemain(item) {
          MessageBox.confirm(`更新流量至${item.flow.remain}TB吗？`, '提示', {
@@ -561,6 +665,33 @@
                   }
               })
           })
+      },
+      handleCommission(item) {
+        this.selectedInviterInfo = {
+          uid: item.uid,
+          inviter: item.inviter,
+          rate: item.commission_rate,
+        }
+        this.commissionVisible = true
+      },
+      submitCommission() {
+        if (!validateEmail(this.selectedInviterInfo.inviter) || this.selectedInviterInfo.rate >= 1) {
+          this.$message({
+            type: 'error',
+            message: '格式错误'
+          })
+          return
+        }
+        updateCommissionInfo(this.selectedInviterInfo).then(res => {
+          if(res.ret === 0) {
+            this.$message({
+              type: 'success',
+              message: '操作成功'
+            })
+            this.fetchTableData()
+          }
+          this.commissionVisible = false
+        })
       },
       handleCustomPlan(item) {
           if (item.custom_plan) {

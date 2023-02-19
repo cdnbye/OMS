@@ -73,16 +73,27 @@
             </span>
           </el-dialog>
         </p>
+        <div style="margin-top: 25px"></div>
         <p>
           <span>{{$t('myInfo.time')}}{{userInfo.time}}</span>
         </p>
-        <div style="margin-top: 25px"></div>
+        <div style="margin-top: 30px"></div>
         <p>
           <span>Token: {{userInfo.token}}</span>
         </p>
         <div style="margin-top: 25px"></div>
         <p>
           <span>{{$t('myInfo.timeZone')}}: UTC{{userInfo.utc>=0 ? '+' :''}}{{userInfo.utc}}</span>
+        </p>
+        <div style="margin-top: 25px"></div>
+        <p>
+          <span>{{$t('myInfo.balanceUSD')}}: {{ userInfo.balanceUSD }} </span>
+          <el-button type="text" @click="recharge('USD')">{{$t('myInfo.recharge')}}</el-button>
+        </p>
+        <div style="margin-top: 25px"></div>
+        <p>
+          <span>{{$t('myInfo.balanceCNY')}}: {{ userInfo.balanceCNY }} </span>
+          <el-button type="text" @click="recharge('CNY')">{{$t('myInfo.recharge')}}</el-button>
         </p>
       </el-card>
   </div>
@@ -92,8 +103,10 @@
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { fetchUserData, changeUserName, changePasswd, changeMail } from '@/api/user'
+import { createOrder } from '@/api/user/package'
 import { sendCode } from '@/api/auth'
 import { setSha256 } from '@/utils/format'
+import { getID } from '@/utils/auth'
 
 export default {
   name: 'Edit',
@@ -172,6 +185,8 @@ export default {
         email: '',
         token: '',
         utc: 0,
+        balanceUSD: 0.0,
+        balanceCNY: 0.0,
       },
       emailForm: {
         email: '',
@@ -200,6 +215,42 @@ export default {
     this.getUserData()
   },
   methods: {
+    recharge(currency) {
+      this.$messageBox.prompt(this.$t('myInfo.rechargeTip'), this.$t('myInfo.recharge'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
+        inputPattern: /^[1-9][0-9]+$/,
+      }).then(({ value }) => {
+        const price = Number(value)
+        const isCNY = currency === 'CNY'
+        const subject = isCNY ? '充值人民幣' : 'Recharge USD'
+        const data = {
+          price,
+          currency,
+          goods: [{
+            subject,
+            amount: 1,
+            price,
+          }],
+          goods_type: isCNY ? 'recharge_cny' : 'recharge_usd',
+        }
+        createOrder(getID(), data)
+        .then(res => {
+          this.$router.push({
+            name: 'OrderDetail',
+            query: {
+              currency: currency,
+              orderID: res.data.order_id,
+              totalPrice: price,
+              buyData: JSON.stringify(data.goods)
+            }
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+    },
     getUserData() {
       fetchUserData().then(res => {
         if(res.data) {
@@ -209,6 +260,8 @@ export default {
           this.userInfo.token = data.token
           this.userInfo.utc = data.utc
           this.userInfo.name = data.name
+          this.userInfo.balanceCNY = data.balance_cny
+          this.userInfo.balanceUSD = data.balance_usd
         }
       }).catch(err => {
         console.log(err)

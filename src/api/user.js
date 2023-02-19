@@ -88,3 +88,21 @@ export function userTrafficChange(data) {
     data
   })
 }
+
+// 用户余额变动
+export function updateBalance(data) {
+  return request({
+    url: `user/balance`,
+    method: 'post',
+    data
+  })
+}
+
+// 用户邀请人
+export function updateCommissionInfo(data) {
+  return request({
+    url: `user/commission`,
+    method: 'post',
+    data
+  })
+}

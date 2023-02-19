@@ -8,15 +8,11 @@
             show-icon>
         </el-alert>
         <el-row :gutter="20" style="text-align: left;">
-          <el-col :xs="7" :sm="4" :lg="2">
-            <el-button size="small" type="success" @click="handleCheckin"
-                       v-loading="checkinLoading"
-                       v-show="showCheckin"
-                       style="font-size: medium; margin-right: 80px">
-              {{ $t('dashboard.checkin') }}
-            </el-button>
+          <el-col :xs="20" :sm="6">
+            <Carousel></Carousel>
           </el-col>
         </el-row>
+
         <LiveTime :statis="statis" ></LiveTime>
         <DistributionGlobal :data="disData"/>
         <NoBindTip />
@@ -31,21 +27,22 @@
     import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
     import { checkAlipayOrder, checkPaypalOrder, updateCryptoTrade } from '@/api/user/package'
     import { fetchGlobalDomains } from '@/api/user/global'
-    import { checkIn } from '@/api/user/package'
-    import { formatTraffic, getQueryObj, formatPieData } from '@/utils/format'
+    import { formatTraffic, formatPieData } from '@/utils/format'
     import NoBindTip from '@/components/NoBindTip'
+    import Carousel from '@/components/Carousel'
     import LiveTime from './LiveTime'
     import DistributionGlobal from './DistributionGlobal'
-    import { getItem, setItemWithExpiration } from '@/utils/storage'
+    import { getItem } from '@/utils/storage'
 
     let int = undefined
 
     export default {
         name: 'liveDataGlobal',
         components: {
-            NoBindTip,
-            LiveTime,
-            DistributionGlobal
+          NoBindTip,
+          LiveTime,
+          DistributionGlobal,
+          Carousel
         },
         data() {
             return {
@@ -189,7 +186,7 @@
 
                         // 如果剩余流量为0，则提醒用户购买
                         if(data.flow.free === 0 && data.flow.remain === 0 && data.flow.daily_remain === 0) {
-                            if(this.remainTrafficFlag && getQueryObj().payment === undefined && !data.whitelist) {
+                            if(this.remainTrafficFlag && this.$route.query.payment === undefined && !data.whitelist) {
                                 this.$messageBox.confirm(this.$t('dashboard.trafficUseOut'), {
                                     distinguishCancelAndClose: true,
                                     confirmButtonText: this.$t('package.buyFlow'),
@@ -218,51 +215,8 @@
                     _this.getData(uid, id)
                 }, 20000)
             },
-            handleCheckin() {
-                if(this.currentDomain.id !== undefined) {
-                    this.checkinLoading = true
-                    checkIn(this.currentDomain.uid, {user_id: this.currentDomain.uid})
-                        .then(res => {
-                            if(res.data.repeat) {
-                                this.$messageBox.alert(this.$t('dashboard.haveChecked'), {
-                                    confirmButtonText: this.$t('common.ok')
-                                })
-                            } else {
-                                this.$messageBox.confirm(this.$t('dashboard.checkinSuccess'), {
-                                    type: 'success',
-                                    confirmButtonText: this.$t('common.ok'),
-                                    showCancelButton: false
-                                })
-                                this.getData(this.currentDomain.uid, this.currentDomain.id)
-                            }
-                            this.checkinLoading = false
-                            setItemWithExpiration('checkin', 1, 3600*12*1000)
-                            this.showCheckin = false
-                        })
-                        .catch(err => {
-                            this.$messageBox.confirm(this.$t('dashboard.checkinFail'), {
-                                type: 'error',
-                                confirmButtonText: this.$t('common.ok'),
-                                showCancelButton: false
-                            })
-                            this.checkinLoading = false
-                            console.log(err)
-                        })
-                } else {
-                    this.$messageBox.confirm(this.$t('dashboard.tip'), {
-                        confirmButtonText: this.$t('common.ok'),
-                        cancelButtonText: this.$t('common.cancel')
-                    })
-                        .then(() => {
-                            this.$router.push('/user/domain')
-                        })
-                        .catch(() => {
-                            return
-                        })
-                }
-            },
             checkPayResult() {
-              const paramObj = getQueryObj()
+              const paramObj = this.$route.query
               if(paramObj.cancel) {
                 this.$messageBox.confirm(this.$t('package.paySuspended'), {
                   type: 'error',
@@ -270,6 +224,13 @@
                   showCancelButton: false
                 })
                 return
+              }
+              if (paramObj.is_payed) {
+                this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                  type: 'success',
+                  confirmButtonText: this.$t('common.ok'),
+                  showCancelButton: false
+                })
               }
               if(paramObj.payment) {
                 this.checkResultLoading = true

@@ -64,6 +64,18 @@
         </span>
       </el-form-item>
 
+      <el-form-item prop="inviter" v-show="showInviter">
+        <span class="svg-container">
+          <svg-icon icon-class="invitation" />
+        </span>
+        <el-input
+            type="text"
+            v-model="signupForm.inviter"
+            :placeholder="$t('signup.inviter')"
+            name="inviter"
+            @keyup.enter.native="handleSignup" />
+      </el-form-item>
+
       <el-form-item prop="captcha" v-if="captchaUrl">
         <span class="svg-container">
           <svg-icon icon-class="lock" />
@@ -102,6 +114,8 @@ import { mapGetters } from 'vuex'
 import SelectZone from '@/components/SelectZone'
 import {checkSelectZone } from '@/utils'
 import { getCaptcha } from '@/api/captcha'
+import { getItem, setItem } from '@/utils/storage'
+import { LOCATION } from '@/constant'
 
 export default {
   name: 'Signup',
@@ -141,6 +155,7 @@ export default {
       }
     }
     return {
+      showInviter: true,
       signupForm: {
         email: '',
         vcode: '',
@@ -148,6 +163,7 @@ export default {
         confirm_passwd: '',
         captcha_id: '',
         captcha_value: '',
+        inviter: '',
       },
       signupRules: {
         email: [{ required: true, trigger: 'blur', validator: formValidateEmail }],
@@ -163,6 +179,19 @@ export default {
       int: undefined,
       contractChecked: true,
       captchaUrl: '',
+    }
+  },
+  mounted() {
+    const { zone, inviter } = this.$route.query
+    if (zone) {
+      if (getItem(LOCATION) !== zone) {
+        setItem(LOCATION, zone)
+        location.reload()
+      }
+    }
+    if (inviter) {
+      this.signupForm.inviter = inviter
+      this.showInviter = false
     }
   },
   watch: {
@@ -223,6 +252,8 @@ export default {
               message,
               type: 'success'
             })
+            // 获取profile
+            this.$store.dispatch('getProfile')
           }).catch(msg => {
             this.signupLoading = false
             if (msg.code === 4005 || msg.code === 4019) {
@@ -292,7 +323,7 @@ export default {
   computed: {
       ...mapGetters([
           'language',
-      ])
+      ]),
   },
 }
 </script>

@@ -316,6 +316,29 @@ const userRouter = [
         ]
     },
 
+    {
+        path: '/commission',
+        component: Layout,
+        redirect: '/user/commission',
+        meta: {
+            title: 'invitation',
+            icon: 'invitation',
+            roles: ['user']
+        },
+        children: [
+            {
+                path: '/user/commission',
+                component: () => import('@/views/commission'),
+                name: 'Invitation',
+                meta: {
+                    title: 'invitation',
+                    roles: ['user'],
+                    noCache: true
+                }
+            }
+        ]
+    },
+
     // user router P2P配置
     {
         path: '/user',

@@ -3,6 +3,25 @@
     <!-- 套餐顶部说明 -->
     <el-alert style="margin-bottom: 20px" type="info" show-icon :title="$t('package.packageSubTitle')" :description="$t('package.monthlyPackageSub')" />
 
+    <el-dialog
+        :title="$t('package.comfirmCreate')"
+        :visible.sync="dialogVisible"
+        :width="device === 'mobile' ? '80%' : '30%'"
+        center>
+      <template v-if="!subject.upgrade">
+        <p>{{$t('order.packageName')}}: {{ subject.subject }}</p>
+        <p>{{$t('package.totalMonths')}}: {{ subject.amount }}</p>
+        <p>{{$t('package.totalPrice')}}: {{ this.totalPrice }}</p>
+      </template>
+      <el-checkbox v-if="balance > 0" :disabled="totalPrice === 0" v-model="useBalance">
+        {{ $t('package.useBalance') }} ({{ balance }})
+      </el-checkbox>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
+      <el-button type="primary" @click="handleBuy">{{ this.$t('common.ok') }}</el-button>
+    </span>
+    </el-dialog>
+
     <template v-for="item in packages">
       <el-row :key="item.subject" :style="{'margin-bottom':'20px'}">
         <el-col :span="24">
@@ -26,7 +45,7 @@
                 </div>
                 <div class="count">
                   <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" placeholder="月数" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
-                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{item.upgrade ? '升級' : '購買'}}</el-button>
+                  <el-button :disabled="item.amount===0" type="warning" @click="showDialog(item)">{{item.upgrade ? '升級' : '購買'}}</el-button>
                 </div>
               </div>
             </template>
@@ -50,7 +69,7 @@
                 </div>
                 <div class="count">
                   <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" placeholder="months" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
-                  <el-button :disabled="item.amount===0" type="warning" @click="handleBuy(item)">{{item.upgrade ? 'Upgrade' :  'Buy'}}</el-button>
+                  <el-button :disabled="item.amount===0" type="warning" @click="showDialog(item)">{{item.upgrade ? 'Upgrade' :  'Buy'}}</el-button>
                 </div>
               </div>
             </template>
@@ -70,12 +89,17 @@ export default {
   name: 'Package',
   data() {
     return {
+      dialogVisible: false,
       currency: '',
       packages: [],
       selectPackage: {
         cn: [],
         en: []
-      }
+      },
+      subject: {},
+      useBalance: false,
+      balance: 0,
+      totalPrice: 0,
     }
   },
   mounted() {
@@ -105,6 +129,7 @@ export default {
 
           if(this.language==='zh') {
             this.currency = 'CNY'
+            this.balance = data.balance_cny
             this.packages = [...data.list_cn]
             this.packages.forEach(item => {
               attachLeftDays(item)
@@ -112,6 +137,7 @@ export default {
             })
           } else {
             this.currency = 'USD'
+            this.balance = data.balance_usd
             this.packages = [...data.list_en]
             this.packages.forEach(item => {
               attachLeftDays(item)
@@ -126,54 +152,58 @@ export default {
     dialogClose() {
       this.$router.push('/')
     },
-    handleCreateOrder(data) {
+    handleCreateOrder(data, realPrice) {
       createOrder(getID(), data)
         .then(res => {
-          this.$router.push({
-            name: 'OrderDetail',
-            query: {
-              currency: this.currency,
-              orderID: res.data.order_id,
-              totalPrice: data.price,
-              buyData: JSON.stringify(data.goods)
-            }
-          })
+          if (res.data.finished) {
+            this.$router.push({
+              path: '/',
+              query: {
+                is_payed: true,
+              }
+            })
+          } else {
+            this.$router.push({
+              name: 'OrderDetail',
+              query: {
+                currency: this.currency,
+                orderID: res.data.order_id,
+                totalPrice: realPrice,
+                buyData: JSON.stringify(data.goods)
+              }
+            })
+          }
         })
         .catch(err => {
           console.log(err)
         })
     },
-    handleBuy(subject) {
-      const name = subject.subject
-      const months = subject.amount
-      const isUpgrade = subject.upgrade
-      const totalPrice = Number(subject.price) * subject.amount
-      const msg = `
-        ${this.$t('order.packageName')}: ${name}<br/>${this.$t('package.totalMonths')}${months}<br/>
-        ${this.$t('package.totalPrice')}${totalPrice}<br/>${this.$t('package.comfirmCreate')}
-      `
-      this.$messageBox.confirm(isUpgrade ? this.$t('package.comfirmCreate') : msg, {
-          type: 'info',
-          dangerouslyUseHTMLString: true,
-          distinguishCancelAndClose: true,
-          confirmButtonText: this.$t('common.ok'),
-          cancelButtonText: this.$t('common.cancel')
-      })
-          .then(() => {
-              const data = {
-                  price: totalPrice,
-                  currency: this.currency,
-                  goods: [subject],
-                  goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
-                  customized: subject.customized,
-                  upgrade: isUpgrade,
-              }
-              this.handleCreateOrder(data)
-              // console.log(subject)
-          }).catch(e => {
+    showDialog(subject) {
+      this.dialogVisible = true
+      this.subject = subject
+      this.totalPrice = Number(subject.price) * subject.amount
+    },
+    handleBuy() {
+      let realPrice = this.totalPrice
+      if (this.useBalance) {
+        if (this.balance >= this.totalPrice) {
+          realPrice = 0
+        } else {
+          realPrice = Number((this.totalPrice - this.balance).toFixed(1))
+        }
+      }
+      const data = {
+        price: this.totalPrice,
+        currency: this.currency,
+        goods: [this.subject],
+        goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
+        customized: this.subject.customized,
+        upgrade: this.subject.upgrade,
+        balance_used: this.totalPrice - realPrice,
+      }
+      this.handleCreateOrder(data, realPrice)
+    },
 
-      })
-    }
   }
 }
 </script>

@@ -21,9 +21,7 @@
   </div>
 
   <el-row>
-    <template v-if="showCopyToken">
-      <CopyToken :token="profile.token"></CopyToken>
-    </template>
+    <CopyToken :token="profile.token"></CopyToken>
   </el-row>
 
   <el-table border :data="tableData" v-loading="loading" style="width: 100%; margin-top: 10px">
@@ -348,9 +346,9 @@
         this.domainFormData.playUrl = trim(this.domainFormData.playUrl)
         this.$refs.domainForm.validate(valid => {
           if(valid) {
-            const domains = this.domainFormData.domain.split('\n').map(dm => trim(dm).toLowerCase()).filter(dm => {
-              return dm !== ""
-            })
+            const domains = this.domainFormData.domain.split('\n')
+                .map(dm => dm.endsWith('.localhost') ? trim(dm) : trim(dm).toLowerCase())
+                .filter(dm => dm !== "")
             const data = {
               play_url: this.domainFormData.playUrl,
             }
