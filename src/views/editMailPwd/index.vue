@@ -41,7 +41,7 @@
                 </el-col>
                 <el-col :span="10">
                   <el-form-item>
-                    <el-button type="primary" @click="SendMsg('emailForm')" :disabled="sendButton.enable" :loading="sendButton.loading">{{sendButton.value}}</el-button>
+                    <el-button type="primary" @click="SendEmailVCode()" :disabled="sendButton.enable" :loading="sendButton.loading">{{sendButton.value}}</el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -73,6 +73,48 @@
             </span>
           </el-dialog>
         </p>
+
+        <div style="margin-top: 25px"></div>
+        <p>
+          <span>{{$t('myInfo.mobile')}}:</span>&nbsp
+          <span v-show="userInfo.mobile">{{userInfo.ncode}}{{userInfo.mobile}}</span>&nbsp;
+          <el-button type="text" @click="mobileDialogVisible = true">
+            {{userInfo.mobile ? $t('myInfo.change') : $t('myInfo.mobileBonus')}}
+          </el-button>
+        </p>
+        <el-dialog
+            :title="$t('myInfo.changeMobile.change')"
+            :visible.sync="mobileDialogVisible"
+            :width="device==='mobile'?'80%':'30%'">
+          <el-form ref="mobileForm" :model="mobileForm" :rules="mobileRules">
+            <div style="display: flex; flex-wrap: wrap">
+              <el-form-item prop="ncode" style="width: 120px">
+                <el-input :placeholder="$t('myInfo.changeMobile.cc')" v-model="mobileForm.ncode"></el-input>
+              </el-form-item>
+              <el-form-item prop="mobile" style="width: 230px; margin-left: 5px">
+                <el-input :placeholder="$t('myInfo.changeMobile.number')" v-model="mobileForm.mobile"></el-input>
+              </el-form-item>
+            </div>
+
+            <el-row :gutter="20">
+              <el-col :span="14">
+                <el-form-item prop="vcode">
+                  <el-input :placeholder="$t('myInfo.changeMail.code')" v-model.number="mobileForm.vcode"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-form-item>
+                  <el-button type="primary" @click="sendMobileVCode()" :disabled="sendButton.enable" :loading="sendButton.loading">{{sendButton.value}}</el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="mobileDialogVisible = false">{{$t('common.cancel')}}</el-button>
+            <el-button type="primary" @click="changeMobile" :loading="confirmButtonLoading">{{$t('common.ok')}}</el-button>
+          </span>
+        </el-dialog>
+
         <div style="margin-top: 25px"></div>
         <p>
           <span>{{$t('myInfo.time')}}{{userInfo.time}}</span>
@@ -102,11 +144,12 @@
 <script>
 import moment from 'moment'
 import { mapGetters } from 'vuex'
-import { fetchUserData, changeUserName, changePasswd, changeMail } from '@/api/user'
+import { fetchUserData, changeUserName, changePasswd, changeMail, changeMobile } from '@/api/user'
 import { createOrder } from '@/api/user/package'
 import { sendCode } from '@/api/auth'
 import { setSha256 } from '@/utils/format'
 import { getID } from '@/utils/auth'
+import { validatePhone } from '@/utils/validate'
 
 export default {
   name: 'Edit',
@@ -162,6 +205,34 @@ export default {
           },
         ]
       },
+      mobileRules: {
+        ncode: [
+          {
+            required: true,
+            message: this.$t('myInfo.changeMobile.wrongCCError'),
+            trigger: 'blur'
+          },
+        ],
+        mobile: [
+          {
+            required: true,
+            message: this.$t('myInfo.changeMobile.number'),
+            trigger: 'blur'
+          },
+        ],
+        vcode: [
+          {
+            required: true,
+            message: this.$t('myInfo.changeMail.codeNoneError'),
+            trigger: 'blur'
+          },
+          {
+            type: 'number',
+            message: this.$t('myInfo.changeMail.codeWrongError'),
+            trigger: "blur",
+          },
+        ]
+      },
       passwdRules: {
         passwd: [
           {
@@ -176,6 +247,7 @@ export default {
       },
 
       mailDialogVisible: false,
+      mobileDialogVisible: false,
       passwdDialogVisible: false,
       nameDialogVisible: false,
       confirmButtonLoading: false,
@@ -185,11 +257,18 @@ export default {
         email: '',
         token: '',
         utc: 0,
+        mobile: '',
+        ncode: 0,
         balanceUSD: 0.0,
         balanceCNY: 0.0,
       },
       emailForm: {
         email: '',
+        vcode: ''
+      },
+      mobileForm: {
+        mobile: '',
+        ncode: 0,
         vcode: ''
       },
       passwdForm: {
@@ -257,6 +336,8 @@ export default {
           const { data } = res
           this.userInfo.time = moment(data.reg_date * 1000).format('YYYY-MM-DD hh:mm:ss')
           this.userInfo.email = data.email
+          this.userInfo.mobile = data.mobile
+          this.userInfo.ncode = data.ncode
           this.userInfo.token = data.token
           this.userInfo.utc = data.utc
           this.userInfo.name = data.name
@@ -267,59 +348,120 @@ export default {
         console.log(err)
       })
     },
-    SendMsg() {
+    sendMobileVCode() {
+      const { mobile, ncode } = this.mobileForm
+      const email = this.userInfo.email
+      if (mobile && ncode !== 0) {
+        const data = {
+          email,
+          mobile,
+          ncode: Number(ncode),
+          action: 'mobile_update'
+        }
+        this.sendVCode(data)
+      } else {
+        this.$message.error(this.$t('myInfo.changeMobile.someError'))
+      }
+    },
+    SendEmailVCode() {
       const email = this.emailForm.email
       if(email) {
         if(email === this.userInfo.email) {
           this.$message.error(this.$t('myInfo.changeMail.sameError'))
         } else {
-          this.sendButton.loading = true
           const data = {
             email,
             action: 'email_update'
           }
-          sendCode(data).then(res => {
-            this.sendButton.loading = false
-            this.$message({
-              message: '验证码已成功发送至您的邮箱',
-              type: 'success'
-            })
-            let timer = 120
-            setInterval(() => {
-              this.sendButton.value = timer
-              this.sendButton.enable = true
-              timer --
-              if(timer <= 0) {
-              this.sendButton.enable = false
-                this.sendButton.value = 'Send'
-              }
-            }, 1000)
-          }).catch(err => {
-            this.sendButton.loading = false
-            console.log(err)
-          })
+          this.sendVCode(data)
         }
       } else {
         this.$message.error(this.$t('myInfo.changeMail.noneError'))
       }
     },
+    sendVCode(data) {
+      this.sendButton.loading = true
+      sendCode(data).then(() => {
+        this.sendButton.loading = false
+        this.$message({
+          message: data.email ? this.$t('myInfo.vcodeEmailSuccess') : this.$t('myInfo.vcodeMobileSuccess'),
+          type: 'success'
+        })
+        let timer = 300
+        setInterval(() => {
+          this.sendButton.value = timer
+          this.sendButton.enable = true
+          timer --
+          if(timer <= 0) {
+            this.sendButton.enable = false
+            this.sendButton.value = 'Send'
+          }
+        }, 1000)
+      }).catch(err => {
+        this.sendButton.loading = false
+        console.log(err)
+      })
+    },
     changeUserName() {
       this.$refs.nameForm.validate(valid => {
         if(valid) {
+          const { name } = this.nameForm
           const data = {
-            name: this.nameForm.name,
+            name,
           }
           this.confirmButtonLoading = true
-          changeUserName(data).then(res => {
+          changeUserName(data).then(() => {
             this.confirmButtonLoading = false
             this.$message({
               message: this.$t('common.success'),
               type: 'success'
             })
             this.nameDialogVisible = false
-            this.userInfo.name = res.data.name
-            this.resetForm('nameForm')
+            this.nameForm.name = ''
+            this.userInfo.name = name
             this.$store.dispatch('getProfile')
+          }).catch(err => {
+            this.confirmButtonLoading = false
+            console.log(err)
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    changeMobile() {
+      this.$refs.mobileForm.validate(valid => {
+        if(valid) {
+          this.confirmButtonLoading = true
+          const { mobile, ncode, vcode } = this.mobileForm
+          if (!validatePhone(mobile) || !validatePhone(ncode)) {
+            this.confirmButtonLoading = false
+            this.$message.error(this.$t('myInfo.changeMobile.someError'))
+            return false
+          }
+          if(mobile === this.userInfo.mobile) {
+            this.$message.error(this.$t('myInfo.changeMobile.sameError'))
+            this.confirmButtonLoading = false
+            return false
+          }
+          const data = {
+            mobile,
+            ncode: Number(ncode),
+            vcode: vcode.toString()
+          }
+          changeMobile(data).then(() => {
+            this.confirmButtonLoading = false
+            this.$message({
+              message: this.$t('common.success'),
+              type: 'success'
+            })
+            this.$store.dispatch('getProfile').then(() => {
+              this.getUserData()
+            })
+            this.mobileDialogVisible = false
+            this.mobileForm.mobile = ''
+            this.mobileForm.ncode = 0
+            this.mobileForm.vcode = ''
           }).catch(err => {
             this.confirmButtonLoading = false
             console.log(err)
@@ -333,19 +475,21 @@ export default {
       this.$refs.emailForm.validate(valid => {
         if(valid) {
           this.confirmButtonLoading = true
+          const { email, vcode } = this.emailForm
           const data = {
-            email: this.emailForm.email,
-            vcode: this.emailForm.vcode.toString()
+            email,
+            vcode: vcode.toString()
           }
-          changeMail(data).then(res => {
+          changeMail(data).then(() => {
             this.confirmButtonLoading = false
             this.$message({
               message: this.$t('common.success'),
               type: 'success'
             })
-            this.userInfo.email = res.data.email
+            this.userInfo.email = email
             this.mailDialogVisible = false
-            this.resetForm('mailForm')
+            this.emailForm.email = ''
+            this.emailForm.vcode = ''
           }).catch(err => {
             this.confirmButtonLoading = false
             console.log(err)
@@ -363,14 +507,15 @@ export default {
             newpasswd: this.passwdForm.newpasswd
           }
           this.confirmButtonLoading = true
-          changePasswd(data).then(res => {
+          changePasswd(data).then(() => {
             this.confirmButtonLoading = false
             this.$message({
               message: this.$t('common.success'),
               type: 'success'
             })
             this.passwdDialogVisible = false
-            this.resetForm('passwdForm')
+            this.passwdForm.passwd = ''
+            this.passwdForm.newpasswd = ''
           }).catch(err => {
             this.confirmButtonLoading = false
             console.log(err)
@@ -380,9 +525,6 @@ export default {
         }
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    }
   }
 }
 </script>

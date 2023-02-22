@@ -229,21 +229,20 @@ export default {
           });
           return
       }
+      if (this.signupForm.email === this.signupForm.inviter) {
+        this.$messageBox.alert('inviter email is invalid', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: this.$t('common.ok'),
+        });
+        return
+      }
       this.$refs.signupForm.validate(valid => {
         if (valid) {
           this.signupLoading = true
-
-          // 获取代理商
-          // const agent = this.$route.query.agent;
-          // if (agent) {
-          //     this.signupForm.agent = agent;
-          // }
-
           // 获取时区
           let utc = (new Date().getTimezoneOffset()/60)*(-1)
           if (utc === -12) utc = 12
           this.signupForm.utc = utc
-
           this.$store.dispatch('signup', this.signupForm).then(() => {
             this.signupLoading = false
             this.$router.push({ path: this.redirect || '/' })

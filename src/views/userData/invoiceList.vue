@@ -62,22 +62,27 @@
                 })
             },
             approve(uid) {
+              this.$messageBox.confirm('确认开票完成？', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+              }).then(() => {
                 this.loading = true
                 updateInvoice({
-                    uid,
-                    action: 'approve'
+                  uid,
+                  action: 'approve'
                 }).then(() => {
-                    this.loading = false
-                    this.$notify({
-                        title: this.$t('common.success'),
-                        message: '开票成功',
-                        type: 'success'
-                    });
-                    this.fetchTableData()
+                  this.loading = false
+                  this.$notify({
+                    title: this.$t('common.success'),
+                    message: '开票成功',
+                    type: 'success'
+                  });
+                  this.fetchTableData()
                 }).catch(err => {
-                    this.loading = false
-                    console.log(err)
+                  this.loading = false
+                  console.log(err)
                 })
+              })
             },
             cancel(uid) {
                 this.loading = true

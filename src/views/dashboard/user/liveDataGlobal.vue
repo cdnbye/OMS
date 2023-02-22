@@ -32,7 +32,6 @@
     import Carousel from '@/components/Carousel'
     import LiveTime from './LiveTime'
     import DistributionGlobal from './DistributionGlobal'
-    import { getItem } from '@/utils/storage'
 
     let int = undefined
 
@@ -49,7 +48,6 @@
                 checkResultLoading: false,
                 checkinLoading: false,
                 remainTrafficFlag: true,
-                showCheckin: true,
                 statis: {
                     whiteList: false,
                     type: {
@@ -103,9 +101,6 @@
             const uid = getID()
             this.loopGetData(uid, 0)
             this.getDisData(uid)
-            if (!!getItem('checkin')) {
-              this.showCheckin = false
-            }
             this.checkPayResult()
         },
         beforeDestroy() {

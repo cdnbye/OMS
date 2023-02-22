@@ -14,7 +14,7 @@
           {{ $t('dashboard.invite') }}
         </el-button>
       </el-carousel-item>
-      <el-carousel-item>
+      <el-carousel-item v-if="profile.mobile === ''">
         <el-button size="mini" @click="handleBonus"
                    style="font-size: medium">
           {{ $t('dashboard.bonus') }}
@@ -29,6 +29,7 @@
 import { mapGetters } from 'vuex'
 import { checkIn } from '@/api/user/package'
 import { setItemWithExpiration } from '@/utils/storage'
+import { getItem } from '@/utils/storage'
 export default {
   name: "Carousel",
   data() {
@@ -37,9 +38,15 @@ export default {
       showCheckin: true,
     }
   },
+  mounted() {
+    if (!!getItem('checkin')) {
+      this.showCheckin = false
+    }
+  },
   computed: {
     ...mapGetters([
       'currentDomain',
+      'profile',
     ])
   },
   methods: {

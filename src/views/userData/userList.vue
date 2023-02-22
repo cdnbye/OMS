@@ -33,8 +33,8 @@
     style="width: 100%">
     <el-table-column align="center" prop="uid" width="50" label="ID"></el-table-column>
     <!--<el-table-column align="center" prop="username" label="用户名"></el-table-column>-->
-    <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
-    <el-table-column align="center" prop="reg_date" label="注册时间"></el-table-column>
+    <el-table-column align="center" prop="email" width="150" label="邮箱"></el-table-column>
+    <el-table-column align="center" prop="reg_date" width="70" label="注册时间"></el-table-column>
 <!--    <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>-->
     <el-table-column align="center" prop="domain" label="域名" width="60"></el-table-column>
     <el-table-column align="center" prop="whitelist" width="60" label="白名单">
@@ -103,9 +103,9 @@
       </template>
     </el-table-column>
 
-    <el-table-column align="center" label="发票">
+    <el-table-column align="center" width="50" label="发票">
       <template slot-scope="scope">
-        <el-row :gutter="4">
+        <el-row :gutter="3">
           <el-col :span="8">
             <el-button type="text" size="big" @click="changeInvoiceIssued(scope.row.invoice_await, scope.row.uid)">修改</el-button>
           </el-col>

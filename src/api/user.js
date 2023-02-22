@@ -36,6 +36,15 @@ export function changeMail(data) {
   })
 }
 
+// 用户修改手机号
+export function changeMobile(data) {
+  return request({
+    url: `user/user_id/${getID()}/profile/mobile`,
+    method: 'put',
+    data
+  })
+}
+
 // 修改时区
 export function changeTimeZone(data) {
   return request({

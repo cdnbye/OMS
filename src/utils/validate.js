@@ -42,6 +42,6 @@ export function validateEmail(email) {
 
 /* 手机号码*/
 export function validatePhone(phone) {
-  const re = /^1[0-9]{10}$/
+  const re = /^\d+$/
   return re.test(phone)
 }
