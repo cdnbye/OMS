@@ -232,7 +232,7 @@ export default {
       someError: '請輸入正確的手機號碼和地區碼',
     },
     vcodeEmailSuccess: '驗證碼已成功發送至您的郵箱',
-    vcodeMobileSuccess: '驗證碼已成功發送至您的郵箱手機',
+    vcodeMobileSuccess: '驗證碼已成功發送至您的手機',
     time: '註冊時間：',
     timeZone: '时区',
     change: '修改',

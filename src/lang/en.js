@@ -222,7 +222,7 @@ export default {
     mobileBonus: 'Bind your Mobile, Earn 10$!',
     changeMobile: {
       change: 'Update Mobile Number',
-      number: 'please enter your mobile number',
+      number: 'your mobile number',
       cc: 'country code',
       wrongCCError: 'please enter your valid country code',
       wrongError: 'please enter your valid mobile number',

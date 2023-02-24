@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-carousel height="30px" indicator-position="none" :interval="5000">
+    <el-carousel height="30px" indicator-position="none" :interval="5000" arrow="never">
       <el-carousel-item v-if="showCheckin">
         <el-button size="mini" type="success" @click="handleCheckin"
                    v-loading="loading"
@@ -14,7 +14,7 @@
           {{ $t('dashboard.invite') }}
         </el-button>
       </el-carousel-item>
-      <el-carousel-item v-if="profile.mobile === ''">
+      <el-carousel-item v-show="profile.mobile === ''">
         <el-button size="mini" @click="handleBonus"
                    style="font-size: medium">
           {{ $t('dashboard.bonus') }}

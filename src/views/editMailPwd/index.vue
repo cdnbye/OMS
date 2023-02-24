@@ -41,7 +41,7 @@
                 </el-col>
                 <el-col :span="10">
                   <el-form-item>
-                    <el-button type="primary" @click="SendEmailVCode()" :disabled="sendButton.enable" :loading="sendButton.loading">{{sendButton.value}}</el-button>
+                    <el-button type="primary" @click="SendEmailVCode()" :disabled="sendButton.disabled" :loading="sendButton.loading">{{sendButton.value}}</el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -77,7 +77,7 @@
         <div style="margin-top: 25px"></div>
         <p>
           <span>{{$t('myInfo.mobile')}}:</span>&nbsp
-          <span v-show="userInfo.mobile">{{userInfo.ncode}}{{userInfo.mobile}}</span>&nbsp;
+          <span v-show="userInfo.mobile">+{{userInfo.ncode}}{{userInfo.mobile}}</span>&nbsp;
           <el-button type="text" @click="mobileDialogVisible = true">
             {{userInfo.mobile ? $t('myInfo.change') : $t('myInfo.mobileBonus')}}
           </el-button>
@@ -87,16 +87,19 @@
             :visible.sync="mobileDialogVisible"
             :width="device==='mobile'?'80%':'30%'">
           <el-form ref="mobileForm" :model="mobileForm" :rules="mobileRules">
-            <div style="display: flex; flex-wrap: wrap">
-              <el-form-item prop="ncode" style="width: 120px">
-                <el-input :placeholder="$t('myInfo.changeMobile.cc')" v-model="mobileForm.ncode"></el-input>
-              </el-form-item>
-              <el-form-item prop="mobile" style="width: 230px; margin-left: 5px">
-                <el-input :placeholder="$t('myInfo.changeMobile.number')" v-model="mobileForm.mobile"></el-input>
-              </el-form-item>
-            </div>
-
-            <el-row :gutter="20">
+            <el-row :gutter="0">
+              <el-col :span="6">
+                <el-form-item prop="ncode">
+                  <el-input :placeholder="$t('myInfo.changeMobile.cc')" v-model="mobileForm.ncode"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="15">
+                <el-form-item prop="mobile">
+                  <el-input :placeholder="$t('myInfo.changeMobile.number')" v-model="mobileForm.mobile"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" style="margin-top: 10px">
               <el-col :span="14">
                 <el-form-item prop="vcode">
                   <el-input :placeholder="$t('myInfo.changeMail.code')" v-model.number="mobileForm.vcode"></el-input>
@@ -104,9 +107,12 @@
               </el-col>
               <el-col :span="10">
                 <el-form-item>
-                  <el-button type="primary" @click="sendMobileVCode()" :disabled="sendButton.enable" :loading="sendButton.loading">{{sendButton.value}}</el-button>
+                  <el-button type="primary" @click="sendMobileVCode()" :disabled="sendButton.disabled" :loading="sendButton.loading">{{sendButton.value}}</el-button>
                 </el-form-item>
               </el-col>
+            </el-row>
+            <el-row>
+              <h3>{{ mobileNumber }}</h3>
             </el-row>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -268,7 +274,7 @@ export default {
       },
       mobileForm: {
         mobile: '',
-        ncode: 0,
+        ncode: undefined,
         vcode: ''
       },
       passwdForm: {
@@ -280,7 +286,7 @@ export default {
       },
       sendButton: {
       value: 'Send',
-      enable: false,
+      disabled: false,
       loading: false,
       },
     };
@@ -288,7 +294,11 @@ export default {
   computed: {
     ...mapGetters([
       'device'
-    ])
+    ]),
+    mobileNumber() {
+      if (!this.mobileForm.ncode && !this.mobileForm.mobile) return ""
+      return `+${this.mobileForm.ncode}${this.mobileForm.mobile}`
+    }
   },
   mounted() {
     this.getUserData()
@@ -384,16 +394,21 @@ export default {
       sendCode(data).then(() => {
         this.sendButton.loading = false
         this.$message({
-          message: data.email ? this.$t('myInfo.vcodeEmailSuccess') : this.$t('myInfo.vcodeMobileSuccess'),
+          message: data.mobile ? this.$t('myInfo.vcodeMobileSuccess') : this.$t('myInfo.vcodeEmailSuccess'),
           type: 'success'
         })
         let timer = 300
-        setInterval(() => {
+        this.sendButton.disabled = true
+        let id = setInterval(() => {
           this.sendButton.value = timer
-          this.sendButton.enable = true
+          if (!this.sendButton.disabled) {
+            clearInterval(id)
+            this.sendButton.value = 'Send'
+            return
+          }
           timer --
           if(timer <= 0) {
-            this.sendButton.enable = false
+            this.sendButton.disabled = false
             this.sendButton.value = 'Send'
           }
         }, 1000)
@@ -465,6 +480,8 @@ export default {
           }).catch(err => {
             this.confirmButtonLoading = false
             console.log(err)
+          }).finally(() => {
+            this.sendButton.disabled = false
           })
         } else {
           return false
@@ -493,6 +510,8 @@ export default {
           }).catch(err => {
             this.confirmButtonLoading = false
             console.log(err)
+          }).finally(() => {
+            this.sendButton.disabled = false
           })
         } else {
           return false
