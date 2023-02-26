@@ -14,7 +14,7 @@
           {{ $t('dashboard.invite') }}
         </el-button>
       </el-carousel-item>
-      <el-carousel-item v-show="profile.mobile === ''">
+      <el-carousel-item v-if="profile.mobile === ''">
         <el-button size="mini" @click="handleBonus"
                    style="font-size: medium">
           {{ $t('dashboard.bonus') }}

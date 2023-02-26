@@ -85,7 +85,7 @@
         <el-dialog
             :title="$t('myInfo.changeMobile.change')"
             :visible.sync="mobileDialogVisible"
-            :width="device==='mobile'?'80%':'30%'">
+            :width="device==='mobile'?'80%':'40%'">
           <el-form ref="mobileForm" :model="mobileForm" :rules="mobileRules">
             <el-row :gutter="0">
               <el-col :span="6">

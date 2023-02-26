@@ -11,7 +11,7 @@
       <template v-if="!subject.upgrade">
         <p>{{$t('order.packageName')}}: {{ subject.subject }}</p>
         <p>{{$t('package.totalMonths')}}: {{ subject.amount }}</p>
-        <p>{{$t('package.totalPrice')}}: {{ this.totalPrice }}</p>
+        <p>{{$t('package.totalPrice')}}: {{ totalPriceDisplay }}</p>
       </template>
       <el-checkbox v-if="balance > 0" :disabled="totalPrice === 0" v-model="useBalance">
         {{ $t('package.useBalance') }} ({{ balance }})
@@ -109,7 +109,14 @@ export default {
     ...mapGetters([
       'device',
       'language',
-    ])
+    ]),
+    totalPriceDisplay() {
+      if (!this.useBalance) return this.totalPrice
+      if (this.balance >= this.totalPrice) {
+        return  0
+      }
+      return Number((this.totalPrice - this.balance).toFixed(1))
+    }
   },
   methods: {
     getPackageData() {
