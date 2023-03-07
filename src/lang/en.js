@@ -154,7 +154,7 @@ export default {
     haveChecked: 'You can only get it once a day',
     checkinFail: 'Failed, please try again!',
     invite: 'Invite friends get Commission',
-    bonus: 'Get 10$ Bonus',
+    bonus: 'Get 5$ Bonus',
     changeUTC: 'TimeZone',
     trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.',
     onlinesTip: 'P2P only works on browsers that support WebRTC Data Channels. On browsers that don’t have such support, P2P will be automatically disabled and fallback to native playback. Those unsupported devices will not have any analytics collected from them, which can cause some discrepancy between the numbers that you see on your own analytics systems and here. This discrepancy is expected and will vary based on the % of unsupported devices your end-users use.',
@@ -219,7 +219,7 @@ export default {
     mail: 'E-mail: ',
     passwd: 'Password: ',
     mobile: 'Mobile Number',
-    mobileBonus: 'Bind your Mobile, Earn 10$!',
+    mobileBonus: 'Bind your Mobile, Earn 5$!',
     changeMobile: {
       change: 'Update Mobile Number',
       number: 'your mobile number',

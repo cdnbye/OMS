@@ -1,4 +1,5 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
+import { Crisp } from "crisp-sdk-web";
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -49,9 +50,14 @@ const permission = {
         let accessedRouters
 
         accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        // if (roles.indexOf('admin') >= 0) {
-        //   accessedRouters = asyncRouterMap
-        // } else {
+        if (roles.indexOf('user') >= 0) {
+          Crisp.configure("9ef4a604-fe60-4864-b365-85891ed5fbf6", {
+            autoload: false
+          });
+          Crisp.setHideOnAway(true);
+          Crisp.load();
+        }
+        // else {
         //   accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         // }
         commit('SET_ROUTERS', accessedRouters)

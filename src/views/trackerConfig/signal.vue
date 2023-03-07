@@ -4,9 +4,12 @@
       <el-col :key="item.url" :xs="24" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-description">
+            <div class="card-panel-name">{{item.name}}</div>
             <span class="card-panel-num">{{item.value}}</span>
             <div class="card-panel-text">{{item.url}} {{ item.version ? ' ' + item.version : '' }}</div>
-            <div class="card-panel-name">{{item.name}}</div>
+            <template v-if="item.certs.length > 0" v-for="cert in item.certs">
+              <div class="card-panel-text">{{cert.name}} {{ cert.expireAt }}</div>
+            </template>
           </div>
         </div>
       </el-col>
@@ -16,6 +19,7 @@
 
 <script>
 import axios from 'axios'
+import moment from "moment";
 
 let int = null
 
@@ -28,25 +32,20 @@ export default {
         { url: 'https://signal.cdnbye.com/total_count', value: 0, name: '香港' },
         { url: 'https://signalcloud.cdnbye.com/total_count', value: 0, name: '法兰克福' },
         { url: 'https://opensignal.cdnbye.com/total_count', value: 0, name: '硅谷' },
-        { url: 'https://fr.cdnbye.com/count', value: 0, name: '巴黎' },
+        { url: 'https://sg.cdnbye.com/total_count', value: 0, name: '新加坡' },
+        { url: 'https://fr.cdnbye.com/info', value: 0, name: '巴黎' },
         { url: 'https://fr.web3-lab.com:8443/count', value: 0, name: '巴黎' },
         { url: 'https://fr.p2pengine.net:2053/count', value: 0, name: '巴黎' },
-        { url: 'https://sg.cdnbye.com/count', value: 0, name: '新加坡' },
-        { url: 'https://sg.p2pengine.net:8089/count', value: 0, name: '新加坡' },
-        { url: 'https://korea.cdnbye.com/count', value: 0, name: '首尔' },
-        { url: 'https://korea.p2pengine.net:8089/count', value: 0, name: '首尔' },
-        { url: 'https://jp.cdnbye.com/count', value: 0, name: '东京' },
-        { url: 'https://jp.p2pengine.net:8089/count', value: 0, name: '东京' },
-        { url: 'https://br.cdnbye.com/count', value: 0, name: '圣保罗' },
+        { url: 'https://jp.cdnbye.com/info', value: 0, name: '东京' },
+        { url: 'https://jp.p2pengine.net:8089/info', value: 0, name: '东京' },
+        { url: 'https://br.cdnbye.com/info', value: 0, name: '圣保罗' },
         { url: 'http://signal.ubtvmarket.com:8077/total_count', value: 0, name: '香港' },
-        { url: 'https://signal.swarmcloud.net/count', value: 0, name: '上海' },
+        { url: 'https://signal.swarmcloud.net/info', value: 0, name: '上海' },
         { url: 'https://gz.swarmcloud.net/total_count', value: 0, name: '广州' },
-        { url: 'https://pk.swarmcloud.net/count', value: 0, name: '北京' },
-        { url: 'https://cd.swarmcloud.net/count', value: 0, name: '成都' },
+        { url: 'https://pk.swarmcloud.net/info', value: 0, name: '北京' },
+        { url: 'https://cd.swarmcloud.net/info', value: 0, name: '成都' },
         { url: 'http://119.28.74.92:8077/count', value: 0, name: 'master-live' },
-        { url: 'http://119.28.74.92/count', value: 0, name: 'master-live' },
         { url: 'http://124.156.138.240:8077/count', value: 0, name: 'slave-live' },
-        { url: 'http://124.156.138.240/count', value: 0, name: 'slave-live' },
         { url: 'http://43.134.199.138/info', value: 0, name: 'cdnbye-2' },
         { url: 'http://43.129.228.44/info', value: 0, name: 'cdnbye-3' },
         { url: 'http://43.154.211.238/info', value: 0, name: 'cdnbye-4' },
@@ -96,6 +95,15 @@ export default {
         { url: 'http://43.153.10.122/info', value: 0, name: 'us-16' },
         { url: 'http://43.153.13.133/info', value: 0, name: 'us-17' },
         { url: 'http://43.153.67.114/info', value: 0, name: 'us-18' },
+        { url: 'http://43.159.60.196/info', value: 0, name: 'sg-1' },
+        { url: 'http://43.153.227.193/info', value: 0, name: 'sg-2' },
+        { url: 'http://129.226.223.49/info', value: 0, name: 'sg-3' },
+        { url: 'http://43.156.114.207/info', value: 0, name: 'sg-4' },
+        { url: 'http://43.134.183.72/info', value: 0, name: 'sg-5' },
+        { url: 'http://106.52.254.88/info', value: 0, name: 'gz-1' },
+        { url: 'http://43.139.105.176/info', value: 0, name: 'gz-2' },
+        { url: 'http://106.53.103.36/info', value: 0, name: 'gz-3' },
+        { url: 'http://43.139.190.60/info', value: 0, name: 'gz-4' },
       ]
     }
   },
@@ -111,15 +119,35 @@ export default {
         const url = `${item.url}?token=${this.token}`
         axios.get(url)
           .then(res => {
+            item.certs = []
             if (typeof res.data === 'number') {
               item.value = res.data
-            } else if (typeof res.data === 'object') {
+            } else if (typeof res.data.data === 'object') {
               const { data } = res.data
               item.value = data.current_connections
               item.version = data.version
+
+            } else if (typeof res.data === 'object') {
+              const { data } = res
+              item.value = data.current_connections
+              item.version = data.version
+              if (data.cert_info) {
+                item.certs.push({
+                  name: data.cert_info.name,
+                  expireAt: moment(data.cert_info.expire_at).format('YY-MM-DD:HH'),
+                })
+              } else if (data.cert_infos && data.cert_infos.length > 0) {
+                data.cert_infos.forEach(cert => {
+                  item.certs.push({
+                    name: cert.name,
+                    expireAt: moment(cert.expire_at).format('YY-MM-DD:HH'),
+                  })
+                })
+              }
             }
           })
           .catch(err => {
+            console.error(err)
             item.value = 0
           })
       })
@@ -141,7 +169,7 @@ export default {
       margin-bottom: 20px;
     }
     .card-panel {
-      height: 108px;
+      //height: 108px;
       font-size: 12px;
       position: relative;
       overflow: hidden;
@@ -153,7 +181,7 @@ export default {
         text-align: right;
         line-height: 42px;
         font-weight: bold;
-        margin: 20px;
+        margin: 15px;
         margin-left: 0;
         .card-panel-text {
           line-height: 18px;
@@ -164,7 +192,8 @@ export default {
           font-size: 24px;
         }
         .card-panel-name {
-          margin-top: 3px;
+          float: left;
+          margin-left: 5px;
           line-height: 18px;
           color: rgba(0, 0, 0, 0.45);
           font-size: 16px;

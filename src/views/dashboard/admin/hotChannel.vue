@@ -24,6 +24,11 @@
             <el-table-column align="center" prop="channel_id" :label="$t('hotChannels.content')"></el-table-column>
             <el-table-column align="center" width="100" prop="num" :label="$t('hotChannels.num')"></el-table-column>
             <el-table-column align="center" width="100" prop="columns.length" label="槽数"></el-table-column>
+            <el-table-column align="center" width="100" prop="live" label="类型">
+              <template slot-scope="scope">
+                {{ scope.row.live ? '直播' : '点播' }}
+              </template>
+            </el-table-column>
             <el-table-column align="center" width="100" label="操作">
                <template slot-scope="scope">
                  <el-button type="primary" @click="splitChannel(scope.row.channel_id)">拆分</el-button>
