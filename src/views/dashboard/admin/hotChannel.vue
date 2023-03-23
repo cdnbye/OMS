@@ -29,12 +29,12 @@
                 {{ scope.row.live ? '直播' : '点播' }}
               </template>
             </el-table-column>
-            <el-table-column align="center" width="100" label="操作">
+            <el-table-column align="center" width="200" label="操作">
                <template slot-scope="scope">
+                 <el-button @click="handleCopy(scope.row.channel_id)" type="primary">Copy</el-button>
                  <el-button type="primary" @click="splitChannel(scope.row.channel_id)">拆分</el-button>
                </template>
             </el-table-column>
-
         </el-table>
 
         <div class="pagination-container">
@@ -54,6 +54,7 @@
 <script>
     import { fetchHotChannels, splitHotChannels } from '@/api/liveData'
     import { mapGetters } from 'vuex'
+    import clip from '@/utils/clipboard'
 
     export default {
         name: 'hotChannel',
@@ -76,6 +77,9 @@
             this.fetchTableData()
         },
         methods: {
+            handleCopy(text) {
+              clip(text, event);
+            },
             fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize) {
                 this.loading = true
                 fetchHotChannels(page, pageSize).then(res => {
@@ -119,6 +123,6 @@
         },
         beforeDestroy() {
             window.clearTimeout(this.timer)
-        }
+        },
     }
 </script>

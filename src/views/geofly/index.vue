@@ -26,6 +26,7 @@ const FLY_TYPE2COLOR = {
   5: '#FF7F00',     // SameAbrLevel
   6: '#B22222',     // SameChannel
   7: '#A020F0',     // VodPosFirst
+  8: '#ffffff',     // SuperPeer
 }
 
 export default {

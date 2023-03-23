@@ -53,6 +53,7 @@ export default {
     uploadRule: 'P2P分享策略',
     activationRatio: '激活比率',
     signalManage: '信令配置',
+    seederManage: '超级节点管理',
     stunManage: 'Stun配置',
     invoices: '發票管理',
     shopping: '商城',
@@ -129,6 +130,7 @@ export default {
     online: '當前在線人數',
     p2pTraffic: '今日P2P流量',
     httpTraffic: '今日HTTP流量',
+    shareTraffic: '今日分享流量',
     p2pEfficiency: '當前P2P效率',
     serveNum: '今日播放次數',
     rebufferRatio: '平均卡頓率',
@@ -285,6 +287,7 @@ export default {
     sureDelete: '確定要刪除嗎？',
     sureUpdate: '確定要更新嗎？',
     default: '默認',
+    setting: '設置',
   },
   historyData: {
     hour: '1小時內',
@@ -372,7 +375,7 @@ export default {
     stunManage: {
       addr: 'Stun地址',
       desc: '本頁面用於雲端配置stun地址，stun用於處於NAT後面的節點獲取公網ip和端口。每行輸入一個地址，最多輸入3個地址。一旦配置，將覆蓋SDK默認stun地址，請謹慎操作。',
-    }
+    },
   },
   app: {
     createToken: '生成Token',
@@ -401,6 +404,20 @@ export default {
     signature: '應用簽名(SHA1)',
     updateSign: '更新SHA1',
     websiteWarn: '請在網站管理頁面綁定域名',
+  },
+  seeder: {
+    create: '+ 超级节点',
+    createTitle: '输入超级节点信息',
+    seedTitle: '输入做种信息',
+    addr: '服务器地址',
+    desc: '',
+    running: '运行中',
+    stopped: '已停止',
+    auto: '自动做种',
+    stats: '统计',
+    seed: "做种",
+    copy: '复制Base64',
+    inputChannelId: '输入m3u8/mpd地址或者自定义频道ID',
   },
   hotChannels: {
     content: '資源',

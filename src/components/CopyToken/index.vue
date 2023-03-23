@@ -25,7 +25,8 @@ export default {
   props: {
     token: {
       type: String,
-      required: true,
+      default: '',
+      required: false,
     },
   },
   data() {

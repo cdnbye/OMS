@@ -13,7 +13,7 @@
           </el-col>
         </el-row>
 
-        <LiveTime :statis="statis" ></LiveTime>
+        <LiveTime :statis="statis" :global="true" ></LiveTime>
         <DistributionGlobal :data="disData"/>
         <NoBindTip />
       </div>

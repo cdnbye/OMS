@@ -9,6 +9,14 @@
                 </card>
             </el-col>
 
+            <!--每日share流量-->
+            <el-col v-if="isSuperPeer && !global" :xs="24" :sm="12" :lg="6" class="card-panel-col">
+              <card :num="statis.traffic_share.num"
+                    :decimals="2"
+                    :desc="`${$t('dashboard.shareTraffic')} (${statis.traffic_share.unit})`">
+              </card>
+            </el-col>
+
             <!--每日p2p流量-->
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card :num="statis.traffic_p2p.num"
@@ -21,7 +29,7 @@
             </el-col>
 
             <!--每日http流量-->
-            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+            <el-col v-if="!isSuperPeer || global" :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card :num="statis.traffic_http.num"
                       :decimals="2"
                       :desc="`${$t('dashboard.httpTraffic')} (${statis.traffic_http.unit})`">
@@ -32,7 +40,7 @@
             </el-col>
 
             <!--p2p效率-->
-            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+            <el-col v-if="!isSuperPeer || global" :xs="24" :sm="12" :lg="6" class="card-panel-col">
               <card :num="p2pEfficiency"
                     :decimals="2"
                     :desc="`${$t('dashboard.p2pEfficiency')} (%)`">
@@ -122,6 +130,10 @@
             Card,
         },
         props: {
+            global: {
+              type: Boolean,
+              default: false,
+            },
             statis: {
                 type: Object,
                 required: true,
@@ -136,6 +148,10 @@
                         traffic_p2p: {
                             num: 0,
                             unit: 'KB'
+                        },
+                        traffic_share: {
+                          num: 0,
+                          unit: 'KB'
                         },
                         traffic_http: {
                             num: 0,
@@ -163,6 +179,9 @@
             ...mapGetters([
               'currentDomain',
             ]),
+            isSuperPeer: function () {
+              return this.currentDomain && this.currentDomain.domain && this.currentDomain.domain.endsWith('.superpeer')
+            },
             p2pEfficiency: function () {
               let p2pDiff = this.statis.traffic_p2p_day - this.lastP2pTraffic;
               if (p2pDiff < 0) p2pDiff = 0;

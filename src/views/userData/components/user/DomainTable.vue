@@ -196,11 +196,15 @@
           callback(new Error("too many domains"))
         }
         domains.forEach(dm => {
-          if(!validateURL(dm)) {
-            const error = this.$t('domainTable.bindDomainTError')
-            callback(new Error(error))
-          } else {
+          if (dm.endsWith('.superpeer')) {
             callback()
+          } else {
+            if(!validateURL(dm)) {
+              const error = this.$t('domainTable.bindDomainTError')
+              callback(new Error(error))
+            } else {
+              callback()
+            }
           }
         })
       }
@@ -347,7 +351,7 @@
         this.$refs.domainForm.validate(valid => {
           if(valid) {
             const domains = this.domainFormData.domain.split('\n')
-                .map(dm => dm.endsWith('.localhost') ? trim(dm) : trim(dm).toLowerCase())
+                .map(dm => (dm.endsWith('.localhost') || dm.endsWith('.superpeer')) ? trim(dm) : trim(dm).toLowerCase())
                 .filter(dm => dm !== "")
             const data = {
               play_url: this.domainFormData.playUrl,

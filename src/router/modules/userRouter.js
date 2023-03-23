@@ -371,6 +371,16 @@ const userRouter = [
                 }
             },
             {
+                path: 'seederManage',
+                component: () => import('@/views/p2pConfig/user/superPeer'),
+                name: 'seederManage',
+                meta: {
+                    title: 'seederManage',
+                    roles: ['user'],
+                    noCache: true
+                }
+            },
+            {
                 path: 'uploadRule',
                 component: () => import('@/views/p2pConfig/user/uploadRule'),
                 name: 'uploadRule',
@@ -400,6 +410,29 @@ const userRouter = [
                     noCache: true
                 }
             },
+        ]
+    },
+
+    {
+        path: '/seeder_stats',
+        component: Layout,
+        redirect: '/user/seeder_stats',
+        hidden: true,
+        meta: {
+            title: 'seederStats',
+            roles: ['user']
+        },
+        children: [
+            {
+                path: '/user/seeder_stats',
+                component: () => import('@/views/p2pConfig/user/seederStats'),
+                name: 'SeederStats',
+                meta: {
+                    hide: true,
+                    roles: ['user'],
+                    noCache: true
+                }
+            }
         ]
     },
 ]

@@ -49,6 +49,10 @@ export default {
           num: 0,
           unit: 'KB'
         },
+        traffic_share: {
+          num: 0,
+          unit: 'KB'
+        },
         frequency_day: 0,
         num_max: 0,
         rebuffer_ratio: -1,
@@ -120,6 +124,7 @@ export default {
           this.statis.traffic_http_day = data.traffic_http_day
           this.statis.traffic_p2p = formatTraffic(data.traffic_p2p_day)
           this.statis.traffic_http = formatTraffic(data.traffic_http_day)
+          this.statis.traffic_share = formatTraffic(data.traffic_share_day)
           this.statis.frequency_day = data.api_frequency_day
           if (data.total_rebuffers !== 0 && data.total_media_requests !== 0) {
             this.statis.rebuffer_ratio = data.total_rebuffers/data.total_media_requests

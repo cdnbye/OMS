@@ -53,6 +53,7 @@ export default {
     uploadRule: 'Uploading Rules',
     activationRatio: 'Activation Ratio',
     signalManage: 'Signal Configuration',
+    seederManage: 'Server as Peer',
     stunManage: 'Stun Configuration',
     invoices: 'Invoices',
     shopping: 'Shopping',
@@ -128,6 +129,7 @@ export default {
     online: 'Current Online Viewers',
     p2pTraffic: 'P2P Traffic Today',
     httpTraffic: 'HTTP Traffic Today',
+    shareTraffic: 'Share Traffic Today',
     p2pEfficiency: 'Current Efficiency',
     serveNum: 'Playback Sessions Today',
     rebufferRatio: 'Rebuffer Ratio',
@@ -283,6 +285,7 @@ export default {
     sureDelete: 'Do you confirm to delete?',
     sureUpdate: 'Do you confirm to update?',
     default: 'Default',
+    setting: 'Setting',
   },
   historyData: {
     hour: '1 Hour',
@@ -371,7 +374,7 @@ export default {
     stunManage: {
         addr: 'Stun Address',
         desc: 'This page is used to configure the stun address. Stun is used for peers behind NAT to discover their public IP and port. Enter one address per line, up to 3 addresses. Please note that it will override default stun address in SDK.',
-    }
+    },
   },
   app: {
     createToken: 'Create Token',
@@ -400,6 +403,20 @@ export default {
     signature: 'Signature(SHA1)',
     updateSign: 'Update SHA1',
     websiteWarn: 'Please add domain on the tab of Website Management',
+  },
+  seeder: {
+    create: '+ Super Peer',
+    createTitle: 'Input Super Peer Information',
+    seedTitle: 'Input Seeding Information',
+    addr: 'Server Address',
+    desc: '',
+    running: 'Running',
+    stopped: 'Stopped',
+    auto: 'Auto Seeding',
+    stats: 'Stats',
+    seed: "Seed",
+    copy: 'Copy Base64',
+    inputChannelId: 'Input m3u8/mpd url or customized video id',
   },
   hotChannels: {
     content: 'Content',
