@@ -38,4 +38,12 @@ export function actionSeeder(uid, sid, data) {
     })
 }
 
+export function copySeeder(uid, data) {
+    return request({
+        url: `seeder/user_id/${uid}/copy`,
+        method: 'post',
+        data
+    })
+}
+
 

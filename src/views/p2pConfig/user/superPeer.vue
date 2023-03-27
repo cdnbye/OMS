@@ -18,22 +18,24 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('p2pConfig.signalManage.switch')" align="center"  min-width="50" width="150">
+      <el-table-column :label="$t('p2pConfig.signalManage.switch')" align="center"  min-width="30" width="100">
         <template slot-scope="scope">
           <el-switch :value="!scope.row.disabled" active-color="#13ce66" inactive-color="#ff4949" @change="value => disabledChange(scope.row, value)"> </el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('seeder.auto')" align="center"  min-width="50" width="150">
+      <el-table-column :label="$t('seeder.auto')" align="center"  min-width="30" width="100">
         <template slot-scope="scope">
           <el-switch :value="scope.row.auto" active-color="#13ce66" inactive-color="#ff4949" @change="value => autoChange(scope.row, value)"> </el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('domainTable.operation')" align="center"  min-width="50" width="420">
+      <el-table-column align="center" prop="bandwidth" :label="$t('seeder.bandwidth')" min-width="30" width="150"></el-table-column>
+      <el-table-column align="center" prop="remarks" :label="$t('seeder.remarks')" min-width="30" width="150"></el-table-column>
+      <el-table-column :label="$t('domainTable.operation')" align="center" min-width="50" width="350">
         <template slot-scope="scope">
           <el-button size="small" :disabled="scope.row.disabled" :loading="loading" type="primary" @click.native.prevent="handlePing(scope.row)">Ping</el-button>
           <el-button size="small" :disabled="scope.row.disabled" :loading="loading" type="primary" @click.native.prevent="seedingClick(scope.row)">{{ $t('seeder.seed') }}</el-button>
-          <el-button size="small" :loading="loading" type="primary" @click.native.prevent="handleStats(scope.row)">{{ $t('seeder.stats') }}</el-button>
-          <el-popover placement="top" width="200" :ref="'popover-' + scope.row.id" trigger="manual" style="margin-left: 10px">
+          <el-button size="small" :loading="loading" type="primary" @click.native.prevent="handleStats(scope.row)">{{ $t('app.watch') }}</el-button>
+          <el-popover placement="top" width="200" :ref="'popover-' + scope.row.id" trigger="manual">
             <p>{{ $t('common.sureDelete') }}</p>
             <div style="text-align: right; margin: 0">
               <el-button size="small" type="text" @click="pClose(scope.row.id)">{{ $t('common.cancel') }}</el-button>
@@ -58,13 +60,16 @@
             <template slot="append">Mbps</template>
           </el-input>
         </el-form-item>
+        <el-form-item prop="remarks" label="Remarks" label-width="100px">
+          <el-input v-model="form.remarks" placeholder="Optional"></el-input>
+        </el-form-item>
         <el-form-item prop="accessToken" label="AccessToken" label-width="100px">
-          <el-input v-model="form.access_token" placeholder="Optional"></el-input>
+          <el-input v-model="form.accessToken" placeholder="Optional"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="handleCreateItem" :loading="createItemLoading">{{ $t('common.ok') }}</el-button>
+        <el-button type="primary" @click="handleCreateItem" :loading="loading">{{ $t('common.ok') }}</el-button>
       </div>
     </el-dialog>
 
@@ -73,30 +78,29 @@
         <p>{{ $t('seeder.seedTitle') }}</p>
       </div>
       <el-form :model="seedForm" label-position="left" label-width="120px">
-        <el-form-item prop="channel_id" label="Channel ID" label-width="100px" required>
-          <el-input v-model="seedForm.channel_id" type="textarea" autosize placeholder="base64"></el-input>
+        <el-form-item prop="channelId" label="Channel ID" label-width="100px" required>
+          <el-input v-model="seedForm.channelId" type="textarea" autosize placeholder="base64"></el-input>
         </el-form-item>
         <el-form-item prop="live" label="Type" label-width="100px">
           <el-select v-model="seedForm.live" style="width: 150px; float: left">
-            <el-option
-                key="live"
-                label="Live"
-                :value="true">
-            </el-option>
-            <el-option
-                key="vod"
-                label="VOD"
-                :value="false">
+            <el-option key="live" label="Live" :value="true"></el-option>
+            <el-option key="vod" label="VOD" :value="false">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="priority" label="Priority" label-width="100px">
           <el-input v-model="seedForm.priority" type="number" style="width: 150px; float: left"></el-input>
         </el-form-item>
+        <el-form-item prop="keepAlive" label="KeepAlive" label-width="100px">
+          <el-select v-model="seedForm.keepAlive" style="width: 150px; float: left">
+            <el-option key="false" label="false" :value="false"></el-option>
+            <el-option key="true" label="true" :value="true"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogSeedVisible = false">{{ $t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="handleSeeding" :loading="seedLoading">{{ $t('common.ok') }}</el-button>
+        <el-button type="primary" @click="handleSeeding" :loading="loading">{{ $t('common.ok') }}</el-button>
       </div>
     </el-dialog>
 
@@ -120,8 +124,6 @@ export default {
       loading: false,
       dialogFormVisible: false,
       dialogSeedVisible: false,
-      createItemLoading: false,
-      seedLoading: false,
       form: {},
       seedForm: {},
       tableData: [],
@@ -134,11 +136,11 @@ export default {
   },
   methods: {
     handleStats(item) {
-      this.action(item.id, {
-        action: 'stats'
-      }).then(resp => {
-        console.log(resp)
-        console.log(JSON.parse(resp.data))
+      this.$router.push({
+        name: 'SeederStats',
+        query: {
+          sid: item.id,
+        }
       })
     },
     seedingClick(item) {
@@ -147,16 +149,24 @@ export default {
     },
     handleSeeding() {
       this.formatSeedForm()
-      if (!this.seedForm.channel_id) return
+      if (!this.seedForm.channelId) return
+      this.processChannelId()
       this.loading = true
       this.action(this.seedForm.id, {
         action: 'seed',
         ...this.seedForm,
       }).then(() => {
+        this.resetSeedForm()
         this.dialogSeedVisible = false
       }).finally(() => {
         this.loading = false
       })
+    },
+    processChannelId() {
+      const arr = this.seedForm.channelId.split('\n').filter(item=>!!item)
+      if (arr.length <= 1) return
+      delete this.seedForm.channelId
+      this.seedForm.channelIds = arr
     },
     handlePing(item) {
       this.loading = true
@@ -178,6 +188,7 @@ export default {
         this.fetchTableData()
       }).finally(() => {
         this.loading = false
+        this.pClose(item.id)
       })
     },
     disabledChange(item, value) {
@@ -232,7 +243,6 @@ export default {
       createSeeder(getID(), this.form).then(res => {
         if(res.ret === 0) {
           this.dialogFormVisible = false
-          this.createItemLoading = false
           this.$notify({
             title: this.$t('common.success'),
             message: this.$t('app.createItemSuccess'),
@@ -243,7 +253,6 @@ export default {
         }
       }).catch(err => {
           console.error(err)
-          this.createItemLoading = false
         }).finally(() => {
           this.loading = false
       })
@@ -258,25 +267,27 @@ export default {
       const { form } = this;
       form.url = trim(form.url)
       form.bandwidth = Number(form.bandwidth)
-      form.access_token = trim(form.access_token)
+      form.accessToken = trim(form.accessToken)
     },
     formatSeedForm() {
       const { seedForm } = this;
-      seedForm.channel_id = trim(seedForm.channel_id)
+      seedForm.channelId = trim(seedForm.channelId)
       seedForm.priority = Number(seedForm.priority)
     },
     resetForm() {
       this.form = {
         url: '',
         bandwidth: 1000,
-        access_token: '',
+        accessToken: '',
+        remarks: '',
       }
     },
     resetSeedForm() {
       this.seedForm = {
-        channel_id: '',
+        channelId: '',
         live: true,
         priority: 100,
+        keepAlive: false,
       }
     }
   },

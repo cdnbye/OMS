@@ -413,15 +413,16 @@ export default {
     running: 'Running',
     stopped: 'Stopped',
     auto: 'Auto Seeding',
-    stats: 'Stats',
     seed: "Seed",
     copy: 'Copy Base64',
     inputChannelId: 'Input m3u8/mpd url or customized video id',
+    remarks: 'Remarks',
+    bandwidth: 'Bandwidth(Mbps)',
   },
   hotChannels: {
     content: 'Content',
     num: 'Viewers',
-    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 100 is not shown.',
+    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 50 is not shown.',
   },
   invitation: {
     date: 'Date',
