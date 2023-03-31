@@ -1,12 +1,13 @@
 <template>
   <div class="app-container" v-loading="loading">
     <div style="margin-bottom: 10px">
-      <el-input placeholder="worker pid or url" v-model="pidOrUrl" style="width: 350px; margin-right: 5px">
+      <el-input placeholder="worker pid, url or number" v-model="pidOrUrl" style="width: 350px; margin-right: 5px">
         <template slot="prepend" >
-          <el-select v-model="action" slot="prepend" placeholder="Select" style="width: 100px">
+          <el-select v-model="action" slot="prepend" placeholder="Select" style="width: 110px">
             <el-option label="Restart" value="restart"></el-option>
             <el-option label="Kill" value="kill"></el-option>
             <el-option label="Migrate" value="copy"></el-option>
+            <el-option label="Workers" value="ping"></el-option>
           </el-select>
         </template>
       </el-input>
@@ -23,6 +24,7 @@
 <script>
 import { actionSeeder, copySeeder } from '@/api/user/seeder'
 import { getID } from '@/utils/auth'
+import { formatTraffic } from '@/utils/format'
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 
@@ -80,10 +82,15 @@ export default {
       const pid = Number(this.pidOrUrl)
       if (!pid || !this.action) return
       this.loading = true
-      actionSeeder(getID(), this.sid, {
+      const data = {
         action: this.action,
-        pid,
-      }).then(() => {
+      }
+      if (this.action === 'ping') {
+        data.workers = pid
+      } else {
+        data.pid = pid
+      }
+      actionSeeder(getID(), this.sid, data).then(() => {
         this.$notify({
           title: this.$t('common.success'),
           type: 'success'
@@ -105,6 +112,11 @@ export default {
             const worker = json.workers[key]
             if (worker.seedFrom) {
               worker.seedFrom = new Date(worker.seedFrom)
+              worker.uploaded = this.formatValue(worker.uploaded)
+              worker.downloaded = this.formatValue(worker.downloaded)
+            }
+            if (worker.diskCacheSize) {
+              worker.diskCacheSize = this.formatValue(worker.diskCacheSize)
             }
           })
         }
@@ -112,6 +124,10 @@ export default {
       }).finally(() => {
         this.loading = false
       })
+    },
+    formatValue(value) {
+      const obj = formatTraffic(value)
+      return `${obj.num}${obj.unit}`
     }
   },
   data() {

@@ -1,5 +1,6 @@
 import Layout from '@/views/layout/Layout'
 import { navLang } from '@/utils/i18n'
+import Cookies from "js-cookie";
 
 const userRouter = [
     {
@@ -437,7 +438,7 @@ const userRouter = [
     },
 ]
 
-if (navLang() === 'zh') {
+if (Cookies.get('language') === 'zh') {
     userRouter.splice(8, 0, {
         path: '/invoice',
         component: Layout,

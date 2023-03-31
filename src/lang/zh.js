@@ -288,6 +288,8 @@ export default {
     sureUpdate: '確定要更新嗎？',
     default: '默認',
     setting: '設置',
+    on: '開啟',
+    off: '關閉',
   },
   historyData: {
     hour: '1小時內',
@@ -358,8 +360,6 @@ export default {
     uploadRule: {
       status: '只在wifi/有線網絡上傳數據',
       desc: '這裏可以配置在不同網絡環境下的P2P分享策略，默認情況下允許在蜂窩網絡上傳數據。\n版本要求：web: 1.3+, android: 1.5+, iOS: 1.4+',
-      on: '開啟',
-      off: '關閉',
     },
     activationRatio: {
       desc: '本頁面用於配置P2P的激活比率，即連接P2P網絡的設備占總設備的百分比。建議先設置一個較小的比例，然後觀察P2P效果以及用戶反饋，在確認正常的情況下逐步提高激活比率至100%。未激活的節點可以正常播放，但不會連接到P2P網絡，只能從CDN或源服務器下載數據。',
@@ -410,7 +410,7 @@ export default {
     createTitle: '输入超级节点信息',
     seedTitle: '输入做种信息',
     addr: '服务器地址',
-    desc: '',
+    desc: '本页面用于将闲置服务器注册为超级节点，为无法连上其他节点的客户端提供服务。 配置方法请参考https://swarmcloud.net/cn/views/super-peer.html',
     running: '运行中',
     stopped: '已停止',
     auto: '自动做种',
@@ -418,7 +418,9 @@ export default {
     copy: '复制Base64',
     inputChannelId: '输入m3u8/mpd地址或者自定义频道ID',
     remarks: '备注',
-    bandwidth: '帶寬(Mbps)',
+    bandwidth: '頻寬(Mbps)',
+    keepAliveTip: '默认情况下会自动清除连接节点数太少的worker，设为true可以保持一直在线',
+    seedPreferred: '优先连接超级节点',
   },
   hotChannels: {
     content: '資源',

@@ -64,7 +64,7 @@ export default {
         if (this.type === 'mpd') {
           streamId = `${streamId}d`
         }
-        output.push(window.btoa(streamId))
+        output.push(window.btoa(encodeURIComponent(streamId)))
       })
       clip(output.join('\n'), event)
     },

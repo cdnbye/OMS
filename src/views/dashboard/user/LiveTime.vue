@@ -18,7 +18,7 @@
             </el-col>
 
             <!--每日p2p流量-->
-            <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+            <el-col v-if="!isSuperPeer || global" :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card :num="statis.traffic_p2p.num"
                       :decimals="2"
                       :desc="`${$t('dashboard.p2pTraffic')} (${statis.traffic_p2p.unit})`">

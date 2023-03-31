@@ -6,16 +6,30 @@
             <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.uploadRule.status')">
                 <template  slot-scope="scope">
                     <el-switch v-if="!scope.row.blocked"
-                               :value="scope.row.wifi_only"
+                               v-model="scope.row.wifi_only"
                                active-color="#13ce66"
                                inactive-color="#ff4949"
-                               :active-text="$t('p2pConfig.uploadRule.on')"
-                               :inactive-text="$t('p2pConfig.uploadRule.off')"
-                               @change="value => valueChange(scope.row, value)"> </el-switch>
+                               :active-text="$t('common.on')"
+                               :inactive-text="$t('common.off')"
+                               @change="valueChange(scope.row)"> </el-switch>
                     <span v-else :style="'color: red'">
                         {{ formatterStatus(scope.row) }}
                      </span>
                 </template>
+            </el-table-column>
+            <el-table-column align="center" :formatter="formatterStatus" :label="$t('seeder.seedPreferred')">
+              <template  slot-scope="scope">
+                <el-switch v-if="!scope.row.blocked"
+                           v-model="scope.row.seed_preferred"
+                           active-color="#13ce66"
+                           inactive-color="#ff4949"
+                           :active-text="$t('common.on')"
+                           :inactive-text="$t('common.off')"
+                           @change="valueChange(scope.row)"> </el-switch>
+                <span v-else :style="'color: red'">
+                          {{ formatterStatus(scope.row) }}
+                       </span>
+              </template>
             </el-table-column>
         </el-table>
 
@@ -117,8 +131,8 @@
                         this.loading = false
                     })
             },
-            valueChange(domain, value) {
-                const data = { wifi_only: value }
+            valueChange(domain) {
+                const data = { wifi_only: domain.wifi_only, seed_preferred: domain.seed_preferred }
                 this.handleP2PConfig(domain.uid, domain.id, data)
             },
             handleSizeChange(pageSize) {

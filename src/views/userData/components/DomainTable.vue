@@ -417,7 +417,7 @@
         }
       },
       handleCheckDetail(val) {
-          // console.warn(JSON.stringify(val))
+        // console.warn(JSON.stringify(val))
         this.$router.push({
           name: 'UserLiveData',
           params: {
@@ -427,6 +427,7 @@
                 uid: getID(),
                 id: -1,
                 native: val.native,
+                domain: val.host,
             },
           }
         })

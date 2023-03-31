@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-alert :title="$t('seeder.desc')" style="margin-bottom: 20px" />
     <el-row type="flex" style="margin-bottom: 10px; width: 100%;" :gutter="5">
       <el-col :span="3">
         <el-button style="float: left" type="primary" @click="dialogFormVisible = true">{{ $t('seeder.create') }}</el-button>
@@ -60,11 +61,11 @@
             <template slot="append">Mbps</template>
           </el-input>
         </el-form-item>
-        <el-form-item prop="remarks" label="Remarks" label-width="100px">
-          <el-input v-model="form.remarks" placeholder="Optional"></el-input>
-        </el-form-item>
         <el-form-item prop="accessToken" label="AccessToken" label-width="100px">
           <el-input v-model="form.accessToken" placeholder="Optional"></el-input>
+        </el-form-item>
+        <el-form-item prop="remarks" label="Remarks" label-width="100px">
+          <el-input v-model="form.remarks" placeholder="Optional"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -91,7 +92,11 @@
         <el-form-item prop="priority" label="Priority" label-width="100px">
           <el-input v-model="seedForm.priority" type="number" style="width: 150px; float: left"></el-input>
         </el-form-item>
-        <el-form-item prop="keepAlive" label="KeepAlive" label-width="100px">
+        <el-form-item prop="keepAlive" label-width="100px">
+          <template slot="label">
+            <span>KeepAlive</span>
+            <PointTip style="margin-left: 4px" :content="$t('seeder.keepAliveTip')" />
+          </template>
           <el-select v-model="seedForm.keepAlive" style="width: 150px; float: left">
             <el-option key="false" label="false" :value="false"></el-option>
             <el-option key="true" label="true" :value="true"></el-option>
@@ -112,12 +117,14 @@ import { createSeeder, getSeeders, deleteSeeder, updateSeeder, actionSeeder } fr
 import { mapGetters } from 'vuex'
 import { trim } from '@/utils'
 import { getID } from '@/utils/auth'
-import CopyChannelId from "@/components/CopyChannelId";
+import CopyChannelId from "@/components/CopyChannelId"
+import PointTip from '@/components/PointTip'
 
 export default {
   name: "superPeer",
   components: {
     CopyChannelId,
+    PointTip,
   },
   data() {
     return {
@@ -132,7 +139,7 @@ export default {
   mounted() {
     this.resetForm();
     this.resetSeedForm();
-    this.fetchTableData()
+    this.fetchTableData();
   },
   methods: {
     handleStats(item) {
@@ -173,9 +180,9 @@ export default {
       this.action(item.id, {
         action: 'ping',
       }).then(() => {
-        this.fetchTableData()
       }).finally(() => {
         this.loading = false
+        this.fetchTableData()
       })
     },
     handleDelete(item) {

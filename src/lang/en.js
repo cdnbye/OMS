@@ -286,6 +286,8 @@ export default {
     sureUpdate: 'Do you confirm to update?',
     default: 'Default',
     setting: 'Setting',
+    on: 'Enabled',
+    off: 'Disabled',
   },
   historyData: {
     hour: '1 Hour',
@@ -357,8 +359,6 @@ export default {
     uploadRule: {
       status: 'Only allow uploading on Wi-Fi and Ethernet',
       desc: 'This page allows you to define your own uploading logic with regards to the network condition. By default, uploading on cellular is enabled.\nCompatibility: web: 1.3+, android: 1.5+, iOS: 1.4+',
-      on: 'Enabled',
-      off: 'Disabled',
     },
     activationRatio: {
       desc: 'This page enables you to allocate an exact percentage of your audience to benefit from SwarmCloud peer-to-peer on a per-device basis. By starting with a small activation ratio, you will be able to test how our technology works on a small percentage of end-users. Then, you can increase it with time after checking the results. Disabled viewers still run our libraries but do not connect to our tracker. Peer connections for those viewers will not be initiated and their videos will be loaded from CDNs only.\n0% - No users are P2P enabled.\n100% - All users are P2P enabled(the default setting).',
@@ -409,7 +409,7 @@ export default {
     createTitle: 'Input Super Peer Information',
     seedTitle: 'Input Seeding Information',
     addr: 'Server Address',
-    desc: '',
+    desc: 'This page is used to configure idle servers as peers (Super Peer) to serve clients that with poor network to original source or cannot connect to other peers. See https://swarmcloud.net/en/views/super-peer.html for more details',
     running: 'Running',
     stopped: 'Stopped',
     auto: 'Auto Seeding',
@@ -418,6 +418,8 @@ export default {
     inputChannelId: 'Input m3u8/mpd url or customized video id',
     remarks: 'Remarks',
     bandwidth: 'Bandwidth(Mbps)',
+    keepAliveTip: 'Workers with too few connected peers will be automatically evicted by default. Set to true can keep them online all the time',
+    seedPreferred: 'Super Peer Preferred',
   },
   hotChannels: {
     content: 'Content',
