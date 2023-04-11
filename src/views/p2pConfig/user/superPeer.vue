@@ -34,8 +34,8 @@
       <el-table-column :label="$t('domainTable.operation')" align="center" min-width="50" width="350">
         <template slot-scope="scope">
           <el-button size="small" :disabled="scope.row.disabled" :loading="loading" type="primary" @click.native.prevent="handlePing(scope.row)">Ping</el-button>
-          <el-button size="small" :disabled="scope.row.disabled" :loading="loading" type="primary" @click.native.prevent="seedingClick(scope.row)">{{ $t('seeder.seed') }}</el-button>
-          <el-button size="small" :loading="loading" type="primary" @click.native.prevent="handleStats(scope.row)">{{ $t('app.watch') }}</el-button>
+          <el-button size="small" :disabled="scope.row.disabled || !scope.row.running" :loading="loading" type="primary" @click.native.prevent="seedingClick(scope.row)">{{ $t('seeder.seed') }}</el-button>
+          <el-button size="small" :disabled="scope.row.disabled || !scope.row.running" :loading="loading" type="primary" @click.native.prevent="handleStats(scope.row)">{{ $t('app.watch') }}</el-button>
           <el-popover placement="top" width="200" :ref="'popover-' + scope.row.id" trigger="manual">
             <p>{{ $t('common.sureDelete') }}</p>
             <div style="text-align: right; margin: 0">

@@ -242,7 +242,7 @@ export default {
           // 获取时区
           let utc = (new Date().getTimezoneOffset()/60)*(-1)
           if (utc === -12) utc = 12
-          this.signupForm.utc = utc
+          this.signupForm.utc = Math.round(utc)
           this.$store.dispatch('signup', this.signupForm).then(() => {
             this.signupLoading = false
             this.$router.push({ path: this.redirect || '/' })

@@ -79,16 +79,20 @@ export default {
         this.copyTo()
         return
       }
-      const pid = Number(this.pidOrUrl)
-      if (!pid || !this.action) return
+      if (!this.action) return
       this.loading = true
       const data = {
         action: this.action,
       }
       if (this.action === 'ping') {
-        data.workers = pid
+        data.workers = Number(this.pidOrUrl)
       } else {
-        data.pid = pid
+        const pids = this.pidOrUrl.split(' ').filter(pid => !!pid).map(pid => Number(pid))
+        if (pids.length === 1) {
+          data.pid = pids[0]
+        } else {
+          data.pids = pids
+        }
       }
       actionSeeder(getID(), this.sid, data).then(() => {
         this.$notify({
@@ -107,9 +111,13 @@ export default {
         action: 'stats'
       }).then(resp => {
         const json = JSON.parse(resp.data)
-        if (json.workers) {
-          Object.keys(json.workers).forEach(key => {
-            const worker = json.workers[key]
+        const { master, workers } = json;
+        if (master) {
+          master.memory = this.formatValue( master.memory)
+        }
+        if (workers) {
+          Object.keys(workers).forEach(key => {
+            const worker = workers[key]
             if (worker.seedFrom) {
               worker.seedFrom = new Date(worker.seedFrom)
               worker.uploaded = this.formatValue(worker.uploaded)
@@ -117,6 +125,9 @@ export default {
             }
             if (worker.diskCacheSize) {
               worker.diskCacheSize = this.formatValue(worker.diskCacheSize)
+            }
+            if (worker.memory) {
+              worker.memory = this.formatValue(worker.memory)
             }
           })
         }
