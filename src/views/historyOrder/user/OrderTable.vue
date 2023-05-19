@@ -91,7 +91,7 @@ export default {
       'language'
     ])
   },
-  mounted() {
+  created() {
     this.handleGetOrder()
   },
   methods: {

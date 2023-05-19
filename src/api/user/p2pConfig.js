@@ -27,6 +27,15 @@ export function p2pConfigRatio(user_id, domain_id, data) {
     })
 }
 
+// 配置p2p urgent ratio
+export function p2pConfigUrgentRatio(user_id, domain_id, data) {
+    return request({
+        url: `user/user_id/${user_id}/domain/domain_id/${domain_id}/control/urgent_ratio`,
+        method: 'post',
+        data
+    })
+}
+
 // 配置信令地址
 export function updateSignalAddr(user_id, domain_id, data) {
     return request({

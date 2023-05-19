@@ -62,7 +62,7 @@
                 },
             }
         },
-        mounted() {
+        created() {
             this.fetchData()
         },
         computed: {

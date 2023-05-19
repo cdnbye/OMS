@@ -102,9 +102,8 @@
                 }
             }
         },
-        mounted() {
-            const _this = this
-            _this.getData()
+        created() {
+          this.getData()
         },
         destroyed() {
             // clearInterval(int)

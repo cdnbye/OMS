@@ -156,11 +156,10 @@ export default {
       }
     }
   },
-  mounted() {
-    const _this = this
-    _this.getData()
-    timer = setInterval(function() {
-      _this.getData()
+  created() {
+    this.getData()
+    timer = setInterval(() => {
+      this.getData()
     }, 20000)
   },
   destroyed() {

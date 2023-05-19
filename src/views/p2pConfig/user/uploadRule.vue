@@ -2,8 +2,8 @@
     <div :style="device === 'mobile' ? '' : 'padding: 30px 120px'">
         <el-alert :title="$t('p2pConfig.uploadRule.desc')" style="margin-bottom: 20px" />
         <el-table border :data="tableData" v-loading="loading">
-            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')"></el-table-column>
-            <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.uploadRule.status')">
+            <el-table-column align="center" prop="domain" :label="$t('p2pConfig.name')" min-width="200"></el-table-column>
+            <el-table-column align="center" :formatter="formatterStatus" :label="$t('p2pConfig.uploadRule.status')" min-width="200">
                 <template  slot-scope="scope">
                     <el-switch v-if="!scope.row.blocked"
                                v-model="scope.row.wifi_only"
@@ -17,7 +17,10 @@
                      </span>
                 </template>
             </el-table-column>
-            <el-table-column align="center" :formatter="formatterStatus" :label="$t('seeder.seedPreferred')">
+            <el-table-column align="center" :formatter="formatterStatus" min-width="200">
+              <template slot="header" slot-scope="scope">
+                {{ $t('seeder.seedPreferred') }}&nbsp;<PointTip :content="$t('seeder.seedPreferredTip')" />
+              </template>
               <template  slot-scope="scope">
                 <el-switch v-if="!scope.row.blocked"
                            v-model="scope.row.seed_preferred"
@@ -26,6 +29,24 @@
                            :active-text="$t('common.on')"
                            :inactive-text="$t('common.off')"
                            @change="valueChange(scope.row)"> </el-switch>
+                <span v-else :style="'color: red'">
+                          {{ formatterStatus(scope.row) }}
+                       </span>
+              </template>
+            </el-table-column>
+          <el-table-column align="center" :formatter="formatterStatus"  min-width="320">
+              <template slot="header" slot-scope="scope">
+                {{ $t('seeder.urgentRatio') }}&nbsp;<PointTip :content="$t('seeder.urgentRatioTip')" />
+              </template>
+              <template  slot-scope="scope">
+                <template v-if="!scope.row.blocked">
+                  <el-input-number
+                      v-model="scope.row.urgent_ratio"
+                      :min="0" :max="1000"
+                      style="margin-right: 10px"></el-input-number>
+                  <el-button :loading="loading" type="primary" @click.native.prevent="changeUrgentRatio(scope.row)">{{$t('common.ok')}}</el-button>
+                </template>
+
                 <span v-else :style="'color: red'">
                           {{ formatterStatus(scope.row) }}
                        </span>
@@ -49,13 +70,17 @@
 
 <script>
     import { fetchUserDomain } from '@/api/userDomain'
-    import { p2pConfigWifiOnly } from '@/api/user/p2pConfig'
+    import { p2pConfigWifiOnly, p2pConfigUrgentRatio } from '@/api/user/p2pConfig'
     import { mapGetters } from 'vuex'
+    import PointTip from '@/components/PointTip'
 
     const APPLY_TO_ALL = '*Apply To All*'
 
     export default {
         name: 'uploadRule',
+      components: {
+        PointTip,
+      },
         data() {
             return {
                 loading: false,
@@ -77,10 +102,39 @@
                 'device'
             ])
         },
-        mounted() {
+        created() {
             this.fetchTableData()
         },
         methods: {
+            changeUrgentRatio(domain) {
+              this.loading = true
+              const id = domain.id
+              const uid = domain.uid
+              p2pConfigUrgentRatio(uid, id, {
+                urgent_ratio: domain.urgent_ratio,
+              })
+                  .then(res => {
+                    if (res.data.succeed) {
+                      this.$notify({
+                        title: this.$t('common.success'),
+                        message: this.$t('p2pConfig.configSuccess'),
+                        type: 'success'
+                      });
+                      if (id === 0) {
+                        this.fetchTableData()
+                      }
+                    } else {
+                      this.$notify.error({
+                        title: this.$t('common.error'),
+                        message: this.$t('p2pConfig.configFail'),
+                      });
+                    }
+                    this.loading = false
+                  })
+                  .catch(() => {
+                    this.loading = false
+                  })
+            },
             formatterStatus(row) {
                 if(row.blocked) {
                     return this.$t('common.illegal')
@@ -115,9 +169,6 @@
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
                             });
-                            if (id === 0) {
-                              this.applyAll.wifi_only = !this.applyAll.wifi_only
-                            }
                             this.fetchTableData()
                         } else {
                             this.$notify.error({

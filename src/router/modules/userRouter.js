@@ -188,47 +188,11 @@ const userRouter = [
                 }
             },
             {
-                path: 'usaGlobal',
-                component: () => import('@/views/userDistribution/user/USAGlobal'),
-                name: 'USADisGlobal',
-                meta: {
-                    title: 'USADisGlobal',
-                    roles: ['user']
-                }
-            },
-            {
-                path: 'chinaGlobal',
-                component: () => import('@/views/userDistribution/user/ChinaGlobal'),
-                name: 'ChinaDisGlobal',
-                meta: {
-                    title: 'chinaDisGlobal',
-                    roles: ['user']
-                }
-            },
-            {
                 path: 'world',
                 component: () => import('@/views/userDistribution/World'),
                 name: 'WorldDistribution',
                 meta: {
                     title: 'worldDistribution',
-                    roles: ['user']
-                }
-            },
-            {
-                path: 'usa',
-                component: () => import('@/views/userDistribution/USA'),
-                name: 'USADistribution',
-                meta: {
-                    title: 'USADistribution',
-                    roles: ['user']
-                }
-            },
-            {
-                path: 'china',
-                component: () => import('@/views/userDistribution/China'),
-                name: 'ChinaDistribution',
-                meta: {
-                    title: 'chinaDistribution',
                     roles: ['user']
                 }
             },

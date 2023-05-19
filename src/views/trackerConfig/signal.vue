@@ -5,7 +5,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <div class="card-panel-name">{{item.name}}</div>
-            <span class="card-panel-num">{{item.value}}</span>
+            <span class="card-panel-num" :style="{color: item.value === 0 ? 'red' : ''}">{{item.value}}</span>
             <div class="card-panel-text">{{item.url}} {{ item.version ? ' ' + item.version : '' }}</div>
             <template v-if="item.certs.length > 0" v-for="cert in item.certs">
               <div class="card-panel-text">{{cert.name}} {{ cert.expireAt }}</div>
@@ -70,6 +70,7 @@ export default {
         { url: 'http://43.131.59.5/info', value: 0, name: 'eu-8' },
         { url: 'http://43.131.29.153/info', value: 0, name: 'eu-9' },
         { url: 'http://43.157.47.140/info', value: 0, name: 'eu-10' },
+        { url: 'http://43.157.60.82/info', value: 0, name: 'eu-11' },
         { url: 'http://43.131.45.141/info', value: 0, name: 'eu-12' },
         { url: 'http://43.131.29.226/info', value: 0, name: 'eu-13' },
         { url: 'http://43.157.7.153/info', value: 0, name: 'eu-14' },
@@ -95,6 +96,8 @@ export default {
         { url: 'http://43.153.10.122/info', value: 0, name: 'us-16' },
         { url: 'http://43.153.13.133/info', value: 0, name: 'us-17' },
         { url: 'http://43.153.67.114/info', value: 0, name: 'us-18' },
+        { url: 'http://170.106.119.248/info', value: 0, name: 'us-19' },
+        { url: 'http://170.106.82.82/info', value: 0, name: 'us-20' },
         { url: 'http://43.159.60.196/info', value: 0, name: 'sg-1' },
         { url: 'http://43.156.10.47/info', value: 0, name: 'sg-2' },
         { url: 'http://129.226.201.3/info', value: 0, name: 'sg-3' },
@@ -105,6 +108,11 @@ export default {
         { url: 'http://43.153.202.33/info', value: 0, name: 'sg-8' },
         { url: 'http://129.226.223.57/info', value: 0, name: 'sg-9' },
         { url: 'http://129.226.198.66/info', value: 0, name: 'sg-10' },
+        { url: 'http://43.153.192.104/info', value: 0, name: 'sg-11' },
+        { url: 'http://43.156.49.159/info', value: 0, name: 'sg-12' },
+        { url: 'http://43.134.170.16/info', value: 0, name: 'sg-13' },
+        { url: 'http://43.156.47.106/info', value: 0, name: 'sg-14' },
+        { url: 'http://43.156.127.56/info', value: 0, name: 'sg-15' },
         { url: 'http://106.52.254.88/info', value: 0, name: 'gz-1' },
         { url: 'http://43.139.105.176/info', value: 0, name: 'gz-2' },
         { url: 'http://106.53.103.36/info', value: 0, name: 'gz-3' },
@@ -112,7 +120,7 @@ export default {
       ]
     }
   },
-  mounted() {
+  created() {
     this.loopGetData()
   },
   beforeDestroy() {
@@ -167,7 +175,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
   .panel-group {
     margin-top: 18px;
     .card-panel-col{

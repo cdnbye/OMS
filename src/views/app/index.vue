@@ -400,7 +400,7 @@
           return this.$t('common.available')
       },
     },
-    mounted() {
+    created() {
       this.fetchData()
     },
   }

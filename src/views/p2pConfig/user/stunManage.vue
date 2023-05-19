@@ -71,7 +71,7 @@
                 'device'
             ])
         },
-        mounted() {
+        created() {
             this.fetchTableData()
         },
         methods: {

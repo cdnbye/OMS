@@ -136,7 +136,7 @@ export default {
       tableData: [],
     }
   },
-  mounted() {
+  created() {
     this.resetForm();
     this.resetSeedForm();
     this.fetchTableData();
@@ -147,6 +147,7 @@ export default {
         name: 'SeederStats',
         query: {
           sid: item.id,
+          remarks: item.remarks,
         }
       })
     },

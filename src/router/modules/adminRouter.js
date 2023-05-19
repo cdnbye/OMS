@@ -184,7 +184,7 @@ export default [
     {
         path: '/distribution',
         component: Layout,
-        redirect: 'distribution/china',
+        redirect: 'distribution/world',
         alwaysShow: true,
         meta: {
             title: 'userDistribution',
@@ -193,29 +193,11 @@ export default [
         },
         children: [
             {
-                path: 'china',
-                component: () => import('@/views/userDistribution/China'),
-                name: 'ChinaDistribution',
-                meta: {
-                    title: 'chinaDistribution',
-                    roles: ['admin']
-                }
-            },
-            {
-                path: 'usa',
-                component: () => import('@/views/userDistribution/USA'),
-                name: 'USADistribution',
-                meta: {
-                    title: 'USADistribution',
-                    roles: ['admin']
-                }
-            },
-            {
                 path: 'world',
                 component: () => import('@/views/userDistribution/World'),
                 name: 'WorldDistribution',
                 meta: {
-                    title: 'worldDistribution',
+                    title: '全球',
                     roles: ['admin']
                 }
             }
@@ -248,6 +230,16 @@ export default [
                 name: 'Signal',
                 meta: {
                     title: 'SignalConfig',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            },
+            {
+                path: 'seeder',
+                component: () => import('@/views/trackerConfig/seeder'),
+                name: 'Seeder',
+                meta: {
+                    title: 'SeederConfig',
                     roles: ['admin'],
                     noCache: true
                 }
@@ -346,6 +338,28 @@ export default [
                 name: 'UserLiveData',
                 meta: {
                     title: 'basicAnalysis',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            }
+        ]
+    },
+
+    {
+        path: '/seeder_stats',
+        component: Layout,
+        hidden: true,
+        meta: {
+            title: 'seederStats',
+            roles: ['admin']
+        },
+        children: [
+            {
+                path: '/',
+                component: () => import('@/views/trackerConfig/seederStats'),
+                name: 'AdminSeederStats',
+                meta: {
+                    hide: true,
                     roles: ['admin'],
                     noCache: true
                 }

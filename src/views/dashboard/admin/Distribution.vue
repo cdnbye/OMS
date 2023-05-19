@@ -77,7 +77,7 @@ export default {
       onlineNum: 0
     }
   },
-  mounted() {
+  created() {
     this.getData()
   },
   methods: {

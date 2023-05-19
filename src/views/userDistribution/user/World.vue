@@ -48,7 +48,9 @@ export default {
         const data = res.data
         if(data) {
           this.total = data.total
-          this.countryData = data.data
+          if (data.data) {
+            this.countryData = data.data
+          }
         }
       }).catch(err => {
         console.log(err)

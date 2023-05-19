@@ -48,6 +48,7 @@ export default {
       deep: true,
       handler(val) {
           // console.warn(`countryData ${JSON.stringify(val)}`)
+        if (!val) return
         val.forEach(item => {
             if (this.max < item.value) this.max = item.value
         })

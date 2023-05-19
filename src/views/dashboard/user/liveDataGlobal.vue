@@ -97,7 +97,7 @@
                 'language'
             ])
         },
-        mounted() {
+        created() {
             const uid = getID()
             this.loopGetData(uid, 0)
             this.getDisData(uid)

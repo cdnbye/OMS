@@ -75,7 +75,7 @@ export default {
       'device'
     ])
   },
-  mounted() {
+  created() {
     fetchTrackerConfig().then(res => {
       this.tempData = {...res.data}
       this.configForm = {...res.data}

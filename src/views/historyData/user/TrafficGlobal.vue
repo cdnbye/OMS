@@ -67,7 +67,7 @@
                 return this.radio === 'week' || this.radio === 'month'
             }
         },
-        mounted() {
+        created() {
             this.getData()
         },
         methods: {

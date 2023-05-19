@@ -32,12 +32,6 @@
       <el-form-item label="net_type">
       <el-input v-model="peerInfo.net_type"></el-input>
       </el-form-item>
-      <el-form-item label="city">
-      <el-input v-model="peerInfo.city"></el-input>
-      </el-form-item>
-      <el-form-item label="province">
-        <el-input v-model="peerInfo.province"></el-input>
-      </el-form-item>
       <el-form-item label="country">
         <el-input v-model="peerInfo.country"></el-input>
       </el-form-item>
@@ -86,8 +80,6 @@ export default {
         live: "",
         dev: "",
         net_type: "",
-        city: "",
-        province: "",
         country: "",
         nat: "",
         isp: "",

@@ -51,7 +51,7 @@
                 excelName: '',
             }
         },
-        mounted() {
+        created() {
             this.getData()
         },
         methods: {

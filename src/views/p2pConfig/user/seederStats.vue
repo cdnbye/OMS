@@ -1,13 +1,14 @@
 <template>
   <div class="app-container" v-loading="loading">
     <div style="margin-bottom: 10px">
-      <el-input placeholder="worker pid, url or number" v-model="pidOrUrl" style="width: 350px; margin-right: 5px">
+      <el-input placeholder="worker pid, url or number" v-model="value" style="width: 350px; margin-right: 5px">
         <template slot="prepend" >
           <el-select v-model="action" slot="prepend" placeholder="Select" style="width: 110px">
             <el-option label="Restart" value="restart"></el-option>
             <el-option label="Kill" value="kill"></el-option>
             <el-option label="Migrate" value="copy"></el-option>
             <el-option label="Workers" value="ping"></el-option>
+            <el-option label="Limits" value="limits"></el-option>
           </el-select>
         </template>
       </el-input>
@@ -62,13 +63,13 @@ export default {
       this.loading = true
       copySeeder(getID(), {
         infos,
-        target: this.pidOrUrl,
+        target: this.value,
       }).then(() => {
         this.$notify({
           title: this.$t('common.success'),
           type: 'success'
         });
-        this.pidOrUrl = ''
+        this.value = ''
         this.action = ''
       }).finally(() => {
         this.loading = false
@@ -84,10 +85,10 @@ export default {
       const data = {
         action: this.action,
       }
-      if (this.action === 'ping') {
-        data.workers = Number(this.pidOrUrl)
+      if (this.action === 'ping' || this.action === 'limits') {
+        data.workers = Number(this.value)
       } else {
-        const pids = this.pidOrUrl.split(' ').filter(pid => !!pid).map(pid => Number(pid))
+        const pids = this.value.split(' ').filter(pid => !!pid).map(pid => Number(pid))
         if (pids.length === 1) {
           data.pid = pids[0]
         } else {
@@ -99,7 +100,7 @@ export default {
           title: this.$t('common.success'),
           type: 'success'
         });
-        this.pidOrUrl = ''
+        this.value = ''
         this.action = ''
       }).finally(() => {
         this.loading = false
@@ -113,7 +114,10 @@ export default {
         const json = JSON.parse(resp.data)
         const { master, workers } = json;
         if (master) {
-          master.memory = this.formatValue( master.memory)
+          master.memory = this.formatValue(master.memory)
+          if (master.averageUplink) {
+            master.averageUplink = `${Math.round(master.averageUplink)}Mbps`
+          }
         }
         if (workers) {
           Object.keys(workers).forEach(key => {
@@ -122,6 +126,9 @@ export default {
               worker.seedFrom = new Date(worker.seedFrom)
               worker.uploaded = this.formatValue(worker.uploaded)
               worker.downloaded = this.formatValue(worker.downloaded)
+            }
+            if (worker.averageUplink) {
+              worker.averageUplink = `${Math.round(worker.averageUplink)}Mbps`
             }
             if (worker.diskCacheSize) {
               worker.diskCacheSize = this.formatValue(worker.diskCacheSize)
@@ -146,8 +153,8 @@ export default {
       loading: false,
       action: '',
       sid: 0,
-      pidOrUrl: '',
-      jsonData: {}
+      value: '',
+      jsonData: {},
     }
   },
   beforeDestroy() {
