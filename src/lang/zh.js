@@ -65,7 +65,7 @@ export default {
     size: '布局大小',
     myInfo: '個人信息',
     currZone: '可用區: ',
-    zoneTip: '如果選擇了廣州以外的可用區，需要手動配置SDK連接的服務器地址，請參考<a style="color: #337ab7" href="https://swarmcloud.net/views/tracker.html" target="_blank">這裏</a>',
+    zoneTip: '如果選擇了歐洲以外的可用區，需要手動配置SDK連接的服務器地址，請參考<a style="color: #337ab7" href="https://swarmcloud.net/views/tracker.html" target="_blank">這裏</a>',
   },
   auth: {
     login: '登入',
@@ -82,8 +82,8 @@ export default {
     vcodeError: '驗證碼不能小於4位',
     console: '選擇可用區',
     consoleHK: '香港',
-    consoleCN: '廣州',
-    consoleUSA: '弗吉尼亞',
+    consoleEU: '欧洲',
+    consoleUSA: '美国',
 
   },
   login: {
@@ -425,7 +425,7 @@ export default {
   hotChannels: {
     content: '資源',
     num: '熱度',
-    desc: '本頁面用於展示參與P2P加速的資源的熱度，從大到小排序，不展示在線人數低於50的資源。',
+    desc: '本頁面用於展示參與P2P加速的資源的熱度，從大到小排序，不展示在線人數低於100的資源。',
   },
   invitation: {
     date: '日期',

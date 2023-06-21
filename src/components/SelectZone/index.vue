@@ -4,7 +4,7 @@
             {{ selectedText }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item command="p1" >{{ $t('auth.consoleCN') }}</el-dropdown-item>
+      <el-dropdown-item command="p1" >{{ $t('auth.consoleEU') }}</el-dropdown-item>
       <el-dropdown-item command="p3" >{{ $t('auth.consoleHK') }}</el-dropdown-item>
       <el-dropdown-item command="p2" >{{ $t('auth.consoleUSA') }}</el-dropdown-item>
       <el-dropdown-item v-if="showLocal" command="d1" >Localhost</el-dropdown-item>
@@ -46,7 +46,7 @@ export default {
         env = getItem(LOCATION)
       }
       if (env === 'p1') {
-        this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleCN')
+        this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleEU')
       } else if (env === 'p3') {
         this.selectedZone = this.$t('navbar.currZone') + this.$t('auth.consoleHK')
       } else if (env === 'p2') {

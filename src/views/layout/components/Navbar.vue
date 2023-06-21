@@ -107,7 +107,7 @@ export default {
     getCurrZone() {
       const loc = getItem(LOCATION)
       if (loc === 'p1') {
-        return this.$t('auth.consoleCN')
+        return this.$t('auth.consoleEU')
       }
       if (loc === 'p3') {
         return this.$t('auth.consoleHK')

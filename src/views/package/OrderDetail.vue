@@ -69,9 +69,6 @@ export default {
     ]),
   },
   mounted() {
-    if (getItem(LOCATION) === 'p1') {
-      this.showCrypto = false
-    }
     if(this.$route.query.currency) {
       this.formatData()
     } else {

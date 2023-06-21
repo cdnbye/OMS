@@ -59,7 +59,11 @@
     </el-table-column>
     <el-table-column align="center" prop="num" label="人数"></el-table-column>
     <el-table-column align="center" prop="max_num" label="最大人数"></el-table-column>
-    <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
+    <el-table-column align="center" label="邮箱">
+      <template slot-scope="scope">
+        <span><a @click="onEmailClick(scope.row.email)">{{scope.row.email}}</a></span>
+      </template>
+    </el-table-column>
     <el-table-column align="center" label="是否绑定">
       <template slot-scope="scope">
         <span>{{ scope.row.isvalid ? '已绑定' : '未绑定' }}</span>
@@ -229,6 +233,14 @@
       // }, 30000)
     },
     methods: {
+      onEmailClick(email) {
+        this.$router.push({
+          path: '/user/list',
+          query: {
+            email,
+          }
+        })
+      },
       pShow(id) {
         this.$refs[`popover-` + id].doShow()
       },

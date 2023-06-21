@@ -405,7 +405,13 @@
       }
     },
     mounted() {
-      this.fetchTableData()
+      const email = this.$route.query.email
+      if (email) {
+        this.searchValue = email
+        this.handleSearch()
+      } else {
+        this.fetchTableData()
+      }
     },
     computed: {
         ...mapGetters([

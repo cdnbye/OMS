@@ -82,7 +82,7 @@ export default {
     vcodeError: 'The verification code can not be less than 4 digits',
     console: 'Select Zone',
     consoleHK: 'HongKong',
-    consoleCN: 'China',
+    consoleEU: 'Europe',
     consoleUSA: 'USA',
   },
   login: {
@@ -424,7 +424,7 @@ export default {
   hotChannels: {
     content: 'Content',
     num: 'Viewers',
-    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 50 is not shown.',
+    desc: 'This page shows the popularity of contents ranked from height to low. Please note that content with viewers lower than 100 is not shown.',
   },
   invitation: {
     date: 'Date',

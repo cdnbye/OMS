@@ -191,7 +191,7 @@ export default {
         goods: [],
         goods_type: this.currency === 'CNY' ? 'flow_packet_cn' : 'flow_packet_en',
         customized: false,
-        balance_used: this.totalPrice - this.realPrice,
+        balance_used: Number((this.totalPrice - this.realPrice).toFixed(1)),
       }
       const selected = this.currency === 'CNY' ? this.selectPackage.cn : this.selectPackage.en
       data.goods = selected.filter(item => item.amount > 0)

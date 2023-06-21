@@ -206,7 +206,7 @@ export default {
         goods_type: this.currency === 'CNY' ? 'monthly_packet_cn' : 'monthly_packet_en',
         customized: this.subject.customized,
         upgrade: this.subject.upgrade,
-        balance_used: this.totalPrice - realPrice,
+        balance_used: Number((this.totalPrice - realPrice).toFixed(1)),
       }
       this.handleCreateOrder(data, realPrice)
     },
