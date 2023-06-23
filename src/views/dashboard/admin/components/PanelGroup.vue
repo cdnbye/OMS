@@ -102,6 +102,13 @@
             desc="频道总数">
       </card>
     </el-col>
+
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
+      <card :num="statis.num_tracker"
+            :duration="500"
+            desc="当前Tracker实例数">
+      </card>
+    </el-col>
   </el-row>
 </template>
 
@@ -124,6 +131,7 @@ export default {
         online: 0,
         max_online: 0,
         num_channel: 0,
+        num_tracker: 0,
         p2p_rate: 0,
 
         hostNum: 0,
@@ -179,6 +187,7 @@ export default {
         this.statis.online = data.num_rt
         this.statis.max_online = data.max_num
         this.statis.num_channel = data.num_channel
+        this.statis.num_tracker = data.num_tracker
         this.statis.bandwidth_p2p = formatBandwidth(data.rt_bw_p2p)
         this.statis.bandwidth_share = formatBandwidth(data.rt_bw_share)
         this.statis.bandwidth_http = formatBandwidth(data.rt_bw_http)
