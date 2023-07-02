@@ -32,6 +32,10 @@
           </router-link>
 
           <el-dropdown-item>
+            <span style="display:block" @click="recharge">{{$t('myInfo.recharge')}}</span>
+          </el-dropdown-item>
+
+          <el-dropdown-item>
             <span style="display:block" @click="showTimeZone">{{ $t('dashboard.changeUTC') }}</span>
           </el-dropdown-item>
 
@@ -55,6 +59,7 @@ import SwitchDomain from '@/components/SwitchDomain'
 import TimeZone from '@/components/TimeZone'
 import {getItem, removeItem} from "@/utils/storage";
 import { LOCATION } from '@/constant'
+import { recharge } from '@/utils/recharge'
 
 export default {
   data() {
@@ -101,6 +106,10 @@ export default {
     ])
   },
   methods: {
+    recharge() {
+      const currency = this.language === 'en'?'USD':'CNY'
+      recharge(currency)
+    },
     showTimeZone() {
       this.timeZoneVisible = true
     },

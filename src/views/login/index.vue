@@ -82,7 +82,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6 || value.length > 18) {
+      if (value.length < 6 || value.length > 64) {
         const error = this.$t('auth.passwdError')
         callback(new Error(error))
       } else {

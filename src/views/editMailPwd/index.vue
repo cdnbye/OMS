@@ -151,11 +151,10 @@
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { fetchUserData, changeUserName, changePasswd, changeMail, changeMobile } from '@/api/user'
-import { createOrder } from '@/api/user/package'
 import { sendCode } from '@/api/auth'
 import { setSha256 } from '@/utils/format'
-import { getID } from '@/utils/auth'
 import { validatePhone } from '@/utils/validate'
+import { recharge } from '@/utils/recharge'
 
 export default {
   name: 'Edit',
@@ -305,40 +304,7 @@ export default {
   },
   methods: {
     recharge(currency) {
-      this.$messageBox.prompt(this.$t('myInfo.rechargeTip'), this.$t('myInfo.recharge'), {
-        confirmButtonText: this.$t('common.ok'),
-        cancelButtonText: this.$t('common.cancel'),
-        inputPattern: /^[1-9][0-9]+$/,
-      }).then(({ value }) => {
-        const price = Number(value)
-        const isCNY = currency === 'CNY'
-        const subject = isCNY ? '充值人民幣' : 'Recharge USD'
-        const data = {
-          price,
-          currency,
-          goods: [{
-            subject,
-            amount: 1,
-            price,
-          }],
-          goods_type: isCNY ? 'recharge_cny' : 'recharge_usd',
-        }
-        createOrder(getID(), data)
-        .then(res => {
-          this.$router.push({
-            name: 'OrderDetail',
-            query: {
-              currency: currency,
-              orderID: res.data.order_id,
-              totalPrice: price,
-              buyData: JSON.stringify(data.goods)
-            }
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      })
+      recharge(currency)
     },
     getUserData() {
       fetchUserData().then(res => {
