@@ -61,7 +61,6 @@ export default {
         { url: 'http://43.154.120.28/info', value: 0, name: 'cdnbye-13' },
         { url: 'http://43.154.219.36/info', value: 0, name: 'cdnbye-14' },
         { url: 'http://43.154.0.207/info', value: 0, name: 'cdnbye-15' },
-        { url: 'http://43.157.32.236/info', value: 0, name: 'eu-1' },
         { url: 'http://43.157.49.248/info', value: 0, name: 'eu-5' },
         { url: 'http://162.62.223.111/info', value: 0, name: 'eu-7' },
         { url: 'http://43.157.93.100/info', value: 0, name: 'eu-9' },
