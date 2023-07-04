@@ -41,6 +41,7 @@ export default {
         { url: 'http://49.233.52.182:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'pk', accessToken: '&dfgd$15~', version: '' },
         { url: 'http://43.130.232.206:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'jp', accessToken: '&dfgd5~', version: '' },
         { url: 'http://51.15.8.17:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'op-nl-1', version: '' },
+        { url: 'http://185.192.124.236:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'op-br-1', version: '' },
         { url: 'http://135.148.67.87:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'us-1', version: '' },
         { url: 'http://51.81.42.244:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'us-2', version: '' },
         { url: 'http://198.244.144.230:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'uk-1', version: '' },

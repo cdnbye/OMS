@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "serve": "vue-cli-service serve",
     "deploy-github": "sh deploy_github.sh",
     "deploy-gitee": "sh deploy.sh",
     "deploy-test": "sh deploy-prerelease.sh",
     "git-push": "git add . && git commit -m 'u' &&  git push",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --mode production",
+    "build": "vue-cli-service build --mode production",
     "build-prerelease": "vue-cli-service build --mode test",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint"
