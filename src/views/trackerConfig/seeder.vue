@@ -44,12 +44,14 @@ export default {
         { url: 'http://185.192.124.236:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'op-br-1', version: '' },
         { url: 'http://135.148.67.87:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'us-1', version: '' },
         { url: 'http://51.81.42.244:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'us-2', version: '' },
+        { url: 'http://135.148.144.167:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'us-3', version: '' },
+        { url: 'http://15.204.49.174:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'us-4', version: '' },
         { url: 'http://198.244.144.230:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'uk-1', version: '' },
         { url: 'http://198.244.144.198:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'uk-2', version: '' },
         { url: 'http://51.68.169.109:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ge-1', version: '' },
-        { url: 'http://50.7.60.2:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'fdc-sg-2', version: '' },
         { url: 'http://66.90.95.6:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'fdc-ru-1', version: '' },
         { url: 'http://74.91.25.194:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'no-us-1', version: '' },
+        { url: 'http://142.54.191.162:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'no-us-2', version: '' },
       ]
     }
   },

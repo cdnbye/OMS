@@ -114,7 +114,8 @@
 
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">详情</el-button>
+        <el-button type="primary" size="mini" @click="handlePlayUrl(scope.row)">介绍</el-button>
+        <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">监控</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -427,6 +428,13 @@
         } else {
           this.fetchTableData()
         }
+      },
+      handlePlayUrl(val) {
+        let url = val.play_url
+        if (!url.startsWith('http')) {
+          url = 'http://' + url
+        }
+        window.open(`${url}`)
       },
       handleCheckDetail(val) {
         // console.warn(JSON.stringify(val))
