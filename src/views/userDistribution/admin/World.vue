@@ -17,7 +17,7 @@ export default {
   components: {
     WorldMap
   },
-  created() {
+  mounted() {
     this.fetchData()
   },
   methods: {

@@ -114,8 +114,8 @@
 
     <el-table-column label="action" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="handlePlayUrl(scope.row)">介绍</el-button>
         <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">监控</el-button>
+        <el-button type="primary" size="mini" @click="handlePlayUrl(scope.row)">介绍</el-button>
       </template>
     </el-table-column>
   </el-table>

@@ -184,7 +184,8 @@ const userRouter = [
                 name: 'WorldDisGlobal',
                 meta: {
                     title: 'worldDisGlobal',
-                    roles: ['user']
+                    roles: ['user'],
+                    noCache: true
                 }
             },
             {
@@ -193,7 +194,8 @@ const userRouter = [
                 name: 'WorldDistribution',
                 meta: {
                     title: 'worldDistribution',
-                    roles: ['user']
+                    roles: ['user'],
+                    noCache: true
                 }
             },
         ]

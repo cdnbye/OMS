@@ -434,6 +434,6 @@ export default {
     status: 'Order Status',
     done: 'Completed',
     commission: 'Commission',
-    tip: 'After inviting your friends to register successfully, you will be able to get 20% of the total amount from your friends\' purchases. The commission will be put into your account balance, which can be used for purchasing.',
+    tip: 'You will be able to get 20% of the total amount from the client that comes via your custom signup link. The commission will be put into your account balance, which can be used for future purchase.',
   }
 }

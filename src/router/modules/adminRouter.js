@@ -198,7 +198,8 @@ export default [
                 name: 'WorldDistribution',
                 meta: {
                     title: '全球',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    noCache: true
                 }
             }
         ]
