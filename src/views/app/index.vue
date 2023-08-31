@@ -391,9 +391,9 @@
           if(row.blocked) {
               return this.$t('app.illegal')
           }
-          // if(row.reviewing) {
-          //     return this.$t('common.reviewing')
-          // }
+          if(row.reviewing) {
+              return this.$t('common.reviewing')
+          }
           if (row.disable_p2p) {
             return this.$t('common.userClosed')
           }

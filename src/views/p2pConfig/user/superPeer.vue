@@ -6,7 +6,7 @@
         <el-button style="float: left" type="primary" @click="dialogFormVisible = true">{{ $t('seeder.create') }}</el-button>
       </el-col>
       <el-col :span="24">
-        <CopyChannelId v-if="device !== 'mobile'" :token="'fsdgdsgsd'"></CopyChannelId>
+        <CopyChannelId v-if="device !== 'mobile'"></CopyChannelId>
       </el-col>
     </el-row>
 

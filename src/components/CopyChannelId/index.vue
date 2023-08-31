@@ -2,7 +2,7 @@
   <div >
     <el-input v-model="url" :placeholder="$t('seeder.inputChannelId')" >
       <template slot="prepend">
-        <el-select v-model="type" style="width: 90px">
+        <el-select v-model="type" style="width: 100px">
           <el-option
               key="hls"
               label="HLS"
@@ -12,6 +12,11 @@
               key="dash"
               label="DASH"
               value="mpd">
+          </el-option>
+          <el-option
+              key="media"
+              label="MEDIA"
+              value="media">
           </el-option>
         </el-select>
       </template>
@@ -54,15 +59,27 @@ export default {
       this.url.split(' ').filter(item => !!item).forEach(url => {
         url = url.split('?')[0]
         let streamId
-        if (url.startsWith('http') && (url.endsWith('.m3u8') || url.endsWith('.mpd'))) {
+        if (url.startsWith('http')) {
           const streamParsed = URLToolkit.parseURL(url);
-          streamId = streamParsed.netLoc.substr(2) + streamParsed.path.substring(0, streamParsed.path.lastIndexOf('.'));
+          if (this.type === 'media') {
+            streamId = streamParsed.netLoc.substr(2) + streamParsed.path;
+            streamId = `${streamId}|[8]m_524288`
+          } else {
+            streamId = streamParsed.netLoc.substr(2) + streamParsed.path.substring(0, streamParsed.path.lastIndexOf('.'));
+            streamId = `${streamId}|[8]`
+            if (this.type === 'mpd') {
+              streamId = `${streamId}d`
+            }
+          }
         } else {
-          streamId = `${this.token}-${url}`;
-        }
-        streamId = `${streamId}|[8]`
-        if (this.type === 'mpd') {
-          streamId = `${streamId}d`
+          streamId = `${this.token}-${url}|[8]`;
+          if (this.type === 'media') {
+            streamId = `${streamId}m_524288`
+          } else {
+            if (this.type === 'mpd') {
+              streamId = `${streamId}d`
+            }
+          }
         }
         output.push(window.btoa(encodeURIComponent(streamId)))
       })
