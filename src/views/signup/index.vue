@@ -116,6 +116,7 @@ import {checkSelectZone } from '@/utils'
 import { getCaptcha } from '@/api/captcha'
 import { getItem, setItem } from '@/utils/storage'
 import { LOCATION } from '@/constant'
+import {INVITER} from "../../constant";
 
 export default {
   name: 'Signup',
@@ -182,14 +183,16 @@ export default {
     }
   },
   mounted() {
-    const { zone, inviter } = this.$route.query
+    let { zone, inviter } = this.$route.query
     if (zone) {
       if (getItem(LOCATION) !== zone) {
         setItem(LOCATION, zone)
         location.reload()
       }
     }
+    if (!inviter) inviter = getItem(INVITER) || undefined
     if (inviter) {
+      setItem(INVITER, inviter)
       this.signupForm.inviter = inviter
       this.showInviter = false
     }

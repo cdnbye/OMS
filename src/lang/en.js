@@ -42,7 +42,7 @@ export default {
     package: 'Traffic Package',
     monthlyPackage: 'Monthly Plan',
     order: 'Order History',
-    invitation: 'Commissions',
+    invitation: 'Affiliates',
     p2pConfig: 'P2P Setting',
     edit: 'edit',
     appInfo: 'App Management',

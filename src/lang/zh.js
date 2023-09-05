@@ -42,7 +42,7 @@ export default {
     package: '流量包',
     monthlyPackage: '包月套餐',
     order: '歷史訂單',
-    invitation: '佣金記錄',
+    invitation: '推廣分佣',
     p2pConfig: 'P2P配置',
     edit: '編輯信息',
     appInfo: 'APP管理',
@@ -436,6 +436,6 @@ export default {
     status: '订单状态',
     done: '已完成',
     commission: '佣金',
-    tip: '邀请朋友注册成功后，将可以获得对方每次购买总金额20%的佣金提成，佣金将自动转到您的账户余额，消费时可以用于抵扣。',
+    tip: '邀请朋友注册成功后，将可以获得对方每次购买总金额20%的佣金提成，佣金将自动转到您的账户余额，消费时可以用于抵扣。只需要受邀请方打开一次链接，后续注册都会绑定您为邀请方。',
   }
 }
