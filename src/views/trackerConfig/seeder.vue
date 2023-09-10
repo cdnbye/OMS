@@ -53,6 +53,7 @@ export default {
         { url: 'http://198.244.144.230:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'uk-1', version: '' },
         { url: 'http://51.68.169.109:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ge-1', version: '' },
         { url: 'http://66.90.95.6:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'fdc-ru-1', version: '' },
+        { url: 'http://50.7.60.52:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'sg-1', version: '' },
       ]
     }
   },

@@ -2,7 +2,7 @@
         <el-row :gutter="20" class="panel-group">
             <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
                 <card :num="statis.online | positive"
-                      :desc="isSuperPeer ? $t('dashboard.onlineSuper') : $t('dashboard.online')">
+                      :desc="isSuperPeer && !global ? $t('dashboard.onlineSuper') : $t('dashboard.online')">
                   <div class="tip">
                     <PointTip :content="$t('dashboard.onlinesTip')" />
                   </div>
