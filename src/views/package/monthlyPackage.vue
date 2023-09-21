@@ -6,7 +6,7 @@
     <el-dialog
         :title="$t('package.comfirmCreate')"
         :visible.sync="dialogVisible"
-        :width="device === 'mobile' ? '80%' : '30%'"
+        :width="device === 'mobile' ? '80%' : '40%'"
         center>
       <template v-if="!subject.upgrade">
         <p>{{$t('order.packageName')}}: {{ subject.subject }}</p>
@@ -15,6 +15,9 @@
       </template>
       <el-checkbox v-if="balance > 0" :disabled="totalPrice === 0" v-model="useBalance">
         {{ $t('package.useBalance') }} ({{ balance }})
+      </el-checkbox>
+      <el-checkbox v-model="autoRenew">
+        {{ $t('package.autoRenew') }}
       </el-checkbox>
       <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
@@ -98,6 +101,7 @@ export default {
       },
       subject: {},
       useBalance: false,
+      autoRenew: false,
       balance: 0,
       totalPrice: 0,
     }
@@ -133,7 +137,7 @@ export default {
               item.leftDays = 30
             }
           }
-
+          // this.autoRenew = data.auto_renew
           if(this.language==='zh') {
             this.currency = 'CNY'
             this.balance = data.balance_cny
@@ -207,6 +211,7 @@ export default {
         customized: this.subject.customized,
         upgrade: this.subject.upgrade,
         balance_used: Number((this.totalPrice - realPrice).toFixed(1)),
+        auto_renew: this.autoRenew,
       }
       this.handleCreateOrder(data, realPrice)
     },

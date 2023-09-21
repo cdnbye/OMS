@@ -78,6 +78,9 @@
       <el-checkbox v-if="balance > 0" :disabled="totalPrice === 0" style="margin-left: 10px" v-model="useBalance" @change="useBalanceChanged">
         {{ $t('package.useBalance') }} ({{ balance }})
       </el-checkbox>
+      <el-checkbox style="margin-left: 10px" v-model="autoRenew">
+        {{ $t('package.autoRenew') }}
+      </el-checkbox>
     </div>
 
   </div>
@@ -93,6 +96,7 @@ export default {
   data() {
     return {
       useBalance: false,
+      autoRenew: false,
       realPrice: 0,
       balance: 0,
       currency: '',
@@ -130,6 +134,7 @@ export default {
       fetchPackage(getID())
         .then(res => {
           const { data } = res
+          // this.autoRenew = data.auto_renew
           if(this.language==='zh') {
             this.currency = 'CNY'
             this.balance = data.balance_cny
@@ -192,6 +197,7 @@ export default {
         goods_type: this.currency === 'CNY' ? 'flow_packet_cn' : 'flow_packet_en',
         customized: false,
         balance_used: Number((this.totalPrice - this.realPrice).toFixed(1)),
+        auto_renew: this.autoRenew,
       }
       const selected = this.currency === 'CNY' ? this.selectPackage.cn : this.selectPackage.en
       data.goods = selected.filter(item => item.amount > 0)

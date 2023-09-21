@@ -15,3 +15,11 @@ export function closeOrder(userID, orderID) {
     method: 'delete'
   })
 }
+
+// 用户获取订单invoice
+export function fetchInvoicePdf(userID, orderID) {
+  return request({
+    url: `order/user_id/${userID}/order_id/${orderID}/invoice`,
+    method: 'get',
+  })
+}

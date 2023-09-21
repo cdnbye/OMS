@@ -43,6 +43,9 @@
       <el-table-column fixed="right" align="center" :label="$t('order.action')">
         <template slot-scope="scope">
           <el-button v-if="scope.row.trade_status === 'WAIT_BUYER_PAY'" type="primary" size="mini" @click="handlePay(scope.row)">{{ $t('order.pay') }}</el-button>
+          <el-button
+              v-if="scope.row.trade_status === 'TRADE_SUCCESS' && scope.row.showInvoice"
+              type="primary" size="mini" @click="handleGetInvoicePdf(scope.row)"><i class="el-icon-download"></i>{{ ' ' }}{{ $t('order.invoice') }}</el-button>
           <el-popover
             :style="device==='mobile'?'':'margin-left: 10px'"
             trigger="manual"
@@ -66,8 +69,7 @@
 </template>
 
 <script>
-import { fetchOrder, closeOrder } from '@/api/user/order'
-import { fetchPayUrl } from '@/api/user/package'
+import { fetchOrder, closeOrder, fetchInvoicePdf } from '@/api/user/order'
 import { getID } from '@/utils/auth'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
@@ -177,8 +179,13 @@ export default {
     },
     formatData(data) {
       if (!data) data = []
+      const showInvoiceDate = moment('2023-09-19')
       data.forEach(item => {
-        item.created_at = moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')
+        const createdAt = moment(item.created_at)
+        item.created_at = createdAt.format('YYYY-MM-DD HH:mm:ss')
+        if (createdAt.isAfter(showInvoiceDate)) {
+          item.showInvoice = true
+        }
       })
       return data
     },
@@ -199,6 +206,29 @@ export default {
           console.log(err)
         })
     },
+    handleGetInvoicePdf(order) {
+      this.tableLoading = true
+      fetchInvoicePdf(getID(), order.order_id).then(res => {
+          console.warn(res)
+          this.tableLoading = false
+          if(res.data) {
+            const binary = window.atob(res.data)
+            var ia = new Uint8Array(binary.length); //创建视图
+            for (var i = 0; i < binary.length; i++) {
+              ia[i] = binary.charCodeAt(i);
+            }
+            const blob = new Blob([ia], { type: 'application/pdf' })
+            const url = window.URL.createObjectURL(blob)
+            window.open(url)
+          }
+        }).catch(err => {
+            this.tableLoading = false
+            console.log(err)
+            this.$notify.error({
+              title: this.$t('common.error')
+            });
+        })
+    },
     handlePay(order) {
       this.$router.push({
         name: 'OrderDetail',
@@ -209,23 +239,6 @@ export default {
           buyData: JSON.stringify(order.details)
         }
       })
-      // this.payLoading = true
-      // fetchPayUrl(order.payment, order.order_id, this.device)
-      //   .then(res => {
-      //     if(res.data.available) {
-      //       window.location.href = `${res.data.pay_url}`
-      //     } else {
-      //       this.$messageBox.confirm(this.$t('package.systemError'), {
-      //         type: 'error',
-      //         confirmButtonText: this.$t('common.ok'),
-      //         showCancelButton: false
-      //       })
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.payLoading = false
-      //     console.log(err)
-      //   })
     }
   }
 }

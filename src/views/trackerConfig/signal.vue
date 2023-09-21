@@ -33,17 +33,15 @@ export default {
         { url: 'https://signalcloud.cdnbye.com/total_count', value: 0, name: '法兰克福' },
         { url: 'https://opensignal.cdnbye.com/total_count', value: 0, name: '硅谷' },
         { url: 'https://sg.cdnbye.com/total_count', value: 0, name: '新加坡' },
+        { url: 'https://gz.swarmcloud.net/total_count', value: 0, name: '广州' },
         { url: 'https://fr.cdnbye.com/info', value: 0, name: '巴黎' },
-        { url: 'https://fr.web3-lab.com:8443/count', value: 0, name: '巴黎' },
-        { url: 'https://fr.p2pengine.net:2053/count', value: 0, name: '巴黎' },
         { url: 'https://jp.cdnbye.com/info', value: 0, name: '东京' },
         { url: 'https://jp.p2pengine.net:8089/info', value: 0, name: '东京' },
         { url: 'https://br.cdnbye.com/info', value: 0, name: '圣保罗' },
         { url: 'https://br1.cdnbye.com/info', value: 0, name: '圣保罗-tx' },
-        { url: 'https://br.p2pengine.net:8089/info', value: 0, name: '圣保罗' },
         { url: 'https://ru.cdnbye.com/info', value: 0, name: '莫斯科' },
+        { url: 'https://us.peerhub.net:2096/info', value: 0, name: '美国' },
         { url: 'https://signal.swarmcloud.net/info', value: 0, name: '上海' },
-        { url: 'https://gz.swarmcloud.net/total_count', value: 0, name: '广州' },
         { url: 'https://pk.swarmcloud.net/info', value: 0, name: '北京' },
         { url: 'https://cd.swarmcloud.net/info', value: 0, name: '成都' },
         { url: 'http://43.134.199.138/info', value: 0, name: 'cdnbye-2' },
@@ -132,12 +130,12 @@ export default {
               item.value = res.data
             } else if (typeof res.data.data === 'object') {
               const { data } = res.data
-              item.value = data.current_connections
+              item.value = data.total_connections
               item.version = data.version
 
             } else if (typeof res.data === 'object') {
               const { data } = res
-              item.value = data.current_connections
+              item.value = data.total_connections
               item.version = data.version
               if (data.cert_info) {
                 item.certs.push({

@@ -256,30 +256,29 @@
                         })
                     break
                   case 'paypal':
-                    if (paramObj.paymentId && paramObj.PayerID) {
-                      checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
-                          .then(res => {
-                            if(res.data.is_payed) {
-                              this.checkResultLoading = false
-                              this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                                type: 'success',
-                                confirmButtonText: this.$t('common.ok'),
-                                showCancelButton: false
-                              }).then(() => {
-                                this.$router.replace('/')
-                              })
-                            } else {
-                              this.$messageBox.confirm(this.$t('package.payFail'), {
-                                type: 'error',
-                                confirmButtonText: this.$t('common.ok'),
-                                showCancelButton: false
-                              })
-                            }
-                          }).catch(err => {
-                        this.checkResultLoading = false
-                        console.log(err)
-                      })
-                    }
+                    // TODO 去掉paymentId PayerID
+                    checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
+                        .then(res => {
+                          if(res.data.is_payed) {
+                            this.checkResultLoading = false
+                            this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                              type: 'success',
+                              confirmButtonText: this.$t('common.ok'),
+                              showCancelButton: false
+                            }).then(() => {
+                              this.$router.replace('/')
+                            })
+                          } else {
+                            this.$messageBox.confirm(this.$t('package.payFail'), {
+                              type: 'error',
+                              confirmButtonText: this.$t('common.ok'),
+                              showCancelButton: false
+                            })
+                          }
+                        }).catch(err => {
+                      this.checkResultLoading = false
+                      console.log(err)
+                    })
                     break
                   case 'crypto':
                     updateCryptoTrade({
