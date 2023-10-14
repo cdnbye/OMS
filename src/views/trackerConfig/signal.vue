@@ -5,7 +5,7 @@
         <div class="card-panel">
           <div class="card-panel-description">
             <div class="card-panel-name">{{item.name}}</div>
-            <span class="card-panel-num" :style="{color: item.value === 0 ? 'red' : ''}">{{item.value}}</span>
+            <span class="card-panel-num" :style="{color: item.value === -1 ? 'red' : ''}">{{item.value}}</span>
             <div class="card-panel-text">{{item.url}} {{ item.version ? ' ' + item.version : '' }}</div>
             <template v-if="item.certs.length > 0" v-for="cert in item.certs">
               <div class="card-panel-text">{{cert.name}} {{ cert.expireAt }}</div>
@@ -41,9 +41,11 @@ export default {
         { url: 'https://br1.cdnbye.com/info', value: 0, name: '圣保罗-tx' },
         { url: 'https://ru.cdnbye.com/info', value: 0, name: '莫斯科' },
         { url: 'https://us.peerhub.net:2096/info', value: 0, name: '美国' },
+        { url: 'https://nl.cdnbye.com/info', value: 0, name: '荷兰' },
         { url: 'https://signal.swarmcloud.net/info', value: 0, name: '上海' },
         { url: 'https://pk.swarmcloud.net/info', value: 0, name: '北京' },
         { url: 'https://cd.swarmcloud.net/info', value: 0, name: '成都' },
+        { url: 'http://43.132.190.148/info', value: 0, name: 'cdnbye-1' },
         { url: 'http://43.134.199.138/info', value: 0, name: 'cdnbye-2' },
         { url: 'http://43.129.228.44/info', value: 0, name: 'cdnbye-3' },
         { url: 'http://43.154.211.238/info', value: 0, name: 'cdnbye-4' },
@@ -58,58 +60,68 @@ export default {
         { url: 'http://43.154.120.28/info', value: 0, name: 'cdnbye-13' },
         { url: 'http://43.154.219.36/info', value: 0, name: 'cdnbye-14' },
         { url: 'http://43.154.0.207/info', value: 0, name: 'cdnbye-15' },
-        { url: 'http://43.157.8.172/info', value: 0, name: 'eu-1' },
-        { url: 'http://162.62.58.118/info', value: 0, name: 'eu-2' },
-        { url: 'http://43.131.0.142/info', value: 0, name: 'eu-3' },
-        { url: 'http://43.157.49.248/info', value: 0, name: 'eu-5' },
-        { url: 'http://162.62.223.111/info', value: 0, name: 'eu-7' },
-        { url: 'http://43.157.93.100/info', value: 0, name: 'eu-9' },
-        { url: 'http://43.157.47.140/info', value: 0, name: 'eu-10' },
-        { url: 'http://43.157.60.82/info', value: 0, name: 'eu-11' },
-        { url: 'http://43.157.89.228/info', value: 0, name: 'eu-12' },
-        { url: 'http://43.131.47.169/info', value: 0, name: 'eu-13' },
-        { url: 'http://43.131.13.92/info', value: 0, name: 'eu-14' },
-        { url: 'http://43.157.64.66/info', value: 0, name: 'eu-15' },
-        { url: 'http://43.157.66.89/info', value: 0, name: 'eu-16' },
-        { url: 'http://43.157.30.17/info', value: 0, name: 'eu-17' },
-        { url: 'http://43.157.79.234/info', value: 0, name: 'eu-18' },
+        { url: 'http://43.132.227.42/info', value: 0, name: 'cdnbye-16' },
+        { url: 'http://43.129.186.47/info', value: 0, name: 'cdnbye-17' },
+        { url: 'http://119.28.189.230/info', value: 0, name: 'cdnbye-18' },
+        { url: 'http://43.129.25.71/info', value: 0, name: 'cdnbye-19' },
+        { url: 'http://43.157.96.48/info', value: 0, name: 'eu-1' },
+        { url: 'http://43.157.111.101/info', value: 0, name: 'eu-2' },
+        { url: 'http://43.157.7.215/info', value: 0, name: 'eu-3' },
+        { url: 'http://43.131.51.25/info', value: 0, name: 'eu-4' },
+        { url: 'http://43.131.41.92/info', value: 0, name: 'eu-5' },
+        { url: 'http://43.131.34.85/info', value: 0, name: 'eu-6' },
+        { url: 'http://43.131.25.44/info', value: 0, name: 'eu-7' },
+        { url: 'http://162.62.57.166/info', value: 0, name: 'eu-8' },
+        { url: 'http://43.131.19.249/info', value: 0, name: 'eu-9' },
+        { url: 'http://43.131.53.249/info', value: 0, name: 'eu-10' },
+        { url: 'http://43.157.97.162/info', value: 0, name: 'eu-11' },
+        { url: 'http://43.157.105.67/info', value: 0, name: 'eu-12' },
+        { url: 'http://43.131.54.143/info', value: 0, name: 'eu-13' },
+        { url: 'http://43.157.0.236/info', value: 0, name: 'eu-14' },
+        { url: 'http://43.157.95.234/info', value: 0, name: 'eu-15' },
+        { url: 'http://43.157.88.119/info', value: 0, name: 'eu-16' },
+        { url: 'http://43.157.97.174/info', value: 0, name: 'eu-17' },
         { url: 'http://43.153.91.36/info', value: 0, name: 'us-1' },
-        { url: 'http://43.153.32.156/info', value: 0, name: 'us-2' },
-        { url: 'http://43.153.20.4/info', value: 0, name: 'us-3' },
-        { url: 'http://43.153.52.120/info', value: 0, name: 'us-4' },
-        { url: 'http://43.153.69.243/info', value: 0, name: 'us-5' },
-        { url: 'http://43.153.30.126/info', value: 0, name: 'us-6' },
-        { url: 'http://43.135.166.77/info', value: 0, name: 'us-7' },
-        { url: 'http://43.153.26.15/info', value: 0, name: 'us-8' },
-        { url: 'http://43.135.161.66/info', value: 0, name: 'us-10' },
-        { url: 'http://43.135.159.196/info', value: 0, name: 'us-11' },
+        { url: 'http://49.51.74.179/info', value: 0, name: 'us-2' },
+        { url: 'http://43.135.155.11/info', value: 0, name: 'us-3' },
+        { url: 'http://43.153.50.57/info', value: 0, name: 'us-4' },
+        { url: 'http://43.153.71.95/info', value: 0, name: 'us-5' },
+        { url: 'http://43.153.68.228/info', value: 0, name: 'us-6' },
+        { url: 'http://43.153.99.68/info', value: 0, name: 'us-7' },
+        { url: 'http://170.106.196.173/info', value: 0, name: 'us-8' },
+        { url: 'http://170.106.137.142/info', value: 0, name: 'us-9' },
+        { url: 'http://170.106.183.3/info', value: 0, name: 'us-10' },
+        { url: 'http://170.106.188.223/info', value: 0, name: 'us-11' },
+        { url: 'http://43.153.12.42/info', value: 0, name: 'us-12' },
+        { url: 'http://49.51.52.181/info', value: 0, name: 'us-13' },
+        { url: 'http://43.153.56.28/info', value: 0, name: 'us-14' },
         { url: 'http://43.153.57.117/info', value: 0, name: 'us-15' },
         { url: 'http://43.153.10.122/info', value: 0, name: 'us-16' },
         { url: 'http://43.153.13.133/info', value: 0, name: 'us-17' },
         { url: 'http://43.153.67.114/info', value: 0, name: 'us-18' },
-        { url: 'http://170.106.119.248/info', value: 0, name: 'us-19' },
-        { url: 'http://170.106.82.82/info', value: 0, name: 'us-20' },
         { url: 'http://43.159.60.196/info', value: 0, name: 'sg-1' },
-        { url: 'http://43.156.10.47/info', value: 0, name: 'sg-2' },
-        { url: 'http://129.226.201.3/info', value: 0, name: 'sg-3' },
-        { url: 'http://43.159.44.110/info', value: 0, name: 'sg-4' },
-        { url: 'http://43.134.178.215/info', value: 0, name: 'sg-5' },
-        { url: 'http://43.156.89.164/info', value: 0, name: 'sg-6' },
-        { url: 'http://43.156.115.238/info', value: 0, name: 'sg-7' },
-        { url: 'http://43.153.202.33/info', value: 0, name: 'sg-8' },
-        { url: 'http://129.226.223.57/info', value: 0, name: 'sg-9' },
-        { url: 'http://129.226.198.66/info', value: 0, name: 'sg-10' },
-        { url: 'http://43.153.192.104/info', value: 0, name: 'sg-11' },
-        { url: 'http://43.156.49.159/info', value: 0, name: 'sg-12' },
-        { url: 'http://43.134.170.16/info', value: 0, name: 'sg-13' },
-        { url: 'http://43.156.47.106/info', value: 0, name: 'sg-14' },
-        { url: 'http://43.156.127.56/info', value: 0, name: 'sg-15' },
+        { url: 'http://124.156.194.246/info', value: 0, name: 'sg-2' },
+        { url: 'http://43.128.71.178/info', value: 0, name: 'sg-3' },
+        { url: 'http://43.156.54.151/info', value: 0, name: 'sg-5' },
+        { url: 'http://129.226.212.8/info', value: 0, name: 'sg-6' },
+        { url: 'http://43.134.52.198/info', value: 0, name: 'sg-7' },
+        { url: 'http://43.134.52.80/info', value: 0, name: 'sg-9' },
+        { url: 'http://43.128.104.72/info', value: 0, name: 'sg-10' },
+        { url: 'http://43.134.180.241/info', value: 0, name: 'sg-11' },
+        { url: 'http://43.156.54.5/info', value: 0, name: 'sg-12' },
+        { url: 'http://43.134.27.161/info', value: 0, name: 'sg-13' },
+        { url: 'http://43.134.3.224/info', value: 0, name: 'sg-16' },
+        { url: 'http://150.109.21.143/info', value: 0, name: 'sg-17' },
+        { url: 'http://43.134.112.106/info', value: 0, name: 'sg-18' },
+        { url: 'http://43.133.61.195/info', value: 0, name: 'sg-19' },
+        { url: 'http://43.134.31.190/info', value: 0, name: 'sg-20' },
         { url: 'http://106.52.254.88/info', value: 0, name: 'gz-1' },
         { url: 'http://43.139.105.176/info', value: 0, name: 'gz-2' },
         { url: 'http://106.53.103.36/info', value: 0, name: 'gz-3' },
         { url: 'http://43.139.190.60/info', value: 0, name: 'gz-4' },
         { url: 'http://123.207.66.25/info', value: 0, name: 'gz-5' },
         { url: 'http://114.132.73.214/info', value: 0, name: 'gz-6' },
+        { url: 'http://175.178.128.46/info', value: 0, name: 'gz-8' },
       ]
     }
   },
@@ -128,14 +140,9 @@ export default {
             item.certs = []
             if (typeof res.data === 'number') {
               item.value = res.data
-            } else if (typeof res.data.data === 'object') {
-              const { data } = res.data
-              item.value = data.total_connections
-              item.version = data.version
-
             } else if (typeof res.data === 'object') {
               const { data } = res
-              item.value = data.total_connections
+              item.value = data.current_connections
               item.version = data.version
               if (data.cert_info) {
                 item.certs.push({
@@ -154,7 +161,7 @@ export default {
           })
           .catch(err => {
             console.error(err)
-            item.value = 0
+            item.value = -1
           })
       })
     },

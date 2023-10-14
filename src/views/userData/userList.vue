@@ -37,6 +37,11 @@
     <el-table-column align="center" prop="reg_date" width="70" label="注册时间"></el-table-column>
 <!--    <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>-->
     <el-table-column align="center" prop="domain" label="域名" width="60"></el-table-column>
+    <el-table-column align="center" prop="debug" width="60" label="debug">
+      <template slot-scope="scope">
+        <el-switch slot="reference" :value="scope.row.debug" active-color="#42b983" @change="handleDebugUser(scope.row)"></el-switch>
+      </template>
+    </el-table-column>
     <el-table-column align="center" prop="whitelist" width="60" label="白名单">
       <template slot-scope="scope">
         <el-switch slot="reference" :value="scope.row.whitelist" active-color="#42b983" @change="handleWhitelistUser(scope.row)"></el-switch>
@@ -254,7 +259,7 @@
 
   <script>
   import { fetchUserList, fetchAdminUser, fetchWhitelistUser, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
-  import { frozenUser, adminUser, whitelistUser, searchUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
+  import { frozenUser, adminUser, whitelistUser, debugUser, searchUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
   import { updateInvoiceIssued } from '@/api/finance'
   import clip from '@/utils/clipboard'
   import moment from 'moment'
@@ -595,6 +600,28 @@
             console.log(err)
           })
       },
+      handleDebugUser(user) {
+        this.loading = true
+        debugUser({
+          uid: user.uid,
+          debug: !user.debug
+        })
+            .then(res => {
+              this.loading = false
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              })
+              this.tableData.forEach(item => {
+                if(item.uid === user.uid)
+                  item.debug = !item.debug
+              })
+            })
+            .catch(err => {
+              this.loading = false
+              console.log(err)
+            })
+      },
       handleWhitelistUser(user) {
           this.loading = true
           whitelistUser({
@@ -602,7 +629,6 @@
               whitelist: !user.whitelist
           })
               .then(res => {
-                  this.pClose(user.uid)
                   this.loading = false
                   this.$message({
                       type: 'success',

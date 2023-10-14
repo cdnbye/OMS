@@ -81,6 +81,15 @@ export function whitelistUser(data) {
     })
 }
 
+// 修改用户白名单
+export function debugUser(data) {
+  return request({
+    url: `user/debug`,
+    method: 'post',
+    data
+  })
+}
+
 // 查找用户
 export function searchUser(mail) {
   return request({

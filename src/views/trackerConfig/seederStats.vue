@@ -24,7 +24,7 @@
 
 <script>
 import axios from 'axios'
-import { formatTraffic } from '@/utils/format'
+import { formatTraffic, formatDuration } from '@/utils/format'
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 export default {
@@ -97,6 +97,7 @@ export default {
         const json = res.data
         const { master, workers } = json
         master.memory = this.formatValue(master.memory)
+        master.elapsed = formatDuration(master.elapsed)
         if (master.averageUplink) {
           master.averageUplink = `${Math.round(master.averageUplink)}Mbps`
         }

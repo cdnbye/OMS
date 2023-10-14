@@ -25,7 +25,7 @@
 <script>
 import { actionSeeder, copySeeder } from '@/api/user/seeder'
 import { getID } from '@/utils/auth'
-import { formatTraffic } from '@/utils/format'
+import { formatTraffic, formatDuration } from '@/utils/format'
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 
@@ -115,6 +115,7 @@ export default {
         const { master, workers } = json;
         if (master) {
           master.memory = this.formatValue(master.memory)
+          master.elapsed = formatDuration(master.elapsed)
           if (master.averageUplink) {
             master.averageUplink = `${Math.round(master.averageUplink)}Mbps`
           }
