@@ -4,7 +4,7 @@
           <template>
             <br>
             <br>
-            <a style="color: #337ab7; font-weight: bold" target="view_window" href="https://swarmcloud.net/views/signaling.html#official-signaling-service">{{ $t('p2pConfig.signalManage.official') }} -></a>
+            <a style="color: #337ab7; font-weight: bold" target="view_window" href="https://swarmcloud.net/signaling.html#official-signaling-service">{{ $t('p2pConfig.signalManage.official') }} -></a>
           </template>
         </el-alert>
         <el-table border :data="tableData" v-loading="loading">

@@ -19,7 +19,7 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="text-align: center">
-          <a target="_blank" href="https://swarmcloud.net/views/">
+          <a target="_blank" href="https://swarmcloud.net/">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
             </el-dropdown-item>

@@ -91,8 +91,8 @@
 
       <!--用户服务协议-->
       <el-row type="flex" justify="space-between" style="margin-bottom: 14px">
-        <el-checkbox v-if="language==='en'" style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/en/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
-        <el-checkbox v-else style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/cn/views/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
+        <el-checkbox v-if="language==='en'" style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/guides/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
+        <el-checkbox v-else style="color:#eee" v-model="contractChecked">{{ $t('signup.contract') }}《<a style="color: dodgerblue" target="view_window" href="https://www.cdnbye.com/cn/contract.html">{{ $t('signup.contractName') }}</a>》</el-checkbox>
       </el-row>
 
       <el-row type="flex" justify="space-between">
