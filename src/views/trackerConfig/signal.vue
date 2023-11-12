@@ -115,11 +115,10 @@ export default {
         { url: 'http://43.133.61.195/info', value: 0, name: 'sg-19' },
         { url: 'http://43.134.31.190/info', value: 0, name: 'sg-20' },
         { url: 'http://106.52.254.88/info', value: 0, name: 'gz-1' },
-        { url: 'http://43.139.105.176/info', value: 0, name: 'gz-2' },
-        { url: 'http://106.53.103.36/info', value: 0, name: 'gz-3' },
         { url: 'http://43.139.190.60/info', value: 0, name: 'gz-4' },
         { url: 'http://123.207.66.25/info', value: 0, name: 'gz-5' },
         { url: 'http://114.132.73.214/info', value: 0, name: 'gz-6' },
+        { url: 'http://43.138.216.187/info', value: 0, name: 'gz-7' },
         { url: 'http://175.178.128.46/info', value: 0, name: 'gz-8' },
       ]
     }

@@ -65,7 +65,7 @@ export default {
     size: '布局大小',
     myInfo: '個人信息',
     currZone: '可用區: ',
-    zoneTip: '如果選擇了歐洲以外的可用區，需要手動配置SDK連接的服務器地址，請參考<a style="color: #337ab7" href="https://www.cdnbye.com/tracker.html" target="_blank">這裏</a>',
+    zoneTip: '如果選擇了歐洲以外的可用區，需要手動配置SDK連接的服務器地址，請參考<a style="color: #337ab7" href="https://www.cdnbye.com/cn/tracker" target="_blank">這裏</a>',
   },
   auth: {
     login: '登入',
