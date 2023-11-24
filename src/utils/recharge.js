@@ -8,7 +8,7 @@ export function recharge(currency) {
     Vue.prototype.$messageBox.prompt(i18n.t('myInfo.rechargeTip'), i18n.t('myInfo.recharge'), {
         confirmButtonText: i18n.t('common.ok'),
         cancelButtonText: i18n.t('common.cancel'),
-        inputPattern: /^[1-9][0-9]+$/,
+        inputPattern: /^[1-9][0-9]*0$/,
         dangerouslyUseHTMLString: true
     }).then(({ value }) => {
         const price = Number(value)

@@ -22,6 +22,7 @@ module.exports = {
       })
   },
   configureWebpack: {
+    devtool: 'none',
     resolve: {
       alias: {
         'moment': "dayjs"

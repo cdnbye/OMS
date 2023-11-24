@@ -8,7 +8,7 @@
     "deploy-gitee": "NODE_OPTIONS=--openssl-legacy-provider sh deploy.sh",
     "deploy-test": "NODE_OPTIONS=--openssl-legacy-provider sh deploy-prerelease.sh",
     "git-push": "git add . && git commit -m 'u' &&  git push",
-    "build": "vue-cli-service build --mode production",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build --mode production",
     "build-prerelease": "vue-cli-service build --mode test",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint"

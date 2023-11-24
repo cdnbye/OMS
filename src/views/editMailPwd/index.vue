@@ -137,11 +137,13 @@
         <p>
           <span>{{$t('myInfo.balanceUSD')}}: {{ userInfo.balanceUSD }} </span>
           <el-button type="text" @click="recharge('USD')">{{$t('myInfo.recharge')}}</el-button>
+          <span style="color: #5daf34"> (+1%)</span>
         </p>
         <div style="margin-top: 25px"></div>
         <p>
           <span>{{$t('myInfo.balanceCNY')}}: {{ userInfo.balanceCNY }} </span>
           <el-button type="text" @click="recharge('CNY')">{{$t('myInfo.recharge')}}</el-button>
+          <span style="color: #5daf34"> (+1%)</span>
         </p>
       </el-card>
   </div>

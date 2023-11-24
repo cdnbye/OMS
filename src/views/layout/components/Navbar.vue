@@ -19,7 +19,7 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" style="text-align: center">
-          <a target="_blank" href="https://swarmcloud.net/">
+          <a target="_blank" :href="docAddress">
             <el-dropdown-item>
               {{ $t('navbar.dosAddress') }}
             </el-dropdown-item>
@@ -69,6 +69,7 @@ export default {
       Avatar: Logo,
       currZone: '',
       userName: '',
+      docAddress: 'https://swarmcloud.net/',
     }
   },
   components: {
@@ -86,10 +87,12 @@ export default {
     this.currZone = this.getCurrZone()
     const profile = getItem('profile')
     if (profile) this.userName = profile.name
+    this.docAddress = this.getDocsAddress()
   },
   watch: {
     language() {
       this.currZone = this.getCurrZone()
+      this.docAddress = this.getDocsAddress()
     },
     profile() {
       const profile = getItem('profile')
@@ -112,6 +115,12 @@ export default {
     },
     showTimeZone() {
       this.timeZoneVisible = true
+    },
+    getDocsAddress() {
+      if (this.language !== 'en') {
+        return  'https://www.cdnbye.com/cn/'
+      }
+      return 'https://swarmcloud.net/guides'
     },
     getCurrZone() {
       const loc = getItem(LOCATION)

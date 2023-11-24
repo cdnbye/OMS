@@ -156,6 +156,7 @@ export default {
     checkinFail: '簽到失敗，請重試！',
     invite: '邀请朋友拿佣金',
     bonus: '绑定手机奖励38元',
+    rechargeBonus: '充值余额可获1%奖励',
     changeUTC: '调整时区',
     trafficUseOut: '您的可用流量已用完，請前往購買流量包',
     onlinesTip: 'P2P依賴於WebRTC Data Channel的支持，在不支持的設備上將自動回退到原生播放並且不會上報統計信息，因此這裏統計的在線人數可能會比實際的偏低，差異的大小取決於有多少比例的設備不支持P2P。',
@@ -239,7 +240,7 @@ export default {
     balanceUSD: '余额(美元)',
     balanceCNY: '余额(人民币)',
     recharge: '余额充值',
-    rechargeTip: '充值金額僅能用於购买流量包和包月套餐，不支持提現。充值金额可参考<a style="color: #337ab7" href="https://www.cdnbye.com/cn/pricing.html" target="_blank">定价</a>。',
+    rechargeTip: '充值金額僅能用於购买流量包和包月套餐，不支持提現。充值金额需为10的整数倍，可参考<a style="color: #337ab7" href="https://www.cdnbye.com/cn/pricing.html" target="_blank">定价</a>。',
     changeMail: {
       change: '修改郵箱',
       newMail: '新郵箱',

@@ -8,7 +8,7 @@
             <span class="card-panel-num" :style="{color: item.value === -1 ? 'red' : ''}">{{item.value}}</span>
             <div class="card-panel-text">{{item.url}} {{ item.version ? ' ' + item.version : '' }}</div>
             <template v-if="item.certs.length > 0" v-for="cert in item.certs">
-              <div class="card-panel-text">{{cert.name}} {{ cert.expireAt }}</div>
+              <div class="card-panel-text" :style="{color: cert.isExpiredSoon ? 'red' : ''}">{{cert.name}} {{ cert.expireAt }}</div>
             </template>
           </div>
         </div>
@@ -20,6 +20,8 @@
 <script>
 import axios from 'axios'
 import moment from "moment";
+
+const EXPIRE_LIMIT = 30;   // days
 
 let int = null
 
@@ -146,12 +148,14 @@ export default {
                 item.certs.push({
                   name: data.cert_info.name,
                   expireAt: moment(data.cert_info.expire_at).format('YY-MM-DD:HH'),
+                  isExpiredSoon: moment(data.cert_info.expire_at).diff(moment(), 'day') <= EXPIRE_LIMIT,
                 })
               } else if (data.cert_infos && data.cert_infos.length > 0) {
                 data.cert_infos.forEach(cert => {
                   item.certs.push({
                     name: cert.name,
                     expireAt: moment(cert.expire_at).format('YY-MM-DD:HH'),
+                    isExpiredSoon: moment(cert.expire_at).diff(moment(), 'day') <= EXPIRE_LIMIT,
                   })
                 })
               }
