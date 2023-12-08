@@ -51,7 +51,7 @@ const permission = {
 
         accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         if (roles.indexOf('user') >= 0) {
-          Crisp.configure("9ef4a604-fe60-4864-b365-85891ed5fbf6", {
+          Crisp.configure("4eed08c4-730f-4676-9f60-89f098f236b2", {
             autoload: false
           });
           Crisp.setHideOnAway(true);

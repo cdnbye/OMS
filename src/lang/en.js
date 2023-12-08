@@ -237,7 +237,7 @@ export default {
     change: 'update',
     balanceUSD: 'Balance(USD)',
     balanceCNY: 'Balance(CNY)',
-    recharge: 'Recharge',
+    recharge: 'Add Funds',
     rechargeTip: 'All deposits are non-refundable, the pricing can be found <a style="color: #337ab7" href="https://www.cdnbye.com/pricing.html" target="_blank">here</a>. The recharge amount needs to be an integer multiple of 10.',
     changeMail: {
       change: 'update E-mail',
