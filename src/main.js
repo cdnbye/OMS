@@ -2,7 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
-
+import VueVectorMap from '@/components/WorldMap/index.js'
+import "jsvectormap/dist/maps/world.js";
+import "jsvectormap/dist/css/jsvectormap.css";
 import '@/styles/index.scss' // global css
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
@@ -15,6 +17,10 @@ import { Alert, Popover, Select, Option, Loading, Pagination, Slider,
   Message, Row, Col, Menu, MenuItem, MenuItemGroup, Scrollbar, Submenu, InputNumber, MessageBox, Tag, Switch, Checkbox, Notification, Carousel, CarouselItem } from 'element-ui'
 
 Vue.config.productionTip = false
+
+Vue.use(VueVectorMap, {
+    backgroundColor: "#FFF"
+});
 
 Vue.use(Carousel)
 Vue.use(CarouselItem)

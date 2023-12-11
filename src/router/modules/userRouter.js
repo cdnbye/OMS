@@ -180,11 +180,12 @@ const userRouter = [
         children: [
             {
                 path: 'worldGlobal',
-                component: () => import('@/views/userDistribution/user/WorldGlobal'),
+                component: () => import('@/views/userDistribution/World'),
                 name: 'WorldDisGlobal',
                 meta: {
                     title: 'worldDisGlobal',
                     roles: ['user'],
+                    global: true,
                     noCache: true
                 }
             },

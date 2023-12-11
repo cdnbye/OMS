@@ -57,7 +57,7 @@ import Logo from '@/assets/logo.png'
 import PointTip from '@/components/PointTip'
 import SwitchDomain from '@/components/SwitchDomain'
 import TimeZone from '@/components/TimeZone'
-import {getItem, removeItem} from "@/utils/storage";
+import { getItem, removeItem } from "@/utils/storage";
 import { LOCATION } from '@/constant'
 import { recharge } from '@/utils/recharge'
 

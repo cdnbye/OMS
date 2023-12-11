@@ -1,28 +1,68 @@
 <template>
-  <component :is="currentRole"/>
+  <div class="app-container" v-loading="loading">
+    <component :is="currentRole" :countryData="countryData" :total="total" />
+  </div>
+
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import adminWorld from './admin/World'
-import userWorld from './user/World'
+import WorldMap from '@/components/WorldMap/index.vue'
+import { fetchGeoDis } from '@/api/user/liveData'
+import { fetchLiveData } from '@/api/liveData'
+import { getID } from '@/utils/auth'
 
 export default {
   name: 'World',
-  components: { adminWorld, userWorld },
+  components: { WorldMap },
   data() {
     return {
-      currentRole: 'adminWorld'
+      currentRole: '',
+      loading: true,
+      countryData: [],
+      total: 0,
     }
+  },
+  mounted() {
+    this.fetchData()
   },
   computed: {
     ...mapGetters([
-      'roles'
+      'roles',
+      'currentDomain'
     ])
   },
-  created() {
-    if (!this.roles.includes('admin')) {
-      this.currentRole = 'userWorld'
+  methods: {
+    fetchData() {
+      if (!this.roles.includes('admin')) {
+        fetchGeoDis(getID(), this.$route.meta.global ? 0 :this.currentDomain.id, 'country').then(res => {
+          const data = res.data
+          if(data) {
+            this.total = data.total
+            if (data.data) {
+              this.countryData = data.data
+            }
+            this.loading = false
+            this.currentRole = 'WorldMap'
+          }
+        }).catch(err => {
+          console.log(err)
+          this.loading = false
+        })
+      } else {
+        fetchLiveData('country').then(res => {
+          const data = res.data
+          if(data) {
+            this.total = data.total
+            this.countryData = data.data
+            this.loading = false
+            this.currentRole = 'WorldMap'
+          }
+        }).catch(err => {
+          console.log(err)
+          this.loading = false
+        })
+      }
     }
   }
 }
