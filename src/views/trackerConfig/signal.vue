@@ -38,6 +38,7 @@ export default {
         { url: 'https://gz.swarmcloud.net/total_count', value: 0, name: '广州' },
         { url: 'https://fr.cdnbye.com/info', value: 0, name: '巴黎' },
         { url: 'https://br.cdnbye.com/info', value: 0, name: '圣保罗-tx' },
+        { url: 'https://br.peerhub.net:2096/info', value: 0, name: '圣保罗' },
         { url: 'https://ru.cdnbye.com/info', value: 0, name: '莫斯科' },
         { url: 'https://us.peerhub.net:2096/info', value: 0, name: '美国' },
         { url: 'https://nl.cdnbye.com/info', value: 0, name: '荷兰' },

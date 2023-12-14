@@ -56,9 +56,9 @@ export default {
         { url: 'http://51.68.169.109:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ge-1', version: '' },
         { url: 'http://50.7.60.70:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'sg-1', version: '' },
         { url: 'http://38.180.9.40:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ih-sg-1', version: '' },
-        { url: 'http://51.161.164.171:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'au-1', version: '' },
         { url: 'http://50.7.59.115:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'hk-1', version: '' },
         { url: 'http://38.180.37.144:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'kz-1', version: '' },
+        { url: 'http://78.111.102.162:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'br-1', version: '' },
         { url: 'http://176.97.69.27:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ih-au-1', version: '' },
       ]
     }

@@ -94,6 +94,8 @@
                   domain: APPLY_TO_ALL,
                   blocked: false,
                   wifi_only: false,
+                  seed_preferred: false,
+                  urgent_ratio: undefined,
                 }
             }
         },
@@ -120,9 +122,7 @@
                         message: this.$t('p2pConfig.configSuccess'),
                         type: 'success'
                       });
-                      if (id === 0) {
-                        this.fetchTableData()
-                      }
+                      this.fetchTableData()
                     } else {
                       this.$notify.error({
                         title: this.$t('common.error'),
@@ -149,6 +149,14 @@
                 fetchUserDomain(page, pageSize, {isvalid: true}).then(res => {
                     if(res.data) {
                         this.tableData = res.data
+                        for (let row of this.tableData) {
+                          if (row.domain.endsWith('.localhost')) {
+                            this.applyAll.wifi_only = row.wifi_only
+                            this.applyAll.seed_preferred = row.seed_preferred
+                            this.applyAll.urgent_ratio = row.urgent_ratio
+                            break
+                          }
+                        }
                         if (this.tableData.length > 1) {
                           this.applyAll.uid = this.tableData[0].uid
                           this.tableData.unshift(this.applyAll)

@@ -89,6 +89,12 @@
                                 row.stuns = row.stuns.join('\n')
                             }
                         })
+                        for (let row of this.tableData) {
+                          if (row.domain.endsWith('.localhost')) {
+                            this.applyAll.stuns = row.stuns
+                            break
+                          }
+                        }
                         if (this.tableData.length > 1) {
                           this.applyAll.uid = this.tableData[0].uid
                           this.tableData.unshift(this.applyAll)
@@ -117,9 +123,7 @@
                                 message: this.$t('p2pConfig.configSuccess'),
                                 type: 'success'
                             });
-                            if (domain.id === 0) {
-                              this.fetchTableData()
-                            }
+                            this.fetchTableData()
                         } else {
                             const msg = res.data.msg || this.$t('p2pConfig.configFail')
                             this.$notify.error({

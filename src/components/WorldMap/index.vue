@@ -33,7 +33,6 @@ export default {
       initial: { fill: '#ff4551' }
     },
     values: {},
-    percents: {},
   }),
   computed: {
     markers() {
@@ -58,7 +57,6 @@ export default {
     },
     visualizeData() {
       for (let { name, value } of this.countryData) {
-        this.percents[name] = value/this.total*100
         this.values[name] = value
       }
       return {
@@ -77,10 +75,11 @@ export default {
       })
     },
     regionTooltipShow(event, tooltip, code) {
-      if (!this.values[code]) return
+      if (!this.values[code] || this.total === 0) return
+      const value = this.values[code]
       tooltip.text(
-          `<p>${tooltip.text()}: ${this.values[code]}</p>` +
-          `<p>Percent: ${this.percents[code].toFixed(2)}%</p>`,
+          `<p>${tooltip.text()}: ${value}</p>` +
+          `<p>Percent: ${(value/this.total*100).toFixed(2)}%</p>`,
           true
       )
     },

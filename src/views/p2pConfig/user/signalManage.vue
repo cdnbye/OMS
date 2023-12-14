@@ -126,6 +126,14 @@
                             row.signals2 = row.signals2.join('\n')
                           }
                         })
+                        for (let row of this.tableData) {
+                          if (row.domain.endsWith('.localhost')) {
+                            this.applyAll.signals = row.signals
+                            this.applyAll.signals2 = row.signals2
+                            this.applyAll.signal_enabled = row.signal_enabled
+                            break
+                          }
+                        }
                         if (this.tableData.length > 1) {
                           this.applyAll.uid = this.tableData[0].uid
                           this.tableData.unshift(this.applyAll)
@@ -145,9 +153,7 @@
                             message: this.$t('p2pConfig.configSuccess'),
                             type: 'success'
                         });
-                        if (id === 0) {
-                          this.fetchTableData()
-                        }
+                        this.fetchTableData()
                     } else {
                         const msg = res.data.msg || this.$t('p2pConfig.configFail')
                         this.$notify.error({
@@ -170,7 +176,7 @@
                         return signal !== ""
                     })
                 }
-              let signals2;
+                let signals2;
                 if (!domain.signals2) {
                     signals2 = []
                 } else {
@@ -179,7 +185,7 @@
                     })
                 }
                 const data = {signals, signals2, enabled: domain.signal_enabled};
-                this.handleSignalAddr(domain.uid, domain.id, data)
+                this.handleSignalAddr(domain.uid, domain.id, data);
             },
             handleSizeChange(pageSize) {
                 this.tableParam.pageSize = pageSize
