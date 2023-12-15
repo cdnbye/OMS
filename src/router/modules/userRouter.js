@@ -256,7 +256,7 @@ const userRouter = [
                     roles: ['user'],
                     noCache: true
                 }
-            }
+            },
         ]
     },
 
@@ -266,7 +266,7 @@ const userRouter = [
         component: Layout,
         redirect: '/user/order',
         meta: {
-            title: 'order',
+            title: 'expenditure',
             icon: 'list',
             roles: ['user']
         },
@@ -277,6 +277,16 @@ const userRouter = [
                 name: 'HistoryOrder',
                 meta: {
                     title: 'order',
+                    roles: ['user'],
+                    noCache: true
+                }
+            },
+            {
+                path: '/user/expenses',
+                component: () => import('@/views/historyOrder/user/ExpensesTrend'),
+                name: 'ExpensesTrend',
+                meta: {
+                    title: 'expenses',
                     roles: ['user'],
                     noCache: true
                 }

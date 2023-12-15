@@ -81,7 +81,16 @@ export function whitelistUser(data) {
     })
 }
 
-// 修改用户白名单
+// 修改用户trusted
+export function trustUser(data) {
+  return request({
+    url: `user/trusted`,
+    method: 'post',
+    data
+  })
+}
+
+// 修改用户debug
 export function debugUser(data) {
   return request({
     url: `user/debug`,

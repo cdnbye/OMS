@@ -160,6 +160,14 @@ export function fetchWhitelistUser() {
     })
 }
 
+// rusted用户列表
+export function fetchTrustedUser() {
+    return request({
+        url: `user/trusted`,
+        method: 'get'
+    })
+}
+
 // 用户包月套餐变动
 export function updateUserPlan(data) {
     return request({

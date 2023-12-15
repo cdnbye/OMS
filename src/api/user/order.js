@@ -23,3 +23,11 @@ export function fetchInvoicePdf(userID, orderID) {
     method: 'get',
   })
 }
+
+// 月支出趋势
+export function fetchExpensesTrend(userID) {
+  return request({
+    url: `order/user_id/${userID}/trend`,
+    method: 'get'
+  })
+}

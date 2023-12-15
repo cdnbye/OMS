@@ -36,7 +36,7 @@
 
             <el-table-column align="center" label="联系方式">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.email }}</span>
+                    <span><a @click="onEmailClick(scope.row.email)">{{ scope.row.email }}</a></span>
                 </template>
             </el-table-column>
 
@@ -93,6 +93,14 @@
             this.fetchTableData()
         },
         methods: {
+            onEmailClick(email) {
+              this.$router.push({
+                path: '/user/list',
+                query: {
+                  email,
+                }
+              })
+            },
             hostClick(value) {
                 window.open(`http://${value}`)
                 window.open(`https://${value}`)

@@ -18,6 +18,9 @@
     <el-col :xs="8" :sm="12" :lg="4">
       <el-checkbox v-model="showWhitelist" @change="showWhitelistUser">白名单用户</el-checkbox>
     </el-col>
+    <el-col :xs="8" :sm="12" :lg="4">
+      <el-checkbox v-model="showWhitelist" @change="showTrustedUser">Trusted用户</el-checkbox>
+    </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
       <el-input
         class="filter-item"
@@ -45,6 +48,11 @@
     <el-table-column align="center" prop="whitelist" width="60" label="白名单">
       <template slot-scope="scope">
         <el-switch slot="reference" :value="scope.row.whitelist" active-color="#42b983" @change="handleWhitelistUser(scope.row)"></el-switch>
+      </template>
+    </el-table-column>
+    <el-table-column align="center" prop="trusted" width="60" label="免审核">
+      <template slot-scope="scope">
+        <el-switch slot="reference" :value="scope.row.trusted" active-color="#42b983" @change="handleTrustUser(scope.row)"></el-switch>
       </template>
     </el-table-column>
     <el-table-column align="center" label="禁用状态" width="60">
@@ -258,8 +266,8 @@
 </template>
 
   <script>
-  import { fetchUserList, fetchAdminUser, fetchWhitelistUser, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
-  import { frozenUser, adminUser, whitelistUser, debugUser, searchUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
+  import { fetchUserList, fetchAdminUser, fetchWhitelistUser, fetchTrustedUser, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
+  import { frozenUser, adminUser, whitelistUser, trustUser, debugUser, searchUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
   import { updateInvoiceIssued } from '@/api/finance'
   import clip from '@/utils/clipboard'
   import moment from 'moment'
@@ -531,6 +539,25 @@
               this.fetchTableData()
           }
       },
+      showTrustedUser(value) {
+        this.loading = true
+        if(value) {
+          fetchTrustedUser()
+              .then(res => {
+                if(res.data) {
+                  this.loading = false
+                  this.tableData = this.formatData(res.data)
+                }
+              })
+              .catch(err => {
+                this.loading = false
+                this.tableData = []
+                console.log(err)
+              })
+        } else {
+          this.fetchTableData()
+        }
+      },
       formatData(data) {
         const temp = [...data]
         temp.forEach(item => {
@@ -643,6 +670,28 @@
                   this.loading = false
                   console.log(err)
               })
+      },
+      handleTrustUser(user) {
+        this.loading = true
+        trustUser({
+          uid: user.uid,
+          trusted: !user.trusted
+        })
+            .then(res => {
+              this.loading = false
+              this.$message({
+                type: 'success',
+                message: '操作成功'
+              })
+              this.tableData.forEach(item => {
+                if(item.uid === user.uid)
+                  item.trusted = !item.trusted
+              })
+            })
+            .catch(err => {
+              this.loading = false
+              console.log(err)
+            })
       },
       handleSearch() {
         this.searchValue = trim(this.searchValue)
