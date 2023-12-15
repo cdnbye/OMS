@@ -43,7 +43,7 @@ export default {
     monthlyPackage: 'Monthly Plan',
     expenditure: 'Order & Costs',
     order: 'Order History',
-    expenses: 'Expenditure Trends',
+    expenses: 'Expenditure Trend',
     invitation: 'Affiliates',
     p2pConfig: 'P2P Setting',
     edit: 'edit',

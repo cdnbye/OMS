@@ -18,13 +18,27 @@ export default {
   data() {
     return {
       currentRole: '',
-      loading: true,
+      loading: false,
       countryData: [],
       total: 0,
     }
   },
   mounted() {
+    if (!this.$route.meta.global) {
+      this.$store.dispatch('toggleSwitchDomain', true)
+    }
     this.fetchData()
+  },
+  beforeDestroy() {
+    this.$store.dispatch('toggleSwitchDomain', false)
+  },
+  watch: {
+    currentDomain: function () {
+      this.currentRole = ''
+      this.countryData = []
+      this.total = 0
+      this.fetchData()
+    }
   },
   computed: {
     ...mapGetters([
@@ -34,6 +48,7 @@ export default {
   },
   methods: {
     fetchData() {
+      this.loading = true
       if (!this.roles.includes('admin')) {
         fetchGeoDis(getID(), this.$route.meta.global ? 0 :this.currentDomain.id, 'country').then(res => {
           const data = res.data

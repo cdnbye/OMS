@@ -3,7 +3,8 @@
     <vuevectormap
         ref="jvm"
         width="100%"
-        height="900px"
+        height="850px"
+        :zoomButtons="false"
         :markers="markers"
         :markerStyle="markerStyle"
         :visualizeData="visualizeData"
@@ -16,6 +17,7 @@
 <script>
 import { getItem } from "@/utils/storage";
 import { LOCATION } from '@/constant';
+
 export default {
   name: 'WorldMap',
   props: {
@@ -68,18 +70,26 @@ export default {
   mounted() {
     this.map = this.$refs.jvm.map;
   },
+  beforeDestroy() {
+    this._map = null
+    window.removeEventListener('resize', this.resize)
+  },
   methods: {
+    resize(map) {
+      if (this._map){
+        this._map.updateSize()
+      }
+    },
     loaded(map) {
-      window.addEventListener('resize', () => {
-        map.updateSize()
-      })
+      this._map = map
+      window.addEventListener('resize', this.resize)
     },
     regionTooltipShow(event, tooltip, code) {
       if (!this.values[code] || this.total === 0) return
       const value = this.values[code]
       tooltip.text(
-          `<p>${tooltip.text()}: ${value}</p>` +
-          `<p>Percent: ${(value/this.total*100).toFixed(2)}%</p>`,
+          `<div style="text-align: center"><p>${tooltip.text()}: ${value}</p>` +
+          `<p>${(value/this.total*100).toFixed(2)}%</p></div>`,
           true
       )
     },
