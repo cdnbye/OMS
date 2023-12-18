@@ -9,7 +9,7 @@ export function fetchHostNum() {
   })
 }
 
-// 获取域名列表
+// 获取host列表
 export function fetchDomain(page, pageSize, order, filters, platform) {
   let url = `host?page=${page}&page_size=${pageSize}&order=${order}`
   if (platform) {
@@ -23,6 +23,19 @@ export function fetchDomain(page, pageSize, order, filters, platform) {
     url,
     method: 'get'
   })
+}
+
+// 获取所有域名列表
+export function fetchDomainList(page, pageSize, filters) {
+    let url = `host/domains?page=${page}&page_size=${pageSize}`
+    filters.forEach(item => {
+        if(item.value)
+            url += `&${item.name}=${item.value}`
+    })
+    return request({
+        url,
+        method: 'get'
+    })
 }
 
 // 获取正在审核域名列表
@@ -79,18 +92,15 @@ export function debugDomain(data) {
     })
 }
 
-// 查找域名
-export function searchHost(host) {
-  return request({
-    url: `host/search?keywords=${host}`,
-    method: 'get'
-  })
-}
-
 // 获取用户列表
-export function fetchUserList(page, pageSize, order) {
+export function fetchUserList(page, pageSize, order, filters) {
+  let url = `user?page=${page}&page_size=${pageSize}&order=${order}`;
+  filters.forEach(item => {
+      if(item.value)
+          url += `&${item.name}=${item.value}`
+  })
   return request({
-    url: `user?page=${page}&page_size=${pageSize}&order=${order}`,
+    url,
     method: 'get'
   })
 }
@@ -141,30 +151,6 @@ export function shadowDomain(data) {
         url: `user/user_id/${getID()}/shadow_domain`,
         method: 'post',
         data,
-    })
-}
-
-// 管理员权限用户列表
-export function fetchAdminUser() {
-  return request({
-    url: `user/admin`,
-    method: 'get'
-  })
-}
-
-// 白名单用户列表
-export function fetchWhitelistUser() {
-    return request({
-        url: `user/whitelist`,
-        method: 'get'
-    })
-}
-
-// rusted用户列表
-export function fetchTrustedUser() {
-    return request({
-        url: `user/trusted`,
-        method: 'get'
     })
 }
 

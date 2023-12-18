@@ -41,3 +41,14 @@ export function recharge(currency) {
             })
     })
 }
+
+export function showRechargeTip(currency) {
+    Vue.prototype.$messageBox.confirm(i18n.t('package.rechargeTip'), 'Tip', {
+        confirmButtonText: i18n.t('myInfo.recharge'),
+        cancelButtonText: i18n.t('common.cancel')
+    })
+        .then(() => {
+            recharge(currency)
+        })
+        .catch(() => {})
+}

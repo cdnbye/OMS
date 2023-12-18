@@ -99,14 +99,6 @@ export function debugUser(data) {
   })
 }
 
-// 查找用户
-export function searchUser(mail) {
-  return request({
-    url: `user/search?keywords=${mail}`,
-    method: 'get'
-  })
-}
-
 // 用户剩余付费流量变动
 export function userTrafficChange(data) {
   return request({

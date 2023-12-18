@@ -157,7 +157,6 @@ export default {
     checkinFail: 'Failed, please try again!',
     invite: 'Invite friends get Commission',
     bonus: 'Get 5$ Bonus',
-    rechargeBonus: 'Add funds receive 1% reward',
     changeUTC: 'TimeZone',
     trafficUseOut: 'You have run out of available traffic, please go to purchase the traffic package.',
     onlinesTip: 'P2P only works on browsers that support WebRTC Data Channels. On browsers that don’t have such support, P2P will be automatically disabled and fallback to native playback. Those unsupported devices will not have any analytics collected from them, which can cause some discrepancy between the numbers that you see on your own analytics systems and here. This discrepancy is expected and will vary based on the % of unsupported devices your end-users use.',
@@ -324,8 +323,9 @@ export default {
     totalTraffic: 'Total Traffic: ',
     resetAfter: 'Reset After',
     createOrder: 'Create Order',
-    useBalance: 'Use balance',
+    useBalance: 'Use Account Funds',
     autoRenew: 'Automatic renewal when account balance is sufficient',
+    rechargeTip: 'Add funds first, then make your purchase to receive a 1% of your added funds as bonus!',
   },
   order: {
     createTime: 'Date',

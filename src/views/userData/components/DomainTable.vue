@@ -7,7 +7,7 @@
           prefix-icon="el-icon-search"
           placeholder="请输入域名"
           v-model="searchValue"
-          @keyup.enter.native="handleSearch"/>
+          @keyup.enter.native="keywordsChange"/>
     </el-col>
     <el-col :xs="12" :sm="6" :lg="3">
       <el-select v-model="selectValue" @change="selectChange" class="filter-item">
@@ -135,7 +135,7 @@
 </template>
 
   <script>
-  import { fetchDomain, blockDomain, whiteDomain, debugDomain, searchHost } from '@/api/userDomain'
+  import { fetchDomain, blockDomain, whiteDomain, debugDomain } from '@/api/userDomain'
   import { mapGetters } from 'vuex'
   import { getID } from '@/utils/auth'
 
@@ -153,30 +153,6 @@
           page: 1,
           pageSize: 10
         },
-
-        filters: [
-          {
-            name: 'isvalid',
-            value: true
-          },
-          {
-            name: 'blocked',
-            value: false
-          },
-          {
-            name: 'whitelist',
-            value: false
-          },
-          {
-            name: 'native',
-            value: false
-          },
-          {
-              name: 'debug',
-              value: false
-          },
-        ],
-
         searchValue: '',
         selectValue: 'num',
         selectOptions: [
@@ -228,10 +204,8 @@
       ])
     },
     mounted() {
+      this.resetFilters()
       this.fetchTableData()
-      // this.timmer = setInterval(() => {
-      //     this.fetchTableData()
-      // }, 30000)
     },
     methods: {
       onEmailClick(email) {
@@ -377,6 +351,14 @@
           })
           this.fetchTableData()
       },
+      keywordsChange(e) {
+        const host = e.target.value.trim()
+        this.filters.forEach(item => {
+          if(item.name === 'keywords')
+            item.value = host || false
+        })
+        this.fetchTableData()
+      },
       formatData(data) {
         data.forEach(item => {
           if(item.p2p_month) {
@@ -399,9 +381,11 @@
         fetchDomain(page, pageSize, order, filters, platform).then(res => {
           this.loading = false
           this.tableData = this.formatData(res.data)
+          this.resetFilters()
         }).catch(err => {
           this.tableData = []
           this.loading = false
+          this.resetFilters()
         })
       },
       handleSizeChange(pageSize) {
@@ -414,20 +398,6 @@
       },
       selectChange(val) {
         this.fetchTableData()
-      },
-      handleSearch(e){
-        const host = e.target.value.trim()
-        if(host) {
-          searchHost(host).then(res => {
-            if(this.showValid) {
-              this.tableData = res.data.filter(item => item.isvalid)
-            } else {
-              this.tableData = [...res.data]
-            }
-          })
-        } else {
-          this.fetchTableData()
-        }
       },
       handlePlayUrl(val) {
         let url = val.play_url
@@ -451,10 +421,35 @@
             },
           }
         })
+      },
+      resetFilters() {
+        this.filters = [
+          {
+            name: 'isvalid',
+            value: true
+          },
+          {
+            name: 'blocked',
+            value: false
+          },
+          {
+            name: 'whitelist',
+            value: false
+          },
+          {
+            name: 'native',
+            value: false
+          },
+          {
+            name: 'debug',
+            value: false
+          },
+          {
+            name: 'keywords',
+            value: false
+          },
+        ]
       }
     },
-    beforeDestroy() {
-        clearInterval(this.timmer)
-    }
   }
   </script>

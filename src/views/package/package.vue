@@ -90,6 +90,7 @@
 import { fetchPackage, createOrder } from '@/api/user/package'
 import { mapGetters } from 'vuex'
 import { getID } from '@/utils/auth'
+import { showRechargeTip } from '@/utils/recharge'
 
 export default {
   name: 'Package',
@@ -155,6 +156,12 @@ export default {
             this.packages.forEach(item => {
               this.selectPackage.en.push({...item, amount: 0})
             })
+          }
+          // 充值提示
+          if (this.balance === 0) {
+            this.timer = setTimeout(() => {
+              showRechargeTip(this.currency)
+            }, 3000)
           }
         })
         .catch(err => {
@@ -238,6 +245,9 @@ export default {
                 this.handleCreateOrder()
             })
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer)
   }
 }
 </script>

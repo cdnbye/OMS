@@ -60,6 +60,7 @@ export default {
         { url: 'http://38.180.37.144:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'kz-1', version: '' },
         { url: 'http://78.111.102.162:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'br-1', version: '' },
         { url: 'http://176.97.69.27:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ih-au-1', version: '' },
+        { url: 'http://38.180.95.224:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ih-hk-1', version: '' },
       ]
     }
   },

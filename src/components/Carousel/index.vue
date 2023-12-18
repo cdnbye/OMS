@@ -20,12 +20,6 @@
           {{ $t('dashboard.bonus') }}
         </el-button>
       </el-carousel-item>
-      <el-carousel-item>
-        <el-button size="mini" @click="handleBonus"
-                   style="font-size: medium; color: goldenrod">
-          {{ $t('dashboard.rechargeBonus') }}
-        </el-button>
-      </el-carousel-item>
     </el-carousel>
 
   </div>

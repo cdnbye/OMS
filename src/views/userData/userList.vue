@@ -27,7 +27,7 @@
         prefix-icon="el-icon-search"
         placeholder="请输入邮箱"
         v-model="searchValue"
-        @keyup.enter.native="handleSearch"/>
+        @keyup.enter.native="keywordsChange"/>
     </el-col>
   </el-row>
   <el-table
@@ -266,8 +266,8 @@
 </template>
 
   <script>
-  import { fetchUserList, fetchAdminUser, fetchWhitelistUser, fetchTrustedUser, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
-  import { frozenUser, adminUser, whitelistUser, trustUser, debugUser, searchUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
+  import { fetchUserList, updateUserPlan, customizeUserPlan } from '@/api/userDomain'
+  import { frozenUser, adminUser, whitelistUser, trustUser, debugUser, userTrafficChange, updateBalance, updateCommissionInfo } from '@/api/user'
   import { updateInvoiceIssued } from '@/api/finance'
   import clip from '@/utils/clipboard'
   import moment from 'moment'
@@ -418,6 +418,7 @@
       }
     },
     mounted() {
+      this.resetFilters()
       const email = this.$route.query.email
       if (email) {
         this.searchValue = email
@@ -502,61 +503,37 @@
         })
       },
       showAdminUser(value) {
+        console.warn(value)
         this.loading = true
-        if(value) {
-          fetchAdminUser()
-            .then(res => {
-              if(res.data) {
-                this.loading = false
-                this.tableData = this.formatData(res.data)
-              }
-            })
-            .catch(err => {
-              this.loading = false
-              this.tableData = []
-              console.log(err)
-            })
-        } else {
-          this.fetchTableData()
-        }
+        this.filters.forEach(item => {
+          if(item.name === 'admin')
+            item.value = value
+        })
+        this.fetchTableData()
       },
       showWhitelistUser(value) {
-          this.loading = true
-          if(value) {
-              fetchWhitelistUser()
-                  .then(res => {
-                      if(res.data) {
-                          this.loading = false
-                          this.tableData = this.formatData(res.data)
-                      }
-                  })
-                  .catch(err => {
-                      this.loading = false
-                      this.tableData = []
-                      console.log(err)
-                  })
-          } else {
-              this.fetchTableData()
-          }
+        this.loading = true
+        this.filters.forEach(item => {
+          if(item.name === 'whitelist')
+            item.value = value
+        })
+        this.fetchTableData()
       },
       showTrustedUser(value) {
         this.loading = true
-        if(value) {
-          fetchTrustedUser()
-              .then(res => {
-                if(res.data) {
-                  this.loading = false
-                  this.tableData = this.formatData(res.data)
-                }
-              })
-              .catch(err => {
-                this.loading = false
-                this.tableData = []
-                console.log(err)
-              })
-        } else {
-          this.fetchTableData()
-        }
+        this.filters.forEach(item => {
+          if(item.name === 'trusted')
+            item.value = value
+        })
+        this.fetchTableData()
+      },
+      keywordsChange(e) {
+        const email = e.target.value.trim()
+        this.filters.forEach(item => {
+          if(item.name === 'keywords')
+            item.value = email || false
+        })
+        this.fetchTableData()
       },
       formatData(data) {
         const temp = [...data]
@@ -567,17 +544,19 @@
         })
         return temp
       },
-      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue) {
+      fetchTableData(page=this.tableParam.page, pageSize=this.tableParam.pageSize, order=this.selectValue, filters=this.filters) {
         this.loading = true
-        fetchUserList(page, pageSize, order).then(res => {
+        fetchUserList(page, pageSize, order, filters).then(res => {
           if(res.data) {
             this.tableData = this.formatData(res.data)
           }
           this.loading = false
+          this.resetFilters()
         }).catch(err => {
           this.tableData = []
           this.loading = false
           console.log(err)
+          this.resetFilters()
         })
       },
       handleFrozenUser(user) {
@@ -695,18 +674,7 @@
       },
       handleSearch() {
         this.searchValue = trim(this.searchValue)
-        if(this.searchValue) {
-          searchUser(this.searchValue)
-            .then(res => {
-              this.tableData = this.formatData(res.data)
-            })
-            .catch(err => {
-              this.tableData = []
-              console.log(err)
-            })
-        } else {
-          this.fetchTableData()
-        }
+        this.fetchTableData()
       },
       handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize
@@ -835,6 +803,30 @@
           return `
           ${json.subject}  类型: ${json.type}  流量: ${json.traffic}TB  价格: ${json.price}  币种: ${json.currency}
           `
+      },
+      resetFilters() {
+        this.filters = [
+          {
+            name: 'whitelist',
+            value: false
+          },
+          {
+            name: 'frozen',
+            value: false
+          },
+          {
+            name: 'admin',
+            value: false
+          },
+          {
+            name: 'trusted',
+            value: false
+          },
+          {
+            name: 'keywords',
+            value: false
+          },
+        ]
       }
     },
   }

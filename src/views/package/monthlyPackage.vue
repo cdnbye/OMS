@@ -87,6 +87,7 @@
 import { fetchMonthlyPackage, createOrder } from '@/api/user/package'
 import { mapGetters } from 'vuex'
 import { getID } from '@/utils/auth'
+import { showRechargeTip } from '@/utils/recharge'
 
 export default {
   name: 'Package',
@@ -155,6 +156,12 @@ export default {
               this.selectPackage.en.push({...item})
             })
           }
+          // 充值提示
+          if (this.balance === 0) {
+            this.timer = setTimeout(() => {
+              showRechargeTip(this.currency)
+            }, 3000)
+          }
         })
         .catch(err => {
           console.log(err)
@@ -215,7 +222,9 @@ export default {
       }
       this.handleCreateOrder(data, realPrice)
     },
-
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer)
   }
 }
 </script>

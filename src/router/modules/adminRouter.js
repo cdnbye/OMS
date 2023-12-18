@@ -104,6 +104,15 @@ export default [
                 }
             },
             {
+                path: 'domains',
+                component: () => import('@/views/userData/DomainList'),
+                name: 'DomainList',
+                meta: {
+                    title: '所有域名',
+                    roles: ['admin']
+                }
+            },
+            {
                 path: 'invoices',
                 component: () => import('@/views/userData/invoiceList'),
                 name: 'invoices',
