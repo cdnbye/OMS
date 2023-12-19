@@ -5,7 +5,7 @@
       <el-input
           class="filter-item"
           prefix-icon="el-icon-search"
-          placeholder="请输入域名"
+          placeholder="请输入域名或UID"
           v-model="searchValue"
           @keyup.enter.native="keywordsChange"/>
     </el-col>
@@ -352,11 +352,18 @@
           this.fetchTableData()
       },
       keywordsChange(e) {
-        const host = e.target.value.trim()
-        this.filters.forEach(item => {
-          if(item.name === 'keywords')
-            item.value = host || false
-        })
+        const hostOrUid = e.target.value.trim()
+        if (!isNaN(Number(hostOrUid))) {
+          this.filters.forEach(item => {
+            if(item.name === 'uid')
+              item.value = hostOrUid
+          })
+        } else {
+          this.filters.forEach(item => {
+            if(item.name === 'keywords')
+              item.value = hostOrUid || false
+          })
+        }
         this.fetchTableData()
       },
       formatData(data) {
@@ -446,6 +453,10 @@
           },
           {
             name: 'keywords',
+            value: false
+          },
+          {
+            name: 'uid',
             value: false
           },
         ]

@@ -42,6 +42,7 @@ export default {
         { url: 'https://ru.cdnbye.com/info', value: 0, name: '莫斯科' },
         { url: 'https://us.peerhub.net:2096/info', value: 0, name: '美国' },
         { url: 'https://nl.cdnbye.com/info', value: 0, name: '荷兰' },
+        { url: 'https://za.cdnbye.com/info', value: 0, name: '南非' },
         { url: 'https://signal.swarmcloud.net/info', value: 0, name: '上海' },
         { url: 'https://pk.swarmcloud.net/info', value: 0, name: '北京' },
         { url: 'https://cd.swarmcloud.net/info', value: 0, name: '成都' },

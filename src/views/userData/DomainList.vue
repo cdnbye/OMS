@@ -5,7 +5,7 @@
         <el-input
             class="filter-item"
             prefix-icon="el-icon-search"
-            placeholder="请输入域名"
+            placeholder="请输入域名或UID"
             v-model="searchValue"
             @keyup.enter.native="keywordsChange"/>
       </el-col>

@@ -21,13 +21,21 @@
     <el-col :xs="8" :sm="12" :lg="4">
       <el-checkbox v-model="showWhitelist" @change="showTrustedUser">Trusted用户</el-checkbox>
     </el-col>
+    <el-col :xs="12" :sm="6" :lg="3">
+      <el-input
+          class="filter-item"
+          prefix-icon="el-icon-search"
+          placeholder="请输入UID"
+          v-model="searchUid"
+          @keyup.enter.native="uidChange"/>
+    </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
       <el-input
-        class="filter-item"
-        prefix-icon="el-icon-search"
-        placeholder="请输入邮箱"
-        v-model="searchValue"
-        @keyup.enter.native="keywordsChange"/>
+          class="filter-item"
+          prefix-icon="el-icon-search"
+          placeholder="请输入邮箱"
+          v-model="searchValue"
+          @keyup.enter.native="(e) => {keywordsChange(e.target.value.trim())}"/>
     </el-col>
   </el-row>
   <el-table
@@ -302,6 +310,7 @@
         showAdmin: false,
         showWhitelist: false,
         searchValue: '',
+        searchUid: '',
         selectValue: 'updated_at',
         selectOptions: [
           {
@@ -422,7 +431,7 @@
       const email = this.$route.query.email
       if (email) {
         this.searchValue = email
-        this.handleSearch()
+        this.keywordsChange(email)
       } else {
         this.fetchTableData()
       }
@@ -527,8 +536,17 @@
         })
         this.fetchTableData()
       },
-      keywordsChange(e) {
-        const email = e.target.value.trim()
+      uidChange(e) {
+        const uid = e.target.value.trim()
+        if (!isNaN(Number(uid))) {
+          this.filters.forEach(item => {
+            if(item.name === 'uid')
+              item.value = uid
+          })
+        }
+        this.fetchTableData()
+      },
+      keywordsChange(email) {
         this.filters.forEach(item => {
           if(item.name === 'keywords')
             item.value = email || false
@@ -671,10 +689,6 @@
               this.loading = false
               console.log(err)
             })
-      },
-      handleSearch() {
-        this.searchValue = trim(this.searchValue)
-        this.fetchTableData()
       },
       handleSizeChange(pageSize) {
         this.tableParam.pageSize = pageSize
@@ -824,6 +838,10 @@
           },
           {
             name: 'keywords',
+            value: false
+          },
+          {
+            name: 'uid',
             value: false
           },
         ]
