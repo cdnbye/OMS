@@ -39,7 +39,6 @@ export default {
         { url: 'http://62.210.122.93:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'fr', accessToken: '&dfgd$15~', version: '' },
         { url: 'http://42.193.53.102:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'cd', accessToken: '&dfgd$15~', version: '' },
         { url: 'http://49.233.52.182:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'pk', accessToken: '&dfgd$15~', version: '' },
-        { url: 'http://51.15.8.17:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'op-nl-1', accessToken: '&dfgd$15~', version: '' },
         { url: 'http://208.87.242.157:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'op-us-1', version: '' },
         { url: 'http://91.193.182.168:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ru-1', version: '' },
         { url: 'http://38.180.105.134:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'tr-1', version: '' },
@@ -62,6 +61,7 @@ export default {
         { url: 'http://176.97.69.27:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ih-au-1', version: '' },
         { url: 'http://38.180.95.224:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'ih-hk-1', version: '' },
         { url: 'http://94.156.93.17:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'za-1', version: '' },
+        { url: 'http://217.195.200.133:8080', failed: false, bandwidth: 0, uplink: 0, workers: 0, full: false, name: 'uae-1', version: '' },
       ]
     }
   },

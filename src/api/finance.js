@@ -41,3 +41,16 @@ export function fetchIncomeTrend() {
         method: 'get'
     })
 }
+
+// 所有交易
+export function fetchTrades(page, pageSize, filters) {
+    let url = `finance/trades?page=${page}&page_size=${pageSize}`
+    filters.forEach(item => {
+        if(item.value)
+            url += `&${item.name}=${item.value}`
+    })
+    return request({
+        url,
+        method: 'get',
+    })
+}

@@ -569,12 +569,10 @@
             this.tableData = this.formatData(res.data)
           }
           this.loading = false
-          this.resetFilters()
         }).catch(err => {
           this.tableData = []
           this.loading = false
           console.log(err)
-          this.resetFilters()
         })
       },
       handleFrozenUser(user) {

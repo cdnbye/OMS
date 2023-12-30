@@ -82,7 +82,8 @@ export default [
                 name: 'Domain',
                 meta: {
                     title: 'domain',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    noCache: true
                 }
             },
             {
@@ -91,7 +92,8 @@ export default [
                 name: 'Review',
                 meta: {
                     title: '待审核域名',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    noCache: true
                 }
             },
             {
@@ -100,7 +102,8 @@ export default [
                 name: 'List',
                 meta: {
                     title: 'list',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    noCache: true
                 }
             },
             {
@@ -109,7 +112,18 @@ export default [
                 name: 'DomainList',
                 meta: {
                     title: '所有域名',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    noCache: true
+                }
+            },
+            {
+                path: 'trades',
+                component: () => import('@/views/historyOrder/admin/OrderTable'),
+                name: 'Trades',
+                meta: {
+                    title: '所有交易',
+                    roles: ['admin'],
+                    noCache: true
                 }
             },
             {
@@ -118,7 +132,8 @@ export default [
                 name: 'invoices',
                 meta: {
                     title: '待开发票',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    noCache: true
                 }
             },
         ]

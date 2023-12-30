@@ -64,7 +64,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 20px" layout="prev, pager, next" :total="total" :page-size="pageSize" :current-page="currentPage" @current-change="cueerntPageChange"></el-pagination>
+    <el-pagination style="margin-top: 20px" layout="prev, pager, next" :total="total" :page-size="pageSize" :current-page="currentPage" @current-change="currentPageChange"></el-pagination>
   </div>
 </template>
 
@@ -161,7 +161,7 @@ export default {
         }
         return status
     },
-    cueerntPageChange(current) {
+    currentPageChange(current) {
       this.currentPage = current
       this.handleGetOrder()
     },

@@ -232,7 +232,7 @@ export default {
             this.loading = false
           })
     },
-    tableFilter(filter) {
+    tableFilter() {
       this.fetchTableData()
     },
     showWhitelistChange(value) {
@@ -283,11 +283,9 @@ export default {
       fetchDomainList(page, pageSize, filters).then(res => {
         this.loading = false
         this.tableData = res.data
-        this.resetFilters()
       }).catch(err => {
         this.tableData = []
         this.loading = false
-        this.resetFilters()
       })
     },
     handleSizeChange(pageSize) {

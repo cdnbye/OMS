@@ -388,11 +388,9 @@
         fetchDomain(page, pageSize, order, filters, platform).then(res => {
           this.loading = false
           this.tableData = this.formatData(res.data)
-          this.resetFilters()
         }).catch(err => {
           this.tableData = []
           this.loading = false
-          this.resetFilters()
         })
       },
       handleSizeChange(pageSize) {
