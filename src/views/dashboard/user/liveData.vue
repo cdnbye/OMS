@@ -100,10 +100,11 @@ export default {
   mounted() {
     this.$store.dispatch('toggleSwitchDomain', true)
     // console.warn(`hostId ${this.$route.params.hostId}`)
-    const domainInfo = this.$route.params.domainInfo;
+    const { params } = this.$route
+    const domainInfo = params.domainInfo;
     if(domainInfo && domainInfo.id && domainInfo.uid) {
-      this.loopGetData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
-      this.getDisData(domainInfo.uid, domainInfo.id, this.$route.params.hostId)
+      this.loopGetData(domainInfo.uid, domainInfo.id, params.hostId)
+      this.getDisData(domainInfo.uid, domainInfo.id, params.hostId)
       store.dispatch('setCurrentDomain', domainInfo)
     } else {
       this.getUserDomain()
@@ -167,7 +168,7 @@ export default {
         })
     },
     getDisData(uid, id, hostID) {
-        if (id < 0) return
+        // if (id < 0) return
         fetchDisData(uid, id, 'version', hostID).then(res => {
           const data = res.data.data
           if(data) {

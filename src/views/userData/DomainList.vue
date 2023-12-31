@@ -84,6 +84,7 @@
 
       <el-table-column label="action" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row)">监控</el-button>
           <el-button type="primary" size="mini" @click="handlePlayUrl(scope.row)">介绍</el-button>
         </template>
       </el-table-column>
@@ -106,6 +107,7 @@
 <script>
 import { fetchDomainList, blockDomain, whiteDomain, debugDomain } from '@/api/userDomain'
 import { mapGetters } from 'vuex'
+import { getID } from '@/utils/auth'
 
 export default {
   name: 'DomainList',
@@ -298,6 +300,21 @@ export default {
     },
     selectChange(val) {
       this.fetchTableData()
+    },
+    handleCheckDetail(val) {
+      // console.warn(JSON.stringify(val))
+      this.$router.push({
+        name: 'UserLiveData',
+        params: {
+          hostId: val.id,
+          domainInfo: {
+            uid: getID(),
+            id: -1,
+            native: val.native,
+            domain: val.domain,
+          },
+        }
+      })
     },
     handlePlayUrl(val) {
       let url = val.play_url
