@@ -117,16 +117,6 @@ export default [
                 }
             },
             {
-                path: 'trades',
-                component: () => import('@/views/historyOrder/admin/OrderTable'),
-                name: 'Trades',
-                meta: {
-                    title: '所有交易',
-                    roles: ['admin'],
-                    noCache: true
-                }
-            },
-            {
                 path: 'invoices',
                 component: () => import('@/views/userData/invoiceList'),
                 name: 'invoices',
@@ -150,6 +140,16 @@ export default [
             roles: ['admin']
         },
         children: [
+            {
+                path: 'trades',
+                component: () => import('@/views/historyOrder/admin/OrderTable'),
+                name: 'Trades',
+                meta: {
+                    title: '所有交易',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            },
             {
                 path: 'page',
                 component: () => import('@/views/financeInfo/admin/Global'),

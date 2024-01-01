@@ -47,7 +47,7 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" placeholder="月数" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
+                  <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" controls-position="right" size="small" :min="0" :max="item.type === 'monthly_500GB' ? 1 : 12"></el-input-number>
                   <el-button :disabled="item.amount===0" type="warning" @click="showDialog(item)">{{item.upgrade ? '升級' : '購買'}}</el-button>
                 </div>
               </div>
@@ -71,7 +71,7 @@
                   </span>
                 </div>
                 <div class="count">
-                  <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" placeholder="months" controls-position="right" size="small" :min="0" :max="12"></el-input-number>
+                  <el-input-number v-if="!item.upgrade" v-model="item.amount" style="margin-right: 10px" controls-position="right" size="small" :min="0" :max="item.type === 'monthly_500GB' ? 1 : 12"></el-input-number>
                   <el-button :disabled="item.amount===0" type="warning" @click="showDialog(item)">{{item.upgrade ? 'Upgrade' :  'Buy'}}</el-button>
                 </div>
               </div>

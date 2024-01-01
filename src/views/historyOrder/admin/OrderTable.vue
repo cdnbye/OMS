@@ -48,6 +48,7 @@
     </el-table-column>
 
       <el-table-column align="center" prop="order_id" label="ID"></el-table-column>
+      <el-table-column align="center" prop="uid" label="UID"></el-table-column>
       <el-table-column align="center" prop="created_at" :label="$t('order.createTime')"></el-table-column>
       <el-table-column align="center" prop="type" :label="$t('order.type')" :formatter="formatterType"></el-table-column>
       <el-table-column align="center" prop="payment" :label="$t('order.payMethod')" :formatter="formatterPayMethod"></el-table-column>

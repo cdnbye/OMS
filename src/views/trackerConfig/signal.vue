@@ -44,7 +44,7 @@ export default {
         { url: 'https://nl.cdnbye.com/info', value: 0, name: '荷兰' },
         { url: 'https://za.cdnbye.com/info', value: 0, name: '南非' },
         { url: 'https://signal.swarmcloud.net/info', value: 0, name: '上海' },
-        { url: 'https://pk.swarmcloud.net/info', value: 0, name: '北京' },
+        { url: 'https://pk.p2pengine.net:8089/info', value: 0, name: '北京' },
         { url: 'https://cd.swarmcloud.net/info', value: 0, name: '成都' },
         { url: 'http://43.132.190.148/info', value: 0, name: 'cdnbye-1' },
         { url: 'http://43.134.199.138/info', value: 0, name: 'cdnbye-2' },
