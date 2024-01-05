@@ -44,7 +44,11 @@
     style="width: 100%">
     <el-table-column align="center" prop="uid" width="50" label="ID"></el-table-column>
     <!--<el-table-column align="center" prop="username" label="用户名"></el-table-column>-->
-    <el-table-column align="center" prop="email" width="150" label="邮箱"></el-table-column>
+    <el-table-column align="center" prop="email" width="150" label="邮箱">
+      <template slot-scope="scope">
+        <a @click="copy(scope.row.email, $event)">{{ scope.row.email }}</a>
+      </template>
+    </el-table-column>
     <el-table-column align="center" prop="reg_date" width="70" label="注册时间"></el-table-column>
 <!--    <el-table-column align="center" prop="checkin" label="最近签到时间"></el-table-column>-->
     <el-table-column align="center" prop="domain" label="域名" width="60"></el-table-column>
@@ -198,7 +202,7 @@
 
     <el-table-column label="passwd" align="center" class-name="small-padding fixed-width">
       <template slot-scope="scope">
-        <el-button type="primary" size="mini" @click="copyPassword(scope.row.raw_pass, $event)">Copy</el-button>
+        <el-button type="primary" size="mini" @click="copy(scope.row.raw_pass, $event)">Copy</el-button>
       </template>
     </el-table-column>
 
@@ -699,7 +703,7 @@
       selectChange() {
         this.fetchTableData()
       },
-      copyPassword(pw, event) {
+      copy(pw, event) {
           clip(pw, event)
       },
       handleEditPlan(item, keepDueTime) {

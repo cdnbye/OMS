@@ -54,7 +54,7 @@
     style="width: 100%">
     <el-table-column align="center" label="域名">
       <template slot-scope="scope">
-        <span><a @click="hostClick(scope.row.host)">{{scope.row.host}}</a></span>
+        <a @click="hostClick(scope.row.host)">{{scope.row.host}}</a>
       </template>
     </el-table-column>
     <el-table-column align="center" prop="num" label="人数"></el-table-column>
@@ -64,6 +64,7 @@
         <span><a @click="onEmailClick(scope.row.email)">{{scope.row.email}}</a></span>
       </template>
     </el-table-column>
+    <el-table-column align="center" prop="uid" label="UID"></el-table-column>
     <el-table-column align="center" label="是否绑定">
       <template slot-scope="scope">
         <span>{{ scope.row.isvalid ? '已绑定' : '未绑定' }}</span>
