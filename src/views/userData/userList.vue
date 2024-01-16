@@ -27,7 +27,7 @@
           prefix-icon="el-icon-search"
           placeholder="请输入UID"
           v-model="searchUid"
-          @keyup.enter.native="uidChange"/>
+          @keyup.enter.native="(e) => {uidChange(e.target.value.trim())}"/>
     </el-col>
     <el-col :xs="24" :sm="12" :lg="6">
       <el-input
@@ -433,9 +433,13 @@
     mounted() {
       this.resetFilters()
       const email = this.$route.query.email
+      const uid = this.$route.query.uid
       if (email) {
         this.searchValue = email
         this.keywordsChange(email)
+      } else if (uid) {
+        this.searchUid = uid
+        this.uidChange(uid)
       } else {
         this.fetchTableData()
       }
@@ -540,8 +544,7 @@
         })
         this.fetchTableData()
       },
-      uidChange(e) {
-        const uid = e.target.value.trim()
+      uidChange(uid) {
         if (!isNaN(Number(uid))) {
           this.filters.forEach(item => {
             if(item.name === 'uid')

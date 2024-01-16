@@ -33,7 +33,11 @@
           <span><a @click="hostClick(scope.row.domain)">{{scope.row.domain}}</a></span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="uid" label="UID"></el-table-column>
+      <el-table-column align="center" prop="uid" label="UID">
+        <template slot-scope="scope">
+          <span><a @click="onUidClick(scope.row.uid)">{{scope.row.uid}}</a></span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="是否绑定">
         <template slot-scope="scope">
           <span>{{ scope.row.isValid ? '已绑定' : '未绑定' }}</span>
@@ -350,7 +354,15 @@ export default {
           value: false
         },
       ]
-    }
+    },
+    onUidClick(uid) {
+      this.$router.push({
+        path: '/user/list',
+        query: {
+          uid,
+        }
+      })
+    },
   },
 }
 </script>
