@@ -53,6 +53,16 @@ export default [
                 }
             },
             {
+                path: '/geofly_all',
+                component: () => import('@/views/geofly'),
+                name: 'geofly_all',
+                meta: {
+                    title: '飞线图(All Zones)',
+                    roles: ['admin'],
+                    noCache: true
+                }
+            },
+            {
                 path: '/overall',
                 component: () => import('@/views/dashboard/admin/OverallData'),
                 name: 'OverallData',

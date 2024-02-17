@@ -21,7 +21,7 @@
       </el-checkbox>
       <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
-      <el-button type="primary" @click="handleBuy">{{ this.$t('common.ok') }}</el-button>
+      <el-button type="primary" @click="handleBuy" :loading="loading">{{ this.$t('common.ok') }}</el-button>
     </span>
     </el-dialog>
 
@@ -93,6 +93,7 @@ export default {
   name: 'Package',
   data() {
     return {
+      loading: false,
       dialogVisible: false,
       currency: '',
       packages: [],
@@ -171,8 +172,10 @@ export default {
       this.$router.push('/')
     },
     handleCreateOrder(data, realPrice) {
+      this.loading = true;
       createOrder(getID(), data)
         .then(res => {
+          this.loading = false;
           if (res.data.finished) {
             this.$router.push({
               path: '/',
@@ -193,6 +196,7 @@ export default {
           }
         })
         .catch(err => {
+          this.loading = false;
           console.log(err)
         })
     },

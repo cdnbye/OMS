@@ -11,7 +11,7 @@ import { getItem } from "@/utils/storage";
 import { LOCATION } from '@/constant'
 
 const SERVER_URLS = {
-  'd1': 'ws://localhost',
+  // 'd1': 'ws://localhost',
   'p1': 'wss://cn.cdnbye.com',
   'p3': 'wss://hk.swarmcloud.net',
   'p2': 'wss://tracker.hdtvcloud.com',
@@ -38,6 +38,7 @@ export default {
       flyLineTimer: null,
       resizing: false,
       resizingTimer: null,
+      flag: false,
     };
   },
   computed: {
@@ -47,18 +48,21 @@ export default {
     ]),
   },
   mounted() {
-    const loc = getItem(LOCATION)
-    if (this.profile.token) {
-      this.initScene(loc)
+    if (this.$route.path === '/geofly_all') {
+      this.initScene()
     } else {
-      this.$store.dispatch('getProfile').then(() => {
+      const loc = getItem(LOCATION)
+      if (this.profile.token) {
         this.initScene(loc)
-      })
+      } else {
+        this.$store.dispatch('getProfile').then(() => {
+          this.initScene(loc)
+        })
+      }
     }
   },
   methods: {
     initScene(loc) {
-      let serverUrl = `${SERVER_URLS[loc]}/flyline?uid=${getID()}&token=${this.profile.token}`
       const scene = new L7.Scene({
         id: 'map',
         logoVisible: false,
@@ -74,7 +78,6 @@ export default {
         defaultLanguage: this.language === 'en' ? 'en' : 'zh-Hant',
       });
       scene.map.addControl(language)
-      let flag = false;
       let flydata = [];
       const flyLine = new L7.LineLayer({ blend: 'normal' })
           .size(0.8)
@@ -90,7 +93,7 @@ export default {
             opacity: 0.6
           });
       const renderData = () => {
-        if (flag && !this.resizing) {
+        if (this.flag && !this.resizing) {
           // console.warn(`setData size ${flydata.length}`)
           flyLine.setData(flydata, {
             parser: {
@@ -101,7 +104,7 @@ export default {
               y1: 'lat2',
             }
           })
-          flag = false
+          this.flag = false
         }
       }
       const startTimer = (timeout) => {
@@ -125,36 +128,46 @@ export default {
 
       scene.on('loaded', () => {
         scene.addLayer(flyLine);
-
-        const wsOptions = {
-          // debug: true,
-          maxRetries: 5,
-          minReconnectionDelay: 5000, // 生成15到40秒的随机数
-          maxReconnectionDelay: 60*1000,
-        };
-        let ws = new ReconnectingWebSocket(serverUrl, undefined, wsOptions);
-        this.ws = ws;
-        ws.addEventListener('open', () => {
-          // console.info(`ws ${SERVER_URL} connection opened`);
-        })
-        ws.addEventListener('message', (e) => {
-          let data = e.data;
-          let msg
-          try {
-            msg = JSON.parse(data);
-          } catch (e) {
-            alert(data)
-            return
+        if (!loc) {
+          for (let loc of Object.keys(SERVER_URLS)) {
+            let serverUrl = `${SERVER_URLS[loc]}/flyline?uid=0&admin_token=RF9ix9jkZhdA`
+            this.createWS(serverUrl, flydata)
           }
-          const coords = this.convert(msg)
-          flydata.push(...coords)
-          if (flydata.length > MAX_LINES) {
-            flydata = flydata.slice(-MAX_LINES)
-          }
-          flag = true
-        })
+        } else {
+          let serverUrl = `${SERVER_URLS[loc]}/flyline?uid=${getID()}&token=${this.profile.token}`
+          this.createWS(serverUrl, flydata)
+        }
       });
       this.setupListener()
+    },
+    createWS(serverUrl, flydata) {
+      const wsOptions = {
+        // debug: true,
+        maxRetries: 5,
+        minReconnectionDelay: 5000, // 生成15到40秒的随机数
+        maxReconnectionDelay: 60*1000,
+      };
+      let ws = new ReconnectingWebSocket(serverUrl, undefined, wsOptions);
+      this.ws = ws;
+      ws.addEventListener('open', () => {
+        // console.info(`ws ${SERVER_URL} connection opened`);
+      })
+      ws.addEventListener('message', (e) => {
+        let data = e.data;
+        let msg
+        try {
+          msg = JSON.parse(data);
+        } catch (e) {
+          alert(data)
+          return
+        }
+        const coords = this.convert(msg)
+        flydata.push(...coords)
+        if (flydata.length > MAX_LINES) {
+          flydata = flydata.slice(-MAX_LINES)
+        }
+        this.flag = true
+      })
     },
     convert(msg) {
       // console.log(msg)
