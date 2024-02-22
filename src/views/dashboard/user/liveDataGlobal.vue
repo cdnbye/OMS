@@ -25,8 +25,9 @@
     import { mapGetters } from 'vuex'
     import { getID } from '@/utils/auth'
     import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
+    import { fetchUserGlobalData, fetchUserDisData } from '@/api/liveData'
     import { checkAlipayOrder, checkPaypalOrder, updateCryptoTrade } from '@/api/user/package'
-    import { fetchGlobalDomains } from '@/api/user/global'
+    import { fetchGlobalDomains, fetchUserGlobalDomains } from '@/api/user/global'
     import { formatTraffic, formatPieData } from '@/utils/format'
     import NoBindTip from '@/components/NoBindTip'
     import Carousel from '@/components/Carousel'
@@ -98,17 +99,49 @@
             ])
         },
         created() {
-            const uid = getID()
-            this.loopGetData(uid, 0)
-            this.getDisData(uid)
             this.checkPayResult()
         },
+      mounted() {
+        // console.warn(`hostId ${this.$route.params.hostId}`)
+        const { params } = this.$route
+        const domainInfo = params.domainInfo;
+        // console.warn(JSON.stringify(domainInfo))
+        // console.warn(JSON.stringify(params))
+        if(domainInfo && domainInfo.uid) {
+          this.loopGetData(domainInfo.uid, true)
+          this.getDisData(domainInfo.uid, true)
+        } else {
+          const uid = getID()
+          this.loopGetData(uid, 0)
+          this.getDisData(uid)
+        }
+      },
         beforeDestroy() {
             clearInterval(int)
         },
         methods: {
-            getDisData(uid) {
-              fetchGlobalDomains(uid).then(res => {
+            getDisData(uid, admin) {
+              let fn;
+              if (admin) {
+                fn = (type) => {
+                  return fetchUserDisData(uid, 0, type)
+                }
+              } else {
+                fn = (type, lang) => {
+                  return fetchDisData(uid, 0, type, lang)
+                }
+              }
+              let domainsFn;
+              if (admin) {
+                domainsFn = (uid) => {
+                  return fetchUserGlobalDomains(uid)
+                }
+              } else {
+                domainsFn = (uid) => {
+                  return fetchGlobalDomains(uid)
+                }
+              }
+              domainsFn(uid).then(res => {
                 const data = res.data
                 if(data) {
                   this.disData.domainData = formatPieData(data)
@@ -116,7 +149,7 @@
                   this.disData.domainData = [];
                 }
               })
-              fetchDisData(uid, 0, 'version').then(res => {
+              fn('version').then(res => {
                 const data = res.data.data
                 if(data) {
                   this.disData.versionData = formatPieData(data)
@@ -124,7 +157,7 @@
                   this.disData.versionData = [];
                 }
               })
-              fetchDisData(uid, 0, 'device').then(res => {
+              fn('device').then(res => {
                 const data = res.data.data
                 if(data) {
                   this.disData.deviceData = formatPieData(data)
@@ -132,7 +165,7 @@
                   this.disData.deviceData = [];
                 }
               })
-              fetchDisData(uid, 0, 'live').then(res => {
+              fn('live').then(res => {
                 const data = res.data.data
                 if(data) {
                   this.disData.liveData = formatPieData(data)
@@ -140,7 +173,7 @@
                   this.disData.liveData = [];
                 }
               })
-              fetchDisData(uid, 0, 'netType').then(res => {
+              fn('netType').then(res => {
                 const data = res.data.data
                 if(data) {
                   this.disData.netTypeData = formatPieData(data)
@@ -148,7 +181,7 @@
                   this.disData.netTypeData = [];
                 }
               })
-              fetchDisData(uid, 0, 'isp', undefined, this.language === 'en'?'en':'').then(res => {
+              fn('isp', this.language === 'en'?'en':'').then(res => {
                 const data = res.data.data
                 if(data) {
                   this.disData.ispData = formatPieData(data)
@@ -158,9 +191,18 @@
               })
             },
             formatTraffic,
-            getData(uid, id) {
-                fetchGlobalData(uid, id)
-                    .then(res => {
+            getData(uid, admin) {
+              let fn;
+              if (admin) {
+                fn = () => {
+                  return fetchUserGlobalData(uid, 0)
+                }
+              } else {
+                fn = () => {
+                  return fetchGlobalData(uid, 0)
+                }
+              }
+              fn().then(res => {
                         const { data } = res
                         this.statis.online = data.num_rt
                         this.statis.traffic_p2p_day = data.traffic_p2p_day
@@ -203,11 +245,11 @@
                         console.log(err)
                     })
             },
-            loopGetData(uid, id) {
+            loopGetData(uid, admin) {
                 const _this = this
-                _this.getData(uid, id)
+                _this.getData(uid, admin)
                 int = setInterval(function() {
-                    _this.getData(uid, id)
+                    _this.getData(uid, admin)
                 }, 20000)
             },
             checkPayResult() {

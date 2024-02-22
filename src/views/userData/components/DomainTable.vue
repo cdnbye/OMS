@@ -420,7 +420,7 @@
             // uid: getID(),
             hostId: val.host_id,
             domainInfo: {
-                uid: getID(),
+                uid: val.uid,
                 id: -1,
                 native: val.native,
                 domain: val.host,

@@ -312,7 +312,7 @@ export default {
         params: {
           hostId: val.id,
           domainInfo: {
-            uid: getID(),
+            uid: val.uid,
             id: -1,
             native: val.native,
             domain: val.domain,

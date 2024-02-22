@@ -6,3 +6,10 @@ export function fetchGlobalDomains(uid) {
         method: 'get'
     })
 }
+
+export function fetchUserGlobalDomains(uid) {
+    return request({
+        url: `global/user/user_id/${uid}/global/domains`,
+        method: 'get'
+    })
+}

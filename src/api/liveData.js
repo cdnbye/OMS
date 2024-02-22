@@ -53,3 +53,23 @@ export function splitHotChannels(data) {
         data,
     })
 }
+
+// 查看用户全局数据
+export function fetchUserGlobalData(uid, domainID) {
+    let url = `global/user/user_id/${uid}/domain/domain_id/${domainID}`
+    return request({
+        url,
+        method: 'get',
+    })
+}
+
+export function fetchUserDisData(uid, domainID, type, lang) {
+    let url = `global/user/user_id/${uid}/domain/domain_id/${domainID}/num?type=${type}`
+    if (lang) {
+        url = `${url}&lang=${lang}`
+    }
+    return request({
+        url,
+        method: 'get',
+    })
+}

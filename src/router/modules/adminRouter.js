@@ -376,6 +376,16 @@ export default [
                     roles: ['admin'],
                     noCache: true
                 }
+            },
+            {
+                path: '/user/liveDataGlobal',
+                component: () => import('@/views/dashboard/user/liveDataGlobal'),
+                name: 'UserLiveDataGlobal',
+                meta: {
+                    title: 'basicAnalysis',
+                    roles: ['admin'],
+                    noCache: true
+                }
             }
         ]
     },

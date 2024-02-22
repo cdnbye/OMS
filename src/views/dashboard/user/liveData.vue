@@ -17,6 +17,7 @@
 import store from '@/store'
 import { mapGetters } from 'vuex'
 import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
+import { fetchUserGlobalData, fetchUserDisData } from '@/api/liveData'
 import { formatTraffic, formatPieData } from '@/utils/format'
 import NoBindTip from '@/components/NoBindTip'
 import Dis from './Distribution'
@@ -90,7 +91,7 @@ export default {
   },
   watch: {
     currentDomain: function () {
-      if (!this.$route.params.hostId) {
+      if (typeof this.$route.params.hostId === 'undefined') {
         clearInterval(timer)
         this.getUserDomain()
       }
@@ -102,6 +103,8 @@ export default {
     // console.warn(`hostId ${this.$route.params.hostId}`)
     const { params } = this.$route
     const domainInfo = params.domainInfo;
+    // console.warn(JSON.stringify(domainInfo))
+    // console.warn(JSON.stringify(params))
     if(domainInfo && domainInfo.id && domainInfo.uid) {
       this.loopGetData(domainInfo.uid, domainInfo.id, params.hostId)
       this.getDisData(domainInfo.uid, domainInfo.id, params.hostId)
@@ -117,7 +120,17 @@ export default {
   methods: {
     formatTraffic,
     getData(uid, id, hostId) {
-      fetchGlobalData(uid, id, hostId)
+      let fn;
+      if (hostId >= 0) {
+        fn = () => {
+          return fetchUserGlobalData(uid, hostId)
+        }
+      } else {
+        fn = () => {
+          return fetchGlobalData(uid, id)
+        }
+      }
+      fn()
         .then(res => {
           const { data } = res
           this.statis.online = data.num_rt
@@ -168,8 +181,17 @@ export default {
         })
     },
     getDisData(uid, id, hostID) {
-        // if (id < 0) return
-        fetchDisData(uid, id, 'version', hostID).then(res => {
+      let fn;
+      if (hostID >= 0) {
+        fn = (type) => {
+          return fetchUserDisData(uid, hostID, type)
+        }
+      } else {
+        fn = (type) => {
+          return fetchDisData(uid, id, type)
+        }
+      }
+      fn('version').then(res => {
           const data = res.data.data
           if(data) {
             this.disData.versionData = formatPieData(data)
@@ -177,7 +199,7 @@ export default {
               this.disData.versionData = [];
           }
         })
-        fetchDisData(uid, id, 'tag', hostID).then(res => {
+      fn('tag').then(res => {
           const data = res.data.data
           if(data) {
             this.disData.tagData = formatPieData(data)
@@ -185,7 +207,7 @@ export default {
               this.disData.tagData = [];
           }
         })
-        fetchDisData(uid, id, 'device', hostID).then(res => {
+      fn('device').then(res => {
           const data = res.data.data
           if(data) {
             this.disData.deviceData = formatPieData(data)
@@ -193,7 +215,7 @@ export default {
               this.disData.deviceData = [];
           }
         })
-        fetchDisData(uid, id, 'live', hostID).then(res => {
+      fn('live').then(res => {
           const data = res.data.data
           if(data) {
             this.disData.liveData = formatPieData(data)
@@ -201,7 +223,7 @@ export default {
               this.disData.liveData = [];
           }
         })
-        fetchDisData(uid, id, 'netType', hostID).then(res => {
+      fn('netType').then(res => {
           const data = res.data.data
           if(data) {
             this.disData.netTypeData = formatPieData(data)
@@ -209,7 +231,7 @@ export default {
               this.disData.netTypeData = [];
           }
         })
-        // fetchDisData(uid, id, 'isp', hostID, this.language === 'en'?'en':'').then(res => {
+        // fn('isp', this.language === 'en'?'en':'').then(res => {
         //   const data = res.data.data
         //   if(data) {
         //       this.disData.ispData = formatPieData(data)
@@ -217,7 +239,7 @@ export default {
         //       this.disData.ispData = [];
         //   }
         // })
-        fetchDisData(uid, id, 'nat', hostID).then(res => {
+      fn('nat').then(res => {
           const data = res.data.data
           if(data) {
               this.disData.natTypeData = formatPieData(data)

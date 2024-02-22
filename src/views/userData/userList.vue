@@ -206,6 +206,12 @@
       </template>
     </el-table-column>
 
+    <el-table-column label="action" align="center" class-name="small-padding fixed-width">
+      <template slot-scope="scope">
+        <el-button type="primary" size="mini" @click="handleCheckDetail(scope.row.uid)">监控</el-button>
+      </template>
+    </el-table-column>
+
   </el-table>
 
   <el-dialog title="定制套餐" :visible.sync="dialogVisible" :width="device === 'mobile' ? '90%' : '30%' ">
@@ -708,6 +714,18 @@
       },
       copy(pw, event) {
           clip(pw, event)
+      },
+      handleCheckDetail(uid) {
+        // console.warn(JSON.stringify(val))
+        this.$router.push({
+          name: 'UserLiveDataGlobal',
+          params: {
+            hostId: 0,
+            domainInfo: {
+              uid,
+            },
+          }
+        })
       },
       handleEditPlan(item, keepDueTime) {
           const type = this.getPlanLabel(item.flow.product_type)
