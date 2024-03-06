@@ -26,7 +26,7 @@
     import { getID } from '@/utils/auth'
     import { fetchGlobalData, fetchDisData } from '@/api/user/liveData'
     import { fetchUserGlobalData, fetchUserDisData } from '@/api/liveData'
-    import { checkAlipayOrder, checkPaypalOrder, updateCryptoTrade } from '@/api/user/package'
+    import { checkOrderStatus, updateCryptoTrade } from '@/api/user/package'
     import { fetchGlobalDomains, fetchUserGlobalDomains } from '@/api/user/global'
     import { formatTraffic, formatPieData } from '@/utils/format'
     import NoBindTip from '@/components/NoBindTip'
@@ -252,6 +252,30 @@
                     _this.getData(uid, admin)
                 }, 20000)
             },
+            showPaymentResult(data) {
+              this.checkResultLoading = false
+              if(data.is_payed) {
+                this.$messageBox.confirm(this.$t('package.paySuccess'), {
+                  type: 'success',
+                  confirmButtonText: this.$t('common.ok'),
+                  showCancelButton: false
+                }).then(() => {
+                  this.$router.replace('/')
+                })
+              } else if (data.processing) {
+                this.$messageBox.confirm(this.$t('package.payPending'), {
+                  type: 'info',
+                  confirmButtonText: this.$t('common.ok'),
+                  showCancelButton: false
+                })
+              } else {
+                this.$messageBox.confirm(this.$t('package.payFail'), {
+                  type: 'error',
+                  confirmButtonText: this.$t('common.ok'),
+                  showCancelButton: false
+                })
+              }
+            },
             checkPayResult() {
               const paramObj = this.$route.query
               if(paramObj.cancel) {
@@ -273,24 +297,9 @@
                 this.checkResultLoading = true
                 switch (paramObj.payment) {
                   case 'alipay':
-                    checkAlipayOrder(paramObj.out_trade_no)
-                        .then(res => {
-                          this.checkResultLoading = false
-                          if(res.data.is_payed) {
-                            this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                              type: 'success',
-                              confirmButtonText: this.$t('common.ok'),
-                              showCancelButton: false
-                            }).then(() => {
-                               this.$router.replace('/')
-                            })
-                          } else {
-                            this.$messageBox.confirm(this.$t('package.payFail'), {
-                              type: 'error',
-                              confirmButtonText: this.$t('common.ok'),
-                              showCancelButton: false
-                            })
-                          }
+                    checkOrderStatus('alipay', paramObj.out_trade_no)
+                        .then(({ data }) => {
+                          this.showPaymentResult(data)
                         })
                         .catch(err => {
                           this.checkResultLoading = false
@@ -298,29 +307,13 @@
                         })
                     break
                   case 'paypal':
-                    // TODO 去掉paymentId PayerID
-                    checkPaypalOrder(paramObj.orderId, paramObj.paymentId, paramObj.PayerID)
-                        .then(res => {
-                          if(res.data.is_payed) {
-                            this.checkResultLoading = false
-                            this.$messageBox.confirm(this.$t('package.paySuccess'), {
-                              type: 'success',
-                              confirmButtonText: this.$t('common.ok'),
-                              showCancelButton: false
-                            }).then(() => {
-                              this.$router.replace('/')
-                            })
-                          } else {
-                            this.$messageBox.confirm(this.$t('package.payFail'), {
-                              type: 'error',
-                              confirmButtonText: this.$t('common.ok'),
-                              showCancelButton: false
-                            })
-                          }
+                    checkOrderStatus('paypal', paramObj.orderId)
+                        .then(({ data }) => {
+                          this.showPaymentResult(data)
                         }).catch(err => {
-                      this.checkResultLoading = false
-                      console.log(err)
-                    })
+                          this.checkResultLoading = false
+                          console.log(err)
+                        })
                     break
                   case 'crypto':
                     updateCryptoTrade({
@@ -338,6 +331,15 @@
                       this.checkResultLoading = false
                       console.log(err)
                     })
+                    break
+                  case 'stripe':
+                    checkOrderStatus('stripe', paramObj.orderId)
+                        .then(({ data }) => {
+                          this.showPaymentResult(data)
+                        }).catch(err => {
+                          this.checkResultLoading = false
+                          console.log(err)
+                        })
                     break
                   default:
                     this.checkResultLoading = false

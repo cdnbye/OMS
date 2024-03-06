@@ -73,6 +73,7 @@ import { fetchOrder, closeOrder, fetchInvoicePdf } from '@/api/user/order'
 import { getID } from '@/utils/auth'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import { formatterPayMethod } from '@/utils/format'
 
 export default {
   name: 'OrderTable',
@@ -166,16 +167,7 @@ export default {
       this.handleGetOrder()
     },
     formatterPayMethod(row) {
-      switch (row.payment) {
-        case 'alipay':
-          return this.$t('order.alipay')
-        case 'paypal':
-          return 'Paypal'
-        case 'crypto':
-          return 'Coinbase'
-        case 'balance':
-          return this.$t('order.balance')
-      }
+      return formatterPayMethod(row)
     },
     formatData(data) {
       if (!data) data = []

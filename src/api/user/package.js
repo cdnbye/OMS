@@ -33,6 +33,14 @@ export function createOrder(userID, data) {
   })
 }
 
+// 获取支付方式
+export function fetchPayMethods() {
+    return request({
+        url: `charge/methods`,
+        method: 'get'
+    })
+}
+
 // 更新支付状态
 export function updateCryptoTrade(data) {
     return request({
@@ -52,20 +60,12 @@ export function fetchPayUrl(payMethod, orderID, device) {
   })
 }
 
-// 检查支付宝支付状态
-export function checkAlipayOrder(orderID) {
-  return request({
-    url: `charge/alipay/query?order_id=${orderID}`,
-    method: 'get'
-  })
-}
-
-// 检查paypal支付状态
-export function checkPaypalOrder(orderID, paymentID, payerID) {
-  return request({
-    url: `charge/paypal/query?order_id=${orderID}&payment_id=${paymentID}&payer_id=${payerID}`,
-    method: 'get'
-  })
+// 检查支付状态
+export function checkOrderStatus(method, orderID) {
+    return request({
+        url: `charge/${method}/query?order_id=${orderID}`,
+        method: 'get'
+    })
 }
 
 // 用户签到

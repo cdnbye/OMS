@@ -19,20 +19,28 @@
           <div class="payMethod">
             <img v-if="currency === 'CNY'" style="" :src="payImg.ali" @click="alipayClick" />
 
-            <img v-if="currency !== 'CNY'" style="" :src="payImg.paypal" @click="paypalClick" />
+            <img v-if="currency !== 'CNY' && showPaypal" style="" :src="payImg.paypal" @click="paypalClick" />
 <!--            <div v-if="currency !== 'CNY'">-->
 <!--              <img style="width: 150px" :src="payImg.credit" />-->
 <!--            </div>-->
             <img v-if="currency !== 'CNY' && showCrypto" style="" :src="payImg.coinbase" @click="coinbaseClick" />
+            <img v-if="currency !== 'CNY' && showStripe" style="" :src="payImg.stripe" @click="stripeClick" />
 
           </div>
         </div>
       </el-card>
     </div>
-    <el-dialog :visible.sync="cantBuyVisible" :width="device === 'mobile' ? '80%' : '30%'">
-      <span>{{ $t('package.systemError') }}</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cantBuyVisible = false">{{ $t('common.ok') }}</el-button>
+    <el-dialog :visible.sync="stripeVisible" :width="device === 'mobile' ? '80%' : '30%'">
+      <stripe-element-payment
+          ref="stripeRef"
+          :pk="stripePK"
+          :elements-options="stripeElementsOptions"
+          :confirm-params="stripeConfirmParams"
+          @element-ready="onStripeElementReady"
+          @error="onStripeError"
+      />
+      <span v-show="stripePayVisible" slot="footer" class="dialog-footer">
+        <el-button type="primary" :loading="stripePayLoading" @click="handleStripePayClick">Pay Now</el-button>
       </span>
     </el-dialog>
   </div>
@@ -40,27 +48,42 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchPayUrl } from '@/api/user/package'
-import { getItem } from '@/utils/storage'
-import { LOCATION } from '@/constant'
+import { fetchPayUrl, fetchPayMethods } from '@/api/user/package'
+import { StripeElementPayment } from '@vue-stripe/vue-stripe';
 
 export default {
   name: 'OrderDetail',
+  components: {
+    StripeElementPayment,
+  },
   data() {
     return {
       showCrypto: true,
+      showPaypal: true,
+      showStripe: true,
       payImg: {
         ali: require('../../assets/ali_pay.png'),
         paypal: require('../../assets/paypal.jpeg'),
         coinbase: require('../../assets/coinbase.png'),
+        stripe: require('../../assets/stripe.png'),
         // credit: require('../../assets/credit_card.png')
       },
       payLoading: false,
-      cantBuyVisible: false,
+      stripeVisible: false,
+      stripePayVisible: false,
       tableData: [],
       currency: '',
       totalPrice: 0,
-      orderID: 0
+      orderID: 0,
+      // stripe
+      stripePK: '',
+      stripeElementsOptions: {
+        appearance: {}, // appearance options
+      },
+      stripeConfirmParams: {
+        return_url: '', // success url
+      },
+      stripePayLoading: false,
     }
   },
   computed: {
@@ -70,7 +93,17 @@ export default {
   },
   mounted() {
     if(this.$route.query.currency) {
-      this.formatData()
+      this.payLoading = true
+      fetchPayMethods().then(({ data }) => {
+        this.payLoading = false
+        this.showCrypto = data.coinbase
+        this.showPaypal = data.paypal
+        this.showStripe = data.stripe
+        this.formatData()
+      }).catch(err => {
+        this.payLoading = false
+        console.log(err)
+      })
     } else {
       this.$router.push('/shopping/package')
     }
@@ -103,15 +136,25 @@ export default {
     coinbaseClick() {
       this.handleFetchPayUrl('crypto')
     },
+    stripeClick() {
+      this.handleFetchPayUrl('stripe')
+    },
     handleFetchPayUrl(payMethod) {
       this.payLoading = true
       fetchPayUrl(payMethod, this.orderID, this.device)
-        .then(res => {
-          if(res.data.available) {
-            window.location.href = `${res.data.pay_url}`
+        .then(({ data }) => {
+          if (!data.available) {
+            return
+          }
+          if (payMethod === 'stripe') {
+            const { client_secret, return_url, public_key } = data
+            this.stripePK = public_key
+            this.stripeConfirmParams.return_url = return_url
+            this.stripeElementsOptions.clientSecret = client_secret
+            this.stripeVisible = true
           } else {
             this.payLoading = false
-            this.cantBuyVisible = true
+            window.location.href = `${data.pay_url}`
           }
         })
         .catch(err => {
@@ -119,6 +162,22 @@ export default {
           console.log(err)
         })
     },
+    handleStripePayClick(){
+      this.$refs.stripeRef.submit()
+      this.stripePayLoading = true
+    },
+    onStripeElementReady() {
+      this.stripePayVisible = true
+      this.payLoading = false
+    },
+    onStripeError(err) {
+      const { message } = err
+      this.stripePayLoading = false
+      this.$notify.error({
+        title: this.$t('common.error'),
+        message: message,
+      });
+    }
   }
 }
 </script>

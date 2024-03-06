@@ -1,3 +1,5 @@
+import i18n from '@/lang'
+
 //sha256 加密
 export function setSha256(value) {
   const sha256 = require("js-sha256").sha256
@@ -145,4 +147,19 @@ export const formatDuration = ms => {
       .filter(val => val[1] !== 0)
       .map(([key, val]) => `${val}${keyToText[key]}`)
       .join(',');
+}
+
+export function formatterPayMethod(row) {
+  switch (row.payment) {
+    case 'alipay':
+      return i18n.t('order.alipay')
+    case 'paypal':
+      return 'Paypal'
+    case 'crypto':
+      return 'Coinbase'
+    case 'stripe':
+      return 'Stripe'
+    case 'balance':
+      return i18n.t('order.balance')
+  }
 }

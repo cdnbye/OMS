@@ -72,6 +72,7 @@
 import { fetchTrades } from '@/api/finance'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import { formatterPayMethod } from '@/utils/format'
 
 export default {
   name: 'OrderTable',
@@ -100,6 +101,10 @@ export default {
         {
           label: 'Crypto',
           value: 'crypto'
+        },
+        {
+          label: 'Stripe',
+          value: 'stripe'
         }
       ]
     }
@@ -127,6 +132,9 @@ export default {
         },
       ]
     },
+    formatterPayMethod(row) {
+      return formatterPayMethod(row)
+    },
     formatterType(row) {
       let type = ''
       if (row.type.startsWith('flow_packet')){
@@ -145,18 +153,6 @@ export default {
     currentPageChange(current) {
       this.currentPage = current
       this.handleGetOrder()
-    },
-    formatterPayMethod(row) {
-      switch (row.payment) {
-        case 'alipay':
-          return this.$t('order.alipay')
-        case 'paypal':
-          return 'Paypal'
-        case 'crypto':
-          return 'Coinbase'
-        case 'balance':
-          return this.$t('order.balance')
-      }
     },
     formatData(data) {
       if (!data) data = []
