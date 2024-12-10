@@ -19,7 +19,7 @@ jobs:
         secretId: ${{ secrets.SECRET_ID }}
         secretKey: ${{ secrets.SECRET_KEY }}
         # 云开发的环境id
-        envId: ${{ secrets.ENV_ID }}
+        envId: dashboard-6gvhe10090d924f1
         # Github 项目静态文件的路径
         staticSrcPath: ./
-#        staticDestPath: ./
+        staticDestPath: ./admin
